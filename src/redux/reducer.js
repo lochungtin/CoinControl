@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 const placeholder = (state = {}, action) => {
-    return settings
+    return state
 }
 
 export default combineReducers({

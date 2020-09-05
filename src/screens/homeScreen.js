@@ -2,7 +2,9 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
-import { styles } from '../styles';
+import Bubble from '../components/Bubble';
+import { accent, styles, } from '../styles';
+
 
 class Screen extends React.Component {
 
@@ -13,7 +15,24 @@ class Screen extends React.Component {
     render() {
         return (
             <View style={styles.screen}>
-                <Text>Home Screen</Text>
+                <View style={{...styles.columns, justifyContent: 'space-evenly'}}>
+                    <View style={{...styles.rows, maxWidth: 70}}>
+                        <Bubble color={accent} iconName={'sync'} iconsSize={25} size={35} />
+                        <Text style={styles.centerText}>Sync</Text>
+                    </View>
+                    <View style={{...styles.rows, maxWidth: 70}}>
+                        <Bubble color={accent} iconName={'plus'} iconsSize={25} size={35} />
+                        <Text style={styles.centerText}>Income</Text>
+                    </View>
+                    <View style={{...styles.rows, maxWidth: 70}}>
+                        <Bubble color={accent} iconName={'minus'} iconsSize={25} size={35} />
+                        <Text style={styles.centerText}>Expense</Text>
+                    </View>
+                    <View style={{...styles.rows, maxWidth: 70}}>
+                        <Bubble color={accent} iconName={'flag-outline'} iconsSize={25} size={35} />
+                        <Text style={styles.centerText}>Set Goal</Text>
+                    </View>
+                </View>
             </View>
         );
     }

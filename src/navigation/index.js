@@ -10,15 +10,15 @@ import customCategory from '../screens/customCategory';
 import homeScreen from '../screens/homeScreen';
 import settingsScreen from '../screens/settingsScreen';
 import updateRecordScreen from '../screens/updateRecordScreen';
+import { accent, bgColor, white } from '../styles';
 
 const Main = createStackNavigator();
 const Settings = createStackNavigator();
-
 const Root = createBottomTabNavigator();
 
 const main = () => {
     return (
-        <Main.Navigator>
+        <Main.Navigator screenOptions={{headerShown: false}}>
             <Main.Screen name='Home' component={homeScreen} />
             <Main.Screen name='Update' component={updateRecordScreen} />
             <Main.Screen name='Category' component={customCategory} />
@@ -28,7 +28,7 @@ const main = () => {
 
 const settings = () => {
     return (
-        <Settings.Navigator>
+        <Settings.Navigator screenOptions={{headerShown: false}}>
             <Settings.Screen name='Settings' component={settingsScreen} />
             <Settings.Screen name='Account' component={accountScreen} />
             <Settings.Screen name='Catergory' component={customCategory} />
@@ -47,18 +47,30 @@ export default class AppNav extends React.Component {
                             let name = '';
                             switch (route.name) {
                                 case 'Chart':
-                                    name = focused ? 'chart-donut' : 'chart-donut-variant';
+                                    name = 'chart-donut';
                                     break;
                                 case 'Home':
-                                    name = focused ? 'home' : 'home-outline';
+                                    name = 'home';
                                     break;
                                 case 'Settings':
-                                    name = focused ? 'dots-horizontal-circle' : 'dots-horizontal-circle-outline';
+                                    name = 'dots-horizontal-circle-outline';
                                     break;
                             }
                             return <Icon name={name} size={size} color={color} />
                         }
-                    })}
+                    })} 
+                    tabBarOptions={{
+                        activeBackgroundColor: bgColor,
+                        activeTintColor: accent,
+                        inactiveBackgroundColor: bgColor,
+                        inactiveTintColor: white,
+                        keyboardHidesTabBar: true,
+                        showLabel: false,
+                        style: {
+                            backgroundColor: bgColor,
+                            borderTopColor: 'transparent',
+                        },
+                    }}
                 >
                     <Root.Screen name='Chart' component={chartScreen} />
                     <Root.Screen name='Home' component={main} />
