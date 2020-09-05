@@ -3,7 +3,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { connect } from 'react-redux';
 
+import { defaultCategory } from '../redux/action';
+import { store } from '../redux/store';
 import accountScreen from '../screens/accountScreen';
 import chartScreen from '../screens/chartScreen';
 import customCategory from '../screens/customCategory';
@@ -36,7 +39,14 @@ const settings = () => {
     )
 }
 
-export default class AppNav extends React.Component {
+class AppNav extends React.Component {
+
+    constructor(props) {
+        super(props);
+        if (props.categories === null || Object.keys(props.categories).length === 0)
+            store.dispatch(defaultCategory());
+    }
+
     render() {
         return (
             <NavigationContainer>
@@ -80,3 +90,9 @@ export default class AppNav extends React.Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+    categories: state.categories
+})
+
+export default connect(mapStateToProps)(AppNav);
