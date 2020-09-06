@@ -38,7 +38,16 @@ const main = () => {
                         title: route.params.title
                     })}
             />
-            <Main.Screen name='Category' component={customCategory} />
+            <Main.Screen
+                name='Category'
+                component={customCategory}
+                options={({ route }) =>
+                    ({
+                        headerStyle: stackScreenHeaderStyle,
+                        headerTintColor: white,
+                        title: 'New ' + route.params.title
+                    })}
+            />
         </Main.Navigator>
     )
 }

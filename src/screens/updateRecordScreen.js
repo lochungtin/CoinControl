@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
 import { store } from '../redux/store';
-import { accent, bgColor, black, styles, updateRecordScreenStyles, white, } from '../styles';
+import { addRecord } from '../redux/action';
+import { accent, black, styles, updateRecordScreenStyles, white, } from '../styles';
 
 class Screen extends React.Component {
 
@@ -25,6 +26,7 @@ class Screen extends React.Component {
             ],
             open: false,
             title: '',
+            type: props.route.params.title,
             value: 0,
         }
     }
@@ -55,7 +57,12 @@ class Screen extends React.Component {
                                     color={accent}
                                     iconName={item.iconName}
                                     iconsSize={25}
-                                    onPress={() => this.setState({ category: item.key, icon: item.iconName, open: true })}
+                                    onPress={() => {
+                                        if (item.key === 'Add')
+                                            this.props.navigation.navigate('Category', { title: this.props.route.params.title });
+                                        else
+                                            this.setState({ category: item.key, icon: item.iconName, open: true });
+                                    }}
                                     selected={this.state.category === item.key}
                                     size={35}
                                 />
@@ -72,7 +79,7 @@ class Screen extends React.Component {
                                     iconsSize={25}
                                     onPress={() => {
                                         if (item.key === 'Add')
-                                            this.props.navigation.navigate('Category');
+                                            this.props.navigation.navigate('Category', { title: this.props.route.params.title });
                                         else
                                             this.setState({ category: item.key, icon: item.iconName, open: true });
                                     }}
@@ -92,7 +99,7 @@ class Screen extends React.Component {
                                     iconsSize={25}
                                     onPress={() => {
                                         if (item.key === 'Add')
-                                            this.props.navigation.navigate('Category');
+                                            this.props.navigation.navigate('Category', { title: this.props.route.params.title });
                                         else
                                             this.setState({ category: item.key, icon: item.iconName, open: true });
                                     }}
@@ -127,9 +134,9 @@ class Screen extends React.Component {
                                         {this.state.icon !== '' &&
                                             <Icon name={'alpha-t-circle-outline'} size={25} color={black} />
                                         }
-                                        <TextInput 
-                                            placeholder={'Title (Optional)'} 
-                                            onChangeText={(text) => this.setState({title : text})}
+                                        <TextInput
+                                            placeholder={'Title (Optional)'}
+                                            onChangeText={(text) => this.setState({ title: text })}
                                             style={{ ...styles.centerText, color: black, width: '100%' }}
                                         />
                                     </View>
@@ -137,9 +144,9 @@ class Screen extends React.Component {
                                         {this.state.icon !== '' &&
                                             <Icon name={'currency-usd-circle-outline'} size={25} color={black} />
                                         }
-                                        <TextInput 
-                                            keyboardType={'numeric'} 
-                                            onChangeText={(text) => this.setState({value: parseFloat(text)})}
+                                        <TextInput
+                                            keyboardType={'numeric'}
+                                            onChangeText={(text) => this.setState({ value: parseFloat(text) })}
                                             placeholder={'amount'}
                                             style={{ ...styles.centerText, color: black, width: '100%' }}
                                         />
@@ -147,10 +154,16 @@ class Screen extends React.Component {
                                 </View>
                                 <View style={{ height: '50%' }} />
                                 <View style={styles.columns}>
-                                    <TouchableOpacity 
+                                    <TouchableOpacity
                                         onPress={() => {
-                                            
-                                        }} 
+                                            store.dispatch(addRecord({
+                                                category: this.state.category,
+                                                icon: this.state.icon,
+                                                title: this.state.title,
+                                                type: this.state.type,
+                                                value: this.state.value,
+                                            }))
+                                        }}
                                         style={{ ...styles.roundView, backgroundColor: accent, width: '42.5%' }}>
                                         <Text style={{ ...styles.centerText, color: black }}>Save</Text>
                                     </TouchableOpacity>
