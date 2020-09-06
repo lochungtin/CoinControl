@@ -5,13 +5,13 @@ import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
 import { store } from '../redux/store';
-import { accent, bgColor, black, styles, updateRecordScreenStyles, white, lightGrey, } from '../styles';
+import { accent, bgColor, black, styles, updateRecordScreenStyles, white, } from '../styles';
 
 class Screen extends React.Component {
 
     constructor(props) {
         super(props);
-        var icons = props.categories;
+        var icons = props.route.params.title === 'Expense' ? props.expenseCategories : props.incomeCategories;
         if (icons[icons.length - 1].key !== 'Add')
             icons.push({ key: 'Add', iconName: 'plus' });
         this.state = {
@@ -168,7 +168,8 @@ class Screen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    categories: state.categories
+    expenseCategories: state.expenseCategories,
+    incomeCategories: state.incomeCategories,
 })
 
 export default connect(mapStateToProps)(Screen);

@@ -5,7 +5,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import { defaultCategory } from '../redux/action';
+import { defaultExpenseCategory, defaultIncomeCategory } from '../redux/action';
 import { store } from '../redux/store';
 import accountScreen from '../screens/accountScreen';
 import chartScreen from '../screens/chartScreen';
@@ -57,8 +57,10 @@ class AppNav extends React.Component {
 
     constructor(props) {
         super(props);
-        if (props.categories === null || Object.keys(props.categories).length === 0)
-            store.dispatch(defaultCategory());
+        if (props.expenseCategories === null || Object.keys(props.expenseCategories).length === 0)
+            store.dispatch(defaultExpenseCategory());
+        if (props.incomeCategories === null || Object.keys(props.incomeCategories).length === 0)
+            store.dispatch(defaultIncomeCategory());
     }
 
     render() {
@@ -106,7 +108,8 @@ class AppNav extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    categories: state.categories
+    expenseCategories: state.expenseCategories,
+    incomeCategories: state.incomeCategories,
 })
 
 export default connect(mapStateToProps)(AppNav);
