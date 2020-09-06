@@ -164,6 +164,7 @@ class Screen extends React.Component {
                                         onPress={() => {
                                             store.dispatch(addRecord({
                                                 category: this.state.category,
+                                                date: this.state.date,
                                                 icon: this.state.icon,
                                                 title: this.state.title,
                                                 type: this.state.type,
