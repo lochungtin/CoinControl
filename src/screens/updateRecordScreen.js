@@ -162,7 +162,8 @@ class Screen extends React.Component {
                                                 title: this.state.title,
                                                 type: this.state.type,
                                                 value: this.state.value,
-                                            }))
+                                            }));
+                                            this.props.navigation.goBack();
                                         }}
                                         style={{ ...styles.roundView, backgroundColor: accent, width: '42.5%' }}>
                                         <Text style={{ ...styles.centerText, color: black }}>Save</Text>

@@ -1,25 +1,36 @@
 import { combineReducers } from 'redux';
 
-import { DEFAULT_EXPENSE_CATEGORY, DEFAULT_INCOME_CATEGORY } from './action';
+import { ADD_RECORD, DEFAULT_EXPENSE_CATEGORY, DEFAULT_INCOME_CATEGORY, DELETE_HISTORY } from './action';
 import { defaultExpenseCategories, defaultIncomeCategories } from '../default';
 
-const updateExpenseCategory = (state = {}, action) => {
+const updateRecords = (records = [], action) => {
+    switch(action.type) {
+        case ADD_RECORD:
+            return [...records, action.payload];
+        case DELETE_HISTORY:
+            return [];
+    }
+    return records;
+}
+
+const updateExpenseCategory = (categories = {}, action) => {
     switch (action.type) {
         case DEFAULT_EXPENSE_CATEGORY:
             return defaultExpenseCategories;
     }
-    return state
+    return categories;
 }
 
-const updateIncomeCategory = (state = {}, action) => {
+const updateIncomeCategory = (categories = {}, action) => {
     switch (action.type) {
         case DEFAULT_INCOME_CATEGORY:
             return defaultIncomeCategories
     }
-    return state
+    return categories;
 }
 
 export default combineReducers({
     expenseCategories: updateExpenseCategory,
     incomeCategories: updateIncomeCategory,
+    records: updateRecords,
 });
