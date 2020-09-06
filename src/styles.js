@@ -7,6 +7,7 @@ export const accent = '#F2D996';
 export const bgColor = '#1C1C1A';
 export const black = '#0C0C0C';
 export const darkGrey = '#2C2C2A';
+export const darkWhite = '#ACACAA';
 export const lightGrey = '#3C3C3A'
 export const white = '#FFFEFA';
 
@@ -53,6 +54,17 @@ export const styles = StyleSheet.create({
         color: white,
     },
 });
+
+export const homeScreenStyles = StyleSheet.create({
+    balance: {
+        color: white,
+        fontSize: 35,
+    },
+    balanceSmall: {
+        color: white,
+        fontSize: 25,
+    }
+})
 
 export const updateRecordScreenStyles = StyleSheet.create({
     modalViewContainer: {
