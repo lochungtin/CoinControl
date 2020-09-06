@@ -1,9 +1,11 @@
+import moment from 'moment';
 import React from 'react';
 import { Modal, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
+import DatePicker from '../components/DatePicker';
 import { store } from '../redux/store';
 import { addRecord } from '../redux/action';
 import { accent, black, styles, updateRecordScreenStyles, white, } from '../styles';
@@ -12,11 +14,13 @@ class Screen extends React.Component {
 
     constructor(props) {
         super(props);
+
         var icons = props.route.params.title === 'Expense' ? props.expenseCategories : props.incomeCategories;
         if (icons[icons.length - 1].key !== 'Add')
             icons.push({ key: 'Add', iconName: 'plus' });
         this.state = {
             category: '',
+            date: moment().format('YYYY-MM-DD'),
             icon: '',
             grid: [
                 icons.slice(0, 4),
@@ -122,7 +126,7 @@ class Screen extends React.Component {
                             <View style={{ ...styles.rows }}>
                                 <View style={styles.rows}>
                                     <TouchableOpacity onPress={() => this.setState({ category: '', open: false })}>
-                                        <Icon name={'dots-horizontal'} size={35} color={white} />
+                                        <Icon name={'dots-horizontal'} size={25} color={white} />
                                     </TouchableOpacity>
                                     <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, minHeight: 60 }}>
                                         {this.state.icon !== '' &&
@@ -131,9 +135,7 @@ class Screen extends React.Component {
                                         <Text style={{ ...styles.centerText, color: black, width: '100%' }}>{this.state.category}</Text>
                                     </View>
                                     <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, minHeight: 60 }}>
-                                        {this.state.icon !== '' &&
-                                            <Icon name={'alpha-t-circle-outline'} size={25} color={black} />
-                                        }
+                                        <Icon name={'alpha-t-circle-outline'} size={25} color={black} />
                                         <TextInput
                                             placeholder={'Title (Optional)'}
                                             onChangeText={(text) => this.setState({ title: text })}
@@ -141,15 +143,19 @@ class Screen extends React.Component {
                                         />
                                     </View>
                                     <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, minHeight: 60 }}>
-                                        {this.state.icon !== '' &&
-                                            <Icon name={'currency-usd-circle-outline'} size={25} color={black} />
-                                        }
+                                        <Icon name={'currency-usd-circle-outline'} size={25} color={black} />
                                         <TextInput
                                             keyboardType={'numeric'}
                                             onChangeText={(text) => this.setState({ value: parseFloat(text) })}
                                             placeholder={'amount'}
                                             style={{ ...styles.centerText, color: black, width: '100%' }}
                                         />
+                                    </View>
+                                    <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, minHeight: 60 }}>
+                                        <Icon name={'calendar-month'} size={25} color={black} />
+                                        <View style={{ width: '100%', paddingHorizontal: '10%' }}>
+                                            <DatePicker accent={accent} action={(date) => this.setState({ date: date })} date={this.state.date} />
+                                        </View>
                                     </View>
                                 </View>
                                 <View style={{ height: '50%' }} />
