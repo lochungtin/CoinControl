@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { bubbleStyles, fontColor, white } from '../styles';
+import { black, bubbleStyles, white } from '../styles';
 
 export default class Bubble extends React.Component {
 
@@ -30,11 +30,11 @@ export default class Bubble extends React.Component {
                 onPress={this.props.onPress}
             >
                 {this.state.icon &&
-                    <Icon name={this.props.iconName} size={this.props.iconsSize} color={this.props.selected ? white : fontColor} />
+                    <Icon name={this.props.iconName} size={this.props.iconsSize} color={black} />
                 }
                 {
                     !this.state.icon &&
-                    <Text style={{ color: this.props.selected ? white : fontColor }}>{this.props.text}</Text>
+                    <Text style={{ color: this.props.selected ? black : white }}>{this.props.text}</Text>
                 }
             </TouchableOpacity >
         )

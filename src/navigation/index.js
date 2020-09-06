@@ -19,11 +19,25 @@ const Main = createStackNavigator();
 const Settings = createStackNavigator();
 const Root = createBottomTabNavigator();
 
+const stackScreenHeaderStyle = {
+    backgroundColor: bgColor,
+    borderBottomWidth: 2,
+}
+
 const main = () => {
     return (
-        <Main.Navigator screenOptions={{headerShown: false}}>
-            <Main.Screen name='Home' component={homeScreen} />
-            <Main.Screen name='Update' component={updateRecordScreen} />
+        <Main.Navigator>
+            <Main.Screen name='Home' component={homeScreen} options={{ headerShown: false }} />
+            <Main.Screen
+                name='Update'
+                component={updateRecordScreen}
+                options={({ route }) =>
+                    ({
+                        headerStyle: stackScreenHeaderStyle,
+                        headerTintColor: white,
+                        title: route.params.title
+                    })}
+            />
             <Main.Screen name='Category' component={customCategory} />
         </Main.Navigator>
     )
@@ -31,7 +45,7 @@ const main = () => {
 
 const settings = () => {
     return (
-        <Settings.Navigator screenOptions={{headerShown: false}}>
+        <Settings.Navigator screenOptions={{ headerShown: false }}>
             <Settings.Screen name='Settings' component={settingsScreen} />
             <Settings.Screen name='Account' component={accountScreen} />
             <Settings.Screen name='Catergory' component={customCategory} />
@@ -68,7 +82,7 @@ class AppNav extends React.Component {
                             }
                             return <Icon name={name} size={size} color={color} />
                         }
-                    })} 
+                    })}
                     tabBarOptions={{
                         activeBackgroundColor: bgColor,
                         activeTintColor: accent,

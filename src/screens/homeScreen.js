@@ -21,11 +21,11 @@ class Screen extends React.Component {
                         <Text style={styles.centerText}>Sync</Text>
                     </View>
                     <View style={{ ...styles.rows, maxWidth: 70 }}>
-                        <Bubble color={accent} iconName={'plus'} iconsSize={25} onPress={() => this.props.navigation.navigate('Update', { type: 'add' })} size={35} />
+                        <Bubble color={accent} iconName={'plus'} iconsSize={25} onPress={() => this.props.navigation.navigate('Update', { title: 'Income' })} size={35} />
                         <Text style={styles.centerText}>Income</Text>
                     </View>
                     <View style={{ ...styles.rows, maxWidth: 70 }}>
-                        <Bubble color={accent} iconName={'minus'} iconsSize={25} onPress={() => this.props.navigation.navigate('Update', { type: 'minus' })} size={35} />
+                        <Bubble color={accent} iconName={'minus'} iconsSize={25} onPress={() => this.props.navigation.navigate('Update', { title: 'Expense' })} size={35} />
                         <Text style={styles.centerText}>Expense</Text>
                     </View>
                     <View style={{ ...styles.rows, maxWidth: 70 }}>
