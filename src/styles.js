@@ -21,7 +21,10 @@ export const shade3 = '#3C3C3C';
 export const shade4 = '#2C2C2C';
 
 export const black = '#0C0C0C';
-export const white = '#FEFEFE';
+export const white = '#FCFCFC';
+
+const bgColorD = '#1C1C1C';
+const bgColorL = white;
 
 // general styles
 
@@ -46,9 +49,15 @@ export const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
     },
-    screen: {
+    screenD: {
         alignItems: 'center',
-        backgroundColor: bgColor,
+        backgroundColor: bgColorD,
+        flex: 1,
+        justifyContent: 'flex-start',
+    },
+    screenL: {
+        alignItems: 'center',
+        backgroundColor: bgColorL,
         flex: 1,
         justifyContent: 'flex-start',
     },
@@ -176,9 +185,21 @@ export const settingStyles = StyleSheet.create({
         paddingHorizontal: '5%',
         paddingVertical: '2%',
     },
-    modalView: {
+    modalViewD: {
         alignItems: 'center',
-        backgroundColor: bgColor,
+        backgroundColor: bgColorD,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        height: maxHeight / 10,
+        justifyContent: 'center',
+        opacity: 0.9,
+        paddingTop: '1%',
+        paddingHorizontal: '5%',
+        width: maxWidth,
+    },
+    modalViewL: {
+        alignItems: 'center',
+        backgroundColor: bgColorL,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         height: maxHeight / 10,
@@ -226,10 +247,6 @@ export const settingStyles = StyleSheet.create({
         alignItems: 'flex-end',
         width: '30%',
     },
-    settingText: {
-        color: white,
-        width: '50%',
-    }
 });
 
 export const settingStyleC = {

@@ -9,7 +9,7 @@ import SettingsHeader from '../components/SettingsHeader';
 import SettingsItem from '../components/SettingsItem';
 import { defaultIncomeCategory, defaultExpenseCategory, defaultSettings, deleteHistory, updateSettings, } from '../redux/action';
 import { store } from '../redux/store';
-import { black, colors, settingStyles, shade2, shade3, styles, white, } from '../styles';
+import { black, colors, settingStyles, styles, white, } from '../styles';
 
 
 
@@ -29,11 +29,11 @@ class Screen extends React.Component {
 
     render() {
         return (
-            <View style={styles.screen}>
+            <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
                 <Modal animationType={'slide'} transparent={true} visible={this.state.colorPicker || this.state.currencyPicker || this.state.timePicker}>
                     <View style={settingStyles.modalViewContainer}>
-                        <View style={settingStyles.modalView}>
-                            <ExpandButton onPress={() => this.setState({ colorPicker: false, currencyPicker: false, timePicker: false })} />
+                        <View style={this.props.settings.darkMode ? settingStyles.modalViewD : settingStyles.modalViewL}>
+                            <ExpandButton dark={this.props.settings.darkMode} onPress={() => this.setState({ colorPicker: false, currencyPicker: false, timePicker: false })} />
                             {this.state.colorPicker &&
                                 <View style={styles.columns}>
                                     <Bubble
@@ -137,7 +137,7 @@ class Screen extends React.Component {
                 </Modal>
                 <Modal animationType={'slide'} transparent={true} visible={this.state.resetAll || this.state.resetCategory || this.state.resetSettings}>
                     <View style={settingStyles.modalViewContainer}>
-                        <View style={settingStyles.modalView}>
+                        <View style={this.props.settings.darkMode ? settingStyles.modalViewD : settingStyles.modalViewL}>
                             <Text style={{ ...styles.centerText, fontSize: 15 }}>{
                                 (this.state.resetAll ? 'Clear ALL data?' : '') +
                                 (this.state.resetCategory ? 'Revert to Default Categories?' : '') +
