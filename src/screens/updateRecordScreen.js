@@ -166,6 +166,7 @@ class Screen extends React.Component {
                                                 category: this.state.category,
                                                 date: this.state.date,
                                                 icon: this.state.icon,
+                                                key: moment().format(),
                                                 title: this.state.title,
                                                 type: this.state.type,
                                                 value: this.state.value,

@@ -5,7 +5,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import { defaultExpenseCategory, defaultIncomeCategory } from '../redux/action';
+import { defaultExpenseCategory, defaultIncomeCategory, defaultSettings } from '../redux/action';
 import { store } from '../redux/store';
 import accountScreen from '../screens/accountScreen';
 import chartScreen from '../screens/chartScreen';
@@ -13,7 +13,7 @@ import customCategory from '../screens/customCategory';
 import homeScreen from '../screens/homeScreen';
 import settingsScreen from '../screens/settingsScreen';
 import updateRecordScreen from '../screens/updateRecordScreen';
-import { accent, bgColor, white } from '../styles';
+import { bgColor, white } from '../styles';
 
 const Main = createStackNavigator();
 const Settings = createStackNavigator();
@@ -70,6 +70,8 @@ class AppNav extends React.Component {
             store.dispatch(defaultExpenseCategory());
         if (props.incomeCategories === null || Object.keys(props.incomeCategories).length === 0)
             store.dispatch(defaultIncomeCategory());
+        if (props.settings === null || Object.keys(props.settings).length === 0)
+            store.dispatch(defaultSettings());
     }
 
     render() {
@@ -96,7 +98,7 @@ class AppNav extends React.Component {
                     })}
                     tabBarOptions={{
                         activeBackgroundColor: bgColor,
-                        activeTintColor: accent,
+                        activeTintColor: this.props.settings.accent,
                         inactiveBackgroundColor: bgColor,
                         inactiveTintColor: white,
                         keyboardHidesTabBar: true,
@@ -119,6 +121,7 @@ class AppNav extends React.Component {
 const mapStateToProps = state => ({
     expenseCategories: state.expenseCategories,
     incomeCategories: state.incomeCategories,
+    settings: state.settings
 })
 
 export default connect(mapStateToProps)(AppNav);

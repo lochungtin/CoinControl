@@ -7,14 +7,19 @@ export const maxWidth = Dimensions.get('screen').width;
 
 // colors
 
-export const accent = '#F2D996';
-export const bgColor = '#1C1C1A';
+export const crimsonPink = '#ff3064';
+export const goldenBrown = '#F2D996';
+export const tealGreen = '#34e0a4';
+export const skyBlue = '#63cbf7';
+export const deepViolet = '#873beb';
+export const accent = skyBlue;
+export const bgColor = '#1C1C1C';
 export const black = '#0C0C0C';
-export const darkGrey = '#2C2C2A';
-export const darkWhite = '#ACACAA';
-export const lightGrey = '#3C3C3A'
+export const darkGrey = '#2C2C2C';
+export const darkWhite = '#ACACAC';
+export const lightGrey = '#3C3C3C'
 export const lightWhite = '#E0E0E0'
-export const white = '#FFFEFA';
+export const white = '#FEFEFE';
 
 // general styles
 

@@ -1,3 +1,5 @@
+import { goldenBrown } from './styles';
+
 export const defaultExpenseCategories = [
     { key: 'Bills', iconName: 'text-box-outline' },
     { key: 'Entertainment', iconName: 'gamepad-variant-outline' },
@@ -15,3 +17,8 @@ export const defaultIncomeCategories = [
     { key: 'Returns', iconName: 'keyboard-backspace'},
     { key: 'Salary', iconName: 'cash' },   
 ]
+
+export const defaultSettings = {
+    accent: goldenBrown,
+    lightMode: false,
+}

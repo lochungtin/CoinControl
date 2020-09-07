@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import { styles } from '../styles';
@@ -13,7 +13,9 @@ class Screen extends React.Component {
     render() {
         return (
             <View style={styles.screen}>
-                <Text>Settings Screen</Text>
+                <ScrollView>
+                    <Text>Settings Screen</Text>
+                </ScrollView>
             </View>
         );
     }

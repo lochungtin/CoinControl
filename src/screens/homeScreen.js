@@ -1,13 +1,12 @@
 import React from 'react';
-import { SafeAreaView, SectionList, Text, View } from 'react-native';
+import { SafeAreaView, SectionList, Text, TouchableOpacity, View } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
 import { parseAll, parseTotal } from '../functions/parser';
-import { accent, darkWhite, homeScreenStyles, lightGrey, maxWidth, styles, white, bgColor, darkGrey, } from '../styles';
-
+import { darkWhite, homeScreenStyles, lightGrey, maxWidth, styles, white, bgColor, darkGrey, } from '../styles';
 
 class Screen extends React.Component {
 
@@ -18,6 +17,7 @@ class Screen extends React.Component {
         this.state = {
             balance: Math.floor(total),
             balanceDecimal: this.getDecimal(total),
+            expand: '',
         }
     }
 
@@ -56,34 +56,34 @@ class Screen extends React.Component {
                         <Text style={{ color: darkWhite }}>{this.state.balance + '.' + this.state.balanceDecimal} left for 3 days</Text>
                     </View>
                     <View style={{ height: 10, justifyContent: 'center' }}>
-                        <Progress.Bar color={accent} progress={0.3} width={maxWidth / 2} />
+                        <Progress.Bar color={this.props.settings.accent} progress={0.3} width={maxWidth / 2} />
                     </View>
                     <View style={{ ...styles.columns, justifyContent: 'space-evenly', maxHeight: 70 }}>
                         <View style={{ ...styles.rows, maxWidth: 70 }}>
-                            <Bubble color={accent} iconName={'sync'} iconsSize={25} onPress={() => console.log('sync')} size={35} />
+                            <Bubble color={this.props.settings.accent} iconName={'sync'} iconsSize={25} onPress={() => console.log('sync')} size={35} />
                             <Text style={styles.centerText}>Sync</Text>
                         </View>
                         <View style={{ ...styles.rows, maxWidth: 70 }}>
-                            <Bubble color={accent} iconName={'plus'} iconsSize={25} onPress={() => this.props.navigation.navigate('Update', { title: 'Income' })} size={35} />
+                            <Bubble color={this.props.settings.accent} iconName={'plus'} iconsSize={25} onPress={() => this.props.navigation.navigate('Update', { title: 'Income' })} size={35} />
                             <Text style={styles.centerText}>Income</Text>
                         </View>
                         <View style={{ ...styles.rows, maxWidth: 70 }}>
-                            <Bubble color={accent} iconName={'minus'} iconsSize={25} onPress={() => this.props.navigation.navigate('Update', { title: 'Expense' })} size={35} />
+                            <Bubble color={this.props.settings.accent} iconName={'minus'} iconsSize={25} onPress={() => this.props.navigation.navigate('Update', { title: 'Expense' })} size={35} />
                             <Text style={styles.centerText}>Expense</Text>
                         </View>
                         <View style={{ ...styles.rows, maxWidth: 70 }}>
-                            <Bubble color={accent} iconName={'flag-outline'} onPress={() => console.log('new goal')} iconsSize={25} size={35} />
+                            <Bubble color={this.props.settings.accent} iconName={'flag-outline'} onPress={() => console.log('new goal')} iconsSize={25} size={35} />
                             <Text style={styles.centerText}>Set Goal</Text>
                         </View>
                     </View>
                     <SafeAreaView style={{ borderColor: darkGrey, borderTopWidth: 2, maxHeight: 400, minWidth: maxWidth }}>
                         <SectionList
                             renderItem={({ item }) =>
-                                <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: lightGrey, justifyContent: 'space-between' }}>
+                                <TouchableOpacity onPress={() => {}} style={{ ...styles.roundView, ...styles.columns, backgroundColor: lightGrey, justifyContent: 'space-between' }}>
                                     <Icon name={item.icon} size={20} color={white} />
                                     <Text style={{ ...styles.text, width: '50%' }}>{item.category}</Text>
                                     <Text style={{ ...styles.centerText, width: '20%' }}>{(item.type === 'Expense' ? '-' : '+') + item.value}</Text>
-                                </View>
+                                </TouchableOpacity>
                             }
                             renderSectionHeader={({ section: { title } }) =>
                                 <View style={{ backgroundColor: bgColor, paddingTop: '4%', paddingBottom: '3%' }}>
@@ -102,7 +102,8 @@ class Screen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    records: state.records
+    records: state.records,
+    settings: state.settings
 })
 
 export default connect(mapStateToProps)(Screen);

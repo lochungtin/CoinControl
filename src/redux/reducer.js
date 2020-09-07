@@ -1,8 +1,8 @@
 import moment from 'moment';
 import { combineReducers } from 'redux';
 
-import { ADD_RECORD, DEFAULT_EXPENSE_CATEGORY, DEFAULT_INCOME_CATEGORY, DELETE_HISTORY } from './action';
-import { defaultExpenseCategories, defaultIncomeCategories } from '../default';
+import { ADD_RECORD, DEFAULT_EXPENSE_CATEGORY, DEFAULT_INCOME_CATEGORY, DEFAULT_SETTINGS, DELETE_HISTORY } from './action';
+import { defaultExpenseCategories, defaultIncomeCategories, defaultSettings } from '../default';
 
 const updateRecords = (records = [], action) => {
     switch(action.type) {
@@ -26,13 +26,22 @@ const updateExpenseCategory = (categories = {}, action) => {
 const updateIncomeCategory = (categories = {}, action) => {
     switch (action.type) {
         case DEFAULT_INCOME_CATEGORY:
-            return defaultIncomeCategories
+            return defaultIncomeCategories;
     }
     return categories;
+}
+
+const updateSettings = (settings = {}, action) => {
+    switch(action.type) {
+        case DEFAULT_SETTINGS:
+            return defaultSettings;
+    }
+    return settings;
 }
 
 export default combineReducers({
     expenseCategories: updateExpenseCategory,
     incomeCategories: updateIncomeCategory,
     records: updateRecords,
+    settings: updateSettings,
 });
