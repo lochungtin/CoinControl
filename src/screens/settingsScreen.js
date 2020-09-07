@@ -180,7 +180,7 @@ class Screen extends React.Component {
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { }} style={{ ...styles.columns, ...settingsScreenStyles.itemContainer }}>
-                        <Icon name={'card'} size={20} color={darkWhite} />
+                        <Icon name={'cash'} size={20} color={darkWhite} />
                         <Text style={settingsScreenStyles.settingText}>Income Categories</Text>
                         <View style={settingsScreenStyles.settingRight}>
                             <Icon name={'arrow-right'} size={20} color={darkWhite} />
