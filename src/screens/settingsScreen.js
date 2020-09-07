@@ -4,9 +4,9 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
-import { updateSettings } from '../redux/action';
+import { defaultIncomeCategory, defaultExpenseCategory, defaultSettings, deleteHistory, updateSettings, } from '../redux/action';
 import { store } from '../redux/store';
-import { colors, darkWhite, lightWhite, settingsScreenStyles, styles, white, lightGrey, } from '../styles';
+import { black, colors, darkWhite, settingsScreenStyles, styles, white, lightGrey, } from '../styles';
 import ExpandButton from '../components/ExpandButton';
 
 
@@ -18,6 +18,9 @@ class Screen extends React.Component {
         this.state = {
             colorPicker: false,
             currencyPicker: false,
+            resetAll: false,
+            resetCategory: false,
+            resetSettings: false,
             timePicker: false,
         }
     }
@@ -130,6 +133,37 @@ class Screen extends React.Component {
                         </View>
                     </View>
                 </Modal>
+                <Modal animationType={'slide'} transparent={true} visible={this.state.resetAll || this.state.resetCategory || this.state.resetSettings}>
+                    <View style={settingsScreenStyles.modalViewContainer}>
+                        <View style={settingsScreenStyles.modalView}>
+                            <Text style={{ ...styles.centerText, fontSize: 15 }}>{
+                                this.state.resetAll ? 'Clear ALL data?' : '' +
+                                    this.state.resetCategory ? 'Revert to Default Categories?' : '' +
+                                        this.state.resetAll ? 'Revert to Default Settings?' : ''
+                            }</Text>
+                            <View style={styles.columns}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        if (this.state.resetAll)
+                                            store.dispatch(deleteHistory());
+                                        if (this.state.resetCategory) {
+                                            store.dispatch(defaultIncomeCategory());
+                                            store.dispatch(defaultExpenseCategory());
+                                        }
+                                        if (this.state.resetSettings)
+                                            store.dispatch(defaultSettings());
+                                        this.setState({ resetAll: false, resetCategory: false, resetSettings: false });
+                                    }}
+                                    style={{ ...styles.roundView, backgroundColor: this.props.settings.accent, width: '47.5%' }}>
+                                    <Text style={{ ...styles.centerText, color: black }}>Confirm</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.setState({ resetAll: false, resetCategory: false, resetSettings: false })} style={{ ...styles.roundView, backgroundColor: white, width: '47.5%' }}>
+                                    <Text style={{ ...styles.centerText, color: black }}>Cancel</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
                 <ScrollView style={settingsScreenStyles.scrollView}>
                     <View style={settingsScreenStyles.titleContainer}>
                         <Text style={{ color: darkWhite }}>GENERAL</Text>
@@ -186,9 +220,9 @@ class Screen extends React.Component {
                             <Icon name={'arrow-right'} size={20} color={darkWhite} />
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { }} style={{ ...styles.columns, ...settingsScreenStyles.itemContainer }}>
+                    <TouchableOpacity onPress={() => this.setState({ resetCategory: true })} style={{ ...styles.columns, ...settingsScreenStyles.itemContainer }}>
                         <Icon name={'backup-restore'} size={20} color={darkWhite} />
-                        <Text style={settingsScreenStyles.settingText}>Reset Default</Text>
+                        <Text style={settingsScreenStyles.settingText}>Reset Default Categories</Text>
                         <View style={settingsScreenStyles.settingRight}>
                             <Icon name={'arrow-right'} size={20} color={darkWhite} />
                         </View>
@@ -227,14 +261,14 @@ class Screen extends React.Component {
                             <Text style={{ color: this.props.settings.notification ? darkWhite : lightGrey }}>23:00</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { }} style={{ ...styles.columns, ...settingsScreenStyles.itemContainer }}>
+                    <TouchableOpacity onPress={() => this.setState({ resetSettings: true })} style={{ ...styles.columns, ...settingsScreenStyles.itemContainer }}>
                         <Icon name={'backup-restore'} size={20} color={darkWhite} />
                         <Text style={settingsScreenStyles.settingText}>Reset Default Settings</Text>
                         <View style={settingsScreenStyles.settingRight}>
                             <Icon name={'arrow-right'} size={20} color={darkWhite} />
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { }} style={{ ...styles.columns, ...settingsScreenStyles.itemContainer }}>
+                    <TouchableOpacity onPress={() => this.setState({ resetAll: true })} style={{ ...styles.columns, ...settingsScreenStyles.itemContainer }}>
                         <Icon name={'trash-can'} size={20} color={darkWhite} />
                         <Text style={settingsScreenStyles.settingText}>Clear Data</Text>
                         <View style={settingsScreenStyles.settingRight}>
@@ -242,7 +276,7 @@ class Screen extends React.Component {
                         </View>
                     </TouchableOpacity>
                 </ScrollView>
-            </View>
+            </View >
         );
     }
 }

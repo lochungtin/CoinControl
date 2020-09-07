@@ -168,9 +168,9 @@ export const settingsScreenStyles = StyleSheet.create({
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         height: maxHeight / 10,
-        
         justifyContent: 'center',
         opacity: 0.9,
+        paddingTop: '1%',
         paddingHorizontal: '5%',
         width: maxWidth,
     },
