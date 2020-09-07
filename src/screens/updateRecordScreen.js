@@ -9,6 +9,7 @@ import DatePicker from '../components/DatePicker';
 import { store } from '../redux/store';
 import { addRecord } from '../redux/action';
 import { black, styles, updateRecordScreenStyles, white, } from '../styles';
+import ExpandButton from '../components/ExpandButton';
 
 class Screen extends React.Component {
 
@@ -45,7 +46,7 @@ class Screen extends React.Component {
                                 <Bubble
                                     color={this.props.settings.accent}
                                     iconName={item.iconName}
-                                    iconsSize={25}
+                                    iconSize={25}
                                     onPress={() => this.setState({ category: item.key, icon: item.iconName, open: true })}
                                     selected={this.state.category === item.key}
                                     size={35}
@@ -60,7 +61,7 @@ class Screen extends React.Component {
                                 <Bubble
                                     color={this.props.settings.accent}
                                     iconName={item.iconName}
-                                    iconsSize={25}
+                                    iconSize={25}
                                     onPress={() => {
                                         if (item.key === 'Add')
                                             this.props.navigation.navigate('Category', { title: this.props.route.params.title });
@@ -80,7 +81,7 @@ class Screen extends React.Component {
                                 <Bubble
                                     color={this.props.settings.accent}
                                     iconName={item.iconName}
-                                    iconsSize={25}
+                                    iconSize={25}
                                     onPress={() => {
                                         if (item.key === 'Add')
                                             this.props.navigation.navigate('Category', { title: this.props.route.params.title });
@@ -100,7 +101,7 @@ class Screen extends React.Component {
                                 <Bubble
                                     color={this.props.settings.accent}
                                     iconName={item.iconName}
-                                    iconsSize={25}
+                                    iconSize={25}
                                     onPress={() => {
                                         if (item.key === 'Add')
                                             this.props.navigation.navigate('Category', { title: this.props.route.params.title });
@@ -125,9 +126,7 @@ class Screen extends React.Component {
                         <View style={updateRecordScreenStyles.modalView}>
                             <View style={styles.rows}>
                                 <View style={styles.rows}>
-                                    <TouchableOpacity onPress={() => this.setState({ category: '', open: false })}>
-                                        <Icon name={'dots-horizontal'} size={25} color={white} />
-                                    </TouchableOpacity>
+                                    <ExpandButton onPress={() => this.setState({ category: '', open: false })} />
                                     <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, minHeight: 60 }}>
                                         {this.state.icon !== '' &&
                                             <Icon name={this.state.icon} size={25} color={black} />

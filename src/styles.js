@@ -12,7 +12,7 @@ export const goldenBrown = '#F2D996';
 export const tealGreen = '#34e0a4';
 export const skyBlue = '#63cbf7';
 export const deepViolet = '#873beb';
-export const accent = skyBlue;
+export const colors = [deepViolet, crimsonPink, goldenBrown, tealGreen, skyBlue]
 export const bgColor = '#1C1C1C';
 export const black = '#0C0C0C';
 export const darkGrey = '#2C2C2C';
@@ -62,6 +62,7 @@ export const bubbleStyles = StyleSheet.create({
     bubble: {
         alignItems: 'center',
         borderRadius: 20,
+        borderColor: black,
         justifyContent: 'center',
     },
     text: {
@@ -138,19 +139,19 @@ export const homeScreenStyles = StyleSheet.create({
 });
 
 export const updateRecordScreenStyles = StyleSheet.create({
-    modalViewContainer: {
-        alignItems: 'center',
-        flex: 1,
-        justifyContent: 'flex-end',
-    },
     modalView: {
         backgroundColor: lightGrey,
-        borderTopLeftRadius: 40, 
+        borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
         height: maxHeight * 3 / 4 - 10,
         opacity: 0.9,
         paddingHorizontal: '5%',
         width: maxWidth,
+    },
+    modalViewContainer: {
+        alignItems: 'center',
+        flex: 1,
+        justifyContent: 'flex-end',
     },
 });
 
@@ -161,12 +162,29 @@ export const settingsScreenStyles = StyleSheet.create({
         paddingHorizontal: '5%',
         paddingVertical: '2%',
     },
+    modalView: {
+        alignItems: 'center',
+        backgroundColor: bgColor,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        height: maxHeight / 10,
+        
+        justifyContent: 'center',
+        opacity: 0.9,
+        paddingHorizontal: '5%',
+        width: maxWidth,
+    },
+    modalViewContainer: {
+        alignItems: 'center',
+        flex: 1,
+        justifyContent: 'flex-end',
+    },
     titleContainer: {
         marginVertical: '3%',
         paddingHorizontal: '5%',
     },
-    scrollView: { 
-        width: maxWidth 
+    scrollView: {
+        width: maxWidth
     },
     settingRight: {
         alignItems: 'flex-end',

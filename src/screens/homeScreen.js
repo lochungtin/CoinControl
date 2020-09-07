@@ -46,13 +46,13 @@ class Screen extends React.Component {
                 <View style={{ ...styles.rows, justifyContent: 'space-between', paddingTop: 50 }}>
                     <View style={{ ...styles.columns, maxHeight: 35, justifyContent: 'center' }}>
                         <View style={{ alignItems: 'center', justifyContent: 'center', minHeight: 30, minWidth: 30 }}>
-                            <Icon name={'currency-gbp'} color={white} size={30} />
+                            <Icon name={'currency-' + this.props.settings.currency} color={white} size={30} />
                         </View>
                         <Text style={homeScreenStyles.balance}>{this.state.balance}</Text>
                         <Text style={homeScreenStyles.balanceSmall}>.{this.state.balanceDecimal}</Text>
                     </View>
                     <View style={{ ...styles.columns, maxHeight: 20, justifyContent: 'center' }}>
-                        <Icon name={'currency-gbp'} color={darkWhite} size={15} />
+                        <Icon name={'currency-' + this.props.settings.currency} color={darkWhite} size={15} />
                         <Text style={{ color: darkWhite }}>{this.state.balance + '.' + this.state.balanceDecimal} left for 3 days</Text>
                     </View>
                     <View style={{ height: 10, justifyContent: 'center' }}>
@@ -79,7 +79,7 @@ class Screen extends React.Component {
                     <SafeAreaView style={{ borderColor: darkGrey, borderTopWidth: 2, maxHeight: 400, minWidth: maxWidth }}>
                         <SectionList
                             renderItem={({ item }) =>
-                                <TouchableOpacity onPress={() => {}} style={{ ...styles.roundView, ...styles.columns, backgroundColor: lightGrey, justifyContent: 'space-between' }}>
+                                <TouchableOpacity onPress={() => { }} style={{ ...styles.roundView, ...styles.columns, backgroundColor: lightGrey, justifyContent: 'space-between' }}>
                                     <Icon name={item.icon} size={20} color={white} />
                                     <Text style={{ ...styles.text, width: '50%' }}>{item.category}</Text>
                                     <Text style={{ ...styles.centerText, width: '20%' }}>{(item.type === 'Expense' ? '-' : '+') + item.value}</Text>
