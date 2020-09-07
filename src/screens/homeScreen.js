@@ -1,19 +1,20 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { SafeAreaView, SectionList, Text, View } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
-import { parseAll } from '../functions/parser';
-import { accent, darkWhite, homeScreenStyles, maxWidth, styles, white, } from '../styles';
+import { parseAll, parseTotal } from '../functions/parser';
+import { accent, darkWhite, homeScreenStyles, lightGrey, maxWidth, styles, white, bgColor, darkGrey, } from '../styles';
 
 
 class Screen extends React.Component {
 
     constructor(props) {
         super(props);
-        const total = parseAll(this.props.records);
+        const total = parseTotal(this.props.records);
+        console.log(parseAll(this.props.records));
         this.state = {
             balance: Math.floor(total),
             balanceDecimal: this.getDecimal(total),
@@ -22,8 +23,8 @@ class Screen extends React.Component {
 
     componentDidMount() {
         this._unsubscribe = this.props.navigation.addListener('focus', () => {
-            const total = parseAll(this.props.records);
-            this.setState({ 
+            const total = parseTotal(this.props.records);
+            this.setState({
                 balance: Math.floor(total),
                 balanceDecimal: this.getDecimal(total),
             });
@@ -36,13 +37,13 @@ class Screen extends React.Component {
 
     getDecimal = total => {
         total = Math.abs(total);
-        return (total - Math.floor(total)) * 100;
+        return Math.floor((total - Math.floor(total)) * 100);
     }
 
     render() {
         return (
             <View style={styles.screen}>
-                <View style={{ ...styles.rows, justifyContent: 'space-evenly', paddingTop: 50 }}>
+                <View style={{ ...styles.rows, justifyContent: 'space-between', paddingTop: 50 }}>
                     <View style={{ ...styles.columns, maxHeight: 35, justifyContent: 'center' }}>
                         <View style={{ alignItems: 'center', justifyContent: 'center', minHeight: 30, minWidth: 30 }}>
                             <Icon name={'currency-gbp'} color={white} size={30} />
@@ -75,7 +76,25 @@ class Screen extends React.Component {
                             <Text style={styles.centerText}>Set Goal</Text>
                         </View>
                     </View>
-                    <View style={{ height: 400 }} />
+                    <SafeAreaView style={{ borderColor: darkGrey, borderTopWidth: 2, maxHeight: 400, minWidth: maxWidth }}>
+                        <SectionList
+                            renderItem={({ item }) =>
+                                <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: lightGrey, justifyContent: 'space-between' }}>
+                                    <Icon name={item.icon} size={20} color={white} />
+                                    <Text style={{ ...styles.text, width: '50%' }}>{item.category}</Text>
+                                    <Text style={{ ...styles.centerText, width: '20%' }}>{(item.type === 'Expense' ? '-' : '+') + item.value}</Text>
+                                </View>
+                            }
+                            renderSectionHeader={({ section: { title } }) =>
+                                <View style={{ backgroundColor: bgColor, paddingTop: '4%', paddingBottom: '3%' }}>
+                                    <Text style={styles.text}>{title}</Text>
+                                </View>
+                            }
+                            sections={parseAll(this.props.records)}
+                            stickySectionHeadersEnabled={true}
+                            style={{ maxHeight: 400, minWidth: maxWidth, paddingHorizontal: '5%' }}
+                        />
+                    </SafeAreaView>
                 </View>
             </View>
         );

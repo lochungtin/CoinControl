@@ -33,7 +33,6 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 40,
         paddingVertical: 10,
         margin: 10,
-        width: '85%',
     },
     rows: {
         alignItems: 'center',
@@ -145,6 +144,7 @@ export const updateRecordScreenStyles = StyleSheet.create({
         borderTopRightRadius: 40,
         height: maxHeight * 3 / 4 - 10,
         opacity: 0.9,
+        paddingHorizontal: '5%',
         width: maxWidth,
     },
 })

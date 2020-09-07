@@ -123,7 +123,7 @@ class Screen extends React.Component {
                 <Modal animationType='slide' transparent={true} visible={this.state.open}>
                     <View style={updateRecordScreenStyles.modalViewContainer}>
                         <View style={updateRecordScreenStyles.modalView}>
-                            <View style={{ ...styles.rows }}>
+                            <View style={styles.rows}>
                                 <View style={styles.rows}>
                                     <TouchableOpacity onPress={() => this.setState({ category: '', open: false })}>
                                         <Icon name={'dots-horizontal'} size={25} color={white} />
@@ -159,7 +159,7 @@ class Screen extends React.Component {
                                     </View>
                                 </View>
                                 <View style={{ height: '50%' }} />
-                                <View style={styles.columns}>
+                                <View style={{...styles.columns, justifyContent: 'space-between'}}>
                                     <TouchableOpacity
                                         onPress={() => {
                                             store.dispatch(addRecord({
@@ -172,10 +172,10 @@ class Screen extends React.Component {
                                             }));
                                             this.props.navigation.goBack();
                                         }}
-                                        style={{ ...styles.roundView, backgroundColor: accent, width: '42.5%' }}>
+                                        style={{ ...styles.roundView, backgroundColor: accent, width: '47.5%' }}>
                                         <Text style={{ ...styles.centerText, color: black }}>Save</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => this.setState({ category: '', open: false })} style={{ ...styles.roundView, backgroundColor: white, width: '42.5%' }}>
+                                    <TouchableOpacity onPress={() => this.setState({ category: '', open: false })} style={{ ...styles.roundView, backgroundColor: white, width: '47.5%' }}>
                                         <Text style={{ ...styles.centerText, color: black }}>Cancel</Text>
                                     </TouchableOpacity>
                                 </View>
