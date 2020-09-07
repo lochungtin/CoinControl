@@ -1,11 +1,11 @@
 import moment from 'moment';
 import { combineReducers } from 'redux';
 
-import { ADD_RECORD, DEFAULT_EXPENSE_CATEGORY, DEFAULT_INCOME_CATEGORY, DEFAULT_SETTINGS, DELETE_HISTORY } from './action';
+import { ADD_RECORD, DEFAULT_EXPENSE_CATEGORY, DEFAULT_INCOME_CATEGORY, DEFAULT_SETTINGS, DELETE_HISTORY, UPDATE_SETTINGS } from './action';
 import { defaultExpenseCategories, defaultIncomeCategories, defaultSettings } from '../default';
 
 const updateRecords = (records = [], action) => {
-    switch(action.type) {
+    switch (action.type) {
         case ADD_RECORD:
             action.payload['key'] = moment().format();
             return [...records, action.payload];
@@ -32,9 +32,13 @@ const updateIncomeCategory = (categories = {}, action) => {
 }
 
 const updateSettings = (settings = {}, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case DEFAULT_SETTINGS:
             return defaultSettings;
+        case UPDATE_SETTINGS:
+            var newSettings = { ...settings };
+            newSettings[action.payload.key] = action.payload.update;
+            return newSettings;
     }
     return settings;
 }

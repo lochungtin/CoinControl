@@ -135,7 +135,7 @@ export const homeScreenStyles = StyleSheet.create({
         color: white,
         fontSize: 25,
     }
-})
+});
 
 export const updateRecordScreenStyles = StyleSheet.create({
     modalViewContainer: {
@@ -152,4 +152,28 @@ export const updateRecordScreenStyles = StyleSheet.create({
         paddingHorizontal: '5%',
         width: maxWidth,
     },
+});
+
+export const settingsScreenStyles = StyleSheet.create({
+    itemContainer: {
+        backgroundColor: darkGrey,
+        justifyContent: 'space-between',
+        paddingHorizontal: '5%',
+        paddingVertical: '2%',
+    },
+    titleContainer: {
+        marginVertical: '3%',
+        paddingHorizontal: '5%',
+    },
+    scrollView: { 
+        width: maxWidth 
+    },
+    settingRight: {
+        alignItems: 'flex-end',
+        width: '30%',
+    },
+    settingText: {
+        color: white,
+        width: '50%',
+    }
 })

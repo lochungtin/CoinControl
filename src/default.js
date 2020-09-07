@@ -20,5 +20,9 @@ export const defaultIncomeCategories = [
 
 export const defaultSettings = {
     accent: goldenBrown,
+    compactView: true,
+    currency: 'gbp',
     lightMode: false,
+    notification: true,
+    notifSchedule: '23:00',
 }

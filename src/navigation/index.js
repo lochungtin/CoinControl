@@ -54,8 +54,16 @@ const main = () => {
 
 const settings = () => {
     return (
-        <Settings.Navigator screenOptions={{ headerShown: false }}>
-            <Settings.Screen name='Settings' component={settingsScreen} />
+        <Settings.Navigator>
+            <Settings.Screen
+                name='Settings'
+                component={settingsScreen}
+                options={{
+                    headerStyle: stackScreenHeaderStyle,
+                    headerTintColor: white,
+                    title: 'Settings'
+                }}
+            />
             <Settings.Screen name='Account' component={accountScreen} />
             <Settings.Screen name='Catergory' component={customCategory} />
         </Settings.Navigator>

@@ -8,7 +8,7 @@ import Bubble from '../components/Bubble';
 import DatePicker from '../components/DatePicker';
 import { store } from '../redux/store';
 import { addRecord } from '../redux/action';
-import { accent, black, styles, updateRecordScreenStyles, white, } from '../styles';
+import { black, styles, updateRecordScreenStyles, white, } from '../styles';
 
 class Screen extends React.Component {
 
@@ -43,7 +43,7 @@ class Screen extends React.Component {
                         {this.state.grid[0].map(item => (
                             <View key={item.key} style={{ ...styles.rows, justifyContent: 'space-between' }}>
                                 <Bubble
-                                    color={accent}
+                                    color={this.props.settings.accent}
                                     iconName={item.iconName}
                                     iconsSize={25}
                                     onPress={() => this.setState({ category: item.key, icon: item.iconName, open: true })}
@@ -58,7 +58,7 @@ class Screen extends React.Component {
                         {this.state.grid[1].map(item => (
                             <View key={item.key} style={{ ...styles.rows, justifyContent: 'space-between' }}>
                                 <Bubble
-                                    color={accent}
+                                    color={this.props.settings.accent}
                                     iconName={item.iconName}
                                     iconsSize={25}
                                     onPress={() => {
@@ -78,7 +78,7 @@ class Screen extends React.Component {
                         {this.state.grid[2].map(item => (
                             <View key={item.key} style={{ ...styles.rows, justifyContent: 'space-between' }}>
                                 <Bubble
-                                    color={accent}
+                                    color={this.props.settings.accent}
                                     iconName={item.iconName}
                                     iconsSize={25}
                                     onPress={() => {
@@ -98,7 +98,7 @@ class Screen extends React.Component {
                         {this.state.grid[3].map(item => (
                             <View key={item.key} style={{ ...styles.rows, justifyContent: 'space-between' }}>
                                 <Bubble
-                                    color={accent}
+                                    color={this.props.settings.accent}
                                     iconName={item.iconName}
                                     iconsSize={25}
                                     onPress={() => {
@@ -154,7 +154,7 @@ class Screen extends React.Component {
                                     <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, minHeight: 60 }}>
                                         <Icon name={'calendar-month'} size={25} color={black} />
                                         <View style={{ width: '100%', paddingHorizontal: '10%' }}>
-                                            <DatePicker accent={accent} action={(date) => this.setState({ date: date })} date={this.state.date} />
+                                            <DatePicker accent={this.props.settings.accent} action={(date) => this.setState({ date: date })} date={this.state.date} />
                                         </View>
                                     </View>
                                 </View>
@@ -173,7 +173,7 @@ class Screen extends React.Component {
                                             }));
                                             this.props.navigation.goBack();
                                         }}
-                                        style={{ ...styles.roundView, backgroundColor: accent, width: '47.5%' }}>
+                                        style={{ ...styles.roundView, backgroundColor: this.props.settings.accent, width: '47.5%' }}>
                                         <Text style={{ ...styles.centerText, color: black }}>Save</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => this.setState({ category: '', open: false })} style={{ ...styles.roundView, backgroundColor: white, width: '47.5%' }}>
@@ -192,6 +192,7 @@ class Screen extends React.Component {
 const mapStateToProps = state => ({
     expenseCategories: state.expenseCategories,
     incomeCategories: state.incomeCategories,
+    settings: state.settings
 })
 
 export default connect(mapStateToProps)(Screen);
