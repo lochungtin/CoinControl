@@ -4,10 +4,12 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
+import ExpandButton from '../components/ExpandButton';
+import SettingsHeader from '../components/SettingsHeader';
+import SettingsItem from '../components/SettingsItem';
 import { defaultIncomeCategory, defaultExpenseCategory, defaultSettings, deleteHistory, updateSettings, } from '../redux/action';
 import { store } from '../redux/store';
-import { black, colors, darkWhite, settingsScreenStyles, styles, white, lightGrey, } from '../styles';
-import ExpandButton from '../components/ExpandButton';
+import { black, colors, settingStyles, shade2, shade3, styles, white, } from '../styles';
 
 
 
@@ -29,8 +31,8 @@ class Screen extends React.Component {
         return (
             <View style={styles.screen}>
                 <Modal animationType={'slide'} transparent={true} visible={this.state.colorPicker || this.state.currencyPicker || this.state.timePicker}>
-                    <View style={settingsScreenStyles.modalViewContainer}>
-                        <View style={settingsScreenStyles.modalView}>
+                    <View style={settingStyles.modalViewContainer}>
+                        <View style={settingStyles.modalView}>
                             <ExpandButton onPress={() => this.setState({ colorPicker: false, currencyPicker: false, timePicker: false })} />
                             {this.state.colorPicker &&
                                 <View style={styles.columns}>
@@ -134,12 +136,12 @@ class Screen extends React.Component {
                     </View>
                 </Modal>
                 <Modal animationType={'slide'} transparent={true} visible={this.state.resetAll || this.state.resetCategory || this.state.resetSettings}>
-                    <View style={settingsScreenStyles.modalViewContainer}>
-                        <View style={settingsScreenStyles.modalView}>
+                    <View style={settingStyles.modalViewContainer}>
+                        <View style={settingStyles.modalView}>
                             <Text style={{ ...styles.centerText, fontSize: 15 }}>{
-                                this.state.resetAll ? 'Clear ALL data?' : '' +
-                                    this.state.resetCategory ? 'Revert to Default Categories?' : '' +
-                                        this.state.resetAll ? 'Revert to Default Settings?' : ''
+                                (this.state.resetAll ? 'Clear ALL data?' : '') +
+                                (this.state.resetCategory ? 'Revert to Default Categories?' : '') +
+                                (this.state.resetSettings ? 'Revert to Default Settings?' : '')
                             }</Text>
                             <View style={styles.columns}>
                                 <TouchableOpacity
@@ -164,117 +166,26 @@ class Screen extends React.Component {
                         </View>
                     </View>
                 </Modal>
-                <ScrollView style={settingsScreenStyles.scrollView}>
-                    <View style={settingsScreenStyles.titleContainer}>
-                        <Text style={{ color: darkWhite }}>GENERAL</Text>
-                    </View>
-                    <TouchableOpacity onPress={() => { }} style={{ ...styles.columns, ...settingsScreenStyles.itemContainer }}>
-                        <Icon name={'account'} size={20} color={darkWhite} />
-                        <Text style={settingsScreenStyles.settingText}>Account settings</Text>
-                        <View style={settingsScreenStyles.settingRight}>
-                            <Icon name={'arrow-right'} size={20} color={darkWhite} />
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.setState({ currencyPicker: true, modal: true })} style={{ ...styles.columns, ...settingsScreenStyles.itemContainer }}>
-                        <Icon name={'currency-usd'} size={20} color={darkWhite} />
-                        <Text style={settingsScreenStyles.settingText}>Currency</Text>
-                        <View style={settingsScreenStyles.settingRight}>
-                            <Icon name={'currency-' + this.props.settings.currency} size={20} color={darkWhite} />
-                        </View>
-                    </TouchableOpacity>
-                    <View style={settingsScreenStyles.titleContainer}>
-                        <Text style={{ color: darkWhite }}>THEMES</Text>
-                    </View>
-                    <TouchableOpacity onPress={() => this.setState({ colorPicker: true, modal: true })} style={{ ...styles.columns, ...settingsScreenStyles.itemContainer }}>
-                        <Icon name={'palette'} size={20} color={darkWhite} />
-                        <Text style={settingsScreenStyles.settingText}>Accent Color</Text>
-                        <View style={settingsScreenStyles.settingRight}>
-                            <Icon name={'circle'} size={20} color={this.props.settings.accent} />
-                        </View>
-                    </TouchableOpacity>
-                    <View onPress={() => { }} style={{ ...styles.columns, ...settingsScreenStyles.itemContainer }}>
-                        <Icon name={'moon-waning-crescent'} size={20} color={darkWhite} />
-                        <Text style={settingsScreenStyles.settingText}>Dark Mode</Text>
-                        <View style={settingsScreenStyles.settingRight}>
-                            <Switch
-                                thumbColor={white}
-                                trackColor={{ false: darkWhite, true: this.props.settings.accent }}
-                                value={true}
-                            />
-                        </View>
-                    </View>
-                    <View style={settingsScreenStyles.titleContainer}>
-                        <Text style={{ color: darkWhite }}>CATEGORIES</Text>
-                    </View>
-                    <TouchableOpacity onPress={() => { }} style={{ ...styles.columns, ...settingsScreenStyles.itemContainer }}>
-                        <Icon name={'shopping'} size={20} color={darkWhite} />
-                        <Text style={settingsScreenStyles.settingText}>Expense Categories</Text>
-                        <View style={settingsScreenStyles.settingRight}>
-                            <Icon name={'arrow-right'} size={20} color={darkWhite} />
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { }} style={{ ...styles.columns, ...settingsScreenStyles.itemContainer }}>
-                        <Icon name={'cash'} size={20} color={darkWhite} />
-                        <Text style={settingsScreenStyles.settingText}>Income Categories</Text>
-                        <View style={settingsScreenStyles.settingRight}>
-                            <Icon name={'arrow-right'} size={20} color={darkWhite} />
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.setState({ resetCategory: true })} style={{ ...styles.columns, ...settingsScreenStyles.itemContainer }}>
-                        <Icon name={'backup-restore'} size={20} color={darkWhite} />
-                        <Text style={settingsScreenStyles.settingText}>Reset Default Categories</Text>
-                        <View style={settingsScreenStyles.settingRight}>
-                            <Icon name={'arrow-right'} size={20} color={darkWhite} />
-                        </View>
-                    </TouchableOpacity>
-                    <View style={settingsScreenStyles.titleContainer}>
-                        <Text style={{ color: darkWhite }}>ADVANCED</Text>
-                    </View>
-                    <View style={{ ...styles.columns, ...settingsScreenStyles.itemContainer }}>
-                        <Icon name={'card-text'} size={20} color={darkWhite} />
-                        <Text style={settingsScreenStyles.settingText}>Compact View</Text>
-                        <View style={settingsScreenStyles.settingRight}>
-                            <Switch
-                                thumbColor={white}
-                                trackColor={{ false: darkWhite, true: this.props.settings.accent }}
-                                value={this.props.settings.compactView}
-                                onChange={() => store.dispatch(updateSettings({ key: 'compactView', update: !this.props.settings.compactView }))}
-                            />
-                        </View>
-                    </View>
-                    <View style={{ ...styles.columns, ...settingsScreenStyles.itemContainer }}>
-                        <Icon name={'bell'} size={20} color={darkWhite} />
-                        <Text style={settingsScreenStyles.settingText}>Notifications</Text>
-                        <View style={settingsScreenStyles.settingRight}>
-                            <Switch
-                                thumbColor={white}
-                                trackColor={{ false: darkWhite, true: this.props.settings.accent }}
-                                value={this.props.settings.notification}
-                                onChange={() => store.dispatch(updateSettings({ key: 'notification', update: !this.props.settings.notification }))}
-                            />
-                        </View>
-                    </View>
-                    <TouchableOpacity onPress={() => { }} style={{ ...styles.columns, ...settingsScreenStyles.itemContainer }}>
-                        <Icon name={'subdirectory-arrow-right'} size={20} color={this.props.settings.notification ? darkWhite : lightGrey} />
-                        <Text style={{ ...settingsScreenStyles.settingText, color: this.props.settings.notification ? darkWhite : lightGrey }}>Schedule</Text>
-                        <View style={settingsScreenStyles.settingRight}>
-                            <Text style={{ color: this.props.settings.notification ? darkWhite : lightGrey }}>23:00</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.setState({ resetSettings: true })} style={{ ...styles.columns, ...settingsScreenStyles.itemContainer }}>
-                        <Icon name={'backup-restore'} size={20} color={darkWhite} />
-                        <Text style={settingsScreenStyles.settingText}>Reset Default Settings</Text>
-                        <View style={settingsScreenStyles.settingRight}>
-                            <Icon name={'arrow-right'} size={20} color={darkWhite} />
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.setState({ resetAll: true })} style={{ ...styles.columns, ...settingsScreenStyles.itemContainer }}>
-                        <Icon name={'trash-can'} size={20} color={darkWhite} />
-                        <Text style={settingsScreenStyles.settingText}>Clear Data</Text>
-                        <View style={settingsScreenStyles.settingRight}>
-                            <Icon name={'arrow-right'} size={20} color={darkWhite} />
-                        </View>
-                    </TouchableOpacity>
+                <ScrollView style={settingStyles.scrollView}>
+                    <SettingsHeader dark={this.props.settings.darkMode} title={'GENERAL'} />
+                    <SettingsItem dark={this.props.settings.darkMode} iconL={'account'} text={'Account Settings'} />
+                    <SettingsItem dark={this.props.settings.darkMode} action={() => this.setState({ currencyPicker: true, modal: true })} iconL={'currency-usd'} iconR={'currency-' + this.props.settings.currency} text={'Currency'} />
+
+                    <SettingsHeader dark={this.props.settings.darkMode} title={'THEMES'} />
+                    <SettingsItem dark={this.props.settings.darkMode} action={() => this.setState({ colorPicker: true, modal: true })} iconL={'palette'} iconR={'circle'} iconRColor={this.props.settings.accent} text={'Accent Color'} />
+                    <SettingsItem dark={this.props.settings.darkMode} accent={this.props.settings.accent} action={() => store.dispatch(updateSettings({ key: 'darkMode', update: !this.props.settings.darkMode }))} iconL={'moon-waning-crescent'} state={this.props.settings.darkMode} switch={true} text={'Dark Mode'} />
+
+                    <SettingsHeader dark={this.props.settings.darkMode} title={'CATEGORIES'} />
+                    <SettingsItem dark={this.props.settings.darkMode} iconL={'shopping'} text={'Expense Categories'} />
+                    <SettingsItem dark={this.props.settings.darkMode} iconL={'cash'} text={'Income Categories'} />
+                    <SettingsItem dark={this.props.settings.darkMode} action={() => this.setState({ resetCategory: true })} iconL={'backup-restore'} text={'Reset Default Categories'} />
+
+                    <SettingsHeader dark={this.props.settings.darkMode} title={'ADVANCED'} />
+                    <SettingsItem dark={this.props.settings.darkMode} accent={this.props.settings.accent} action={() => store.dispatch(updateSettings({ key: 'compactView', update: !this.props.settings.compactView }))} iconL={'card-text'} state={this.props.settings.compactView} switch={true} text={'Compact View'} />
+                    <SettingsItem dark={this.props.settings.darkMode} accent={this.props.settings.accent} action={() => store.dispatch(updateSettings({ key: 'notification', update: !this.props.settings.notification }))} iconL={'bell'} state={this.props.settings.notification} switch={true} text={'Notifications'} />
+                    <SettingsItem dark={this.props.settings.darkMode} action={() => this.setState({ timePicker: true, modal: true })} disabled={!this.props.settings.notification} iconL={'subdirectory-arrow-right'} text={this.props.settings.notifSchedule} />
+                    <SettingsItem dark={this.props.settings.darkMode} action={() => this.setState({ resetSettings: true })} iconL={'backup-restore'} text={'Reset Default Settings'} />
+                    <SettingsItem dark={this.props.settings.darkMode} action={() => this.setState({ resetAll: true })} iconL={'trash-can'} text={'Clear All Data'} />
                 </ScrollView>
             </View >
         );

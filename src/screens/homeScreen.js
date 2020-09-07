@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
 import { parseAll, parseTotal } from '../functions/parser';
-import { darkWhite, homeScreenStyles, lightGrey, maxWidth, styles, white, bgColor, darkGrey, } from '../styles';
+import { shade2, homeScreenStyles, shade3, maxWidth, styles, white, bgColor, shade4, } from '../styles';
 
 class Screen extends React.Component {
 
@@ -52,34 +52,34 @@ class Screen extends React.Component {
                         <Text style={homeScreenStyles.balanceSmall}>.{this.state.balanceDecimal}</Text>
                     </View>
                     <View style={{ ...styles.columns, maxHeight: 20, justifyContent: 'center' }}>
-                        <Icon name={'currency-' + this.props.settings.currency} color={darkWhite} size={15} />
-                        <Text style={{ color: darkWhite }}>{this.state.balance + '.' + this.state.balanceDecimal} left for 3 days</Text>
+                        <Icon name={'currency-' + this.props.settings.currency} color={shade2} size={15} />
+                        <Text style={{ color: shade2 }}>{this.state.balance + '.' + this.state.balanceDecimal} left for 3 days</Text>
                     </View>
                     <View style={{ height: 10, justifyContent: 'center' }}>
                         <Progress.Bar color={this.props.settings.accent} progress={0.3} width={maxWidth / 2} />
                     </View>
                     <View style={{ ...styles.columns, justifyContent: 'space-evenly', maxHeight: 70 }}>
                         <View style={{ ...styles.rows, maxWidth: 70 }}>
-                            <Bubble color={this.props.settings.accent} iconName={'sync'} iconsSize={25} onPress={() => console.log('sync')} size={35} />
+                            <Bubble color={this.props.settings.accent} iconName={'sync'} iconSize={25} onPress={() => console.log('sync')} size={35} />
                             <Text style={styles.centerText}>Sync</Text>
                         </View>
                         <View style={{ ...styles.rows, maxWidth: 70 }}>
-                            <Bubble color={this.props.settings.accent} iconName={'plus'} iconsSize={25} onPress={() => this.props.navigation.navigate('Update', { title: 'Income' })} size={35} />
+                            <Bubble color={this.props.settings.accent} iconName={'plus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', { title: 'Income' })} size={35} />
                             <Text style={styles.centerText}>Income</Text>
                         </View>
                         <View style={{ ...styles.rows, maxWidth: 70 }}>
-                            <Bubble color={this.props.settings.accent} iconName={'minus'} iconsSize={25} onPress={() => this.props.navigation.navigate('Update', { title: 'Expense' })} size={35} />
+                            <Bubble color={this.props.settings.accent} iconName={'minus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', { title: 'Expense' })} size={35} />
                             <Text style={styles.centerText}>Expense</Text>
                         </View>
                         <View style={{ ...styles.rows, maxWidth: 70 }}>
-                            <Bubble color={this.props.settings.accent} iconName={'flag-outline'} onPress={() => console.log('new goal')} iconsSize={25} size={35} />
+                            <Bubble color={this.props.settings.accent} iconName={'flag-outline'} iconSize={25} onPress={() => console.log('new goal')} size={35} />
                             <Text style={styles.centerText}>Set Goal</Text>
                         </View>
                     </View>
-                    <SafeAreaView style={{ borderColor: darkGrey, borderTopWidth: 2, maxHeight: 400, minWidth: maxWidth }}>
+                    <SafeAreaView style={{ borderColor: shade4, borderTopWidth: 2, maxHeight: 400, minWidth: maxWidth }}>
                         <SectionList
                             renderItem={({ item }) =>
-                                <TouchableOpacity onPress={() => { }} style={{ ...styles.roundView, ...styles.columns, backgroundColor: lightGrey, justifyContent: 'space-between' }}>
+                                <TouchableOpacity onPress={() => { }} style={{ ...styles.roundView, ...styles.columns, backgroundColor: shade3, justifyContent: 'space-between' }}>
                                     <Icon name={item.icon} size={20} color={white} />
                                     <Text style={{ ...styles.text, width: '50%' }}>{item.category}</Text>
                                     <Text style={{ ...styles.centerText, width: '20%' }}>{(item.type === 'Expense' ? '-' : '+') + item.value}</Text>

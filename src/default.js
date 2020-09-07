@@ -22,7 +22,7 @@ export const defaultSettings = {
     accent: goldenBrown,
     compactView: true,
     currency: 'usd',
-    lightMode: false,
+    darkMode: true,
     notification: true,
     notifSchedule: '23:00',
 }

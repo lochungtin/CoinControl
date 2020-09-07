@@ -13,12 +13,14 @@ export const tealGreen = '#34e0a4';
 export const skyBlue = '#63cbf7';
 export const deepViolet = '#873beb';
 export const colors = [deepViolet, crimsonPink, goldenBrown, tealGreen, skyBlue]
+
 export const bgColor = '#1C1C1C';
+export const shade1 = '#E0E0E0';
+export const shade2 = '#ACACAC';
+export const shade3 = '#3C3C3C';
+export const shade4 = '#2C2C2C';
+
 export const black = '#0C0C0C';
-export const darkGrey = '#2C2C2C';
-export const darkWhite = '#ACACAC';
-export const lightGrey = '#3C3C3C'
-export const lightWhite = '#E0E0E0'
 export const white = '#FEFEFE';
 
 // general styles
@@ -66,7 +68,7 @@ export const bubbleStyles = StyleSheet.create({
         justifyContent: 'center',
     },
     text: {
-        color: lightWhite,
+        color: shade1,
     }
 });
 
@@ -140,7 +142,7 @@ export const homeScreenStyles = StyleSheet.create({
 
 export const updateRecordScreenStyles = StyleSheet.create({
     modalView: {
-        backgroundColor: lightGrey,
+        backgroundColor: shade3,
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
         height: maxHeight * 3 / 4 - 10,
@@ -155,9 +157,21 @@ export const updateRecordScreenStyles = StyleSheet.create({
     },
 });
 
-export const settingsScreenStyles = StyleSheet.create({
-    itemContainer: {
-        backgroundColor: darkGrey,
+export const settingStyles = StyleSheet.create({
+    itemContainerD: {
+        alignItems: 'center',
+        backgroundColor: shade4,
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: '5%',
+        paddingVertical: '2%',
+    },
+    itemContainerL: {
+        alignItems: 'center',
+        backgroundColor: shade1,
+        flex: 1,
+        flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: '5%',
         paddingVertical: '2%',
@@ -179,9 +193,31 @@ export const settingsScreenStyles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-end',
     },
+    textD: {
+        color: white,
+        width: '50%',
+    },
+    textDisabledD: {
+        color: shade3,
+        width: '50%',
+    },
+    textDisabledL: {
+        color: shade2,
+        width: '50%',
+    },
+    textL : {
+        color: black,
+        width: '50%',
+    },
     titleContainer: {
         marginVertical: '3%',
         paddingHorizontal: '5%',
+    },
+    titleStyleD: {
+        color: shade2,
+    },
+    titleStyleL: {
+        color: shade3,
     },
     scrollView: {
         width: maxWidth
@@ -194,4 +230,9 @@ export const settingsScreenStyles = StyleSheet.create({
         color: white,
         width: '50%',
     }
-})
+});
+
+export const settingStyleC = {
+    iconD: shade2,
+    iconL: shade3,
+}

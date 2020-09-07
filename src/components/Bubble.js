@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { black, bubbleStyles, white } from '../styles';
@@ -31,10 +31,6 @@ export default class Bubble extends React.Component {
             >
                 {this.state.icon &&
                     <Icon name={this.props.iconName} size={this.props.iconSize} color={black} />
-                }
-                {
-                    !this.state.icon &&
-                    <Text style={{ color: this.props.selected ? black : white }}>{this.props.text}</Text>
                 }
             </TouchableOpacity >
         )

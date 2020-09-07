@@ -2,7 +2,7 @@ import moment from 'moment';
 import React from 'react';
 import { TouchableOpacity, Text, } from 'react-native';
 
-import { bgColor, calendarStyles, lightGrey, styles, white, } from '../styles';
+import { bgColor, calendarStyles, shade3, styles, white, } from '../styles';
 
 export default class CalendarDateSelector extends React.Component {
     render() {
@@ -16,7 +16,7 @@ export default class CalendarDateSelector extends React.Component {
             >
                 <Text style={{
                     ...styles.centerText,
-                    color: this.props.day === moment().format('YYYY-MM-DD') ? this.props.color : (this.props.disabled ? lightGrey : white),
+                    color: this.props.day === moment().format('YYYY-MM-DD') ? this.props.color : (this.props.disabled ? shade3 : white),
                     fontSize: this.props.fontSize
                 }}>
                     {parseInt(this.props.day.substring(8, 10))}
