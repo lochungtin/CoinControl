@@ -15,8 +15,8 @@ const shade2 = '#ACACAC';
 const shade3 = '#3C3C3C';
 const shade4 = '#2C2C2C';
 
-const black = '#0C0C0C';
-const white = '#FCFCFC';
+export const black = '#0C0C0C';
+export const white = '#FCFCFC';
 
 export const bgColorD = '#1C1C1C';
 export const bgColorL = white;
@@ -110,12 +110,12 @@ export const headerStyles = StyleSheet.create({
     textD: {
         color: white,
         fontSize: 20,
-        
+
     },
     textL: {
         color: black,
         fontSize: 20,
-        
+
     },
 })
 
@@ -216,10 +216,60 @@ export const homeScreenStyles = StyleSheet.create({
         borderTopWidth: 2,
         maxHeight: 400,
         minWidth: maxWidth,
-    }
+    },
+    sectionHeadD: {
+        backgroundColor: bgColorD,
+        paddingBottom: '3%',
+        paddingTop: '4%', 
+    },
+    sectionHeadL: {
+        backgroundColor: bgColorL,
+        paddingBottom: '3%',
+        paddingTop: '4%', 
+    },
+    sectionItemD: { 
+        alignItems: 'center',
+        backgroundColor: shade3,
+        borderRadius: 40,
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 40,
+        paddingVertical: 10,
+        margin: 10,
+    }, 
+    sectionItemL: { 
+        alignItems: 'center',
+        backgroundColor: shade1,
+        borderRadius: 40,
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 40,
+        paddingVertical: 10,
+        margin: 10,
+    }, 
+    textCatD: { 
+        color: white,
+        width: '50%' 
+    },
+    textCatL: { 
+        color: black,
+        width: '50%' 
+    },
+    textValD: { 
+        color: white,
+        textAlign: 'center', 
+        width: '20%' 
+    },
+    textValL: { 
+        color: black,
+        textAlign: 'center', 
+        width: '20%' 
+    },
 });
 
-export const updateRecordScreenStyles = StyleSheet.create({
+export const recordStyles = StyleSheet.create({
     cancelBtnD: {
         backgroundColor: white,
         borderRadius: 40,
@@ -235,6 +285,11 @@ export const updateRecordScreenStyles = StyleSheet.create({
         paddingVertical: 10,
         margin: 10,
         width: '80%'
+    },
+    input: {
+        color: black,
+        textAlign: 'center',
+        width: '100%',
     },
     modalView: {
         backgroundColor: shade3,
@@ -338,7 +393,7 @@ export const settingStyles = StyleSheet.create({
         color: shade2,
         width: '50%',
     },
-    textL : {
+    textL: {
         color: black,
         width: '50%',
     },

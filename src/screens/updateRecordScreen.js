@@ -9,7 +9,7 @@ import DatePicker from '../components/DatePicker';
 import ScreenHeader from '../components/ScreenHeader';
 import { store } from '../redux/store';
 import { addRecord } from '../redux/action';
-import { black, styles, updateRecordScreenStyles, white, } from '../styles';
+import { black, styles, recordStyles, white, } from '../styles';
 import ExpandButton from '../components/ExpandButton';
 
 class Screen extends React.Component {
@@ -123,13 +123,13 @@ class Screen extends React.Component {
                     </View>
                 </View>
                 {!this.state.open &&
-                    <TouchableOpacity onPress={this.props.navigation.goBack} style={this.props.settings.darkMode ? updateRecordScreenStyles.cancelBtnD : updateRecordScreenStyles.cancelBtnL}>
+                    <TouchableOpacity onPress={this.props.navigation.goBack} style={this.props.settings.darkMode ? recordStyles.cancelBtnD : recordStyles.cancelBtnL}>
                         <Text style={styles.centerTextL}>Cancel</Text>
                     </TouchableOpacity>
                 }
                 <Modal animationType='slide' transparent={true} visible={this.state.open}>
-                    <View style={updateRecordScreenStyles.modalViewContainer}>
-                        <View style={updateRecordScreenStyles.modalView}>
+                    <View style={recordStyles.modalViewContainer}>
+                        <View style={recordStyles.modalView}>
                             <View style={styles.rows}>
                                 <View style={styles.rows}>
                                     <ExpandButton onPress={() => this.setState({ category: '', open: false })} />
@@ -137,14 +137,14 @@ class Screen extends React.Component {
                                         {this.state.icon !== '' &&
                                             <Icon name={this.state.icon} size={25} color={black} />
                                         }
-                                        <Text style={{ ...styles.centerText, color: black, width: '100%' }}>{this.state.category}</Text>
+                                        <Text style={recordStyles.input}>{this.state.category}</Text>
                                     </View>
                                     <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, minHeight: 60 }}>
                                         <Icon name={'alpha-t-circle-outline'} size={25} color={black} />
                                         <TextInput
                                             placeholder={'Title (Optional)'}
                                             onChangeText={(text) => this.setState({ title: text })}
-                                            style={{ ...styles.centerText, color: black, width: '100%' }}
+                                            style={recordStyles.input}
                                         />
                                     </View>
                                     <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, minHeight: 60 }}>
@@ -153,7 +153,7 @@ class Screen extends React.Component {
                                             keyboardType={'numeric'}
                                             onChangeText={(text) => this.setState({ value: parseFloat(text) })}
                                             placeholder={'amount'}
-                                            style={{ ...styles.centerText, color: black, width: '100%' }}
+                                            style={recordStyles.input}
                                         />
                                     </View>
                                     <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, minHeight: 60 }}>

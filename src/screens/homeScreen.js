@@ -5,8 +5,10 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
+import SectionHeader from '../components/SectionHeader';
+import SectionItem from '../components/SectionItem';
 import { parseAll, parseTotal } from '../functions/parser';
-import { iconColors, homeScreenStyles, shade3, maxWidth, styles, white, bgColor,  } from '../styles';
+import { iconColors, homeScreenStyles, shade3, maxWidth, styles, white, bgColor, } from '../styles';
 
 class Screen extends React.Component {
 
@@ -102,18 +104,8 @@ class Screen extends React.Component {
                     </View>
                     <SafeAreaView style={this.safeAreaView()}>
                         <SectionList
-                            renderItem={({ item }) =>
-                                <TouchableOpacity onPress={() => { }} style={{ ...styles.roundView, ...styles.columns, backgroundColor: shade3, justifyContent: 'space-between' }}>
-                                    <Icon name={item.icon} size={20} color={white} />
-                                    <Text style={{ ...styles.text, width: '50%' }}>{item.category}</Text>
-                                    <Text style={{ ...styles.centerText, width: '20%' }}>{(item.type === 'Expense' ? '-' : '+') + item.value}</Text>
-                                </TouchableOpacity>
-                            }
-                            renderSectionHeader={({ section: { title } }) =>
-                                <View style={{ backgroundColor: bgColor, paddingTop: '4%', paddingBottom: '3%' }}>
-                                    <Text style={styles.text}>{title}</Text>
-                                </View>
-                            }
+                            renderItem={({ item }) => <SectionItem dark={this.props.settings.darkMode} item={item} />}
+                            renderSectionHeader={({ section: { title } }) => <SectionHeader dark={this.props.settings.darkMode} title={title} />}
                             sections={parseAll(this.props.records)}
                             stickySectionHeadersEnabled={true}
                             style={{ maxHeight: 400, minWidth: maxWidth, paddingHorizontal: '5%' }}
