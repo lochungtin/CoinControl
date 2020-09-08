@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, TouchableOpacity, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { settingStyles, settingStyleC, white } from '../styles';
+import { settingStyles, iconColors, white } from '../styles';
 
 export default class SettingsItem extends React.Component {
 
@@ -13,13 +13,13 @@ export default class SettingsItem extends React.Component {
     iconColor = () => {
         if (this.props.disabled) 
             return this.props.dark ? settingStyles.textDisabledD.color : textDisabledL.color;
-        return this.props.dark ? settingStyleC.iconD : settingStyleC.iconL;
+        return this.props.dark ? iconColors.iconD : iconColors.iconL;
     }
 
     iconRColor = () => {
         if (this.props.disabled) 
             return this.props.dark ? settingStyles.textDisabledD.color : textDisabledL.color;
-        return this.props.iconRColor === undefined ? this.props.dark ? settingStyleC.iconD : settingStyleC.iconL : this.props.iconRColor;
+        return this.props.iconRColor === undefined ? this.props.dark ? iconColors.iconD : iconColors.iconL : this.props.iconRColor;
     }
 
     iconRight = () => {

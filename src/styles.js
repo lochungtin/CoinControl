@@ -23,14 +23,23 @@ export const shade4 = '#2C2C2C';
 export const black = '#0C0C0C';
 export const white = '#FCFCFC';
 
-const bgColorD = '#1C1C1C';
-const bgColorL = white;
+export const bgColorD = '#1C1C1C';
+export const bgColorL = white;
+
+export const iconColors = {
+    iconD: shade2,
+    iconL: shade3,
+}
 
 // general styles
 
 export const styles = StyleSheet.create({
-    centerText: {
+    centerTextD: {
         color: white,
+        textAlign: 'center',
+    },
+    centerTextL: {
+        color: black,
         textAlign: 'center',
     },
     columns: {
@@ -61,13 +70,59 @@ export const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
     },
-    text: {
+    textD: {
         color: white,
+    },
+    textL: {
+        color: black,
     },
 });
 
 
 // component styles
+
+export const headerStyles = StyleSheet.create({
+    headerD: {
+        alignItems: 'center',
+        backgroundColor: bgColorD,
+        borderColor: shade1,
+        borderBottomWidth: 2,
+        flex: 1,
+        flexDirection: 'row',
+        maxHeight: 50,
+        minHeight: 50,
+        justifyContent: 'space-between',
+        paddingLeft: 10,
+        width: maxWidth,
+    },
+    headerL: {
+        alignItems: 'center',
+        backgroundColor: bgColorL,
+        borderColor: shade4,
+        borderBottomWidth: 2,
+        flex: 1,
+        flexDirection: 'row',
+        maxHeight: 50,
+        minHeight: 50,
+        justifyContent: 'space-between',
+        paddingLeft: 10,
+        width: maxWidth,
+    },
+    textContainer: {
+        marginLeft: 30,
+        width: '85%',
+    },
+    textD: {
+        color: white,
+        fontSize: 20,
+        
+    },
+    textL: {
+        color: black,
+        fontSize: 20,
+        
+    },
+})
 
 export const bubbleStyles = StyleSheet.create({
     bubble: {
@@ -139,13 +194,33 @@ export const datePickerStyles = StyleSheet.create({
 // screen styles
 
 export const homeScreenStyles = StyleSheet.create({
-    balance: {
+    balanceD: {
         color: white,
         fontSize: 35,
     },
-    balanceSmall: {
+    balanceL: {
+        color: black,
+        fontSize: 35,
+    },
+    balanceSmallD: {
         color: white,
         fontSize: 25,
+    },
+    balanceSmallL: {
+        color: black,
+        fontSize: 25,
+    },
+    borderD: {
+        borderColor: shade4,
+        borderTopWidth: 2,
+        maxHeight: 400,
+        minWidth: maxWidth,
+    },
+    borderL: {
+        borderColor: shade1,
+        borderTopWidth: 2,
+        maxHeight: 400,
+        minWidth: maxWidth,
     }
 });
 
@@ -248,8 +323,3 @@ export const settingStyles = StyleSheet.create({
         width: '30%',
     },
 });
-
-export const settingStyleC = {
-    iconD: shade2,
-    iconL: shade3,
-}

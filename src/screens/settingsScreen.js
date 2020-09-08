@@ -1,10 +1,10 @@
 import React from 'react';
-import { Modal, ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
 import ExpandButton from '../components/ExpandButton';
+import ScreenHeader from '../components/ScreenHeader';
 import SettingsHeader from '../components/SettingsHeader';
 import SettingsItem from '../components/SettingsItem';
 import { defaultIncomeCategory, defaultExpenseCategory, defaultSettings, deleteHistory, updateSettings, } from '../redux/action';
@@ -166,6 +166,7 @@ class Screen extends React.Component {
                         </View>
                     </View>
                 </Modal>
+                <ScreenHeader dark={this.props.settings.darkMode} action={() => this.props.navigation.navigate('Home')} name={'Settings'} />
                 <ScrollView style={settingStyles.scrollView}>
                     <SettingsHeader dark={this.props.settings.darkMode} title={'GENERAL'} />
                     <SettingsItem dark={this.props.settings.darkMode} iconL={'account'} text={'Account Settings'} />

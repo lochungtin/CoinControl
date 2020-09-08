@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
 import { parseAll, parseTotal } from '../functions/parser';
-import { shade2, homeScreenStyles, shade3, maxWidth, styles, white, bgColor, shade4, } from '../styles';
+import { iconColors, homeScreenStyles, shade3, maxWidth, styles, white, bgColor,  } from '../styles';
 
 class Screen extends React.Component {
 
@@ -35,25 +35,49 @@ class Screen extends React.Component {
         this._unsubscribe();
     }
 
+    balance = () => {
+        return this.props.settings.darkMode ? homeScreenStyles.balanceD : homeScreenStyles.balanceL;
+    }
+
+    balanceSmall = () => {
+        return this.props.settings.darkMode ? homeScreenStyles.balanceSmallD : homeScreenStyles.balanceSmallL;
+    }
+
+    centerText = () => {
+        return this.props.settings.darkMode ? styles.centerTextD : styles.centerTextL;
+    }
+
+    iconColor = () => {
+        return this.props.settings.darkMode ? iconColors.iconD : iconColors.iconL;
+    }
+
     getDecimal = total => {
         total = Math.abs(total);
         return Math.floor((total - Math.floor(total)) * 100);
     }
 
+    safeAreaView = () => {
+        return this.props.settings.darkMode ? homeScreenStyles.borderD : homeScreenStyles.borderL;
+    }
+
+    text = () => {
+        return this.props.settings.darkMode ? styles.textD : styles.textL;
+    }
+
     render() {
         return (
-            <View style={styles.screen}>
+            <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
                 <View style={{ ...styles.rows, justifyContent: 'space-between', paddingTop: 50 }}>
                     <View style={{ ...styles.columns, maxHeight: 35, justifyContent: 'center' }}>
                         <View style={{ alignItems: 'center', justifyContent: 'center', minHeight: 30, minWidth: 30 }}>
-                            <Icon name={'currency-' + this.props.settings.currency} color={white} size={30} />
+                            <Icon name={'currency-' + this.props.settings.currency} color={this.text().color} size={30} />
                         </View>
-                        <Text style={homeScreenStyles.balance}>{this.state.balance}</Text>
-                        <Text style={homeScreenStyles.balanceSmall}>.{this.state.balanceDecimal}</Text>
+                        <Text style={this.balance()}>{this.state.balance}</Text>
+                        <Text style={this.balanceSmall()}>.{this.state.balanceDecimal}</Text>
                     </View>
                     <View style={{ ...styles.columns, maxHeight: 20, justifyContent: 'center' }}>
-                        <Icon name={'currency-' + this.props.settings.currency} color={shade2} size={15} />
-                        <Text style={{ color: shade2 }}>{this.state.balance + '.' + this.state.balanceDecimal} left for 3 days</Text>
+                        <Icon name={'currency-' + this.props.settings.currency} color={this.text().color} size={15} />
+                        <Text style={{ color: this.iconColor() }}>{this.state.balance + '.' + this.state.balanceDecimal} left for 3 days</Text>
                     </View>
                     <View style={{ height: 10, justifyContent: 'center' }}>
                         <Progress.Bar color={this.props.settings.accent} progress={0.3} width={maxWidth / 2} />
@@ -61,22 +85,22 @@ class Screen extends React.Component {
                     <View style={{ ...styles.columns, justifyContent: 'space-evenly', maxHeight: 70 }}>
                         <View style={{ ...styles.rows, maxWidth: 70 }}>
                             <Bubble color={this.props.settings.accent} iconName={'sync'} iconSize={25} onPress={() => console.log('sync')} size={35} />
-                            <Text style={styles.centerText}>Sync</Text>
+                            <Text style={this.centerText()}>Sync</Text>
                         </View>
                         <View style={{ ...styles.rows, maxWidth: 70 }}>
-                            <Bubble color={this.props.settings.accent} iconName={'plus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', { title: 'Income' })} size={35} />
-                            <Text style={styles.centerText}>Income</Text>
+                            <Bubble color={this.props.settings.accent} iconName={'plus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', { darkMode: this.props.settings.darkMode, title: 'Income' })} size={35} />
+                            <Text style={this.centerText()}>Income</Text>
                         </View>
                         <View style={{ ...styles.rows, maxWidth: 70 }}>
-                            <Bubble color={this.props.settings.accent} iconName={'minus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', { title: 'Expense' })} size={35} />
-                            <Text style={styles.centerText}>Expense</Text>
+                            <Bubble color={this.props.settings.accent} iconName={'minus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', { darkMode: this.props.settings.darkMode, title: 'Expense' })} size={35} />
+                            <Text style={this.centerText()}>Expense</Text>
                         </View>
                         <View style={{ ...styles.rows, maxWidth: 70 }}>
                             <Bubble color={this.props.settings.accent} iconName={'flag-outline'} iconSize={25} onPress={() => console.log('new goal')} size={35} />
-                            <Text style={styles.centerText}>Set Goal</Text>
+                            <Text style={this.centerText()}>Set Goal</Text>
                         </View>
                     </View>
-                    <SafeAreaView style={{ borderColor: shade4, borderTopWidth: 2, maxHeight: 400, minWidth: maxWidth }}>
+                    <SafeAreaView style={this.safeAreaView()}>
                         <SectionList
                             renderItem={({ item }) =>
                                 <TouchableOpacity onPress={() => { }} style={{ ...styles.roundView, ...styles.columns, backgroundColor: shade3, justifyContent: 'space-between' }}>

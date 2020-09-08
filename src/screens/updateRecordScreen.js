@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
 import DatePicker from '../components/DatePicker';
+import ScreenHeader from '../components/ScreenHeader';
 import { store } from '../redux/store';
 import { addRecord } from '../redux/action';
 import { black, styles, updateRecordScreenStyles, white, } from '../styles';
@@ -38,7 +39,8 @@ class Screen extends React.Component {
 
     render() {
         return (
-            <View style={styles.screen}>
+            <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
+                <ScreenHeader dark={this.props.settings.darkMode} action={() => this.props.navigation.goBack()} name={this.props.route.params.title} />
                 <View style={styles.rows}>
                     <View style={{ ...styles.columns, maxHeight: 120 }}>
                         {this.state.grid[0].map(item => (
