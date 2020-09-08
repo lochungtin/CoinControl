@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import { parseAll, parseTotal } from '../functions/parser';
-import { accent, shade2, homeScreenStyles, shade3, maxWidth, styles, white, } from '../styles';
+import { styles } from '../styles';
 
 class Screen extends React.Component {
 
@@ -14,7 +14,7 @@ class Screen extends React.Component {
 
     render() {
         return (
-            <View style={styles.screen}>
+            <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
 
             </View>
         );
@@ -22,7 +22,8 @@ class Screen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    records: state.records
+    records: state.records,
+    settings: state.settings,
 })
 
 export default connect(mapStateToProps)(Screen);

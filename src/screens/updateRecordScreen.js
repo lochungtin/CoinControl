@@ -37,6 +37,10 @@ class Screen extends React.Component {
         }
     }
 
+    centerText = () => {
+        return this.props.settings.darkMode ? styles.centerTextD : styles.centerTextL;
+    }
+
     render() {
         return (
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
@@ -53,7 +57,7 @@ class Screen extends React.Component {
                                     selected={this.state.category === item.key}
                                     size={35}
                                 />
-                                <Text style={styles.centerText}>{item.key}</Text>
+                                <Text style={this.centerText()}>{item.key}</Text>
                             </View>
                         ))}
                     </View>
@@ -73,7 +77,7 @@ class Screen extends React.Component {
                                     selected={this.state.category === item.key}
                                     size={35}
                                 />
-                                <Text style={styles.centerText}>{item.key}</Text>
+                                <Text style={this.centerText()}>{item.key}</Text>
                             </View>
                         ))}
                     </View>
@@ -93,7 +97,7 @@ class Screen extends React.Component {
                                     selected={this.state.category === item.key}
                                     size={35}
                                 />
-                                <Text style={styles.centerText}>{item.key}</Text>
+                                <Text style={this.centerText()}>{item.key}</Text>
                             </View>
                         ))}
                     </View>
@@ -113,14 +117,14 @@ class Screen extends React.Component {
                                     selected={this.state.category === item.key}
                                     size={35}
                                 />
-                                <Text style={styles.centerText}>{item.key}</Text>
+                                <Text style={this.centerText()}>{item.key}</Text>
                             </View>
                         ))}
                     </View>
                 </View>
                 {!this.state.open &&
-                    <TouchableOpacity onPress={this.props.navigation.goBack} style={{ ...styles.roundView, backgroundColor: white }}>
-                        <Text style={{ ...styles.centerText, color: black }}>Cancel</Text>
+                    <TouchableOpacity onPress={this.props.navigation.goBack} style={this.props.settings.darkMode ? updateRecordScreenStyles.cancelBtnD : updateRecordScreenStyles.cancelBtnL}>
+                        <Text style={styles.centerTextL}>Cancel</Text>
                     </TouchableOpacity>
                 }
                 <Modal animationType='slide' transparent={true} visible={this.state.open}>
@@ -175,10 +179,10 @@ class Screen extends React.Component {
                                             this.props.navigation.goBack();
                                         }}
                                         style={{ ...styles.roundView, backgroundColor: this.props.settings.accent, width: '47.5%' }}>
-                                        <Text style={{ ...styles.centerText, color: black }}>Save</Text>
+                                        <Text style={styles.centerTextL}>Save</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => this.setState({ category: '', open: false })} style={{ ...styles.roundView, backgroundColor: white, width: '47.5%' }}>
-                                        <Text style={{ ...styles.centerText, color: black }}>Cancel</Text>
+                                        <Text style={styles.centerTextL}>Cancel</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>

@@ -7,21 +7,16 @@ export const maxWidth = Dimensions.get('screen').width;
 
 // colors
 
-export const crimsonPink = '#ff3064';
-export const goldenBrown = '#F2D996';
-export const tealGreen = '#34e0a4';
-export const skyBlue = '#63cbf7';
-export const deepViolet = '#873beb';
-export const colors = [deepViolet, crimsonPink, goldenBrown, tealGreen, skyBlue]
+export const colors = ['#ff3064', '#F2D996', '#34e0a4', '#63cbf7', '#873beb'];
 
-export const bgColor = '#1C1C1C';
-export const shade1 = '#E0E0E0';
-export const shade2 = '#ACACAC';
-export const shade3 = '#3C3C3C';
-export const shade4 = '#2C2C2C';
+const bgColor = '#1C1C1C';
+const shade1 = '#E0E0E0';
+const shade2 = '#ACACAC';
+const shade3 = '#3C3C3C';
+const shade4 = '#2C2C2C';
 
-export const black = '#0C0C0C';
-export const white = '#FCFCFC';
+const black = '#0C0C0C';
+const white = '#FCFCFC';
 
 export const bgColorD = '#1C1C1C';
 export const bgColorL = white;
@@ -225,6 +220,22 @@ export const homeScreenStyles = StyleSheet.create({
 });
 
 export const updateRecordScreenStyles = StyleSheet.create({
+    cancelBtnD: {
+        backgroundColor: white,
+        borderRadius: 40,
+        paddingHorizontal: 40,
+        paddingVertical: 10,
+        margin: 10,
+        width: '80%',
+    },
+    cancelBtnL: {
+        backgroundColor: shade1,
+        borderRadius: 40,
+        paddingHorizontal: 40,
+        paddingVertical: 10,
+        margin: 10,
+        width: '80%'
+    },
     modalView: {
         backgroundColor: shade3,
         borderTopLeftRadius: 40,
@@ -242,6 +253,22 @@ export const updateRecordScreenStyles = StyleSheet.create({
 });
 
 export const settingStyles = StyleSheet.create({
+    cancelBtnD: {
+        backgroundColor: white,
+        borderRadius: 40,
+        paddingHorizontal: 40,
+        paddingVertical: 10,
+        margin: 10,
+        width: '47.5%',
+    },
+    cancelBtnL: {
+        backgroundColor: shade1,
+        borderRadius: 40,
+        paddingHorizontal: 40,
+        paddingVertical: 10,
+        margin: 10,
+        width: '47.5%',
+    },
     itemContainerD: {
         alignItems: 'center',
         backgroundColor: shade4,
@@ -259,6 +286,16 @@ export const settingStyles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: '5%',
         paddingVertical: '2%',
+    },
+    modalTextD: {
+        color: white,
+        fontSize: 15,
+        textAlign: 'center',
+    },
+    modalTextL: {
+        color: black,
+        fontSize: 15,
+        textAlign: 'center',
     },
     modalViewD: {
         alignItems: 'center',

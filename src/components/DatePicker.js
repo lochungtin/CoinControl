@@ -2,7 +2,7 @@ import React from 'react'
 import { Modal, Text, TouchableOpacity, View } from 'react-native';
 
 import Calendar from './Calendar';
-import { black, datePickerStyles, styles, white } from '../styles';
+import { datePickerStyles, styles, white } from '../styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class DatePicker extends React.Component {
@@ -41,7 +41,7 @@ export default class DatePicker extends React.Component {
                         onPress={() => this.setState({ open: true })}
                         style={{ ...datePickerStyles.editBtn, backgroundColor: this.props.accent }}
                     >
-                        <Text style={{ ...styles.centerText, color: black }}>Edit</Text>
+                        <Text style={styles.centerTextL}>Edit</Text>
                     </TouchableOpacity>
                 </View>
             </View>

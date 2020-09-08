@@ -138,7 +138,7 @@ class Screen extends React.Component {
                 <Modal animationType={'slide'} transparent={true} visible={this.state.resetAll || this.state.resetCategory || this.state.resetSettings}>
                     <View style={settingStyles.modalViewContainer}>
                         <View style={this.props.settings.darkMode ? settingStyles.modalViewD : settingStyles.modalViewL}>
-                            <Text style={{ ...styles.centerText, fontSize: 15 }}>{
+                            <Text style={this.props.settings.darkMode ? settingStyles.modalTextD : settingStyles.modalTextL}>{
                                 (this.state.resetAll ? 'Clear ALL data?' : '') +
                                 (this.state.resetCategory ? 'Revert to Default Categories?' : '') +
                                 (this.state.resetSettings ? 'Revert to Default Settings?' : '')
@@ -157,10 +157,10 @@ class Screen extends React.Component {
                                         this.setState({ resetAll: false, resetCategory: false, resetSettings: false });
                                     }}
                                     style={{ ...styles.roundView, backgroundColor: this.props.settings.accent, width: '47.5%' }}>
-                                    <Text style={{ ...styles.centerText, color: black }}>Confirm</Text>
+                                    <Text style={styles.centerTextL}>Confirm</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.setState({ resetAll: false, resetCategory: false, resetSettings: false })} style={{ ...styles.roundView, backgroundColor: white, width: '47.5%' }}>
-                                    <Text style={{ ...styles.centerText, color: black }}>Cancel</Text>
+                                <TouchableOpacity onPress={() => this.setState({ resetAll: false, resetCategory: false, resetSettings: false })} style={this.props.settings.darkMode ? settingStyles.cancelBtnD : settingStyles.cancelBtnL}>
+                                    <Text style={styles.centerTextL}>Cancel</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
