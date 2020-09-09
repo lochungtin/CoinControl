@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, SectionList, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, SectionList, Text, View, } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
@@ -8,14 +8,13 @@ import Bubble from '../components/Bubble';
 import SectionHeader from '../components/SectionHeader';
 import SectionItem from '../components/SectionItem';
 import { parseAll, parseTotal } from '../functions/parser';
-import { iconColors, homeScreenStyles, shade3, maxWidth, styles, white, bgColor, } from '../styles';
+import { iconColors, homeScreenStyles, maxWidth, styles, } from '../styles';
 
 class Screen extends React.Component {
 
     constructor(props) {
         super(props);
         const total = parseTotal(this.props.records);
-        console.log(parseAll(this.props.records));
         this.state = {
             balance: Math.floor(total),
             balanceDecimal: this.getDecimal(total),
@@ -104,7 +103,7 @@ class Screen extends React.Component {
                     </View>
                     <SafeAreaView style={this.safeAreaView()}>
                         <SectionList
-                            renderItem={({ item }) => <SectionItem dark={this.props.settings.darkMode} item={item} />}
+                            renderItem={({ item }) => <SectionItem dark={this.props.settings.darkMode} compactMode={this.props.settings.compactView} item={item} />}
                             renderSectionHeader={({ section: { title } }) => <SectionHeader dark={this.props.settings.darkMode} title={title} />}
                             sections={parseAll(this.props.records)}
                             stickySectionHeadersEnabled={true}

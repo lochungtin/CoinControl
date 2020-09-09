@@ -1,8 +1,8 @@
 import React from 'react';
-import { TouchableOpacity, Text, } from 'react-native';
+import { TouchableOpacity, Text, View, } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { black, homeScreenStyles, white, } from '../styles';
+import { black, homeScreenStyles, white, styles, } from '../styles';
 
 export default class SectionItem extends React.Component {
 
@@ -32,10 +32,31 @@ export default class SectionItem extends React.Component {
     render() {
         return (
             <TouchableOpacity onPress={() => this.setState({ open: !this.state.open })} style={this.container()}>
-                <Icon name={this.props.item.icon} size={20} color={this.iconColor()} />
-                <Text style={this.textCategory()}>{this.props.item.category}</Text>
-                <Text style={this.textValue()}>{(this.props.item.type === 'Expense' ? '-' : '+') + this.props.item.value}</Text>
+                <View style={{ ...styles.columns, justifyContent: 'space-between' }}>
+                    <Icon name={this.props.item.icon} size={20} color={this.iconColor()} />
+                    <Text style={this.textCategory()}>{this.props.item.category}</Text>
+                    <Text style={this.textValue()}>{(this.props.item.type === 'Expense' ? '-' : '+') + this.props.item.value}</Text>
+                </View>
+                {(this.state.open || !this.props.compactMode) &&
+                    <>
+                        <View style={{ ...styles.columns, justifyContent: 'space-between' }}>
+                            <Icon name={this.props.item.icon} size={20} color={'transparent'} />
+                            <Text style={this.textCategory()}>Title: {this.props.item.title}</Text>
+                            <Text style={{ ...this.textValue(), color: 'transparent' }}>{(this.props.item.type === 'Expense' ? '-' : '+') + this.props.item.value}</Text>
+                        </View>
+                        <View style={{ ...styles.columns, justifyContent: 'space-between' }}>
+                            <View style={{ width: '70%' }} />
+                            <TouchableOpacity onPress={() => { }}>
+                                <Icon name={'pencil-outline'} size={20} color={this.iconColor()} />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => { }}>
+                                <Icon name={'trash-can'} size={20} color={this.iconColor()} />
+                            </TouchableOpacity>
+                        </View>
+                    </>
+                }
             </TouchableOpacity>
+
         );
     }
 }

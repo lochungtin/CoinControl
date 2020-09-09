@@ -188,6 +188,54 @@ export const datePickerStyles = StyleSheet.create({
 
 // screen styles
 
+export const chartScreenStyles = StyleSheet.create({
+    categoryTextD: {
+        color: white,
+        width: '50%'
+    },
+    categoryTextL: {
+        color: black,
+        width: '50%'
+    },
+    percentageTextD: {
+        color: white,
+        width: '15%'
+    },
+    percentageTextL: {
+        color: black,
+        width: '15%'
+    },
+    titleD: {
+        color: white,
+        fontSize: 35,
+    },
+    titleL: {
+        color: black,
+        fontSize: 35,
+    },
+    type: {
+        alignItems: 'center',
+        borderBottomWidth: 2,
+        borderColor: 'transparent',
+        paddingBottom: 10,
+        width: '30%',
+    },
+    typeSelectedD: {
+        alignItems: 'center',
+        borderBottomWidth: 2,
+        borderColor: white,
+        paddingBottom: 10,
+        width: '30%',
+    },
+    typeSelectedL: {
+        alignItems: 'center',
+        borderBottomWidth: 2,
+        borderColor: black,
+        paddingBottom: 10,
+        width: '30%',
+    },
+})
+
 export const homeScreenStyles = StyleSheet.create({
     balanceD: {
         color: white,
@@ -228,23 +276,15 @@ export const homeScreenStyles = StyleSheet.create({
         paddingTop: '4%', 
     },
     sectionItemD: { 
-        alignItems: 'center',
         backgroundColor: shade3,
         borderRadius: 40,
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
         paddingHorizontal: 40,
         paddingVertical: 10,
         margin: 10,
     }, 
     sectionItemL: { 
-        alignItems: 'center',
         backgroundColor: shade1,
         borderRadius: 40,
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
         paddingHorizontal: 40,
         paddingVertical: 10,
         margin: 10,
