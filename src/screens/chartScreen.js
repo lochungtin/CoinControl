@@ -4,6 +4,7 @@ import Pie from 'react-native-pie';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
+import ExpandButton from '../components/ExpandButton';
 import PieLabels from '../components/PieLabels';
 import { parseLabel, parseSector, } from '../functions/parser';
 import { bgColorD, bgColorL, chartScreenStyles, iconColors, styles, maxWidth, } from '../styles';
@@ -85,6 +86,7 @@ class Screen extends React.Component {
                         </View>
                     </View>
                 </View>
+                <ExpandButton dark={this.props.settings.darkMode} onPress={() => {}} />
             </View>
         );
     }
