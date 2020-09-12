@@ -70,7 +70,7 @@ class Screen extends React.Component {
                             )}
                             strokeCap={'butt'}
                         />
-                        <View style={{ height: 10 }} />
+                        <View style={{ height: 20 }} />
                         <View>
                             {
                                 parseLabel(

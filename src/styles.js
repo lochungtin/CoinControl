@@ -256,13 +256,13 @@ export const homeScreenStyles = StyleSheet.create({
     borderD: {
         borderColor: shade4,
         borderTopWidth: 2,
-        maxHeight: 400,
+        maxHeight: '70%',
         minWidth: maxWidth,
     },
     borderL: {
         borderColor: shade1,
         borderTopWidth: 2,
-        maxHeight: 400,
+        maxHeight: '70%',
         minWidth: maxWidth,
     },
     sectionHeadD: {

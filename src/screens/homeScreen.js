@@ -68,46 +68,47 @@ class Screen extends React.Component {
     render() {
         return (
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
-                <View style={{ ...styles.rows, justifyContent: 'space-between', paddingTop: 50 }}>
-                    <View style={{ ...styles.columns, maxHeight: 35, justifyContent: 'center' }}>
-                        <View style={{ alignItems: 'center', justifyContent: 'center', minHeight: 30, minWidth: 30 }}>
+                <View style={{ alignItems: 'center', paddingTop: 20 }}>
+                    <View style={{ ...styles.rows, minHeight: '30%', justifyContent: 'space-evenly' }}>
+                        <View style={{ ...styles.columns, flex: 0 }}>
                             <Icon name={'currency-' + this.props.settings.currency} color={this.text().color} size={30} />
+                            <Text style={this.balance()}>{this.state.balance}</Text>
+                            <Text style={this.balanceSmall()}>.{this.state.balanceDecimal}</Text>
                         </View>
-                        <Text style={this.balance()}>{this.state.balance}</Text>
-                        <Text style={this.balanceSmall()}>.{this.state.balanceDecimal}</Text>
+                        <View style={{ ...styles.columns, flex: 0 }}>
+                            <Icon name={'currency-' + this.props.settings.currency} color={this.text().color} size={15} />
+                            <Text style={{ color: this.iconColor() }}>{this.state.balance + '.' + this.state.balanceDecimal} left for 3 days</Text>
+                        </View>
+                        <View style={{ ...styles.columns, flex: 0 }}>
+                            <Progress.Bar color={this.props.settings.accent} progress={0.3} width={maxWidth / 2} />
+                        </View>
+                        <View style={{ ...styles.columns, flex: 0, justifyContent: 'space-evenly' }}>
+                            <View style={{ ...styles.rows, maxWidth: 70 }}>
+                                <Bubble color={this.props.settings.accent} iconName={'sync'} iconSize={25} onPress={() => console.log('sync')} size={35} />
+                                <Text style={this.centerText()}>Sync</Text>
+                            </View>
+                            <View style={{ ...styles.rows, maxWidth: 70 }}>
+                                <Bubble color={this.props.settings.accent} iconName={'plus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', { darkMode: this.props.settings.darkMode, title: 'Income' })} size={35} />
+                                <Text style={this.centerText()}>Income</Text>
+                            </View>
+                            <View style={{ ...styles.rows, maxWidth: 70 }}>
+                                <Bubble color={this.props.settings.accent} iconName={'minus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', { darkMode: this.props.settings.darkMode, title: 'Expense' })} size={35} />
+                                <Text style={this.centerText()}>Expense</Text>
+                            </View>
+                            <View style={{ ...styles.rows, maxWidth: 70 }}>
+                                <Bubble color={this.props.settings.accent} iconName={'flag-outline'} iconSize={25} onPress={() => console.log('new goal')} size={35} />
+                                <Text style={this.centerText()}>Set Goal</Text>
+                            </View>
+                        </View>
                     </View>
-                    <View style={{ ...styles.columns, maxHeight: 20, justifyContent: 'center' }}>
-                        <Icon name={'currency-' + this.props.settings.currency} color={this.text().color} size={15} />
-                        <Text style={{ color: this.iconColor() }}>{this.state.balance + '.' + this.state.balanceDecimal} left for 3 days</Text>
-                    </View>
-                    <View style={{ height: 10, justifyContent: 'center' }}>
-                        <Progress.Bar color={this.props.settings.accent} progress={0.3} width={maxWidth / 2} />
-                    </View>
-                    <View style={{ ...styles.columns, justifyContent: 'space-evenly', maxHeight: 70 }}>
-                        <View style={{ ...styles.rows, maxWidth: 70 }}>
-                            <Bubble color={this.props.settings.accent} iconName={'sync'} iconSize={25} onPress={() => console.log('sync')} size={35} />
-                            <Text style={this.centerText()}>Sync</Text>
-                        </View>
-                        <View style={{ ...styles.rows, maxWidth: 70 }}>
-                            <Bubble color={this.props.settings.accent} iconName={'plus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', { darkMode: this.props.settings.darkMode, title: 'Income' })} size={35} />
-                            <Text style={this.centerText()}>Income</Text>
-                        </View>
-                        <View style={{ ...styles.rows, maxWidth: 70 }}>
-                            <Bubble color={this.props.settings.accent} iconName={'minus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', { darkMode: this.props.settings.darkMode, title: 'Expense' })} size={35} />
-                            <Text style={this.centerText()}>Expense</Text>
-                        </View>
-                        <View style={{ ...styles.rows, maxWidth: 70 }}>
-                            <Bubble color={this.props.settings.accent} iconName={'flag-outline'} iconSize={25} onPress={() => console.log('new goal')} size={35} />
-                            <Text style={this.centerText()}>Set Goal</Text>
-                        </View>
-                    </View>
+
                     <SafeAreaView style={this.safeAreaView()}>
                         <SectionList
                             renderItem={({ item }) => <SectionItem dark={this.props.settings.darkMode} compactMode={this.props.settings.compactView} item={item} />}
                             renderSectionHeader={({ section: { title } }) => <SectionHeader dark={this.props.settings.darkMode} title={title} />}
                             sections={parseAll(this.props.records)}
                             stickySectionHeadersEnabled={true}
-                            style={{ maxHeight: 400, minWidth: maxWidth, paddingHorizontal: '5%' }}
+                            style={{ flex: 1, minWidth: maxWidth, paddingHorizontal: '5%' }}
                         />
                     </SafeAreaView>
                 </View>
