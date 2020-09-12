@@ -106,7 +106,7 @@ class Screen extends React.Component {
 
                     <SafeAreaView style={this.safeAreaView()}>
                         <SectionList
-                            renderItem={({ item }) => <SectionItem dark={this.props.settings.darkMode} compactMode={this.props.settings.compactView} item={item} />}
+                            renderItem={({ item }) => <SectionItem dark={this.props.settings.darkMode} accent={this.props.settings.accent} compactMode={this.props.settings.compactView} item={item} />}
                             renderSectionHeader={({ section: { title } }) => <SectionHeader dark={this.props.settings.darkMode} title={title} />}
                             sections={parseAll(this.props.records)}
                             stickySectionHeadersEnabled={true}
@@ -134,7 +134,7 @@ class Screen extends React.Component {
                                         onPress={() => {
                                             this.setState({ goalType: 'W' })
                                         }}
-                                        style={{ ...styles.roundView, backgroundColor: white, width: '47.5%' }}
+                                        style={{ ...styles.roundView, backgroundColor: white, paddingHorizontal: 10 ,width: '30%' }}
                                     >
                                         <Text style={styles.centerTextL}>Weekly</Text>
                                     </TouchableOpacity>
@@ -142,9 +142,17 @@ class Screen extends React.Component {
                                         onPress={() => {
                                             this.setState({ goalType: 'W' })
                                         }}
-                                        style={{ ...styles.roundView, backgroundColor: white, width: '47.5%' }}
+                                        style={{ ...styles.roundView, backgroundColor: white, paddingHorizontal: 10, width: '30%' }}
                                     >
                                         <Text style={styles.centerTextL}>Monthly</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            this.setState({ goalType: 'W' })
+                                        }}
+                                        style={{ ...styles.roundView, backgroundColor: this.props.settings.accent, paddingHorizontal: 10, width: '30%' }}
+                                    >
+                                        <Text style={styles.centerTextL}>None</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>

@@ -33,7 +33,7 @@ export default class SectionItem extends React.Component {
         return (
             <TouchableOpacity onPress={() => this.setState({ open: !this.state.open })} style={this.container()}>
                 <View style={{ ...styles.columns, justifyContent: 'space-between' }}>
-                    <Icon name={this.props.item.icon} size={20} color={this.iconColor()} />
+                    <Icon name={this.props.item.icon} size={20} color={this.props.accent} />
                     <Text style={this.textCategory()}>{this.props.item.category}</Text>
                     <Text style={this.textValue()}>{(this.props.item.type === 'Expense' ? '-' : '+') + this.props.item.value}</Text>
                 </View>

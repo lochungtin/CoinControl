@@ -11,6 +11,11 @@ export const defaultExpenseCategories = [
     { key: 'Transport', iconName: 'train-car' },
 ]
 
+export const defaultGoal = {
+    type: 'None',
+    amount: 0
+}
+
 export const defaultIncomeCategories = [
     { key: 'Allowance', iconName: 'wallet-outline'},
     { key: 'Loan', iconName: 'bank' },
