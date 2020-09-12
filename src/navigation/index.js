@@ -5,7 +5,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import { defaultExpenseCategory, defaultIncomeCategory, defaultSettings } from '../redux/action';
+import { defaultExpenseCategory, defaultGoal, defaultIncomeCategory, defaultSettings } from '../redux/action';
 import { store } from '../redux/store';
 import accountScreen from '../screens/accountScreen';
 import chartScreen from '../screens/chartScreen';
@@ -19,16 +19,14 @@ const Main = createStackNavigator();
 const Settings = createStackNavigator();
 const Root = createBottomTabNavigator();
 
-
-
-
-
 class AppNav extends React.Component {
 
     constructor(props) {
         super(props);
         if (props.expenseCategories === null || Object.keys(props.expenseCategories).length === 0)
             store.dispatch(defaultExpenseCategory());
+        if (props.goal === null || Object.keys(props.goal).length === 0)
+            store.dispatch(defaultGoal());
         if (props.incomeCategories === null || Object.keys(props.incomeCategories).length === 0)
             store.dispatch(defaultIncomeCategory());
         if (props.settings === null || Object.keys(props.settings).length === 0)
@@ -110,6 +108,7 @@ class AppNav extends React.Component {
 
 const mapStateToProps = state => ({
     expenseCategories: state.expenseCategories,
+    goal: state.goal,
     incomeCategories: state.incomeCategories,
     settings: state.settings
 })

@@ -8,7 +8,9 @@ import Bubble from '../components/Bubble';
 import ExpandButton from '../components/ExpandButton';
 import SectionHeader from '../components/SectionHeader';
 import SectionItem from '../components/SectionItem';
-import { parseAll, parseTotal } from '../functions/parser';
+import { parseAll, parseGoal, parseGoalPercentage, parseTotal } from '../functions/parser';
+import { defaultGoal, updateGoal } from '../redux/action';
+import { store } from '../redux/store';
 import { black, iconColors, homeScreenStyles, maxWidth, maxHeight, styles, white } from '../styles';
 
 class Screen extends React.Component {
@@ -17,10 +19,12 @@ class Screen extends React.Component {
         super(props);
         const total = parseTotal(this.props.records);
         this.state = {
+            amount: 0,
             balance: Math.floor(total),
             balanceDecimal: this.getDecimal(total),
             expand: '',
             open: false,
+            toGoal: parseGoal(this.props.records, this.props.goal.amount),
         }
     }
 
@@ -30,6 +34,7 @@ class Screen extends React.Component {
             this.setState({
                 balance: Math.floor(total),
                 balanceDecimal: this.getDecimal(total),
+                toGoal: parseGoal(this.props.records, this.props.goal.amount),
             });
         });
     }
@@ -59,6 +64,17 @@ class Screen extends React.Component {
         return Math.floor((total - Math.floor(total)) * 100);
     }
 
+    goalMessage = (amount) => {
+        switch (this.props.goal.type) {
+            case 'monthly':
+                return amount + ' left for this month';
+            case 'weekly':
+                return amount + ' left for this week';
+            default:
+                return 'No Goals Currently';
+        }
+    }
+
     safeAreaView = () => {
         return this.props.settings.darkMode ? homeScreenStyles.borderD : homeScreenStyles.borderL;
     }
@@ -78,11 +94,11 @@ class Screen extends React.Component {
                             <Text style={this.balanceSmall()}>.{this.state.balanceDecimal}</Text>
                         </View>
                         <View style={{ ...styles.columns, flex: 0 }}>
-                            <Icon name={'currency-' + this.props.settings.currency} color={this.text().color} size={15} />
-                            <Text style={{ color: this.iconColor() }}>{this.state.balance + '.' + this.state.balanceDecimal} left for 3 days</Text>
+                            <Icon name={'currency-' + this.props.settings.currency} color={this.props.goal.type === 'none' ? 'transparent' : this.text().color} size={15} />
+                            <Text style={{ color: this.iconColor() }}>{this.goalMessage(parseGoal(this.props.records, this.props.goal.amount))} </Text>
                         </View>
                         <View style={{ ...styles.columns, flex: 0 }}>
-                            <Progress.Bar color={this.props.settings.accent} progress={0.3} width={maxWidth / 2} />
+                            <Progress.Bar color={this.props.settings.accent} progress={parseGoalPercentage(this.state.toGoal, this.props.goal.amount)} width={maxWidth / 2} />
                         </View>
                         <View style={{ ...styles.columns, flex: 0, justifyContent: 'space-evenly' }}>
                             <View style={{ ...styles.rows, maxWidth: 70 }}>
@@ -132,15 +148,27 @@ class Screen extends React.Component {
                                 <View style={{ ...styles.columns, justifyContent: 'space-between' }}>
                                     <TouchableOpacity
                                         onPress={() => {
-                                            this.setState({ goalType: 'W' })
+                                            if (this.state.amount !== 0) {
+                                                store.dispatch(updateGoal({
+                                                    amount: this.state.amount,
+                                                    type: 'weekly',
+                                                }));
+                                                this.setState({ open: false });
+                                            }
                                         }}
-                                        style={{ ...styles.roundView, backgroundColor: white, paddingHorizontal: 10 ,width: '30%' }}
+                                        style={{ ...styles.roundView, backgroundColor: white, paddingHorizontal: 10, width: '30%' }}
                                     >
                                         <Text style={styles.centerTextL}>Weekly</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity
                                         onPress={() => {
-                                            this.setState({ goalType: 'W' })
+                                            if (this.state.amount !== 0) {
+                                                store.dispatch(updateGoal({
+                                                    amount: this.state.amount,
+                                                    type: 'monthly',
+                                                }));
+                                                this.setState({ open: false });
+                                            }
                                         }}
                                         style={{ ...styles.roundView, backgroundColor: white, paddingHorizontal: 10, width: '30%' }}
                                     >
@@ -148,7 +176,8 @@ class Screen extends React.Component {
                                     </TouchableOpacity>
                                     <TouchableOpacity
                                         onPress={() => {
-                                            this.setState({ goalType: 'W' })
+                                            store.dispatch(defaultGoal());
+                                            this.setState({ open: false });
                                         }}
                                         style={{ ...styles.roundView, backgroundColor: this.props.settings.accent, paddingHorizontal: 10, width: '30%' }}
                                     >
@@ -165,6 +194,7 @@ class Screen extends React.Component {
 }
 
 const mapStateToProps = state => ({
+    goal: state.goal,
     records: state.records,
     settings: state.settings
 })

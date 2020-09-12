@@ -12,8 +12,8 @@ export const defaultExpenseCategories = [
 ]
 
 export const defaultGoal = {
-    type: 'None',
-    amount: 0
+    amount: 0,
+    type: 'none',
 }
 
 export const defaultIncomeCategories = [
