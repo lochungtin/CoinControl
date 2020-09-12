@@ -9,7 +9,7 @@ import DatePicker from '../components/DatePicker';
 import ScreenHeader from '../components/ScreenHeader';
 import { store } from '../redux/store';
 import { addRecord } from '../redux/action';
-import { black, styles, recordStyles, white, } from '../styles';
+import { black, maxHeight, recordStyles, styles, white, } from '../styles';
 import ExpandButton from '../components/ExpandButton';
 
 class Screen extends React.Component {
@@ -128,11 +128,11 @@ class Screen extends React.Component {
                     </TouchableOpacity>
                 }
                 <Modal animationType='slide' transparent={true} visible={this.state.open}>
-                    <View style={recordStyles.modalViewContainer}>
-                        <View style={recordStyles.modalView}>
+                    <View style={styles.modalViewContainer}>
+                        <View style={{ ...styles.modalView, height: maxHeight * 3 / 4 - 10 }}>
                             <View style={styles.rows}>
                                 <View style={styles.rows}>
-                                    <ExpandButton onPress={() => this.setState({ category: '', open: false })} />
+                                    <ExpandButton dark={this.props.settings.darkMode} onPress={() => this.setState({ category: '', open: false })} />
                                     <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, minHeight: 60 }}>
                                         {this.state.icon !== '' &&
                                             <Icon name={this.state.icon} size={25} color={black} />
@@ -164,7 +164,7 @@ class Screen extends React.Component {
                                     </View>
                                 </View>
                                 <View style={{ height: '50%' }} />
-                                <View style={{...styles.columns, justifyContent: 'space-between'}}>
+                                <View style={{ ...styles.columns, justifyContent: 'space-between' }}>
                                     <TouchableOpacity
                                         onPress={() => {
                                             store.dispatch(addRecord({

@@ -1,14 +1,15 @@
 import React from 'react';
-import { SafeAreaView, SectionList, Text, View, } from 'react-native';
+import { Modal, SafeAreaView, SectionList, Text, TextInput, TouchableOpacity, View, } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
+import ExpandButton from '../components/ExpandButton';
 import SectionHeader from '../components/SectionHeader';
 import SectionItem from '../components/SectionItem';
 import { parseAll, parseTotal } from '../functions/parser';
-import { iconColors, homeScreenStyles, maxWidth, styles, } from '../styles';
+import { black, iconColors, homeScreenStyles, maxWidth, maxHeight, styles, white } from '../styles';
 
 class Screen extends React.Component {
 
@@ -19,6 +20,7 @@ class Screen extends React.Component {
             balance: Math.floor(total),
             balanceDecimal: this.getDecimal(total),
             expand: '',
+            open: false,
         }
     }
 
@@ -96,7 +98,7 @@ class Screen extends React.Component {
                                 <Text style={this.centerText()}>Expense</Text>
                             </View>
                             <View style={{ ...styles.rows, maxWidth: 70 }}>
-                                <Bubble color={this.props.settings.accent} iconName={'flag-outline'} iconSize={25} onPress={() => console.log('new goal')} size={35} />
+                                <Bubble color={this.props.settings.accent} iconName={'flag-outline'} iconSize={25} onPress={() => this.setState({ open: true })} size={35} />
                                 <Text style={this.centerText()}>Set Goal</Text>
                             </View>
                         </View>
@@ -112,6 +114,43 @@ class Screen extends React.Component {
                         />
                     </SafeAreaView>
                 </View>
+
+                <Modal animationType='slide' transparent={true} visible={this.state.open}>
+                    <View style={styles.modalViewContainer}>
+                        <View style={{ ...styles.modalView, height: maxHeight / 4 - 20 }}>
+                            <View style={styles.rows}>
+                                <ExpandButton dark={this.props.settings.darkMode} onPress={() => this.setState({ open: false })} />
+                                <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, maxHeight: 60 }}>
+                                    <Icon name={'cash'} size={35} color={black} />
+                                    <TextInput
+                                        keyboardType={'numeric'}
+                                        placeholder={'Amount'}
+                                        onChangeText={(text) => this.setState({ amount: parseInt(text) })}
+                                        style={{ color: black, textAlign: 'center', width: '95%' }}
+                                    />
+                                </View>
+                                <View style={{ ...styles.columns, justifyContent: 'space-between' }}>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            this.setState({ goalType: 'W' })
+                                        }}
+                                        style={{ ...styles.roundView, backgroundColor: white, width: '47.5%' }}
+                                    >
+                                        <Text style={styles.centerTextL}>Weekly</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            this.setState({ goalType: 'W' })
+                                        }}
+                                        style={{ ...styles.roundView, backgroundColor: white, width: '47.5%' }}
+                                    >
+                                        <Text style={styles.centerTextL}>Monthly</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
             </View>
         );
     }

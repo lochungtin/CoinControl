@@ -42,6 +42,19 @@ export const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
     },
+    modalView: {
+        backgroundColor: shade3,
+        borderTopLeftRadius: 40,
+        borderTopRightRadius: 40,
+        opacity: 0.9,
+        paddingHorizontal: '5%',
+        width: maxWidth,
+    },
+    modalViewContainer: {
+        alignItems: 'center',
+        flex: 1,
+        justifyContent: 'flex-end',
+    },
     roundView: {
         borderRadius: 40,
         paddingHorizontal: 40,
@@ -330,20 +343,6 @@ export const recordStyles = StyleSheet.create({
         color: black,
         textAlign: 'center',
         width: '100%',
-    },
-    modalView: {
-        backgroundColor: shade3,
-        borderTopLeftRadius: 40,
-        borderTopRightRadius: 40,
-        height: maxHeight * 3 / 4 - 10,
-        opacity: 0.9,
-        paddingHorizontal: '5%',
-        width: maxWidth,
-    },
-    modalViewContainer: {
-        alignItems: 'center',
-        flex: 1,
-        justifyContent: 'flex-end',
     },
 });
 
