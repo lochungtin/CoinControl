@@ -111,3 +111,40 @@ export const parseTotal = records => {
     }
     return total;
 }
+
+export const parseWeek = (records, type) => {
+    var entries = {};
+    var begin = moment().subtract(7, 'days');
+
+    for (const record of records) {
+        var date = record.date;
+        if (!Object.keys(entries).includes(date))
+            entries[date] = [];
+        if (record.type === type)
+            entries[date].push(record);
+    }
+
+    var sorted = mergeSort(Object.keys(entries));
+    var data = new Array(7);
+
+    for (const entry of sorted) {
+        var day = moment(entry);
+        if (day.isAfter(begin)) {
+            var total = 0;
+            for (const record of entries[entry]) {
+                total += record.value;
+            }
+            if (data[day.day()] === undefined) 
+                data[day.day()] = total;
+        }
+        else 
+            break;
+    }
+
+    for (var i = 0; i < 7; i++) {
+        if (data[i] === undefined)
+            data[i] = 0;
+    }
+
+    return data;
+}
