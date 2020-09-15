@@ -11,6 +11,17 @@ export const defaultExpenseCategories = [
     { key: 'Transport', iconName: 'train-car' },
 ]
 
+export const defaultExpenseSelection = {
+    selection1: 'Bills',
+    selection2: 'Entertainment',
+    selection3: 'Food',
+    selection4: 'Groceries',
+    selection5: 'Office',
+    selection6: 'Other',
+    selection7: 'Shopping',
+    selection8: 'Transport',
+}
+
 export const defaultGoal = {
     amount: 0,
     type: 'none',
@@ -22,6 +33,17 @@ export const defaultIncomeCategories = [
     { key: 'Returns', iconName: 'keyboard-backspace'},
     { key: 'Salary', iconName: 'cash' },   
 ]
+
+export const defaultIncomeSelection = {
+    selection1: 'Allowance',
+    selection2: 'Loan',
+    selection3: 'Returns',
+    selection4: 'Salary',
+    selection5: '',
+    selection6: '',
+    selection7: '',
+    selection8: '',
+}
 
 export const defaultSettings = {
     accent: goldenBrown,

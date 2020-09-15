@@ -1,8 +1,26 @@
 import moment from 'moment';
 import { combineReducers } from 'redux';
 
-import { ADD_RECORD, DEFAULT_EXPENSE_CATEGORY, DEFAULT_GOAL, DEFAULT_INCOME_CATEGORY, DEFAULT_SETTINGS, DELETE_HISTORY, UPDATE_GOAL, UPDATE_SETTINGS } from './action';
-import { defaultExpenseCategories, defaultGoal, defaultIncomeCategories, defaultSettings } from '../default';
+import {
+    ADD_RECORD,
+    DEFAULT_EXPENSE_CATEGORY,
+    DEFAULT_EXPENSE_SELECTION,
+    DEFAULT_GOAL,
+    DEFAULT_INCOME_CATEGORY,
+    DEFAULT_INCOME_SELECTION,
+    DEFAULT_SETTINGS,
+    DELETE_HISTORY,
+    UPDATE_GOAL,
+    UPDATE_SETTINGS,
+} from './action';
+import {
+    defaultExpenseCategories,
+    defaultExpenseSelection,
+    defaultGoal,
+    defaultIncomeCategories,
+    defaultIncomeSelection,
+    defaultSettings
+} from '../default';
 
 const updateRecords = (records = [], action) => {
     switch (action.type) {
@@ -23,6 +41,14 @@ const updateExpenseCategory = (categories = {}, action) => {
     return categories;
 }
 
+const updateExpenseSelection = (selection = {}, action) => {
+    switch(action.type) {
+        case DEFAULT_EXPENSE_SELECTION:
+            return defaultExpenseSelection;
+    }
+    return selection;
+}
+
 const updateGoal = (goal = {}, action) => {
     switch (action.type) {
         case DEFAULT_GOAL:
@@ -41,6 +67,14 @@ const updateIncomeCategory = (categories = {}, action) => {
     return categories;
 }
 
+const updateIncomeSelection = (selection = {}, action) => {
+    switch(action.type) {
+        case DEFAULT_INCOME_SELECTION:
+            return defaultIncomeSelection;
+    }
+    return selection;
+}
+
 const updateSettings = (settings = {}, action) => {
     switch (action.type) {
         case DEFAULT_SETTINGS:
@@ -55,8 +89,10 @@ const updateSettings = (settings = {}, action) => {
 
 export default combineReducers({
     expenseCategories: updateExpenseCategory,
+    expenseSelection: updateExpenseSelection,
     goal: updateGoal,
     incomeCategories: updateIncomeCategory,
+    incomeSelection: updateIncomeSelection,
     records: updateRecords,
     settings: updateSettings,
 });

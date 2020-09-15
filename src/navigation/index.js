@@ -5,7 +5,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import { defaultExpenseCategory, defaultGoal, defaultIncomeCategory, defaultSettings } from '../redux/action';
+import { defaultExpenseCategory, defaultExpenseSelection, defaultGoal, defaultIncomeCategory, defaultIncomeSelection, defaultSettings, } from '../redux/action';
 import { store } from '../redux/store';
 import accountScreen from '../screens/accountScreen';
 import chartScreen from '../screens/chartScreen';
@@ -25,12 +25,17 @@ class AppNav extends React.Component {
         super(props);
         if (props.expenseCategories === null || Object.keys(props.expenseCategories).length === 0)
             store.dispatch(defaultExpenseCategory());
+        if (props.expenseSelection === null || Object.keys(props.expenseSelection).length === 0)
+            store.dispatch(defaultExpenseSelection());
         if (props.goal === null || Object.keys(props.goal).length === 0)
             store.dispatch(defaultGoal());
         if (props.incomeCategories === null || Object.keys(props.incomeCategories).length === 0)
             store.dispatch(defaultIncomeCategory());
+        if (props.incomeSelection === null || Object.keys(props.incomeSelection).length === 0)
+            store.dispatch(defaultIncomeSelection());
         if (props.settings === null || Object.keys(props.settings).length === 0)
             store.dispatch(defaultSettings());
+
     }
 
     main = () => {
@@ -108,8 +113,10 @@ class AppNav extends React.Component {
 
 const mapStateToProps = state => ({
     expenseCategories: state.expenseCategories,
+    expenseSelection: state.expenseSelection,
     goal: state.goal,
     incomeCategories: state.incomeCategories,
+    incomeSelection: state.incomeSelection,
     settings: state.settings
 })
 

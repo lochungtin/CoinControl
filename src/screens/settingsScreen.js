@@ -7,11 +7,9 @@ import ExpandButton from '../components/ExpandButton';
 import ScreenHeader from '../components/ScreenHeader';
 import SettingsHeader from '../components/SettingsHeader';
 import SettingsItem from '../components/SettingsItem';
-import { defaultIncomeCategory, defaultExpenseCategory, defaultSettings, deleteHistory, updateSettings, } from '../redux/action';
+import { defaultExpenseCategory, defaultExpenseSelection, defaultIncomeCategory, defaultIncomeSelection, defaultSettings, deleteHistory, updateSettings, } from '../redux/action';
 import { store } from '../redux/store';
-import { black, colors, settingStyles, styles, white, } from '../styles';
-
-
+import { colors, settingStyles, styles, } from '../styles';
 
 class Screen extends React.Component {
 
@@ -149,8 +147,10 @@ class Screen extends React.Component {
                                         if (this.state.resetAll)
                                             store.dispatch(deleteHistory());
                                         if (this.state.resetCategory) {
-                                            store.dispatch(defaultIncomeCategory());
                                             store.dispatch(defaultExpenseCategory());
+                                            store.dispatch(defaultExpenseSelection());
+                                            store.dispatch(defaultIncomeCategory());
+                                            store.dispatch(defaultIncomeSelection());
                                         }
                                         if (this.state.resetSettings)
                                             store.dispatch(defaultSettings());
