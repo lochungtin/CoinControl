@@ -9,6 +9,8 @@ import ChartSelectionItem from '../components/ChartSelectionItem';
 import ExpandButton from '../components/ExpandButton';
 import PieLabels from '../components/PieLabels';
 import { parseLabel, parseSector, parseWeek } from '../functions/parser';
+import { store } from '../redux/store';
+import { updateExpenseSelection, updateIncomeSelection } from '../redux/action';
 import { bgColorD, bgColorL, chartScreenStyles, iconColors, maxWidth, styles, } from '../styles';
 
 class Screen extends React.Component {
@@ -23,6 +25,10 @@ class Screen extends React.Component {
 
     iconColor = () => {
         return this.props.settings.darkMode ? iconColors.iconD : iconColors.iconL;
+    }
+
+    selected = (list = [], itemName) => {
+        return list.includes(itemName);
     }
 
     text = type => {
@@ -67,7 +73,12 @@ class Screen extends React.Component {
                                 <LineChart
                                     data={{
                                         labels: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-                                        datasets: [{ data: parseWeek(this.props.records, this.state.type) }]
+                                        datasets: [{
+                                            data: parseWeek(
+                                                this.props.records,
+                                                this.state.type,
+                                            )
+                                        }]
                                     }}
                                     width={maxWidth}
                                     height={220}
@@ -75,7 +86,6 @@ class Screen extends React.Component {
                                         backgroundColor: this.props.settings.darkMode ? bgColorD : bgColorL,
                                         backgroundGradientFrom: this.props.settings.darkMode ? bgColorD : bgColorL,
                                         backgroundGradientTo: this.props.settings.darkMode ? bgColorD : bgColorL,
-                                        decimalPlaces: 2, // optional, defaults to 2dp
                                         color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                                         labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                                         style: {
@@ -102,7 +112,8 @@ class Screen extends React.Component {
                                         this.props.records,
                                         this.state.type,
                                         this.props.settings.accent,
-                                        this.props.settings.darkMode ? bgColorL : bgColorD
+                                        this.props.settings.darkMode ? bgColorL : bgColorD,
+                                        this.state.type === 'Expense' ? this.props.expenseSelection : this.props.incomeSelection,
                                     )}
                                     strokeCap={'butt'}
                                 />
@@ -113,7 +124,8 @@ class Screen extends React.Component {
                                             this.props.records,
                                             this.state.type,
                                             this.props.settings.accent,
-                                            this.props.settings.darkMode ? bgColorL : bgColorD
+                                            this.props.settings.darkMode ? bgColorL : bgColorD,
+                                            this.state.type === 'Expense' ? this.props.expenseSelection : this.props.incomeSelection,
                                         ).map((item) => {
                                             return <PieLabels dark={this.props.settings.darkMode} item={item} key={item.category} />
                                         })
@@ -131,9 +143,30 @@ class Screen extends React.Component {
                                     <ChartSelectionItem
                                         dark={this.props.settings.darkMode}
                                         accent={this.props.settings.accent}
-                                        action={(item) => {}}
+                                        action={(itemName, selected) => { 
+                                            if (selected) {
+                                                if (this.state.type === 'Expense') 
+                                                    store.dispatch(updateExpenseSelection([...this.props.expenseSelection, itemName]));
+                                                else
+                                                    store.dispatch(updateIncomeSelection([...this.props.incomeSelection, itemName]));
+                                            }
+                                            else {
+                                                if (this.state.type === 'Expense') {
+                                                    var temp = [...this.props.expenseSelection];
+                                                    var position = temp.indexOf(itemName);
+                                                    temp.splice(position, 1);
+                                                    store.dispatch(updateExpenseSelection(temp));
+                                                }
+                                                else {
+                                                    var temp = [...this.props.incomeSelection];
+                                                    var position = temp.indexOf(itemName);
+                                                    temp.splice(position, 1);
+                                                    store.dispatch(updateIncomeSelection(temp));
+                                                }
+                                            }
+                                        }}
                                         item={item}
-                                        
+                                        selected={this.selected(this.state.type === 'Expense' ? this.props.expenseSelection : this.props.incomeSelection, item.key)}
                                     />
                                 }
                             />
@@ -148,7 +181,9 @@ class Screen extends React.Component {
 
 const mapStateToProps = state => ({
     expenseCategories: state.expenseCategories,
+    expenseSelection: state.expenseSelection,
     incomeCategories: state.incomeCategories,
+    incomeSelection: state.incomeSelection,
     records: state.records,
     settings: state.settings,
 })

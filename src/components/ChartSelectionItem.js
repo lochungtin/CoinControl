@@ -21,12 +21,11 @@ export default class ChartSelectionItem extends React.Component {
         return this.state.selected ? 'checkbox-marked-circle-outline' : 'checkbox-blank-circle-outline';
     }
 
-
     render() {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    this.props.action(this.props.key);
+                    this.props.action(this.props.item.key, !this.state.selected);
                     this.setState({ selected: !this.state.selected });
                 }}
                 style={{ ...styles.columns, justifyContent: 'space-between', marginVertical: 5, paddingHorizontal: '15%', width: '100%' }}

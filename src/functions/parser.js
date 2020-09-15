@@ -48,17 +48,19 @@ export const parseGoalPercentage = (total, goal) => {
     return (goal - total) / goal;
 }
 
-export const parseLabel = (records, type, color, bgColor) => {
+export const parseLabel = (records, type, color, bgColor, selection) => {
     var data = [];
     var tally = {};
     var size = 0;
 
     for (const record of records) {
         if (record.type === type) {
-            if (!Object.keys(tally).includes(record.category))
-                tally[record.category] = 0;
-            tally[record.category]++;
-            size++;
+            if (selection.includes(record.category)) {
+                if (!Object.keys(tally).includes(record.category))
+                    tally[record.category] = 0;
+                tally[record.category]++;
+                size++;
+            }
         }
     }
 
@@ -75,17 +77,19 @@ export const parseLabel = (records, type, color, bgColor) => {
     return data;
 }
 
-export const parseSector = (records, type, color, bgColor) => {
+export const parseSector = (records, type, color, bgColor, selection) => {
     var data = [];
-    var tally = {};
     var size = 0;
+    var tally = {};
 
     for (const record of records) {
         if (record.type === type) {
-            if (!Object.keys(tally).includes(record.category))
-                tally[record.category] = 0;
-            tally[record.category]++;
-            size++;
+            if (selection.includes(record.category)) {
+                if (!Object.keys(tally).includes(record.category))
+                    tally[record.category] = 0;
+                tally[record.category]++;
+                size++;
+            }
         }
     }
 
@@ -113,8 +117,8 @@ export const parseTotal = records => {
 }
 
 export const parseWeek = (records, type) => {
-    var entries = {};
     var begin = moment().subtract(7, 'days');
+    var entries = {};
 
     for (const record of records) {
         var date = record.date;
@@ -134,10 +138,10 @@ export const parseWeek = (records, type) => {
             for (const record of entries[entry]) {
                 total += record.value;
             }
-            if (data[day.day()] === undefined) 
+            if (data[day.day()] === undefined)
                 data[day.day()] = total;
         }
-        else 
+        else
             break;
     }
 

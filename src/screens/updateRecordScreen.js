@@ -17,7 +17,7 @@ class Screen extends React.Component {
     constructor(props) {
         super(props);
 
-        var icons = props.route.params.title === 'Expense' ? props.expenseCategories : props.incomeCategories;
+        var icons = JSON.parse(JSON.stringify(props.route.params.title === 'Expense' ? props.expenseCategories : props.incomeCategories));
         if (icons[icons.length - 1].key !== 'Add')
             icons.push({ key: 'Add', iconName: 'plus' });
         this.state = {

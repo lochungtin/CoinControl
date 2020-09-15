@@ -10,7 +10,9 @@ import {
     DEFAULT_INCOME_SELECTION,
     DEFAULT_SETTINGS,
     DELETE_HISTORY,
+    UPDATE_EXPENSE_SELECTION,
     UPDATE_GOAL,
+    UPDATE_INCOME_SELECTION,
     UPDATE_SETTINGS,
 } from './action';
 import {
@@ -41,10 +43,12 @@ const updateExpenseCategory = (categories = {}, action) => {
     return categories;
 }
 
-const updateExpenseSelection = (selection = {}, action) => {
-    switch(action.type) {
+const updateExpenseSelection = (selection = [], action) => {
+    switch (action.type) {
         case DEFAULT_EXPENSE_SELECTION:
             return defaultExpenseSelection;
+        case UPDATE_EXPENSE_SELECTION:
+            return action.payload;
     }
     return selection;
 }
@@ -67,10 +71,12 @@ const updateIncomeCategory = (categories = {}, action) => {
     return categories;
 }
 
-const updateIncomeSelection = (selection = {}, action) => {
-    switch(action.type) {
+const updateIncomeSelection = (selection = [], action) => {
+    switch (action.type) {
         case DEFAULT_INCOME_SELECTION:
             return defaultIncomeSelection;
+        case UPDATE_INCOME_SELECTION:
+            return action.payload;
     }
     return selection;
 }
