@@ -9,7 +9,7 @@ import { defaultExpenseCategory, defaultExpenseSelection, defaultGoal, defaultIn
 import { store } from '../redux/store';
 import accountScreen from '../screens/accountScreen';
 import chartScreen from '../screens/chartScreen';
-import customCategory from '../screens/customCategory';
+import customCategoryScreen from '../screens/customCategoryScreen';
 import homeScreen from '../screens/homeScreen';
 import settingsScreen from '../screens/settingsScreen';
 import updateRecordScreen from '../screens/updateRecordScreen';
@@ -43,7 +43,7 @@ class AppNav extends React.Component {
             <Main.Navigator>
                 <Main.Screen name='Home' component={homeScreen} options={{ headerShown: false }} />
                 <Main.Screen name='Update' component={updateRecordScreen} options={{ headerShown: false }} />
-                <Main.Screen name='Category' component={customCategory} options={{ headerShown: false }} />
+                <Main.Screen name='Category' component={customCategoryScreen} options={{ headerShown: false }} />
             </Main.Navigator>
         )
     }
@@ -53,7 +53,7 @@ class AppNav extends React.Component {
             <Settings.Navigator>
                 <Settings.Screen name='Settings' component={settingsScreen} options={{ headerShown: false }} />
                 <Settings.Screen name='Account' component={accountScreen} options={{ headerShown: false }} />
-                <Settings.Screen name='Category' component={customCategory} options={{ headerShown: false }} />
+                <Settings.Screen name='Category' component={customCategoryScreen} options={{ headerShown: false }} />
             </Settings.Navigator>
         )
     }

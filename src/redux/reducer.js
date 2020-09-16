@@ -3,17 +3,22 @@ import { combineReducers } from 'redux';
 
 import {
     ADD_RECORD,
+    ADD_EXPENSE_CATEGORY,
+    ADD_INCOME_CATEGORY,
     DEFAULT_EXPENSE_CATEGORY,
     DEFAULT_EXPENSE_SELECTION,
     DEFAULT_GOAL,
     DEFAULT_INCOME_CATEGORY,
     DEFAULT_INCOME_SELECTION,
     DEFAULT_SETTINGS,
+    DELETE_EXPENSE_CATEGORY,
+    DELETE_INCOME_CATEGORY,
     DELETE_HISTORY,
     UPDATE_EXPENSE_SELECTION,
     UPDATE_GOAL,
     UPDATE_INCOME_SELECTION,
     UPDATE_SETTINGS,
+
 } from './action';
 import {
     defaultExpenseCategories,
@@ -35,10 +40,12 @@ const updateRecords = (records = [], action) => {
     return records;
 }
 
-const updateExpenseCategory = (categories = {}, action) => {
+const updateExpenseCategory = (categories = [], action) => {
     switch (action.type) {
         case DEFAULT_EXPENSE_CATEGORY:
             return defaultExpenseCategories;
+        case ADD_EXPENSE_CATEGORY:
+            return [...categories, action.payload];
     }
     return categories;
 }
@@ -63,10 +70,12 @@ const updateGoal = (goal = {}, action) => {
     return goal;
 }
 
-const updateIncomeCategory = (categories = {}, action) => {
+const updateIncomeCategory = (categories = [], action) => {
     switch (action.type) {
         case DEFAULT_INCOME_CATEGORY:
             return defaultIncomeCategories;
+        case ADD_INCOME_CATEGORY:
+            return [...categories, action.payload];
     }
     return categories;
 }

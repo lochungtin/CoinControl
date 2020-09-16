@@ -1,5 +1,21 @@
 import { goldenBrown } from './styles';
 
+export const customCategoryIconList = [
+    'alpha-a-circle-outline',
+    'alpha-b-circle-outline',
+    'alpha-c-circle-outline',
+    'alpha-d-circle-outline',
+    'alpha-e-circle-outline',
+    'alpha-f-circle-outline',
+    'alpha-g-circle-outline',
+    'alpha-h-circle-outline',
+    'alpha-i-circle-outline',
+    'alpha-j-circle-outline',
+    'alpha-k-circle-outline',
+    'alpha-l-circle-outline',
+    'alpha-m-circle-outline',
+]
+
 export const defaultExpenseCategories = [
     { default: 'true', key: 'Bills', iconName: 'text-box-outline' },
     { default: 'true', key: 'Entertainment', iconName: 'gamepad-variant-outline' },

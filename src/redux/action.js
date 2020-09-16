@@ -1,10 +1,14 @@
 export const ADD_RECORD = 'ADD_RECORD';
+export const ADD_EXPENSE_CATEGORY = 'ADD_EXPENSE_CATEGORY';
+export const ADD_INCOME_CATEGORY = 'ADD_INCOME_CATEGORY';
 export const DEFAULT_EXPENSE_CATEGORY = 'DEFAULT_EXPENSE_CATEGORY';
 export const DEFAULT_EXPENSE_SELECTION = 'DEFAULT_EXPENSE_SELECTION';
 export const DEFAULT_GOAL = 'DEFAULT_GOAL';
 export const DEFAULT_INCOME_CATEGORY = 'DEFAULT_INCOME_CATEGORY';
 export const DEFAULT_INCOME_SELECTION = 'DEFAULT_INCOME_SELECTION';
 export const DEFAULT_SETTINGS = 'DEFAULT_SETTINGS';
+export const DELETE_EXPENSE_CATEGORY = 'DELETE_EXPENSE_CATEGORY';
+export const DELETE_INCOME_CATEGORY = 'DELETE_INCOME_CATEGORY';
 export const DELETE_HISTORY = 'DELETE_HISTORY';
 export const UPDATE_CATEGORY = 'UPDATE_CATEGORY';
 export const UPDATE_EXPENSE_SELECTION = 'UPDATE_EXPENSE_SELECTION';
@@ -14,6 +18,16 @@ export const UPDATE_SETTINGS = 'UPDATE_SETTINGS';
 
 export const addRecord = payload => ({
     type: ADD_RECORD,
+    payload: payload,
+});
+
+export const addExpenseCategory = payload => ({
+    type: ADD_EXPENSE_CATEGORY,
+    payload: payload,
+});
+
+export const addIncomeCategory = payload => ({
+    type: ADD_INCOME_CATEGORY,
     payload: payload,
 });
 
@@ -39,6 +53,16 @@ export const defaultIncomeSelection = () => ({
 
 export const defaultSettings = () => ({
     type: DEFAULT_SETTINGS,
+});
+
+export const deleteExpenseCategory = payload => ({
+    type: DELETE_EXPENSE_CATEGORY,
+    payload: payload,
+});
+
+export const deleteIncomeCategory = payload => ({
+    type: DELETE_INCOME_CATEGORY,
+    payload: payload,
 });
 
 export const deleteHistory = () => ({
