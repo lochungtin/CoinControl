@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
@@ -14,10 +14,18 @@ class Screen extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            adding: false,
+            deleting: false,
+        }
     }
 
     centerText = () => {
         return this.props.settings.darkMode ? styles.centerTextD : styles.centerTextL;
+    }
+
+    color = () => {
+        return this.props.settings.darkMode ? white : black;
     }
 
     data = () => {
@@ -30,13 +38,24 @@ class Screen extends React.Component {
                 <ScreenHeader dark={this.props.settings.darkMode} action={() => this.props.navigation.goBack()} name={'Edit ' + this.props.route.params.title + ' Category'} />
                 <FlatList
                     data={this.data()}
-                    renderItem={({ item }) => <CategoryItem 
-                        dark={this.props.settings.darkMode} 
-                        accent={this.props.settings.accent}
-                        item={item} 
+                    renderItem={({ item }) =>
+                        <CategoryItem
+                            dark={this.props.settings.darkMode}
+                            accent={this.props.settings.accent}
+                            expand={this.state.deleting}
+                            item={item}
                         />
                     }
+                    style={{ marginVertical: 50 }}
                 />
+                <View style={{ ...styles.columns, justifyContent: 'space-between', width: '25%' }}>
+                    <TouchableOpacity onPress={() => this.setState({ adding: true })}>
+                        <Icon name={'plus'} size={30} color={this.color()} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.setState({ deleting: !this.state.deleting })}>
+                        <Icon name={'trash-can'} size={30} color={this.state.deleting ? this.props.settings.accent : this.color()} />
+                    </TouchableOpacity>
+                </View>
             </View>
         );
     }
