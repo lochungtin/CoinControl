@@ -25,8 +25,14 @@ export default class ChartSelectionItem extends React.Component {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    this.props.action(this.props.item.key, !this.state.selected);
-                    this.setState({ selected: !this.state.selected });
+                    if (this.props.canRemove && this.state.selected) {
+                        this.props.action(this.props.item.key, false);
+                        this.setState({ selected: false });
+                    }
+                    else if (this.props.canAdd && !this.state.selected) {
+                        this.props.action(this.props.item.key, true);
+                        this.setState({ selected: true });
+                    }
                 }}
                 style={{ ...styles.columns, justifyContent: 'space-between', marginVertical: 5, paddingHorizontal: '15%', width: '100%' }}
             >

@@ -143,9 +143,9 @@ class Screen extends React.Component {
                                     <ChartSelectionItem
                                         dark={this.props.settings.darkMode}
                                         accent={this.props.settings.accent}
-                                        action={(itemName, selected) => { 
+                                        action={(itemName, selected) => {
                                             if (selected) {
-                                                if (this.state.type === 'Expense') 
+                                                if (this.state.type === 'Expense')
                                                     store.dispatch(updateExpenseSelection([...this.props.expenseSelection, itemName]));
                                                 else
                                                     store.dispatch(updateIncomeSelection([...this.props.incomeSelection, itemName]));
@@ -165,6 +165,8 @@ class Screen extends React.Component {
                                                 }
                                             }
                                         }}
+                                        canAdd={this.state.type === 'Expense' ? this.props.expenseSelection.length < 8 : this.props.incomeSelection < 8}
+                                        canRemove={this.state.type === 'Expense' ? this.props.expenseSelection.length > 1 : this.props.incomeSelection > 1}
                                         item={item}
                                         selected={this.selected(this.state.type === 'Expense' ? this.props.expenseSelection : this.props.incomeSelection, item.key)}
                                     />
