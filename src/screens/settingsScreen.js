@@ -177,8 +177,8 @@ class Screen extends React.Component {
                     <SettingsItem dark={this.props.settings.darkMode} accent={this.props.settings.accent} action={() => store.dispatch(updateSettings({ key: 'darkMode', update: !this.props.settings.darkMode }))} iconL={'moon-waning-crescent'} state={this.props.settings.darkMode} switch={true} text={'Dark Mode'} />
 
                     <SettingsHeader dark={this.props.settings.darkMode} title={'CATEGORIES'} />
-                    <SettingsItem dark={this.props.settings.darkMode} iconL={'shopping'} text={'Expense Categories'} />
-                    <SettingsItem dark={this.props.settings.darkMode} iconL={'cash'} text={'Income Categories'} />
+                    <SettingsItem dark={this.props.settings.darkMode} action={() => this.props.navigation.navigate('Category', {title: 'Expense'})} iconL={'shopping'} text={'Expense Categories'} />
+                    <SettingsItem dark={this.props.settings.darkMode} action={() => this.props.navigation.navigate('Category', {title: 'Income'})} iconL={'cash'} text={'Income Categories'} />
                     <SettingsItem dark={this.props.settings.darkMode} action={() => this.setState({ resetCategory: true })} iconL={'backup-restore'} text={'Reset Default Categories'} />
 
                     <SettingsHeader dark={this.props.settings.darkMode} title={'ADVANCED'} />

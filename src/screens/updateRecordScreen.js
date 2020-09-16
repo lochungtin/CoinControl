@@ -16,19 +16,16 @@ class Screen extends React.Component {
 
     constructor(props) {
         super(props);
-
-        var icons = JSON.parse(JSON.stringify(props.route.params.title === 'Expense' ? props.expenseCategories : props.incomeCategories));
-        if (icons[icons.length - 1].key !== 'Add')
-            icons.push({ key: 'Add', iconName: 'plus' });
+        var categories = props.route.params.title === 'Expense' ? props.expenseCategories : props.incomeCategories;
         this.state = {
             category: '',
             date: moment().format('YYYY-MM-DD'),
             icon: '',
             grid: [
-                icons.slice(0, 4),
-                icons.slice(4, 8),
-                icons.slice(8, 12),
-                icons.slice(12, 16),
+                categories.slice(0, 4),
+                categories.slice(4, 8),
+                categories.slice(8, 12),
+                categories.slice(12, 16),
             ],
             open: false,
             title: '',
@@ -68,12 +65,7 @@ class Screen extends React.Component {
                                     color={this.props.settings.accent}
                                     iconName={item.iconName}
                                     iconSize={25}
-                                    onPress={() => {
-                                        if (item.key === 'Add')
-                                            this.props.navigation.navigate('Category', { title: this.props.route.params.title });
-                                        else
-                                            this.setState({ category: item.key, icon: item.iconName, open: true });
-                                    }}
+                                    onPress={() => this.setState({ category: item.key, icon: item.iconName, open: true })}
                                     selected={this.state.category === item.key}
                                     size={35}
                                 />
@@ -88,12 +80,9 @@ class Screen extends React.Component {
                                     color={this.props.settings.accent}
                                     iconName={item.iconName}
                                     iconSize={25}
-                                    onPress={() => {
-                                        if (item.key === 'Add')
-                                            this.props.navigation.navigate('Category', { title: this.props.route.params.title });
-                                        else
-                                            this.setState({ category: item.key, icon: item.iconName, open: true });
-                                    }}
+                                    onPress={() =>
+                                        this.setState({ category: item.key, icon: item.iconName, open: true })
+                                    }
                                     selected={this.state.category === item.key}
                                     size={35}
                                 />
@@ -108,12 +97,7 @@ class Screen extends React.Component {
                                     color={this.props.settings.accent}
                                     iconName={item.iconName}
                                     iconSize={25}
-                                    onPress={() => {
-                                        if (item.key === 'Add')
-                                            this.props.navigation.navigate('Category', { title: this.props.route.params.title });
-                                        else
-                                            this.setState({ category: item.key, icon: item.iconName, open: true });
-                                    }}
+                                    onPress={() => this.setState({ category: item.key, icon: item.iconName, open: true })}
                                     selected={this.state.category === item.key}
                                     size={35}
                                 />
@@ -122,6 +106,7 @@ class Screen extends React.Component {
                         ))}
                     </View>
                 </View>
+                <ExpandButton dark={this.props.settings.darkMode} onPress={() => this.props.navigation.navigate('Category', {title: this.props.route.params.title})}/>
                 {!this.state.open &&
                     <TouchableOpacity onPress={this.props.navigation.goBack} style={this.props.settings.darkMode ? recordStyles.cancelBtnD : recordStyles.cancelBtnL}>
                         <Text style={styles.centerTextL}>Cancel</Text>

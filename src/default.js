@@ -1,14 +1,14 @@
 import { goldenBrown } from './styles';
 
 export const defaultExpenseCategories = [
-    { key: 'Bills', iconName: 'text-box-outline' },
-    { key: 'Entertainment', iconName: 'gamepad-variant-outline' },
-    { key: 'Food', iconName: 'food-fork-drink' },
-    { key: 'Groceries', iconName: 'cart-outline' },
-    { key: 'Office', iconName: 'paperclip' },
-    { key: 'Other', iconName: 'information-variant' },
-    { key: 'Shopping', iconName: 'shopping-outline' },
-    { key: 'Transport', iconName: 'train-car' },
+    { default: 'true', key: 'Bills', iconName: 'text-box-outline' },
+    { default: 'true', key: 'Entertainment', iconName: 'gamepad-variant-outline' },
+    { default: 'true', key: 'Food', iconName: 'food-fork-drink' },
+    { default: 'true', key: 'Groceries', iconName: 'cart-outline' },
+    { default: 'true', key: 'Office', iconName: 'paperclip' },
+    { default: 'true', key: 'Other', iconName: 'information-variant' },
+    { default: 'true', key: 'Shopping', iconName: 'shopping-outline' },
+    { default: 'true', key: 'Transport', iconName: 'train-car' },
 ]
 
 export const defaultExpenseSelection = [
@@ -28,10 +28,10 @@ export const defaultGoal = {
 }
 
 export const defaultIncomeCategories = [
-    { key: 'Allowance', iconName: 'wallet-outline' },
-    { key: 'Loan', iconName: 'bank' },
-    { key: 'Returns', iconName: 'keyboard-backspace' },
-    { key: 'Salary', iconName: 'cash' },
+    { default: 'true', key: 'Allowance', iconName: 'wallet-outline' },
+    { default: 'true', key: 'Loan', iconName: 'bank' },
+    { default: 'true', key: 'Returns', iconName: 'keyboard-backspace' },
+    { default: 'true', key: 'Salary', iconName: 'cash' },
 ]
 
 export const defaultIncomeSelection = [

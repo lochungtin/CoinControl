@@ -53,7 +53,7 @@ class AppNav extends React.Component {
             <Settings.Navigator>
                 <Settings.Screen name='Settings' component={settingsScreen} options={{ headerShown: false }} />
                 <Settings.Screen name='Account' component={accountScreen} options={{ headerShown: false }} />
-                <Settings.Screen name='Catergory' component={customCategory} options={{ headerShown: false }} />
+                <Settings.Screen name='Category' component={customCategory} options={{ headerShown: false }} />
             </Settings.Navigator>
         )
     }
