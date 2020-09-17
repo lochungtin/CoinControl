@@ -74,6 +74,12 @@ class Screen extends React.Component {
                         <CategoryItem
                             dark={this.props.settings.darkMode}
                             accent={this.props.settings.accent}
+                            action={(key) => {
+                                if (this.props.route.params.title === 'Expense') 
+                                    store.dispatch(deleteExpenseCategory(key));
+                                else 
+                                    store.dispatch(deleteIncomeCategory(key));
+                            }}
                             expand={this.state.deleting}
                             item={item}
                         />

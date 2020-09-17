@@ -46,6 +46,15 @@ const updateExpenseCategory = (categories = [], action) => {
             return defaultExpenseCategories;
         case ADD_EXPENSE_CATEGORY:
             return [...categories, action.payload];
+        case DELETE_EXPENSE_CATEGORY:
+            var temp = [...categories];
+            var position
+            for (position = 0; position < temp.length; position++) {
+                if (temp[position].key === action.payload)
+                    break;
+            }
+            temp.splice(position, 1);
+            return temp;
     }
     return categories;
 }
@@ -76,6 +85,15 @@ const updateIncomeCategory = (categories = [], action) => {
             return defaultIncomeCategories;
         case ADD_INCOME_CATEGORY:
             return [...categories, action.payload];
+        case DELETE_INCOME_CATEGORY:
+            var temp = [...categories];
+            var position
+            for (position = 0; position < temp.length; position++) {
+                if (temp[position].key === action.payload)
+                    break;
+            }
+            temp.splice(position, 1);
+            return temp;
     }
     return categories;
 }

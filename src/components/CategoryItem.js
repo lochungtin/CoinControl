@@ -21,7 +21,7 @@ export default class CategoryItem extends React.Component {
                 <View style={{ width: '20%' }}>
                     {!this.props.item.default && this.props.expand && 
                         <View style={{...styles.columns, justifyContent: 'space-between', }}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.props.action(this.props.item.key)}>
                                 <Icon name={'trash-can'} size={25} color={this.color()} />
                             </TouchableOpacity>
                         </View>
