@@ -202,20 +202,6 @@ export const datePickerStyles = StyleSheet.create({
 // screen styles
 
 export const categoryStyles = StyleSheet.create({
-    modalViewD: {
-        backgroundColor: shade3,
-        borderRadius: 40,
-        height: 150,
-        paddingHorizontal: '5%',
-        width: maxWidth,
-    },
-    modalViewL: {
-        backgroundColor: shade2,
-        borderRadius: 40,
-        height: 150,
-        paddingHorizontal: '5%',
-        width: maxWidth,
-    },
     cancelBtnD: {
         backgroundColor: white,
         borderRadius: 40,
@@ -231,6 +217,32 @@ export const categoryStyles = StyleSheet.create({
         paddingVertical: 10,
         margin: 10,
         width: '45%',
+    },
+    listD: {
+        borderColor: shade4,
+        borderTopWidth: 2,
+        borderBottomWidth: 2,
+        height: '70%',
+    },
+    listL: {
+        borderColor: shade1,
+        borderTopWidth: 2,
+        borderBottomWidth: 2,
+        height: '70%',
+    },
+    modalViewD: {
+        backgroundColor: shade3,
+        borderRadius: 40,
+        height: 150,
+        paddingHorizontal: '5%',
+        width: maxWidth,
+    },
+    modalViewL: {
+        backgroundColor: shade2,
+        borderRadius: 40,
+        height: 150,
+        paddingHorizontal: '5%',
+        width: maxWidth,
     },
 })
 
