@@ -7,7 +7,7 @@ import CategoryItem from '../components/CategoryItem';
 import ExpandButton from '../components/ExpandButton';
 import ScreenHeader from '../components/ScreenHeader';
 import { customCategoryIconList } from '../default';
-import { addExpenseCategory, addIncomeCategory, deleteExpenseCategory, deleteIncomeCategory, } from '../redux/action';
+import { addExpenseCategory, addIncomeCategory, deleteExpenseCategory, deleteIncomeCategory, updateExpenseSelection, updateIncomeSelection } from '../redux/action';
 import { store } from '../redux/store';
 import { black, categoryStyles, styles, white, } from '../styles';
 
@@ -75,10 +75,23 @@ class Screen extends React.Component {
                             dark={this.props.settings.darkMode}
                             accent={this.props.settings.accent}
                             action={(key) => {
-                                if (this.props.route.params.title === 'Expense') 
+                                if (this.props.route.params.title === 'Expense') {
                                     store.dispatch(deleteExpenseCategory(key));
-                                else 
+                                    var temp = [...this.props.expenseSelection];
+                                    var position = temp.indexOf(key);
+                                    if (position !== -1) {
+                                        temp.splice(position, 1);
+                                        store.dispatch(updateExpenseSelection(temp));
+                                    }
+                                }
+                                else
                                     store.dispatch(deleteIncomeCategory(key));
+                                    var temp = [...this.props.incomeSelection];
+                                    var position = temp.indexOf(key);
+                                    if (position !== -1) {
+                                        temp.splice(position, 1);
+                                        store.dispatch(updateIncomeSelection(temp));
+                                    }
                             }}
                             expand={this.state.deleting}
                             item={item}
@@ -91,7 +104,6 @@ class Screen extends React.Component {
                     <TouchableOpacity onPress={() => {
                         if (this.data().length < 16)
                             this.setState({ adding: true });
-
                     }}>
                         <Icon name={'plus'} size={30} color={this.color()} />
                     </TouchableOpacity>
@@ -154,8 +166,10 @@ class Screen extends React.Component {
 
 const mapStateToProps = state => ({
     expenseCategories: state.expenseCategories,
+    expenseSelection: state.expenseSelection,
     incomeCategories: state.incomeCategories,
-    settings: state.settings
+    incomeSelection: state.incomeSelection,
+    settings: state.settings,
 })
 
 export default connect(mapStateToProps)(Screen);
