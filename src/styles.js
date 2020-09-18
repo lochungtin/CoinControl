@@ -169,9 +169,6 @@ export const calendarStyles = StyleSheet.create({
         textAlign: 'center',
         width: 40
     },
-    scrollable: {
-        flex: 1,
-    },
     selectionContainer: {
         height: 40,
         paddingTop: 8,
@@ -191,7 +188,8 @@ export const datePickerStyles = StyleSheet.create({
     calendar: {
         width: 350,
     },
-    centered: {
+    modalViewContainer: {
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
