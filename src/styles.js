@@ -147,26 +147,42 @@ export const bubbleStyles = StyleSheet.create({
 export const calendarStyles = StyleSheet.create({
     container: {
         borderRadius: 30,
+        height: 375,
         paddingTop: 15,
         paddingHorizontal: 15,
     },
+    disabledD: {
+        color: shade3,
+        textAlign: 'center',
+    },  
+    disabledL: {
+        color: shade2,
+        textAlign: 'center',
+    },  
     dot: {
         borderRadius: 5,
         height: 5,
         margin: 1,
         width: 5,
     },
+    label: { 
+        textAlign: 'center',
+        width: 40
+    },
     scrollable: {
         flex: 1,
     },
     selectionContainer: {
-        borderRadius: 40,
         height: 40,
         paddingTop: 8,
         width: 40,
     },
-    title: {
+    titleD: {
         color: white,
+        fontSize: 16
+    },
+    titleL: {
+        color: black,
         fontSize: 16
     }
 });
@@ -188,11 +204,19 @@ export const datePickerStyles = StyleSheet.create({
         padding: 10,
         width: '47%',
     },
-    modalView: {
+    modalViewD: {
         alignItems: 'center',
-        backgroundColor: bgColor,
+        backgroundColor: bgColorD,
         borderRadius: 30,
-        height: 375,
+        height: 425,
+        margin: 20,
+        padding: 5,
+    },
+    modalViewL: {
+        alignItems: 'center',
+        backgroundColor: bgColorL,
+        borderRadius: 30,
+        height: 425,
         margin: 20,
         padding: 5,
     }

@@ -1,9 +1,11 @@
 import React from 'react'
 import { Modal, Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Calendar from './Calendar';
+import ExpandButton from './ExpandButton';
 import { datePickerStyles, styles, white } from '../styles';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 
 export default class DatePicker extends React.Component {
 
@@ -15,16 +17,19 @@ export default class DatePicker extends React.Component {
         }
     }
 
+    modalStyle = () => {
+        return this.props.dark ? datePickerStyles.modalViewD : datePickerStyles.modalViewL;
+    }
+
     render() {
         return (
             <View>
                 <Modal animationType={'fade'} transparent={true} visible={this.state.open}>
                     <View style={datePickerStyles.centered}>
-                        <View style={datePickerStyles.modalView}>
-                            <TouchableOpacity onPress={() => this.setState({ open: false })}>
-                                <Icon name={'dots-horizontal'} size={25} color={white} />
-                            </TouchableOpacity>
+                        <View style={this.modalStyle()}>
+                            <ExpandButton dark={this.props.dark} onPress={() => this.setState({ open: false })} />
                             <Calendar
+                                dark={this.props.dark}
                                 accent={this.props.accent}
                                 data={[]}
                                 onPress={(date) => {

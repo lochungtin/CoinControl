@@ -138,8 +138,8 @@ export const parseWeek = (records, type) => {
             for (const record of entries[entry]) {
                 total += record.value;
             }
-            if (data[day.day()] === undefined)
-                data[day.day()] = total;
+            if (data[day.weekday()] === undefined)
+                data[day.weekday()] = total;
         }
         else
             break;

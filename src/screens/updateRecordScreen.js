@@ -117,7 +117,7 @@ class Screen extends React.Component {
                         <View style={{ ...styles.modalView, height: maxHeight * 3 / 4 - 10 }}>
                             <View style={styles.rows}>
                                 <View style={styles.rows}>
-                                    <ExpandButton dark={this.props.settings.darkMode} onPress={() => this.setState({ category: '', open: false })} />
+                                    <ExpandButton dark={true} onPress={() => this.setState({ category: '', open: false })} />
                                     <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, minHeight: 60 }}>
                                         {this.state.icon !== '' &&
                                             <Icon name={this.state.icon} size={25} color={black} />
@@ -144,7 +144,7 @@ class Screen extends React.Component {
                                     <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, minHeight: 60 }}>
                                         <Icon name={'calendar-month'} size={25} color={black} />
                                         <View style={{ width: '100%', paddingHorizontal: '10%' }}>
-                                            <DatePicker accent={this.props.settings.accent} action={(date) => this.setState({ date: date })} date={this.state.date} />
+                                            <DatePicker dark={this.props.settings.darkMode} accent={this.props.settings.accent} action={(date) => this.setState({ date: date })} date={this.state.date} />
                                         </View>
                                     </View>
                                 </View>
