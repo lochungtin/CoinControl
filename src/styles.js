@@ -277,6 +277,14 @@ export const chartScreenStyles = StyleSheet.create({
         color: black,
         width: '50%'
     },
+    messageD: {
+        color: shade2,
+        textAlign: 'center',
+    },
+    messageL: {
+        color: shade3,
+        textAlign: 'center',
+    },
     percentageTextD: {
         color: white,
         width: '15%'
@@ -344,6 +352,14 @@ export const homeScreenStyles = StyleSheet.create({
         borderTopWidth: 2,
         maxHeight: '70%',
         minWidth: maxWidth,
+    },
+    messageD: {
+        color: shade2,
+        textAlign: 'center',
+    },
+    messageL: {
+        color: shade3,
+        textAlign: 'center',
     },
     sectionHeadD: {
         backgroundColor: bgColorD,

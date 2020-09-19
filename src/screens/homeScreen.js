@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, SafeAreaView, SectionList, Text, TextInput, TouchableOpacity, View, } from 'react-native';
+import { Modal, SafeAreaView, SectionList, StatusBar, Text, TextInput, TouchableOpacity, View, } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
@@ -11,7 +11,7 @@ import SectionItem from '../components/SectionItem';
 import { parseAll, parseGoal, parseGoalPercentage, parseTotal } from '../functions/parser';
 import { defaultGoal, updateGoal } from '../redux/action';
 import { store } from '../redux/store';
-import { black, iconColors, homeScreenStyles, maxWidth, maxHeight, styles, white } from '../styles';
+import { bgColorD, bgColorL, black, iconColors, homeScreenStyles, maxWidth, maxHeight, styles, white, } from '../styles';
 
 class Screen extends React.Component {
 
@@ -75,8 +75,20 @@ class Screen extends React.Component {
         }
     }
 
+    message = () => {
+        return this.props.settings.darkMode ? homeScreenStyles.messageD : homeScreenStyles.messageL;
+    }
+
     safeAreaView = () => {
         return this.props.settings.darkMode ? homeScreenStyles.borderD : homeScreenStyles.borderL;
+    }
+
+    statusBarBg = () => {
+        return this.props.settings.darkMode ? bgColorD : bgColorL;
+    }
+
+    statusBarStyle = () => {
+        return this.props.settings.darkMode ? 'light-content' : 'dark-content';
     }
 
     text = () => {
@@ -86,8 +98,9 @@ class Screen extends React.Component {
     render() {
         return (
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
+                <StatusBar backgroundColor={this.statusBarBg()} barStyle={this.statusBarStyle()}/>
                 <View style={{ alignItems: 'center', paddingTop: 20 }}>
-                    <View style={{ ...styles.rows, minHeight: '30%', justifyContent: 'space-evenly' }}>
+                    <View style={{ ...styles.rows, maxHeight: '30%', justifyContent: 'space-evenly' }}>
                         <View style={{ ...styles.columns, flex: 0 }}>
                             <Icon name={'currency-' + this.props.settings.currency} color={this.text().color} size={30} />
                             <Text style={this.balance()}>{this.state.balance}</Text>
@@ -121,6 +134,11 @@ class Screen extends React.Component {
                     </View>
 
                     <SafeAreaView style={this.safeAreaView()}>
+                        {this.props.records.length === 0 &&
+                            <View style={{ paddingTop: 30 }}>
+                                <Text style={this.message()}>Add a record to start using the app</Text>
+                            </View>
+                        }
                         <SectionList
                             renderItem={({ item }) => <SectionItem dark={this.props.settings.darkMode} accent={this.props.settings.accent} compactMode={this.props.settings.compactView} item={item} />}
                             renderSectionHeader={({ section: { title } }) => <SectionHeader dark={this.props.settings.darkMode} title={title} />}

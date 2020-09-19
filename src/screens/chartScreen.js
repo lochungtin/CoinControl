@@ -27,6 +27,10 @@ class Screen extends React.Component {
         return this.props.settings.darkMode ? iconColors.iconD : iconColors.iconL;
     }
 
+    message = () => {
+        return this.props.settings.darkMode ? chartScreenStyles.messageD : chartScreenStyles.messageL;
+    }
+
     selected = (list = [], itemName) => {
         return list.includes(itemName);
     }
@@ -103,7 +107,12 @@ class Screen extends React.Component {
                                 <View style={{ height: 10 }} />
                                 <Text style={{ ...this.text(), width: '85%' }}>{'Total ' + this.state.type + ' Pie Chart'}</Text>
                                 <View style={{ height: 20 }} />
-                                <Pie
+                                {this.props.records.length === 0 &&
+                                    <View style={{ paddingTop: 30 }}>
+                                        <Text style={this.message()}>Add a record to start using the app</Text>
+                                    </View>
+                                }
+                               <Pie
                                     backgroundColor={this.props.settings.darkMode ? bgColorD : bgColorL}
                                     dividerSize={6}
                                     innerRadius={100}
