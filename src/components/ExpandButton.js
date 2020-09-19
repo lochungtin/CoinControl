@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { black, white } from '../styles';
+import { black, white, } from '../styles';
 
 export default ExpandButton = props => {
     return (

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import { homeScreenStyles, styles } from '../styles';
+import { Text, View, } from 'react-native';
+import { homeScreenStyles, styles, } from '../styles';
 
 export default class SectionHeader extends React.Component {
 

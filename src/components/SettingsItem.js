@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, TouchableOpacity, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { settingStyles, iconColors, white } from '../styles';
+import { settingStyles, iconColors, white, } from '../styles';
 
 export default class SettingsItem extends React.Component {
 

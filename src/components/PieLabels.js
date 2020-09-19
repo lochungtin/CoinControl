@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { chartScreenStyles, styles } from '../styles';
+import { chartScreenStyles, styles, } from '../styles';
 
 export default class PieLabels extends React.Component {
 

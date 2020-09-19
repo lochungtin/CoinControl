@@ -8,7 +8,7 @@ import Bubble from '../components/Bubble';
 import ExpandButton from '../components/ExpandButton';
 import SectionHeader from '../components/SectionHeader';
 import SectionItem from '../components/SectionItem';
-import { parseAll, parseGoal, parseGoalPercentage, parseTotal } from '../functions/parser';
+import { parseAll, parseGoal, parseGoalPercentage, parseTotal, } from '../functions/parser';
 import { defaultGoal, updateGoal } from '../redux/action';
 import { store } from '../redux/store';
 import { bgColorD, bgColorL, black, iconColors, homeScreenStyles, maxWidth, maxHeight, styles, white, } from '../styles';

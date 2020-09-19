@@ -1,11 +1,10 @@
 import moment from 'moment';
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View, } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import CalendarDateSelector from './CalendarDateSelector';
-import ExpandButton from './ExpandButton';
-import { calendarStyles, styles } from '../styles';
+import { calendarStyles, styles, } from '../styles';
 
 const longMonths = [1, 3, 5, 7, 8, 10, 12];
 const shortMonths = [4, 6, 9, 11];
@@ -25,7 +24,7 @@ export default class Calendar extends React.Component {
             year: year,
         }
         this.days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-        this.disabled = [this.disabledTop, () => false, () => false, this.disabledBottom, this.disabledBottom, this.disabledBottom];  
+        this.disabled = [this.disabledTop, () => false, () => false, this.disabledBottom, this.disabledBottom, this.disabledBottom];
     }
 
     componentDidMount() {
@@ -83,7 +82,7 @@ export default class Calendar extends React.Component {
         });
         this.props.onPress(date);
     }
-    
+
     titleStyle = () => {
         return this.props.dark ? calendarStyles.titleD : calendarStyles.titleL;
     }

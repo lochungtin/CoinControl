@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Text, TouchableOpacity, View } from 'react-native';
+import { Modal, Text, TouchableOpacity, View, } from 'react-native';
 
 import Calendar from './Calendar';
 import ExpandButton from './ExpandButton';

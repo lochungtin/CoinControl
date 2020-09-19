@@ -8,9 +8,9 @@ import { connect } from 'react-redux';
 import ChartSelectionItem from '../components/ChartSelectionItem';
 import ExpandButton from '../components/ExpandButton';
 import PieLabels from '../components/PieLabels';
-import { parseLabel, parseSector, parseWeek } from '../functions/parser';
+import { parseLabel, parseSector, parseWeek, } from '../functions/parser';
 import { store } from '../redux/store';
-import { updateExpenseSelection, updateIncomeSelection } from '../redux/action';
+import { updateExpenseSelection, updateIncomeSelection, } from '../redux/action';
 import { bgColorD, bgColorL, chartScreenStyles, iconColors, maxWidth, styles, } from '../styles';
 
 class Screen extends React.Component {

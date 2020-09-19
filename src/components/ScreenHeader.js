@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text, View, } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { black, headerStyles, white } from '../styles';
+import { black, headerStyles, white, } from '../styles';
 
 export default class ScreenHeader extends React.Component {
     render() {

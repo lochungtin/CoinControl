@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Modal, ScrollView, Text, TouchableOpacity, View, } from 'react-native';
 import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';

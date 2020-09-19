@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text, View, } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { black, styles, white } from '../styles';
+import { black, styles, white, } from '../styles';
 
 export default class CategoryItem extends React.Component {
     constructor(props) {
