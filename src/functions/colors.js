@@ -13,3 +13,11 @@ export const mix = (foreground, background, alpha) => {
 
     return '#' + rR.toString(16) + gR.toString(16) + bR.toString(16);
 }
+
+export const str2rgb = string => {
+    const r = parseInt(string.substring(1, 3), 16);
+    const g = parseInt(string.substring(3, 5), 16);
+    const b = parseInt(string.substring(5, 7), 16);
+
+    return [r, g, b];
+}

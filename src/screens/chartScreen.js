@@ -8,10 +8,11 @@ import { connect } from 'react-redux';
 import ChartSelectionItem from '../components/ChartSelectionItem';
 import ExpandButton from '../components/ExpandButton';
 import PieLabels from '../components/PieLabels';
+import { str2rgb } from '../functions/colors';
 import { parseLabel, parseSector, parseWeek, } from '../functions/parser';
 import { store } from '../redux/store';
 import { updateExpenseSelection, updateIncomeSelection, } from '../redux/action';
-import { bgColorD, bgColorL, chartScreenStyles, iconColors, maxWidth, styles, } from '../styles';
+import { black, bgColorD, bgColorL, chartScreenStyles, iconColors, maxWidth, styles, white, } from '../styles';
 
 class Screen extends React.Component {
 
@@ -90,8 +91,14 @@ class Screen extends React.Component {
                                         backgroundColor: this.props.settings.darkMode ? bgColorD : bgColorL,
                                         backgroundGradientFrom: this.props.settings.darkMode ? bgColorD : bgColorL,
                                         backgroundGradientTo: this.props.settings.darkMode ? bgColorD : bgColorL,
-                                        color: (opacity = 1) => `rgba(255, 0, 0, ${opacity})`,
-                                        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                                        color: (opacity = 1) => {
+                                            var colorArray = str2rgb(this.props.settings.accent);
+                                            return 'rgba(' + colorArray[0] + ', ' + colorArray[1] + ', ' + colorArray[2] + ', ' + opacity + ')';
+                                        },
+                                        labelColor: (opacity = 1) => {
+                                            var colorArray = str2rgb(this.props.settings.darkMode ? white : black);
+                                            return 'rgba(' + colorArray[0] + ', ' + colorArray[1] + ', ' + colorArray[2] + ', ' + opacity + ')';
+                                        },
                                         style: {
                                             borderRadius: 16
                                         },
