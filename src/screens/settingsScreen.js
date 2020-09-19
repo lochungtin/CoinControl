@@ -7,6 +7,7 @@ import ExpandButton from '../components/ExpandButton';
 import ScreenHeader from '../components/ScreenHeader';
 import SettingsHeader from '../components/SettingsHeader';
 import SettingsItem from '../components/SettingsItem';
+import Scroller from '../components/Scroller';
 import { defaultExpenseCategory, defaultExpenseSelection, defaultIncomeCategory, defaultIncomeSelection, defaultSettings, deleteHistory, updateSettings, } from '../redux/action';
 import { store } from '../redux/store';
 import { colors, settingStyles, styles, } from '../styles';
@@ -15,6 +16,16 @@ class Screen extends React.Component {
 
     constructor(props) {
         super(props);
+        var hrs = new Array(24);
+        var mins = new Array(12);
+        for (var i = 0; i < 24; i++)
+            hrs[i] = { key: i, label: i }
+        for (var i = 0; i < 12; i++)
+            mins[i] = { key: i, label: i * 5 }
+
+        const hr = parseInt(props.settings.notifSchedule.substring(0, 2));
+        const min = parseInt(props.settings.notifSchedule.substring(3, 5)) / 5;
+
         this.state = {
             colorPicker: false,
             currencyPicker: false,
@@ -22,7 +33,16 @@ class Screen extends React.Component {
             resetCategory: false,
             resetSettings: false,
             timePicker: false,
+
+            hours: hrs,
+            minutes: mins,
+            setHr: hr,
+            setMin: min,
         }
+    }
+
+    addZero = num => {
+        return num < 10 ? '0' + num : num;
     }
 
     render() {
@@ -31,7 +51,20 @@ class Screen extends React.Component {
                 <Modal animationType={'slide'} transparent={true} visible={this.state.colorPicker || this.state.currencyPicker || this.state.timePicker}>
                     <View style={settingStyles.modalViewContainer}>
                         <View style={this.props.settings.darkMode ? settingStyles.modalViewD : settingStyles.modalViewL}>
-                            <ExpandButton dark={this.props.settings.darkMode} onPress={() => this.setState({ colorPicker: false, currencyPicker: false, timePicker: false })} />
+                            <ExpandButton
+                                dark={this.props.settings.darkMode}
+                                onPress={() => {
+                                    if (this.state.timePicker)
+                                        store.dispatch(updateSettings(
+                                            {
+                                                key: 'notifSchedule',
+                                                update: 
+                                                    this.addZero(this.state.hours[this.state.setHr].label) + ":" +
+                                                    this.addZero(this.state.minutes[this.state.setMin].label)
+                                            }
+                                        ))
+                                    this.setState({ colorPicker: false, currencyPicker: false, timePicker: false });
+                                }} />
                             {this.state.colorPicker &&
                                 <View style={styles.columns}>
                                     <Bubble
@@ -130,6 +163,22 @@ class Screen extends React.Component {
                                     />
                                 </View>
                             }
+                            {this.state.timePicker &&
+                                <View style={styles.columns}>
+                                    <Scroller
+                                        dark={this.props.settings.darkMode}
+                                        data={this.state.hours}
+                                        initial={this.state.setHr}
+                                        onScroll={(index) => this.setState({ setHr: this.state.hours[index].key })}
+                                    />
+                                    <Scroller
+                                        dark={this.props.settings.darkMode}
+                                        data={this.state.minutes}
+                                        initial={this.state.setMin}
+                                        onScroll={(index) => this.setState({ setMin: this.state.minutes[index].key })}
+                                    />
+                                </View>
+                            }
                         </View>
                     </View>
                 </Modal>
@@ -177,8 +226,8 @@ class Screen extends React.Component {
                     <SettingsItem dark={this.props.settings.darkMode} accent={this.props.settings.accent} action={() => store.dispatch(updateSettings({ key: 'darkMode', update: !this.props.settings.darkMode }))} iconL={'moon-waning-crescent'} state={this.props.settings.darkMode} switch={true} text={'Dark Mode'} />
 
                     <SettingsHeader dark={this.props.settings.darkMode} title={'CATEGORIES'} />
-                    <SettingsItem dark={this.props.settings.darkMode} action={() => this.props.navigation.navigate('Category', {title: 'Expense'})} iconL={'shopping'} text={'Expense Categories'} />
-                    <SettingsItem dark={this.props.settings.darkMode} action={() => this.props.navigation.navigate('Category', {title: 'Income'})} iconL={'cash'} text={'Income Categories'} />
+                    <SettingsItem dark={this.props.settings.darkMode} action={() => this.props.navigation.navigate('Category', { title: 'Expense' })} iconL={'shopping'} text={'Expense Categories'} />
+                    <SettingsItem dark={this.props.settings.darkMode} action={() => this.props.navigation.navigate('Category', { title: 'Income' })} iconL={'cash'} text={'Income Categories'} />
                     <SettingsItem dark={this.props.settings.darkMode} action={() => this.setState({ resetCategory: true })} iconL={'backup-restore'} text={'Reset Default Categories'} />
 
                     <SettingsHeader dark={this.props.settings.darkMode} title={'ADVANCED'} />

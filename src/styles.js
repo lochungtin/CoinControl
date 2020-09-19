@@ -97,47 +97,6 @@ export const styles = StyleSheet.create({
 
 // component styles
 
-export const headerStyles = StyleSheet.create({
-    headerD: {
-        alignItems: 'center',
-        backgroundColor: bgColorD,
-        borderColor: shade1,
-        borderBottomWidth: 2,
-        flex: 1,
-        flexDirection: 'row',
-        maxHeight: 60,
-        minHeight: 60,
-        justifyContent: 'space-between',
-        paddingLeft: 20,
-        width: maxWidth,
-    },
-    headerL: {
-        alignItems: 'center',
-        backgroundColor: bgColorL,
-        borderColor: shade4,
-        borderBottomWidth: 2,
-        flex: 1,
-        flexDirection: 'row',
-        maxHeight: 60,
-        minHeight: 60,
-        justifyContent: 'space-between',
-        paddingLeft: 20,
-        width: maxWidth,
-    },
-    textContainer: {
-        marginLeft: 30,
-        width: '85%',
-    },
-    textD: {
-        color: white,
-        fontSize: 20,
-    },
-    textL: {
-        color: black,
-        fontSize: 20,
-    },
-})
-
 export const bubbleStyles = StyleSheet.create({
     bubble: {
         alignItems: 'center',
@@ -224,6 +183,86 @@ export const datePickerStyles = StyleSheet.create({
         margin: 20,
         padding: 5,
     }
+});
+
+export const headerStyles = StyleSheet.create({
+    headerD: {
+        alignItems: 'center',
+        backgroundColor: bgColorD,
+        borderColor: shade1,
+        borderBottomWidth: 2,
+        flex: 1,
+        flexDirection: 'row',
+        maxHeight: 60,
+        minHeight: 60,
+        justifyContent: 'space-between',
+        paddingLeft: 20,
+        width: maxWidth,
+    },
+    headerL: {
+        alignItems: 'center',
+        backgroundColor: bgColorL,
+        borderColor: shade4,
+        borderBottomWidth: 2,
+        flex: 1,
+        flexDirection: 'row',
+        maxHeight: 60,
+        minHeight: 60,
+        justifyContent: 'space-between',
+        paddingLeft: 20,
+        width: maxWidth,
+    },
+    textContainer: {
+        marginLeft: 30,
+        width: '85%',
+    },
+    textD: {
+        color: white,
+        fontSize: 20,
+    },
+    textL: {
+        color: black,
+        fontSize: 20,
+    },
+});
+
+
+export const scrollerStyles = StyleSheet.create({
+    containerD: {
+        borderBottomWidth: 1,
+        borderColor: white,
+        flex: 1,
+        maxHeight: 50,
+        marginHorizontal: 10,
+        minHeight: 50,
+    },
+    containerL: {
+        borderBottomWidth: 1,
+        borderColor: black,
+        flex: 1,
+        maxHeight: 50,
+        marginHorizontal: 10,
+        minHeight: 50,
+    },
+    list: {
+        height: 50,
+    },
+    item: {
+        justifyContent: 'center',
+        marginHorizontal: 16,
+        maxHeight: 50,
+        minHeight: 50
+    },
+    titleD: {
+        color: white,
+        fontSize: 16,
+        textAlign: 'center',
+    },
+    titleL: {
+        color: black,
+        fontSize: 16,
+        textAlign: 'center',
+    },
 });
 
 
