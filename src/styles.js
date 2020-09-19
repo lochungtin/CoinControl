@@ -474,7 +474,7 @@ export const settingStyles = StyleSheet.create({
     },
     modalViewD: {
         alignItems: 'center',
-        backgroundColor: bgColorD,
+        backgroundColor: shade4,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         height: maxHeight / 10,
@@ -486,7 +486,7 @@ export const settingStyles = StyleSheet.create({
     },
     modalViewL: {
         alignItems: 'center',
-        backgroundColor: bgColorL,
+        backgroundColor: shade1,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         height: maxHeight / 10,
