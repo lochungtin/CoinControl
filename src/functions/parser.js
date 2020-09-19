@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { mix } from '../functions/colorMixer';
+import { mix } from './colors';
 import { mergeSort } from './mergeSort';
 
 export const parseAll = records => {

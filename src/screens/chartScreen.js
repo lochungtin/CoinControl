@@ -90,7 +90,7 @@ class Screen extends React.Component {
                                         backgroundColor: this.props.settings.darkMode ? bgColorD : bgColorL,
                                         backgroundGradientFrom: this.props.settings.darkMode ? bgColorD : bgColorL,
                                         backgroundGradientTo: this.props.settings.darkMode ? bgColorD : bgColorL,
-                                        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                                        color: (opacity = 1) => `rgba(255, 0, 0, ${opacity})`,
                                         labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                                         style: {
                                             borderRadius: 16
