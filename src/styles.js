@@ -8,8 +8,8 @@ export const maxWidth = Dimensions.get('screen').width;
 // colors
 
 export const colors = ['#ff3064', '#F2D996', '#34e0a4', '#63cbf7', '#873beb'];
+export const goldenBrown = '#F2D996';
 
-const bgColor = '#1C1C1C';
 const shade1 = '#E0E0E0';
 const shade2 = '#ACACAC';
 const shade3 = '#3C3C3C';
