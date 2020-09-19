@@ -119,35 +119,39 @@ class Screen extends React.Component {
                                         <Text style={this.message()}>Add a record to start using the app</Text>
                                     </View>
                                 }
-                               <Pie
-                                    backgroundColor={this.props.settings.darkMode ? bgColorD : bgColorL}
-                                    dividerSize={6}
-                                    innerRadius={100}
-                                    radius={130}
-                                    sections={parseSector(
-                                        this.props.records,
-                                        this.state.type,
-                                        this.props.settings.accent,
-                                        this.props.settings.darkMode ? bgColorL : bgColorD,
-                                        this.state.type === 'Expense' ? this.props.expenseSelection : this.props.incomeSelection,
-                                    )}
-                                    strokeCap={'butt'}
-                                />
-                                <View style={{ height: 30 }} />
-                                <View>
-                                    {
-                                        parseLabel(
-                                            this.props.records,
-                                            this.state.type,
-                                            this.props.settings.accent,
-                                            this.props.settings.darkMode ? bgColorL : bgColorD,
-                                            this.state.type === 'Expense' ? this.props.expenseSelection : this.props.incomeSelection,
-                                        ).map((item) => {
-                                            return <PieLabels dark={this.props.settings.darkMode} item={item} key={item.category} />
-                                        })
-                                    }
-                                </View>
-                                <View style={{ height: 10 }} />
+                                {this.props.records.length !== 0 &&
+                                    <>
+                                        <Pie
+                                            backgroundColor={this.props.settings.darkMode ? bgColorD : bgColorL}
+                                            dividerSize={6}
+                                            innerRadius={100}
+                                            radius={130}
+                                            sections={parseSector(
+                                                this.props.records,
+                                                this.state.type,
+                                                this.props.settings.accent,
+                                                this.props.settings.darkMode ? bgColorL : bgColorD,
+                                                this.state.type === 'Expense' ? this.props.expenseSelection : this.props.incomeSelection,
+                                            )}
+                                            strokeCap={'butt'}
+                                        />
+                                        <View style={{ height: 30 }} />
+                                        <View>
+                                            {
+                                                parseLabel(
+                                                    this.props.records,
+                                                    this.state.type,
+                                                    this.props.settings.accent,
+                                                    this.props.settings.darkMode ? bgColorL : bgColorD,
+                                                    this.state.type === 'Expense' ? this.props.expenseSelection : this.props.incomeSelection,
+                                                ).map((item) => {
+                                                    return <PieLabels dark={this.props.settings.darkMode} item={item} key={item.category} />
+                                                })
+                                            }
+                                        </View>
+                                        <View style={{ height: 10 }} />
+                                    </>
+                                }
                             </View>
                         </ScrollView>
                     }
