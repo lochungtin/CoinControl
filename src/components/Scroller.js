@@ -31,7 +31,6 @@ export default class Scroller extends React.Component {
                     onScroll={(event) => {
                         const offset = Math.ceil(event.nativeEvent.contentOffset.y / 10) * 10;
                         const index = Math.floor(offset * 2 / 100);
-                        console.log(index > this.props.data.length - 1 ? this.props.data.length - 1 : index);
                         this.props.onScroll(index > this.props.data.length - 1 ? this.props.data.length - 1 : index);
                     }}
                     renderItem={({ item }) => {
