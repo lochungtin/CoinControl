@@ -97,8 +97,8 @@ export const headerStyles = StyleSheet.create({
         borderBottomWidth: 2,
         flex: 1,
         flexDirection: 'row',
-        maxHeight: 50,
-        minHeight: 50,
+        maxHeight: 60,
+        minHeight: 60,
         justifyContent: 'space-between',
         paddingLeft: 10,
         width: maxWidth,
@@ -110,8 +110,8 @@ export const headerStyles = StyleSheet.create({
         borderBottomWidth: 2,
         flex: 1,
         flexDirection: 'row',
-        maxHeight: 50,
-        minHeight: 50,
+        maxHeight: 60,
+        minHeight: 60,
         justifyContent: 'space-between',
         paddingLeft: 10,
         width: maxWidth,
@@ -123,12 +123,10 @@ export const headerStyles = StyleSheet.create({
     textD: {
         color: white,
         fontSize: 20,
-
     },
     textL: {
         color: black,
         fontSize: 20,
-
     },
 })
 
