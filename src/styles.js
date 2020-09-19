@@ -100,7 +100,7 @@ export const headerStyles = StyleSheet.create({
         maxHeight: 60,
         minHeight: 60,
         justifyContent: 'space-between',
-        paddingLeft: 10,
+        paddingLeft: 20,
         width: maxWidth,
     },
     headerL: {
@@ -113,7 +113,7 @@ export const headerStyles = StyleSheet.create({
         maxHeight: 60,
         minHeight: 60,
         justifyContent: 'space-between',
-        paddingLeft: 10,
+        paddingLeft: 20,
         width: maxWidth,
     },
     textContainer: {
