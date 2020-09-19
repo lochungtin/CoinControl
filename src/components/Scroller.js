@@ -14,7 +14,7 @@ export default class Scroller extends React.Component {
     }
 
     text = () => {
-        return this.props.dark ? scrollerStyles.titleD : scrollerStyles.textL;
+        return this.props.dark ? scrollerStyles.titleD : scrollerStyles.titleL;
     }
 
     render() {
