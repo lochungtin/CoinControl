@@ -42,7 +42,12 @@ export const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
     },
-    modalView: {
+    modalViewContainer: {
+        alignItems: 'center',
+        flex: 1,
+        justifyContent: 'flex-end',
+    },
+    modalViewD: {
         backgroundColor: shade3,
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
@@ -50,10 +55,13 @@ export const styles = StyleSheet.create({
         paddingHorizontal: '5%',
         width: maxWidth,
     },
-    modalViewContainer: {
-        alignItems: 'center',
-        flex: 1,
-        justifyContent: 'flex-end',
+    modalViewL: {
+        backgroundColor: shade2,
+        borderTopLeftRadius: 40,
+        borderTopRightRadius: 40,
+        opacity: 0.9,
+        paddingHorizontal: '5%',
+        width: maxWidth,
     },
     roundView: {
         borderRadius: 40,
@@ -249,20 +257,6 @@ export const categoryStyles = StyleSheet.create({
         borderTopWidth: 2,
         borderBottomWidth: 2,
         height: '70%',
-    },
-    modalViewD: {
-        backgroundColor: shade3,
-        borderRadius: 40,
-        height: 150,
-        paddingHorizontal: '5%',
-        width: maxWidth,
-    },
-    modalViewL: {
-        backgroundColor: shade2,
-        borderRadius: 40,
-        height: 150,
-        paddingHorizontal: '5%',
-        width: maxWidth,
     },
 })
 
@@ -472,6 +466,11 @@ export const settingStyles = StyleSheet.create({
         fontSize: 15,
         textAlign: 'center',
     },
+    modalViewContainer: {
+        alignItems: 'center',
+        flex: 1,
+        justifyContent: 'flex-end',
+    },
     modalViewD: {
         alignItems: 'center',
         backgroundColor: shade4,
@@ -495,11 +494,6 @@ export const settingStyles = StyleSheet.create({
         paddingTop: '1%',
         paddingHorizontal: '5%',
         width: maxWidth,
-    },
-    modalViewContainer: {
-        alignItems: 'center',
-        flex: 1,
-        justifyContent: 'flex-end',
     },
     textD: {
         color: white,

@@ -79,6 +79,10 @@ class Screen extends React.Component {
         return this.props.settings.darkMode ? homeScreenStyles.messageD : homeScreenStyles.messageL;
     }
 
+    modalView = () => {
+        return this.props.settings.darkMode ? styles.modalViewD : styles.modalViewL;
+    }
+
     safeAreaView = () => {
         return this.props.settings.darkMode ? homeScreenStyles.borderD : homeScreenStyles.borderL;
     }
@@ -151,7 +155,7 @@ class Screen extends React.Component {
 
                 <Modal animationType='slide' transparent={true} visible={this.state.open}>
                     <View style={styles.modalViewContainer}>
-                        <View style={{ ...styles.modalView, height: maxHeight / 4 - 20 }}>
+                        <View style={{ ...this.modalView(), height: maxHeight / 4 - 20 }}>
                             <View style={styles.rows}>
                                 <ExpandButton dark={this.props.settings.darkMode} onPress={() => this.setState({ open: false })} />
                                 <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, maxHeight: 60 }}>

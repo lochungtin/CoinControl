@@ -57,8 +57,8 @@ class Screen extends React.Component {
         return this.props.settings.darkMode ? categoryStyles.listD : categoryStyles.listL;
     }
 
-    modal = () => {
-        return this.props.settings.darkMode ? categoryStyles.modalViewD : categoryStyles.modalViewL;
+    modalView = () => {
+        return this.props.settings.darkMode ? styles.modalViewD : styles.modalViewL;
     }
 
     render() {
@@ -113,7 +113,7 @@ class Screen extends React.Component {
                 </View>
                 <Modal animationType={'slide'} visible={this.state.adding} transparent={true}>
                     <View style={styles.modalViewContainer}>
-                        <View style={{ ...styles.modalView, height: 175 }}>
+                        <View style={{ ...this.modalView(), height: 175 }}>
                             <View style={styles.rows}>
                                 <ExpandButton dark={this.props.settings.darkMode} onPress={() => this.setState({ adding: false })} />
                                 <View style={{ ...styles.columns, ...styles.roundView, backgroundColor: white, maxHeight: 60, width: '95%' }}>
