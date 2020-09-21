@@ -25,6 +25,7 @@
     "react-native-gesture-handler": "~1.6.0",
     "react-native-pie": "^1.1.2",
     "react-native-progress": "^4.1.2",
+    "react-native-push-notification": "^5.1.1",
     "react-native-reanimated": "~1.9.0",
     "react-native-safe-area-context": "~3.0.7",
     "react-native-screens": "~2.9.0",
