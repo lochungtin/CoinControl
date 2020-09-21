@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React from 'react';
 import { Modal, ScrollView, Text, TouchableOpacity, View, } from 'react-native';
 import { connect } from 'react-redux';
@@ -8,6 +9,7 @@ import ScreenHeader from '../components/ScreenHeader';
 import SettingsHeader from '../components/SettingsHeader';
 import SettingsItem from '../components/SettingsItem';
 import Scroller from '../components/Scroller';
+import NotifService from '../notifications/notifService';
 import { defaultExpenseCategory, defaultExpenseSelection, defaultIncomeCategory, defaultIncomeSelection, defaultSettings, deleteHistory, updateSettings, } from '../redux/action';
 import { store } from '../redux/store';
 import { colors, settingStyles, styles, } from '../styles';
@@ -39,10 +41,27 @@ class Screen extends React.Component {
             setHr: hr,
             setMin: min,
         }
+
+        this.notif = new NotifService(
+            this.onRegister.bind(this),
+            this.onNotif.bind(this),
+        );
     }
 
     addZero = num => {
         return num < 10 ? '0' + num : num;
+    }
+
+    onRegister(token) {
+        this.setState({ registerToken: token.token, fcmRegistered: true });
+    }
+
+    onNotif(notif) {
+        this.notif.scheduleNotif();
+    }
+
+    handlePerm(perms) {
+        Alert.alert('Permissions', JSON.stringify(perms));
     }
 
     render() {
@@ -54,16 +73,27 @@ class Screen extends React.Component {
                             <ExpandButton
                                 dark={this.props.settings.darkMode}
                                 onPress={() => {
-                                    if (this.state.timePicker)
+                                    if (this.state.timePicker) {
+                                        this.notif.cancelAll();
+                                        var set = moment().set({
+                                            'hour': parseInt(this.addZero(this.state.hours[this.state.setHr].label)),
+                                            'minute': parseInt(this.addZero(this.state.minutes[this.state.setMin].label)),
+                                            'second': 0,
+                                        });
+                                        if (set.isBefore(moment()))
+                                            set.add(1, 'day');
+                                        this.notif.scheduleNotif(set, this.props.settings.accent);
+
                                         store.dispatch(updateSettings(
                                             {
                                                 key: 'notifSchedule',
-                                                update: 
+                                                update:
                                                     this.addZero(this.state.hours[this.state.setHr].label) + ":" +
                                                     this.addZero(this.state.minutes[this.state.setMin].label)
                                             }
                                         ))
-                                    this.setState({ colorPicker: false, currencyPicker: false, timePicker: false });
+                                        this.setState({ colorPicker: false, currencyPicker: false, timePicker: false });
+                                    }
                                 }} />
                             {this.state.colorPicker &&
                                 <View style={styles.columns}>
@@ -232,7 +262,28 @@ class Screen extends React.Component {
 
                     <SettingsHeader dark={this.props.settings.darkMode} title={'ADVANCED'} />
                     <SettingsItem dark={this.props.settings.darkMode} accent={this.props.settings.accent} action={() => store.dispatch(updateSettings({ key: 'compactView', update: !this.props.settings.compactView }))} iconL={'card-text'} state={this.props.settings.compactView} switch={true} text={'Compact View'} />
-                    <SettingsItem dark={this.props.settings.darkMode} accent={this.props.settings.accent} action={() => store.dispatch(updateSettings({ key: 'notification', update: !this.props.settings.notification }))} iconL={'bell'} state={this.props.settings.notification} switch={true} text={'Notifications'} />
+                    <SettingsItem
+                        dark={this.props.settings.darkMode}
+                        accent={this.props.settings.accent}
+                        action={() => {
+                            this.notif.cancelAll();
+                            if (!this.props.settings.notification) {
+                                var set = moment().set({
+                                    'hour': parseInt(this.props.settings.notifSchedule.substring(0, 2)),
+                                    'minute': parseInt(this.props.settings.notifSchedule.substring(3, 5)),
+                                    'second': 0,
+                                });
+                                if (set.isBefore(moment()))
+                                    set.add(1, 'day');
+                                this.notif.scheduleNotif(set, this.props.settings.accent);
+                            }
+                            store.dispatch(updateSettings({ key: 'notification', update: !this.props.settings.notification }))
+                        }}
+                        iconL={'bell'}
+                        state={this.props.settings.notification}
+                        switch={true}
+                        text={'Notifications'}
+                    />
                     <SettingsItem dark={this.props.settings.darkMode} action={() => this.setState({ timePicker: true, modal: true })} disabled={!this.props.settings.notification} iconL={'subdirectory-arrow-right'} text={this.props.settings.notifSchedule} />
                     <SettingsItem dark={this.props.settings.darkMode} action={() => this.setState({ resetSettings: true })} iconL={'backup-restore'} text={'Reset Default Settings'} />
                     <SettingsItem dark={this.props.settings.darkMode} action={() => this.setState({ resetAll: true })} iconL={'trash-can'} text={'Clear All Data'} />
