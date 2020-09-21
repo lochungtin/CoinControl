@@ -52,15 +52,15 @@ class Screen extends React.Component {
         return num < 10 ? '0' + num : num;
     }
 
-    onRegister(token) {
+    onRegister = token => {
         this.setState({ registerToken: token.token, fcmRegistered: true });
     }
 
-    onNotif(notif) {
-        this.notif.scheduleNotif();
+    onNotif = notif => {
+        
     }
 
-    handlePerm(perms) {
+    handlePerm = perms => {
         Alert.alert('Permissions', JSON.stringify(perms));
     }
 
@@ -248,7 +248,6 @@ class Screen extends React.Component {
                 <ScreenHeader dark={this.props.settings.darkMode} action={() => this.props.navigation.navigate('Home')} name={'Settings'} />
                 <ScrollView style={settingStyles.scrollView}>
                     <SettingsHeader dark={this.props.settings.darkMode} title={'GENERAL'} />
-                    <SettingsItem dark={this.props.settings.darkMode} iconL={'account'} text={'Account Settings'} />
                     <SettingsItem dark={this.props.settings.darkMode} action={() => this.setState({ currencyPicker: true, modal: true })} iconL={'currency-usd'} iconR={'currency-' + this.props.settings.currency} text={'Currency'} />
 
                     <SettingsHeader dark={this.props.settings.darkMode} title={'THEMES'} />

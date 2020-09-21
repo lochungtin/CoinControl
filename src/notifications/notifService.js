@@ -20,7 +20,7 @@ export default class NotifService {
         });
     }
 
-    scheduleNotif(time, color) {
+    scheduleNotif = (time, color) => {
         this.lastId++;
         console.log('scheduled notif @ ' + new Date(time));
         PushNotification.localNotificationSchedule({
@@ -52,7 +52,7 @@ export default class NotifService {
         });
     }
 
-    cancelAll() {
+    cancelAll = () => {
         PushNotification.cancelAllLocalNotifications();
     }
 }
