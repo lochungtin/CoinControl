@@ -8,9 +8,6 @@ export default class ChartSelectionItem extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            selected: this.props.selected,
-        }
     }
 
     color = () => {
@@ -18,21 +15,17 @@ export default class ChartSelectionItem extends React.Component {
     }
 
     icon = () => {
-        return this.state.selected ? 'checkbox-marked-circle-outline' : 'checkbox-blank-circle-outline';
+        return this.props.selected ? 'checkbox-marked-circle-outline' : 'checkbox-blank-circle-outline';
     }
 
     render() {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    if (this.props.canRemove && this.state.selected) {
+                    if (this.props.canRemove && this.props.selected)
                         this.props.action(this.props.item.key, false);
-                        this.setState({ selected: false });
-                    }
-                    else if (this.props.canAdd && !this.state.selected) {
+                    else if (this.props.canAdd && !this.props.selected)
                         this.props.action(this.props.item.key, true);
-                        this.setState({ selected: true });
-                    }
                 }}
                 style={{ ...styles.columns, justifyContent: 'space-between', marginVertical: 5, paddingHorizontal: '15%', width: '100%' }}
             >

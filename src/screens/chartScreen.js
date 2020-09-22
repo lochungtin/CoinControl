@@ -24,6 +24,10 @@ class Screen extends React.Component {
         }
     }
 
+    centerText = () => {
+        return this.props.settings.darkMode ? styles.centerTextD : styles.centerTextL;
+    }
+
     iconColor = () => {
         return this.props.settings.darkMode ? iconColors.iconD : iconColors.iconL;
     }
@@ -157,6 +161,7 @@ class Screen extends React.Component {
                     }
                     {this.state.edit &&
                         <View style={{ height: 480 }}>
+                            <Text style={this.centerText()}>Maximum Selection: 8</Text>
                             <FlatList
                                 data={this.state.type === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories}
                                 renderItem={({ item }) =>
@@ -178,6 +183,7 @@ class Screen extends React.Component {
                                                     store.dispatch(updateExpenseSelection(temp));
                                                 }
                                                 else {
+                                                    
                                                     var temp = [...this.props.incomeSelection];
                                                     var position = temp.indexOf(itemName);
                                                     temp.splice(position, 1);
@@ -185,12 +191,13 @@ class Screen extends React.Component {
                                                 }
                                             }
                                         }}
-                                        canAdd={this.state.type === 'Expense' ? this.props.expenseSelection.length < 8 : this.props.incomeSelection < 8}
-                                        canRemove={this.state.type === 'Expense' ? this.props.expenseSelection.length > 1 : this.props.incomeSelection > 1}
+                                        canAdd={this.state.type === 'Expense' ? this.props.expenseSelection.length < 8 : this.props.incomeSelection.length < 8}
+                                        canRemove={this.state.type === 'Expense' ? this.props.expenseSelection.length > 1 : this.props.incomeSelection.length > 1}
                                         item={item}
                                         selected={this.selected(this.state.type === 'Expense' ? this.props.expenseSelection : this.props.incomeSelection, item.key)}
                                     />
                                 }
+                                style={{ paddingTop: 10 }}
                             />
                         </View>
                     }

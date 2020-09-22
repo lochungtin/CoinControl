@@ -118,7 +118,7 @@ class Screen extends React.Component {
                 }
                 <Modal animationType='slide' transparent={true} visible={this.state.open}>
                     <View style={styles.modalViewContainer}>
-                        <View style={{ ...this.modalView(), height: maxHeight * 3 / 4 - 10 }}>
+                        <View style={{ ...this.modalView(), height: maxHeight * 2 / 3 - 10 }}>
                             <View style={styles.rows}>
                                 <View style={styles.rows}>
                                     <ExpandButton dark={true} onPress={() => this.setState({ category: '', open: false })} />
@@ -131,6 +131,7 @@ class Screen extends React.Component {
                                     <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, minHeight: 60 }}>
                                         <Icon name={'alpha-t-circle-outline'} size={25} color={black} />
                                         <TextInput
+                                            key
                                             placeholder={'Title (Optional)'}
                                             onChangeText={(text) => this.setState({ title: text })}
                                             style={recordStyles.input}
