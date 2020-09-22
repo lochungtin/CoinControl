@@ -265,6 +265,30 @@ export const scrollerStyles = StyleSheet.create({
     },
 });
 
+export const recordModalStyles = StyleSheet.create({
+    cancelBtnD: {
+        backgroundColor: white,
+        borderRadius: 40,
+        paddingHorizontal: 40,
+        paddingVertical: 10,
+        margin: 10,
+        width: '80%',
+    },
+    cancelBtnL: {
+        backgroundColor: shade1,
+        borderRadius: 40,
+        paddingHorizontal: 40,
+        paddingVertical: 10,
+        margin: 10,
+        width: '80%'
+    },
+    input: {
+        color: black,
+        textAlign: 'center',
+        width: '100%',
+    },
+});
+
 
 // screen styles
 
@@ -452,11 +476,6 @@ export const recordStyles = StyleSheet.create({
         paddingVertical: 10,
         margin: 10,
         width: '80%'
-    },
-    input: {
-        color: black,
-        textAlign: 'center',
-        width: '100%',
     },
 });
 

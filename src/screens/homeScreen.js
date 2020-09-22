@@ -149,6 +149,7 @@ class Screen extends React.Component {
                                     compactMode={this.props.settings.compactView}
                                     item={item}
                                     onDelete={key => store.dispatch(deleteRecord(key))}
+                                    onEdit={item => store.dispatch(editRecord(item))}
                                 />
                             }
                             renderSectionHeader={({ section: { title } }) => <SectionHeader dark={this.props.settings.darkMode} title={title} />}

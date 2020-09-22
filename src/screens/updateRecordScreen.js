@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
 import DatePicker from '../components/DatePicker';
+import RecordModal from '../components/RecordModal';
 import ScreenHeader from '../components/ScreenHeader';
 import { store } from '../redux/store';
 import { addRecord } from '../redux/action';
@@ -36,10 +37,6 @@ class Screen extends React.Component {
 
     centerText = () => {
         return this.props.settings.darkMode ? styles.centerTextD : styles.centerTextL;
-    }
-
-    modalView = () => {
-        return this.props.settings.darkMode ? styles.modalViewD : styles.modalViewL;
     }
 
     render() {
@@ -110,75 +107,26 @@ class Screen extends React.Component {
                         ))}
                     </View>
                 </View>
-                <ExpandButton dark={this.props.settings.darkMode} onPress={() => this.props.navigation.navigate('Category', {title: this.props.route.params.title})}/>
+                <ExpandButton dark={this.props.settings.darkMode} onPress={() => this.props.navigation.navigate('Category', { title: this.props.route.params.title })} />
                 {!this.state.open &&
                     <TouchableOpacity onPress={this.props.navigation.goBack} style={this.props.settings.darkMode ? recordStyles.cancelBtnD : recordStyles.cancelBtnL}>
                         <Text style={styles.centerTextL}>Cancel</Text>
                     </TouchableOpacity>
                 }
-                <Modal animationType='slide' transparent={true} visible={this.state.open}>
-                    <View style={styles.modalViewContainer}>
-                        <View style={{ ...this.modalView(), height: maxHeight * 2 / 3 - 10 }}>
-                            <View style={styles.rows}>
-                                <View style={styles.rows}>
-                                    <ExpandButton dark={true} onPress={() => this.setState({ category: '', open: false })} />
-                                    <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, minHeight: 60 }}>
-                                        {this.state.icon !== '' &&
-                                            <Icon name={this.state.icon} size={25} color={black} />
-                                        }
-                                        <Text style={recordStyles.input}>{this.state.category}</Text>
-                                    </View>
-                                    <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, minHeight: 60 }}>
-                                        <Icon name={'alpha-t-circle-outline'} size={25} color={black} />
-                                        <TextInput
-                                            key
-                                            placeholder={'Title (Optional)'}
-                                            onChangeText={(text) => this.setState({ title: text })}
-                                            style={recordStyles.input}
-                                        />
-                                    </View>
-                                    <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, minHeight: 60 }}>
-                                        <Icon name={'currency-usd-circle-outline'} size={25} color={black} />
-                                        <TextInput
-                                            keyboardType={'numeric'}
-                                            onChangeText={(text) => this.setState({ value: parseFloat(text) })}
-                                            placeholder={'amount'}
-                                            style={recordStyles.input}
-                                        />
-                                    </View>
-                                    <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, minHeight: 60 }}>
-                                        <Icon name={'calendar-month'} size={25} color={black} />
-                                        <View style={{ width: '100%', paddingHorizontal: '10%' }}>
-                                            <DatePicker dark={this.props.settings.darkMode} accent={this.props.settings.accent} action={(date) => this.setState({ date: date })} date={this.state.date} />
-                                        </View>
-                                    </View>
-                                </View>
-                                <View style={{ height: '50%' }} />
-                                <View style={{ ...styles.columns, justifyContent: 'space-between' }}>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            store.dispatch(addRecord({
-                                                category: this.state.category,
-                                                date: this.state.date,
-                                                icon: this.state.icon,
-                                                key: moment().format(),
-                                                title: this.state.title,
-                                                type: this.state.type,
-                                                value: this.state.value,
-                                            }));
-                                            this.props.navigation.goBack();
-                                        }}
-                                        style={{ ...styles.roundView, backgroundColor: this.props.settings.accent, width: '47.5%' }}>
-                                        <Text style={styles.centerTextL}>Save</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => this.setState({ category: '', open: false })} style={{ ...styles.roundView, backgroundColor: white, width: '47.5%' }}>
-                                        <Text style={styles.centerTextL}>Cancel</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                </Modal>
+                <RecordModal
+                    dark={this.props.settings.darkMode}
+                    accent={this.props.settings.accent}
+                    category={this.state.category}
+                    close={() => this.setState({ category: '', open: false })}
+                    date={moment().format('YYYY-MM-DD')}
+                    dispatch={record => {
+                        store.dispatch(addRecord(record));
+                        this.setState({ category: '', open: false });
+                    }}
+                    icon={this.state.icon}
+                    open={this.state.open}
+                    type={this.props.route.params.title}
+                />
             </View>
         );
     }
