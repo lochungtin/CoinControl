@@ -48,7 +48,7 @@ export default class NotifService {
             playSound: true,
             number: 10,
             soundName: 'default',
-            repeatType: 'minute',
+            repeatType: 'day',
         });
     }
 
