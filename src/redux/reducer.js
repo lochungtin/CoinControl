@@ -13,7 +13,9 @@ import {
     DEFAULT_SETTINGS,
     DELETE_EXPENSE_CATEGORY,
     DELETE_INCOME_CATEGORY,
+    DELETE_RECORD,
     DELETE_HISTORY,
+    EDIT_RECORD,
     UPDATE_EXPENSE_SELECTION,
     UPDATE_GOAL,
     UPDATE_INCOME_SELECTION,
@@ -36,6 +38,26 @@ const updateRecords = (records = [], action) => {
             return [...records, action.payload];
         case DELETE_HISTORY:
             return [];
+        case DELETE_RECORD:
+            var temp = [...records];
+            var found = false;
+            var pos = -1;
+            while (!found) {
+                if (temp[++pos].key === action.payload)
+                    found = true;
+            }
+            temp.splice(pos, 1);
+            return temp;
+        case EDIT_RECORD:
+            var temp = [...records];
+            var found = false;
+            var pos = -1;
+            while (!found) {
+                if (temp[++pos].key === action.payload.key)
+                    found = true;
+            }
+            temp.splice(pos, 1, action.payload);
+            return temp;
     }
     return records;
 }

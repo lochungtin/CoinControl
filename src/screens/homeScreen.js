@@ -9,7 +9,7 @@ import ExpandButton from '../components/ExpandButton';
 import SectionHeader from '../components/SectionHeader';
 import SectionItem from '../components/SectionItem';
 import { parseAll, parseGoal, parseGoalPercentage, parseTotal, } from '../functions/parser';
-import { defaultGoal, updateGoal } from '../redux/action';
+import { defaultGoal, deleteRecord, editRecord, updateGoal } from '../redux/action';
 import { store } from '../redux/store';
 import { bgColorD, bgColorL, black, iconColors, homeScreenStyles, maxWidth, maxHeight, styles, white, } from '../styles';
 
@@ -142,7 +142,15 @@ class Screen extends React.Component {
                             </View>
                         }
                         <SectionList
-                            renderItem={({ item }) => <SectionItem dark={this.props.settings.darkMode} accent={this.props.settings.accent} compactMode={this.props.settings.compactView} item={item} />}
+                            renderItem={({ item }) =>
+                                <SectionItem
+                                    dark={this.props.settings.darkMode}
+                                    accent={this.props.settings.accent}
+                                    compactMode={this.props.settings.compactView}
+                                    item={item}
+                                    onDelete={key => store.dispatch(deleteRecord(key))}
+                                />
+                            }
                             renderSectionHeader={({ section: { title } }) => <SectionHeader dark={this.props.settings.darkMode} title={title} />}
                             sections={parseAll(this.props.records)}
                             stickySectionHeadersEnabled={true}
