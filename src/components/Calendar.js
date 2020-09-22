@@ -23,7 +23,15 @@ export default class Calendar extends React.Component {
             selectedRow: '',
             year: year,
         }
-        this.days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+        this.days = [
+            { key: 0, label: 'S' },
+            { key: 1, label: 'M' },
+            { key: 2, label: 'T' },
+            { key: 3, label: 'W' },
+            { key: 4, label: 'T' },
+            { key: 5, label: 'F' },
+            { key: 6, label: 'S' }
+        ];
         this.disabled = [this.disabledTop, () => false, () => false, this.disabledBottom, this.disabledBottom, this.disabledBottom];
     }
 
@@ -149,13 +157,13 @@ export default class Calendar extends React.Component {
                 <View style={{ ...styles.columns, minHeight: 20, justifyContent: 'space-between' }} >
                     {this.days.map(item => {
                         return (
-                            <Text style={this.labelStyle(this.props.accent)}>{item}</Text>
+                            <Text key={item.key} style={this.labelStyle(this.props.accent)}>{item.label}</Text>
                         )
                     })}
                 </View>
                 {this.state.grid.map(row => {
                     return (
-                        <View style={{ ...styles.columns, minHeight: 20, justifyContent: 'space-between' }} >
+                        <View key={row} style={{ ...styles.columns, minHeight: 20, justifyContent: 'space-between' }} >
                             {row.map(item => {
                                 return (
                                     <CalendarDateSelector

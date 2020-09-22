@@ -136,7 +136,7 @@ class Screen extends React.Component {
                                                         }));
                                                     }
                                                     else {
-                                                        var iconName = customCategoryIconList[this.props.expenseCategories.length - 4];
+                                                        var iconName = customCategoryIconList[this.props.incomeCategories.length - 4];
                                                         var key = this.changeName(this.props.incomeCategories, this.state.newName, this.state.newName, 0);
                                                         store.dispatch(addIncomeCategory({
                                                             default: false,
