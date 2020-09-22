@@ -102,7 +102,7 @@ class Screen extends React.Component {
     render() {
         return (
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
-                <StatusBar backgroundColor={this.statusBarBg()} barStyle={this.statusBarStyle()}/>
+                <StatusBar backgroundColor={this.statusBarBg()} barStyle={this.statusBarStyle()} />
                 <View style={{ alignItems: 'center', paddingTop: 20 }}>
                     <View style={{ ...styles.rows, maxHeight: '30%', justifyContent: 'space-evenly' }}>
                         <View style={{ ...styles.columns, flex: 0 }}>
@@ -119,17 +119,15 @@ class Screen extends React.Component {
                         </View>
                         <View style={{ ...styles.columns, flex: 0, justifyContent: 'space-evenly' }}>
                             <View style={{ ...styles.rows, maxWidth: 70 }}>
-                                <Bubble color={this.props.settings.accent} iconName={'sync'} iconSize={25} onPress={() => console.log('sync')} size={35} />
-                                <Text style={this.centerText()}>Sync</Text>
-                            </View>
-                            <View style={{ ...styles.rows, maxWidth: 70 }}>
                                 <Bubble color={this.props.settings.accent} iconName={'plus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', { darkMode: this.props.settings.darkMode, title: 'Income' })} size={35} />
                                 <Text style={this.centerText()}>Income</Text>
                             </View>
+                            <View style={{ width: 15 }} />
                             <View style={{ ...styles.rows, maxWidth: 70 }}>
                                 <Bubble color={this.props.settings.accent} iconName={'minus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', { darkMode: this.props.settings.darkMode, title: 'Expense' })} size={35} />
                                 <Text style={this.centerText()}>Expense</Text>
                             </View>
+                            <View style={{ width: 15 }} />
                             <View style={{ ...styles.rows, maxWidth: 70 }}>
                                 <Bubble color={this.props.settings.accent} iconName={'flag-outline'} iconSize={25} onPress={() => this.setState({ open: true })} size={35} />
                                 <Text style={this.centerText()}>Set Goal</Text>
