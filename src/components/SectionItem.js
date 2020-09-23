@@ -46,7 +46,7 @@ export default class SectionItem extends React.Component {
                         </View>
                         <View style={{ ...styles.columns, justifyContent: 'space-between' }}>
                             <View style={{ width: '70%' }} />
-                            <TouchableOpacity onPress={() => { }}>
+                            <TouchableOpacity onPress={() => this.props.onEdit(this.props.item)}>
                                 <Icon name={'pencil-outline'} size={20} color={this.iconColor()} />
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => this.props.onDelete(this.props.item.key)}>

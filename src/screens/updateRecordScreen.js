@@ -1,16 +1,14 @@
 import moment from 'moment';
 import React from 'react';
-import { Modal, Text, TextInput, TouchableOpacity, View, } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Text, TouchableOpacity, View, } from 'react-native';
 import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
-import DatePicker from '../components/DatePicker';
 import RecordModal from '../components/RecordModal';
 import ScreenHeader from '../components/ScreenHeader';
 import { store } from '../redux/store';
 import { addRecord } from '../redux/action';
-import { black, maxHeight, recordStyles, styles, white, } from '../styles';
+import { recordStyles, styles, } from '../styles';
 import ExpandButton from '../components/ExpandButton';
 
 class Screen extends React.Component {
@@ -21,7 +19,7 @@ class Screen extends React.Component {
         this.state = {
             category: '',
             date: moment().format('YYYY-MM-DD'),
-            icon: '',
+            icon: 'check-box-outline-blank',
             grid: [
                 categories.slice(0, 4),
                 categories.slice(4, 8),
@@ -122,6 +120,7 @@ class Screen extends React.Component {
                     dispatch={record => {
                         store.dispatch(addRecord(record));
                         this.setState({ category: '', open: false });
+                        this.props.navigation.goBack();
                     }}
                     icon={this.state.icon}
                     open={this.state.open}

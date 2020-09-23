@@ -8,6 +8,7 @@ import Bubble from '../components/Bubble';
 import ExpandButton from '../components/ExpandButton';
 import SectionHeader from '../components/SectionHeader';
 import SectionItem from '../components/SectionItem';
+import RecordModal from '../components/RecordModal';
 import { parseAll, parseGoal, parseGoalPercentage, parseTotal, } from '../functions/parser';
 import { defaultGoal, deleteRecord, editRecord, updateGoal } from '../redux/action';
 import { store } from '../redux/store';
@@ -23,7 +24,9 @@ class Screen extends React.Component {
             balance: Math.floor(total),
             balanceDecimal: this.getDecimal(total),
             expand: '',
+            item: {},
             open: false,
+            rmOpen: false,
             toGoal: parseGoal(this.props.records, this.props.goal.amount),
         }
     }
@@ -149,7 +152,7 @@ class Screen extends React.Component {
                                     compactMode={this.props.settings.compactView}
                                     item={item}
                                     onDelete={key => store.dispatch(deleteRecord(key))}
-                                    onEdit={item => store.dispatch(editRecord(item))}
+                                    onEdit={item => this.setState({ item: item, rmOpen: true })}
                                 />
                             }
                             renderSectionHeader={({ section: { title } }) => <SectionHeader dark={this.props.settings.darkMode} title={title} />}
@@ -217,6 +220,24 @@ class Screen extends React.Component {
                         </View>
                     </View>
                 </Modal>
+                <RecordModal
+                    dark={this.props.settings.darkMode}
+                    accent={this.props.settings.accent}
+                    category={this.state.item.category}
+                    close={() => this.setState({ rmOpen: false })}
+                    date={this.state.item.date}
+                    dispatch={record => {
+                        console.log(record);
+                        store.dispatch(editRecord(record));
+                        this.setState({ rmOpen: false });
+                    }}
+                    icon={this.state.item.icon}
+                    id={this.state.item.key}
+                    open={this.state.rmOpen}
+                    title={this.state.item.title}
+                    type={this.state.item.type}
+                    value={this.state.item.value}
+                />
             </View>
         );
     }

@@ -12,13 +12,27 @@ export default class RecordModal extends React.Component {
         super(props);
         this.state = {
             date: props.date,
-            title: '',
-            value: 0,
+            editDate: false,
+            editTitle: false,
+            editDate: false,
+            title: undefined,
+            value: undefined,
         }
+
+        console.log(props);
     }
 
     modalView = () => {
         return this.props.dark ? styles.modalViewD : styles.modalViewL;
+    }
+
+    close = () => {
+        this.props.close();
+        this.setState({
+            editDate: false,
+            editTitle: false,
+            editValue: false,
+        })
     }
 
     render() {
@@ -28,32 +42,34 @@ export default class RecordModal extends React.Component {
                     <View style={{ ...this.modalView(), height: maxHeight * 2 / 3 - 10 }}>
                         <View style={styles.rows}>
                             <View style={styles.rows}>
-                                <ExpandButton dark={this.props.dark} onPress={() => this.props.close()} />
+                                <ExpandButton dark={this.props.dark} onPress={this.close} />
                                 <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, minHeight: 60 }}>
-                                    <Icon name={this.props.icon} size={25} color={black} />
+                                    {this.props.icon !== 'check-box-outline-blank' && <Icon name={this.props.icon} size={25} color={black} />}
                                     <Text style={recordModalStyles.input}>{this.props.category}</Text>
                                 </View>
                                 <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, minHeight: 60 }}>
                                     <Icon name={'alpha-t-circle-outline'} size={25} color={black} />
                                     <TextInput
                                         placeholder={'Title (Optional)'}
-                                        onChangeText={(text) => this.setState({ title: text })}
+                                        onChangeText={(text) => this.setState({ editTitle: true, title: text })}
                                         style={recordModalStyles.input}
+                                        value={this.state.editTitle ? this.state.title : this.props.title}
                                     />
                                 </View>
                                 <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, minHeight: 60 }}>
                                     <Icon name={'currency-usd-circle-outline'} size={25} color={black} />
                                     <TextInput
                                         keyboardType={'numeric'}
-                                        onChangeText={(text) => this.setState({ value: parseFloat(text) })}
+                                        onChangeText={(text) => this.setState({ editValue: true, value: text })}
                                         placeholder={'amount'}
                                         style={recordModalStyles.input}
+                                        value={this.state.editValue ? this.state.value.toString() : this.props.value === undefined ? undefined : this.props.value.toString()}
                                     />
                                 </View>
                                 <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, minHeight: 60 }}>
                                     <Icon name={'calendar-month'} size={25} color={black} />
                                     <View style={{ width: '100%', paddingHorizontal: '10%' }}>
-                                        <DatePicker dark={this.props.dark} accent={this.props.accent} action={(date) => this.setState({ date: date })} date={this.props.date} />
+                                        <DatePicker dark={this.props.dark} accent={this.props.accent} action={(date) => this.setState({ date: date, editDate: true })} date={this.state.editDate ? this.state.date : this.props.date} />
                                     </View>
                                 </View>
                             </View>
@@ -63,18 +79,18 @@ export default class RecordModal extends React.Component {
                                     onPress={() => {
                                         this.props.dispatch({
                                             category: this.props.category,
-                                            date: this.state.date,
+                                            date: this.state.editDate ? this.state.date : this.props.date,
                                             icon: this.props.icon,
-                                            key: moment().format(),
-                                            title: this.state.title,
+                                            key: this.props.id === undefined ? moment().format() : this.props.id,
+                                            title: this.state.editTitle ? this.state.title : this.props.title,
                                             type: this.props.type,
-                                            value: this.state.value,
+                                            value: this.state.editValue ? this.state.value : this.props.value,
                                         });
                                     }}
                                     style={{ ...styles.roundView, backgroundColor: this.props.accent, width: '47.5%' }}>
                                     <Text style={styles.centerTextL}>Save</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.props.close()} style={{ ...styles.roundView, backgroundColor: white, width: '47.5%' }}>
+                                <TouchableOpacity onPress={this.close} style={{ ...styles.roundView, backgroundColor: white, width: '47.5%' }}>
                                     <Text style={styles.centerTextL}>Cancel</Text>
                                 </TouchableOpacity>
                             </View>
