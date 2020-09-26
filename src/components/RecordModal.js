@@ -84,7 +84,7 @@ export default class RecordModal extends React.Component {
                                             key: this.props.id === undefined ? moment().format() : this.props.id,
                                             title: this.state.editTitle ? this.state.title : this.props.title,
                                             type: this.props.type,
-                                            value: this.state.editValue ? this.state.value : this.props.value,
+                                            value: parseFloat(this.state.editValue ? this.state.value : this.props.value),
                                         });
                                     }}
                                     style={{ ...styles.roundView, backgroundColor: this.props.accent, width: '47.5%' }}>
