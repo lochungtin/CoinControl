@@ -18,11 +18,8 @@ class Screen extends React.Component {
 
     constructor(props) {
         super(props);
-        const total = parseTotal(this.props.records);
         this.state = {
             amount: 0,
-            balance: Math.floor(total),
-            balanceDecimal: this.getDecimal(total),
             expand: '',
             item: {},
             open: false,
@@ -33,12 +30,7 @@ class Screen extends React.Component {
 
     componentDidMount() {
         this._unsubscribe = this.props.navigation.addListener('focus', () => {
-            const total = parseTotal(this.props.records);
-            this.setState({
-                balance: Math.floor(total),
-                balanceDecimal: this.getDecimal(total),
-                toGoal: parseGoal(this.props.records, this.props.goal.amount),
-            });
+            this.setState({ toGoal: parseGoal(this.props.records, this.props.goal.amount) });
         });
     }
 
@@ -47,10 +39,19 @@ class Screen extends React.Component {
     }
 
     balance = () => {
+        return Math.floor(parseTotal(this.props.records));
+    }
+
+    balanceDecimal = () => {
+        var total = Math.abs(parseTotal(this.props.records));
+        return Math.floor((total - Math.floor(total)) * 100);
+    }
+
+    balanceStyle = () => {
         return this.props.settings.darkMode ? homeScreenStyles.balanceD : homeScreenStyles.balanceL;
     }
 
-    balanceSmall = () => {
+    balanceSmallStyle = () => {
         return this.props.settings.darkMode ? homeScreenStyles.balanceSmallD : homeScreenStyles.balanceSmallL;
     }
 
@@ -60,11 +61,6 @@ class Screen extends React.Component {
 
     iconColor = () => {
         return this.props.settings.darkMode ? iconColors.iconD : iconColors.iconL;
-    }
-
-    getDecimal = total => {
-        total = Math.abs(total);
-        return Math.floor((total - Math.floor(total)) * 100);
     }
 
     goalMessage = (amount) => {
@@ -110,8 +106,8 @@ class Screen extends React.Component {
                     <View style={{ ...styles.rows, maxHeight: '30%', justifyContent: 'space-evenly' }}>
                         <View style={{ ...styles.columns, flex: 0 }}>
                             <Icon name={'currency-' + this.props.settings.currency} color={this.text().color} size={30} />
-                            <Text style={this.balance()}>{this.state.balance}</Text>
-                            <Text style={this.balanceSmall()}>.{this.state.balanceDecimal}</Text>
+                            <Text style={this.balanceStyle()}>{this.balance()}</Text>
+                            <Text style={this.balanceSmallStyle()}>.{this.balanceDecimal()}</Text>
                         </View>
                         <View style={{ ...styles.columns, flex: 0 }}>
                             <Icon name={'currency-' + this.props.settings.currency} color={this.props.goal.type === 'none' ? 'transparent' : this.text().color} size={15} />
@@ -227,7 +223,6 @@ class Screen extends React.Component {
                     close={() => this.setState({ rmOpen: false })}
                     date={this.state.item.date}
                     dispatch={record => {
-                        console.log(record);
                         store.dispatch(editRecord(record));
                         this.setState({ rmOpen: false });
                     }}
