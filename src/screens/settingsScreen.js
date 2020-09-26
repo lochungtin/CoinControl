@@ -10,7 +10,7 @@ import SettingsHeader from '../components/SettingsHeader';
 import SettingsItem from '../components/SettingsItem';
 import Scroller from '../components/Scroller';
 import NotifService from '../notifications/notifService';
-import { defaultExpenseCategory, defaultExpenseSelection, defaultIncomeCategory, defaultIncomeSelection, defaultSettings, deleteHistory, updateSettings, } from '../redux/action';
+import { defaultExpenseCategory, defaultExpenseSelection, defaultIncomeCategory, defaultIncomeSelection, defaultSettings, deleteHistory, resetAllKeys, updateSettings, } from '../redux/action';
 import { store } from '../redux/store';
 import { colors, settingStyles, styles, } from '../styles';
 
@@ -230,6 +230,7 @@ class Screen extends React.Component {
                                             store.dispatch(defaultExpenseSelection());
                                             store.dispatch(defaultIncomeCategory());
                                             store.dispatch(defaultIncomeSelection());
+                                            store.dispatch(resetAllKeys());
                                         }
                                         if (this.state.resetSettings)
                                             store.dispatch(defaultSettings());

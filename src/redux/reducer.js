@@ -16,11 +16,12 @@ import {
     DELETE_RECORD,
     DELETE_HISTORY,
     EDIT_RECORD,
+    RESET_KEY,
+    RESET_ALLKEYS,
     UPDATE_EXPENSE_SELECTION,
     UPDATE_GOAL,
     UPDATE_INCOME_SELECTION,
-    UPDATE_SETTINGS,
-
+    UPDATE_SETTINGS, 
 } from './action';
 import {
     defaultExpenseCategories,
@@ -39,7 +40,7 @@ const updateRecords = (records = [], action) => {
         case DELETE_HISTORY:
             return [];
         case DELETE_RECORD:
-            var temp = [...records];
+            
             var found = false;
             var pos = -1;
             while (!found) {
@@ -58,6 +59,23 @@ const updateRecords = (records = [], action) => {
             }
             temp.splice(pos, 1, action.payload);
             return temp;
+        case RESET_KEY:
+            var temp = [...records];
+            for (const record of temp) {
+                if (record.category === action.payload) {
+                    record.category = 'Other';
+                    record.icon = 'information-variant';
+                }
+            }
+            return temp;
+        case RESET_ALLKEYS:
+            var temp = [...records];
+            for (const record of temp) {
+                if (!defaultExpenseCategories.includes(record.category) || !defaultIncomeCategories.includes(record.category)) {
+                    record.category = 'Other';
+                    record.icon = 'information-variant';
+                }
+            }
     }
     return records;
 }

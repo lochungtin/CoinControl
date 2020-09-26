@@ -7,7 +7,7 @@ import CategoryItem from '../components/CategoryItem';
 import ExpandButton from '../components/ExpandButton';
 import ScreenHeader from '../components/ScreenHeader';
 import { customCategoryIconList } from '../default';
-import { addExpenseCategory, addIncomeCategory, deleteExpenseCategory, deleteIncomeCategory, updateExpenseSelection, updateIncomeSelection, } from '../redux/action';
+import { addExpenseCategory, addIncomeCategory, deleteExpenseCategory, deleteIncomeCategory, resetKey, updateExpenseSelection, updateIncomeSelection, } from '../redux/action';
 import { store } from '../redux/store';
 import { black, categoryStyles, styles, white, } from '../styles';
 
@@ -77,6 +77,7 @@ class Screen extends React.Component {
                             action={(key) => {
                                 if (this.props.route.params.title === 'Expense') {
                                     store.dispatch(deleteExpenseCategory(key));
+                                    store.dispatch(resetKey(key));
                                     var temp = [...this.props.expenseSelection];
                                     var position = temp.indexOf(key);
                                     if (position !== -1) {
@@ -84,14 +85,16 @@ class Screen extends React.Component {
                                         store.dispatch(updateExpenseSelection(temp));
                                     }
                                 }
-                                else
+                                else {
                                     store.dispatch(deleteIncomeCategory(key));
+                                    store.dispatch(resetKey(key));
                                     var temp = [...this.props.incomeSelection];
                                     var position = temp.indexOf(key);
                                     if (position !== -1) {
                                         temp.splice(position, 1);
                                         store.dispatch(updateIncomeSelection(temp));
                                     }
+                                }
                             }}
                             expand={this.state.deleting}
                             item={item}
@@ -136,7 +139,7 @@ class Screen extends React.Component {
                                                         }));
                                                     }
                                                     else {
-                                                        var iconName = customCategoryIconList[this.props.incomeCategories.length - 4];
+                                                        var iconName = customCategoryIconList[this.props.incomeCategories.length - 5];
                                                         var key = this.changeName(this.props.incomeCategories, this.state.newName, this.state.newName, 0);
                                                         store.dispatch(addIncomeCategory({
                                                             default: false,

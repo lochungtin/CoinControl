@@ -47,6 +47,7 @@ export const defaultIncomeCategories = [
     { default: 'true', key: 'Allowance', iconName: 'wallet-outline' },
     { default: 'true', key: 'Loan', iconName: 'bank' },
     { default: 'true', key: 'Returns', iconName: 'keyboard-backspace' },
+    { default: 'true', key: 'Other', iconName: 'information-variant' },
     { default: 'true', key: 'Salary', iconName: 'cash' },
 ]
 
@@ -54,6 +55,7 @@ export const defaultIncomeSelection = [
     'Allowance',
     'Loan',
     'Returns',
+    'Other',
     'Salary',
 ]
 
