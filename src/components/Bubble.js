@@ -16,6 +16,10 @@ export default class Bubble extends React.Component {
         }
     }
 
+    iconColor = () => {
+        return this.props.dark === undefined ? black : (this.props.dark ? white : black);
+    }
+
     render() {
         return (
             <TouchableOpacity
@@ -30,7 +34,7 @@ export default class Bubble extends React.Component {
                 onPress={this.props.onPress}
             >
                 {this.state.icon &&
-                    <Icon name={this.props.iconName} size={this.props.iconSize} color={black} />
+                    <Icon name={this.props.iconName} size={this.props.iconSize} color={this.iconColor()} />
                 }
             </TouchableOpacity >
         )

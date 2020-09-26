@@ -2,6 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text, View, } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import Bubble from '../components/Bubble';
 import { black, homeScreenStyles, white, styles, } from '../styles';
 
 export default class SectionItem extends React.Component {
@@ -11,6 +12,10 @@ export default class SectionItem extends React.Component {
         this.state = {
             open: false,
         }
+    }
+
+    bubbleColor = () => {
+        return this.props.dark ? homeScreenStyles.bubbleD : homeScreenStyles.bubbleL;
     }
 
     container = () => {
@@ -46,12 +51,18 @@ export default class SectionItem extends React.Component {
                         </View>
                         <View style={{ ...styles.columns, justifyContent: 'space-between' }}>
                             <View style={{ width: '70%' }} />
-                            <TouchableOpacity onPress={() => this.props.onEdit(this.props.item)}>
-                                <Icon name={'pencil-outline'} size={20} color={this.iconColor()} />
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => this.props.onDelete(this.props.item.key)}>
-                                <Icon name={'trash-can'} size={20} color={this.iconColor()} />
-                            </TouchableOpacity>
+                            <Bubble
+                                dark={this.props.dark}
+                                color={this.bubbleColor().backgroundColor}
+                                iconName={'pencil-outline'}
+                                onPress={() => this.props.onEdit(this.props.item)}
+                            />
+                            <Bubble
+                                dark={this.props.dark}
+                                color={this.bubbleColor().backgroundColor}
+                                iconName={'trash-can'}
+                                onPress={() => this.props.onDelete(this.props.item.key)}
+                            />
                         </View>
                     </>
                 }

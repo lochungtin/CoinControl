@@ -408,6 +408,12 @@ export const homeScreenStyles = StyleSheet.create({
         maxHeight: '70%',
         minWidth: maxWidth,
     },
+    bubbleD: {
+        backgroundColor: shade4,
+    },
+    bubbleL: {
+        backgroundColor: shade2,
+    },
     messageD: {
         color: shade2,
         textAlign: 'center',
