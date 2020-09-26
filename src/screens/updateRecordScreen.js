@@ -33,6 +33,24 @@ class Screen extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this._unsubscribe = this.props.navigation.addListener('focus', () => {
+            var categories = this.props.route.params.title === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories;
+            this.setState({
+                grid: [
+                    categories.slice(0, 4),
+                    categories.slice(4, 8),
+                    categories.slice(8, 12),
+                    categories.slice(12, 16),
+                ],
+            });
+        });
+    }
+
+    componentWillUnmount() {
+        this._unsubscribe();
+    }
+
     centerText = () => {
         return this.props.settings.darkMode ? styles.centerTextD : styles.centerTextL;
     }
