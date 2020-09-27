@@ -18,8 +18,6 @@ export default class RecordModal extends React.Component {
             title: undefined,
             value: undefined,
         }
-
-        console.log(props);
     }
 
     modalView = () => {
