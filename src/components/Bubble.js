@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { black, bubbleStyles, white } from '../styles';
+import { black, bubbleStyles, white, } from '../styles';
 
 export default class Bubble extends React.Component {
 
