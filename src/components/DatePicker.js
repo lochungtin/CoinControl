@@ -1,12 +1,13 @@
 import React from 'react'
 import { Modal, Text, TouchableOpacity, View, } from 'react-native';
+import { connect } from 'react-redux';
 
 import Calendar from './Calendar';
 import ExpandButton from './ExpandButton';
 import { datePickerStyles, styles, } from '../styles';
 
 
-export default class DatePicker extends React.Component {
+class DatePicker extends React.Component {
 
     constructor(props) {
         super(props);
@@ -17,7 +18,7 @@ export default class DatePicker extends React.Component {
     }
 
     modalStyle = () => {
-        return this.props.dark ? datePickerStyles.modalViewD : datePickerStyles.modalViewL;
+        return this.props.settings.darkMode ? datePickerStyles.modalViewD : datePickerStyles.modalViewL;
     }
 
     render() {
@@ -26,10 +27,8 @@ export default class DatePicker extends React.Component {
                 <Modal animationType={'fade'} transparent={true} visible={this.state.open}>
                     <View style={datePickerStyles.modalViewContainer}>
                         <View style={this.modalStyle()}>
-                            <ExpandButton dark={this.props.dark} onPress={() => this.setState({ open: false })} />
+                            <ExpandButton onPress={() => this.setState({ open: false })} />
                             <Calendar
-                                dark={this.props.dark}
-                                accent={this.props.accent}
                                 data={[]}
                                 onPress={(date) => {
                                     this.props.action(date);
@@ -43,7 +42,7 @@ export default class DatePicker extends React.Component {
                     <Text style={{ fontSize: this.props.fontSize }}>{this.state.date}</Text>
                     <TouchableOpacity
                         onPress={() => this.setState({ open: true })}
-                        style={{ ...datePickerStyles.editBtn, backgroundColor: this.props.accent }}
+                        style={{ ...datePickerStyles.editBtn, backgroundColor: this.props.settings.accent }}
                     >
                         <Text style={styles.centerTextL}>Edit</Text>
                     </TouchableOpacity>
@@ -52,3 +51,9 @@ export default class DatePicker extends React.Component {
         );
     }
 }
+
+const mapStateToProps = state => ({
+    settings: state.settings
+});
+
+export default connect(mapStateToProps)(DatePicker);

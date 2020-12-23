@@ -9,7 +9,7 @@ class ExpandButton extends React.Component {
     render() {
         return (
             <TouchableOpacity onPress={this.props.onPress}>
-                <Icon name={'dots-horizontal'} size={25} color={this.props.dark ? white : black} />
+                <Icon name={'dots-horizontal'} size={25} color={this.props.settings.darkMode ? white : black} />
             </TouchableOpacity>
         )
     }

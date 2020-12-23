@@ -123,7 +123,7 @@ class Screen extends React.Component {
                         ))}
                     </View>
                 </View>
-                <ExpandButton dark={this.props.settings.darkMode} onPress={() => this.props.navigation.navigate('Category', { title: this.props.route.params.title })} />
+                <ExpandButton onPress={() => this.props.navigation.navigate('Category', { title: this.props.route.params.title })} />
                 {!this.state.open &&
                     <TouchableOpacity onPress={this.props.navigation.goBack} style={this.props.settings.darkMode ? recordStyles.cancelBtnD : recordStyles.cancelBtnL}>
                         <Text style={styles.centerTextL}>Cancel</Text>

@@ -202,7 +202,7 @@ class Screen extends React.Component {
                         </View>
                     }
                 </View>
-                <ExpandButton dark={this.props.settings.darkMode} onPress={() => { this.setState({ edit: !this.state.edit }) }} />
+                <ExpandButton onPress={() => { this.setState({ edit: !this.state.edit }) }} />
             </View>
         );
     }

@@ -147,7 +147,7 @@ class Screen extends React.Component {
                     <View style={styles.modalViewContainer}>
                         <View style={{ ...this.style(styles, 'modalView'), height: maxHeight / 4 - 20 }}>
                             <View style={styles.rows}>
-                                <ExpandButton dark={this.props.settings.darkMode} onPress={() => this.setState({ open: false })} />
+                                <ExpandButton onPress={() => this.setState({ open: false })} />
                                 <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, maxHeight: 60 }}>
                                     <Icon name={'cash'} size={35} color={black} />
                                     <TextInput

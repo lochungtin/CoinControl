@@ -118,7 +118,7 @@ class Screen extends React.Component {
                     <View style={styles.modalViewContainer}>
                         <View style={{ ...this.modalView(), height: 175 }}>
                             <View style={styles.rows}>
-                                <ExpandButton dark={this.props.settings.darkMode} onPress={() => this.setState({ adding: false })} />
+                                <ExpandButton onPress={() => this.setState({ adding: false })} />
                                 <View style={{ ...styles.columns, ...styles.roundView, backgroundColor: white, maxHeight: 60, width: '95%' }}>
                                     <Icon name={'chevron-right-circle-outline'} size={25} color={black} />
                                     <TextInput onChangeText={(text) => this.setState({ newName: text })} placeholder={'Name'} style={{ paddingHorizontal: 20 }} />
