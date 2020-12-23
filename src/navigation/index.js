@@ -17,7 +17,9 @@ import { bgColorD, bgColorL, white, black } from '../styles';
 
 const Main = createStackNavigator();
 const Settings = createStackNavigator();
+const AuthStack = createStackNavigator();
 const Root = createBottomTabNavigator();
+
 
 class AppNav extends React.Component {
 
@@ -60,8 +62,7 @@ class AppNav extends React.Component {
             </Settings.Navigator>
         )
     }
-
-    render() {
+    contentScreens () {
         return (
             <NavigationContainer>
                 <Root.Navigator
@@ -109,6 +110,19 @@ class AppNav extends React.Component {
                         })}
                     />
                 </Root.Navigator>
+                
+            </NavigationContainer>
+            );
+        };
+    
+
+    render() {
+        return (
+            <NavigationContainer>
+                <AuthStack.Navigator>
+                     <AuthStack.Screen name="Login" component={accountScreen} />
+                     <AuthStack.Screen name="Content" component={this.contentScreens} />
+                </AuthStack.Navigator>
             </NavigationContainer>
         )
     }
