@@ -1,17 +1,20 @@
 import moment from 'moment';
 import React from 'react';
 import { TouchableOpacity, Text, } from 'react-native';
+import { connect } from 'react-redux';
 
-import { calendarStyles, styles, } from '../styles';
+import { calendarStyles, } from '../styles';
 
-export default class CalendarDateSelector extends React.Component {
+class CalendarDateSelector extends React.Component {
 
     text = () => {
         if (this.props.day === moment().format('YYYY-MM-DD'))
-            return { textAlign: 'center', color: this.props.accent }
-        if (this.props.dark)
-            return this.props.disabled ? calendarStyles.disabledD : styles.centerTextD
-        return this.props.disabled ? calendarStyles.disabledL : styles.centerTextL
+            return { textAlign: 'center', color: this.props.settings.accent }
+        return this.props.disabled ? this.style('disabled') : this.style('centerText');
+    }
+
+    style = styleName => {
+        return calendarStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
     }
 
     render() {
@@ -28,3 +31,9 @@ export default class CalendarDateSelector extends React.Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+    settings: state.settings
+});
+
+export default connect(mapStateToProps)(CalendarDateSelector);

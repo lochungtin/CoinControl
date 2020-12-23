@@ -116,6 +116,14 @@ export const calendarStyles = StyleSheet.create({
         paddingTop: 15,
         paddingHorizontal: 15,
     },
+    centerTextD: {
+        color: white,
+        textAlign: 'center',
+    },
+    centerTextL: {
+        color: black,
+        textAlign: 'center',
+    },
     disabledD: {
         color: shade3,
         textAlign: 'center',
