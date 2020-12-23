@@ -7,11 +7,24 @@ import { black, numpadStyles, white, } from '../styles';
 
 class NumpadButton extends React.Component {
 
+    style = () => {
+        return this.props.settings.darkMode ? numpadStyles.buttonD : numpadStyles.buttonL
+    }
+
+    iconColor = () => {
+        if (this.props.special)
+            return this.props.settings.accent;
+        return this.props.settings.darkMode ? white : black;
+    }
+
     render() {
         return (
-            <View style={numpadStyles.button}>
-
-            </View>        
+            <TouchableOpacity 
+                onPress={this.props.onPress}
+                style={this.style()}
+            >
+                <Icon name={this.props.icon} color={this.iconColor()} size={35} />
+            </TouchableOpacity>        
         )
     }
 }

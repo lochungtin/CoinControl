@@ -273,37 +273,132 @@ export const scrollerStyles = StyleSheet.create({
 });
 
 export const recordModalStyles = StyleSheet.create({
-    box: {
-        backgroundColor: white,
-        borderBottomWidth: 1,
-        borderBottomColor: shade2,
-        height: '8%',
+    headerD: {
+        alignItems: 'center',
+        display: 'flex',
+        backgroundColor: shade3,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        height: 20,
+        justifyContent: 'center',
         width: '100%'
+    },
+    headerL: {
+        alignItems: 'center',
+        display: 'flex',
+        backgroundColor: shade2,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        height: 20,
+        justifyContent: 'center',
+        width: '100%'
+    },
+    inputBoxD: {
+        alignItems: 'center',
+        display: 'flex',
+        backgroundColor: bgColorD,
+        borderWidth: 1,
+        borderColor: shade3,
+        flexDirection: 'row',
+        height: '8%',
+        paddingHorizontal: '5%',
+        width: '100%'
+    },
+    inputBoxL: {
+        alignItems: 'center',
+        display: 'flex',
+        backgroundColor: bgColorL,
+        borderWidth: 1,
+        borderColor: shade2,
+        flexDirection: 'row',
+        height: '8%',
+        paddingHorizontal: '5%',
+        width: '100%'
+    },
+    inputD: {
+        borderBottomWidth: 1,
+        borderColor: shade3,
+        color: white,
+        fontSize: 15,
+        marginLeft: '5%',
+        paddingLeft: '5%',
+        width: '85%'
+    },
+    inputL: {
+        borderBottomWidth: 1,
+        borderColor: shade2,
+        color: black,
+        fontSize: 15,
+        marginLeft: '5%',
+        paddingLeft: '5%',
+        width: '85%'
     },
 });
 
 export const numpadStyles = StyleSheet.create({
-    button: {
-        backgroundColor: white,
+    buttonD: {
+        alignItems: 'center',
+        display: 'flex',
+        backgroundColor: bgColorD,
+        borderWidth: 1,
+        borderColor: shade3,
+        height: '100%',
+        justifyContent: 'center',
+        width: '25%',
+    },
+    buttonL: {
+        alignItems: 'center',
+        display: 'flex',
+        backgroundColor: bgColorL,
         borderWidth: 1,
         borderColor: shade2,
         height: '100%',
+        justifyContent: 'center',
         width: '25%',
     },
     numpadRoot: {
-        height: '32%',
+        height: '40%',
         width: '100%'
     },
     numpadRow: {
         display: 'flex',
         flexDirection: 'row',
-        height: '25%',
+        height: '20%',
         width: '100%'
     },
-    input: {
+    outputD: {
+        alignItems: 'center',
+        display: 'flex',
+        backgroundColor: bgColorD,
+        borderWidth: 1,
+        borderColor: shade3,
+        flexDirection: 'row',
+        height: '20%',
+        justifyContent: 'space-between',
+        paddingHorizontal: '5%',
+        width: '100%'
+    },
+    outputL: {
+        alignItems: 'center',
+        display: 'flex',
+        backgroundColor: bgColorL,
+        borderWidth: 1,
+        borderColor: shade2,
+        flexDirection: 'row',
+        height: '20%',
+        justifyContent: 'space-between',
+        paddingHorizontal: '5%',
+        width: '100%'
+    },
+    outputNumD: {
+        color: white,
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
+    outputNumL: {
         color: black,
-        textAlign: 'center',
-        width: '100%',
+        fontSize: 20,
+        fontWeight: 'bold'
     },
 });
 

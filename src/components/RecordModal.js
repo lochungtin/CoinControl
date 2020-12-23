@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import DatePicker from '../components/DatePicker';
 import ExpandButton from './ExpandButton';
 import Numpad from './Numpad';
-import { black, maxHeight, recordModalStyles, styles, white, } from '../styles';
+import { black, iconColors, recordModalStyles, styles, white, } from '../styles';
 
 class RecordModal extends React.Component {
 
@@ -23,22 +23,34 @@ class RecordModal extends React.Component {
         this.props.close();
     }
 
+    style = (stylesheet, styleName) => {
+        return stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
+    }
+
+    iconColor = () => {
+        return this.props.settings.darkMode ? white : black;
+    }
+
     render() {
         return (
-            <Modal 
+            <Modal
                 animationIn={'slideInUp'}
-                isVisible={this.props.open} 
+                isVisible={this.props.open}
                 onBackdropPress={this.close}
                 onBackButtonPress={this.close}
-                style={{flexDirection: 'row', alignItems: 'flex-end', padding: 0, margin: 0}}
+                style={{ flexDirection: 'row', alignItems: 'flex-end', padding: 0, margin: 0 }}
             >
                 <View style={styles.rows}>
-                    <ExpandButton color={white} onPress={this.close} />
-                    <View style={recordModalStyles.box}>
-                        
+                    <View style={this.style(recordModalStyles, 'header')}>
+                        <ExpandButton color={this.iconColor()} onPress={this.close} />
                     </View>
-                    <View style={recordModalStyles.box}>
-                        
+                    <View style={this.style(recordModalStyles, 'inputBox')}>
+                        <Icon name={this.props.item.icon} color={this.props.settings.accent} size={30} />
+                        <TextInput 
+                            placeholder={'Title (Optional)'}
+                            placeholderTextColor={this.style(iconColors, 'icon')} 
+                            style={this.style(recordModalStyles, 'input')}
+                        />
                     </View>
                     <Numpad />
                 </View>
