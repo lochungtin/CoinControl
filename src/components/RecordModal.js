@@ -4,6 +4,7 @@ import { Modal, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import DatePicker from '../components/DatePicker';
+import ExpandButton from './ExpandButton';
 import { black, maxHeight, recordModalStyles, styles, white, } from '../styles';
 
 export default class RecordModal extends React.Component {
