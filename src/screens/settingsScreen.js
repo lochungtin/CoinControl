@@ -57,7 +57,7 @@ class Screen extends React.Component {
     }
 
     onNotif = notif => {
-        
+
     }
 
     handlePerm = perms => {
@@ -248,23 +248,25 @@ class Screen extends React.Component {
                 </Modal>
                 <ScreenHeader dark={this.props.settings.darkMode} action={() => this.props.navigation.navigate('Home')} name={'Settings'} />
                 <ScrollView style={settingStyles.scrollView}>
-                    <SettingsHeader dark={this.props.settings.darkMode} title={'GENERAL'} />
-                    <SettingsItem dark={this.props.settings.darkMode} action={() => this.setState({ currencyPicker: true, modal: true })} iconL={'currency-usd'} iconR={'currency-' + this.props.settings.currency} text={'Currency'} />
+                    <SettingsHeader title={'ACCOUNTS'} />
+                    <SettingsItem action={() => this.props.navigation.navigate('Account')} iconL={'login'} text={'Login'} />
+                    <SettingsItem action={() => this.props.navigation.navigate('Account')} iconL={'account'} text={'Account Settings'} />
 
-                    <SettingsHeader dark={this.props.settings.darkMode} title={'THEMES'} />
-                    <SettingsItem dark={this.props.settings.darkMode} action={() => this.setState({ colorPicker: true, modal: true })} iconL={'palette'} iconR={'circle'} iconRColor={this.props.settings.accent} text={'Accent Color'} />
-                    <SettingsItem dark={this.props.settings.darkMode} accent={this.props.settings.accent} action={() => store.dispatch(updateSettings({ key: 'darkMode', update: !this.props.settings.darkMode }))} iconL={'moon-waning-crescent'} state={this.props.settings.darkMode} switch={true} text={'Dark Mode'} />
+                    <SettingsHeader title={'GENERAL'} />
+                    <SettingsItem action={() => this.setState({ currencyPicker: true, modal: true })} iconL={'currency-usd'} iconR={'currency-' + this.props.settings.currency} text={'Currency'} />
 
-                    <SettingsHeader dark={this.props.settings.darkMode} title={'CATEGORIES'} />
-                    <SettingsItem dark={this.props.settings.darkMode} action={() => this.props.navigation.navigate('Category', { title: 'Expense' })} iconL={'shopping'} text={'Expense Categories'} />
-                    <SettingsItem dark={this.props.settings.darkMode} action={() => this.props.navigation.navigate('Category', { title: 'Income' })} iconL={'cash'} text={'Income Categories'} />
-                    <SettingsItem dark={this.props.settings.darkMode} action={() => this.setState({ resetCategory: true })} iconL={'backup-restore'} text={'Reset Default Categories'} />
+                    <SettingsHeader title={'THEMES'} />
+                    <SettingsItem action={() => this.setState({ colorPicker: true, modal: true })} iconL={'palette'} iconR={'circle'} iconRColor={this.props.settings.accent} text={'Accent Color'} />
+                    <SettingsItem action={() => store.dispatch(updateSettings({ key: 'darkMode', update: !this.props.settings.darkMode }))} iconL={'moon-waning-crescent'} state={this.props.settings.darkMode} switch={true} text={'Dark Mode'} />
 
-                    <SettingsHeader dark={this.props.settings.darkMode} title={'ADVANCED'} />
-                    <SettingsItem dark={this.props.settings.darkMode} accent={this.props.settings.accent} action={() => store.dispatch(updateSettings({ key: 'compactView', update: !this.props.settings.compactView }))} iconL={'card-text'} state={this.props.settings.compactView} switch={true} text={'Compact View'} />
+                    <SettingsHeader title={'CATEGORIES'} />
+                    <SettingsItem action={() => this.props.navigation.navigate('Category', { title: 'Expense' })} iconL={'shopping'} text={'Expense Categories'} />
+                    <SettingsItem action={() => this.props.navigation.navigate('Category', { title: 'Income' })} iconL={'cash'} text={'Income Categories'} />
+                    <SettingsItem action={() => this.setState({ resetCategory: true })} iconL={'backup-restore'} text={'Reset Default Categories'} />
+
+                    <SettingsHeader title={'ADVANCED'} />
+                    <SettingsItem action={() => store.dispatch(updateSettings({ key: 'compactView', update: !this.props.settings.compactView }))} iconL={'card-text'} state={this.props.settings.compactView} switch={true} text={'Compact View'} />
                     <SettingsItem
-                        dark={this.props.settings.darkMode}
-                        accent={this.props.settings.accent}
                         action={() => {
                             this.notif.cancelAll();
                             if (!this.props.settings.notification) {
@@ -284,9 +286,9 @@ class Screen extends React.Component {
                         switch={true}
                         text={'Notifications'}
                     />
-                    <SettingsItem dark={this.props.settings.darkMode} action={() => this.setState({ timePicker: true, modal: true })} disabled={!this.props.settings.notification} iconL={'subdirectory-arrow-right'} text={this.props.settings.notifSchedule} />
-                    <SettingsItem dark={this.props.settings.darkMode} action={() => this.setState({ resetSettings: true })} iconL={'backup-restore'} text={'Reset Default Settings'} />
-                    <SettingsItem dark={this.props.settings.darkMode} action={() => this.setState({ resetAll: true })} iconL={'trash-can'} text={'Clear All Data'} />
+                    <SettingsItem action={() => this.setState({ timePicker: true, modal: true })} disabled={!this.props.settings.notification} iconL={'subdirectory-arrow-right'} text={this.props.settings.notifSchedule} />
+                    <SettingsItem action={() => this.setState({ resetSettings: true })} iconL={'backup-restore'} text={'Reset Default Settings'} />
+                    <SettingsItem action={() => this.setState({ resetAll: true })} iconL={'trash-can'} text={'Clear All Data'} />
                 </ScrollView>
             </View >
         );

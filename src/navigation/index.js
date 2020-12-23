@@ -23,18 +23,22 @@ class AppNav extends React.Component {
 
     constructor(props) {
         super(props);
-        if (props.expenseCategories === undefined || Object.keys(props.expenseCategories).length === 0)
+        if (this.checkNull(props.expenseCategories))
             store.dispatch(defaultExpenseCategory());
-        if (props.expenseSelection === undefined || Object.keys(props.expenseSelection).length === 0)
+        if (this.checkNull(props.expenseSelection))
             store.dispatch(defaultExpenseSelection());
-        if (props.goal === undefined || Object.keys(props.goal).length === 0)
+        if (this.checkNull(props.goal))
             store.dispatch(defaultGoal());
-        if (props.incomeCategories === undefined || Object.keys(props.incomeCategories).length === 0)
+        if (this.checkNull(props.incomeCategories))
             store.dispatch(defaultIncomeCategory());
-        if (props.incomeSelection === undefined || Object.keys(props.incomeSelection).length === 0)
+        if (this.checkNull(props.incomeSelection))
             store.dispatch(defaultIncomeSelection());
-        if (props.settings === undefined || Object.keys(props.settings).length === 0)
+        if (this.checkNull(props.settings))
             store.dispatch(defaultSettings());
+    }
+
+    checkNull = obj => {
+        return obj === undefined || Object.keys(obj).length === 0;
     }
 
     main = () => {

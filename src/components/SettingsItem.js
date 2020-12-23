@@ -1,25 +1,22 @@
 import React from 'react';
 import { Switch, TouchableOpacity, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { connect } from 'react-redux';
 
 import { settingStyles, iconColors, white, } from '../styles';
 
-export default class SettingsItem extends React.Component {
-
-    container = () => {
-        return this.props.dark ? settingStyles.itemContainerD : settingStyles.itemContainerL;
-    }
+class SettingsItem extends React.Component {
 
     iconColor = () => {
         if (this.props.disabled) 
-            return this.props.dark ? settingStyles.textDisabledD.color : settingStyles.textDisabledL.color;
-        return this.props.dark ? iconColors.iconD : iconColors.iconL;
+            return this.style('textDisabled').color;
+        return this.props.settings.darkMode ? iconColors.iconD : iconColors.iconL;
     }
 
     iconRColor = () => {
-        if (this.props.disabled) 
-            return this.props.dark ? settingStyles.textDisabledD.color : settingStyles.textDisabledL.color;
-        return this.props.iconRColor === undefined ? this.props.dark ? iconColors.iconD : iconColors.iconL : this.props.iconRColor;
+        if (this.props.iconRColor !== undefined)
+            return this.props.iconRColor;
+        return this.iconColor();
     }
 
     iconRight = () => {
@@ -27,22 +24,23 @@ export default class SettingsItem extends React.Component {
     }
 
     text = () => {
-        if (this.props.disabled) 
-            return this.props.dark ? settingStyles.textDisabledD : settingStyles.textDisabledL;
-        else 
-            return this.props.dark ? settingStyles.textD : settingStyles.textL;
+        return this.props.disabled ? this.style('textDisabled') : this.style('text');
+    }
+
+    style = styleName => {
+        return settingStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
     }
 
     render() {
         if (this.props.switch)
             return (
-                <View style={this.container()}>
+                <View style={this.style('itemContainer')}>
                     <Icon name={this.props.iconL} size={20} color={this.iconColor()} />
                     <Text style={this.text()}>{this.props.text}</Text>
                     <View style={settingStyles.settingRight}>
                         <Switch
                             thumbColor={white}
-                            trackColor={{ false: this.props.dark ? settingStyles.iconD : settingStyles.iconL, true: this.props.accent }}
+                            trackColor={{ false: this.style('icon'), true: this.props.settings.accent }}
                             value={this.props.state}
                             onChange={() => this.props.action(!this.props.state)}
                         />
@@ -52,7 +50,7 @@ export default class SettingsItem extends React.Component {
             )
         else
             return (
-                <TouchableOpacity onPress={this.props.action} style={this.container()}>
+                <TouchableOpacity onPress={this.props.action} style={this.style('itemContainer')}>
                     <Icon name={this.props.iconL} size={20} color={this.iconColor()} />
                     <Text style={this.text()}>{this.props.text}</Text>
                     <View style={settingStyles.settingRight}>
@@ -62,3 +60,9 @@ export default class SettingsItem extends React.Component {
             )
     }
 }
+
+const mapStateToProps = state => ({
+    settings: state.settings
+});
+
+export default connect(mapStateToProps)(SettingsItem);
