@@ -1,20 +1,34 @@
 import React from 'react';
 import { TouchableOpacity, Text, View, } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { connect } from 'react-redux';
 
 import { black, headerStyles, white, } from '../styles';
 
-export default class ScreenHeader extends React.Component {
+class ScreenHeader extends React.Component {
+
+    style = styleName => {
+        return headerStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
+    }
+
     render() {
         return (
-            <View style={this.props.dark ? headerStyles.headerD : headerStyles.headerL}>
+            <View style={this.style('header')}>
                 <TouchableOpacity onPress={this.props.action}>
-                    <Icon name={'arrow-left'} size={25} color={this.props.dark ? white : black} />
+                    <Icon name={'arrow-left'} size={25} color={this.props.settings.darkMode ? white : black} />
                 </TouchableOpacity>
                 <View style={headerStyles.textContainer}>
-                    <Text style={this.props.dark ? headerStyles.textD : headerStyles.textL}>{this.props.name}</Text>
+                    <Text style={this.style('text')}>
+                        {this.props.name}
+                    </Text>
                 </View>
             </View>
         )
     }
 }
+
+const mapStateToProps = state => ({
+    settings: state.settings
+});
+
+export default connect(mapStateToProps)(ScreenHeader);

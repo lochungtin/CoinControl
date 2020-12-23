@@ -47,22 +47,6 @@ class Screen extends React.Component {
         return Math.floor((total - Math.floor(total)) * 100);
     }
 
-    balanceStyle = () => {
-        return this.props.settings.darkMode ? homeScreenStyles.balanceD : homeScreenStyles.balanceL;
-    }
-
-    balanceSmallStyle = () => {
-        return this.props.settings.darkMode ? homeScreenStyles.balanceSmallD : homeScreenStyles.balanceSmallL;
-    }
-
-    centerText = () => {
-        return this.props.settings.darkMode ? styles.centerTextD : styles.centerTextL;
-    }
-
-    iconColor = () => {
-        return this.props.settings.darkMode ? iconColors.iconD : iconColors.iconL;
-    }
-
     goalMessage = (amount) => {
         switch (this.props.goal.type) {
             case 'monthly':
@@ -74,18 +58,6 @@ class Screen extends React.Component {
         }
     }
 
-    message = () => {
-        return this.props.settings.darkMode ? homeScreenStyles.messageD : homeScreenStyles.messageL;
-    }
-
-    modalView = () => {
-        return this.props.settings.darkMode ? styles.modalViewD : styles.modalViewL;
-    }
-
-    safeAreaView = () => {
-        return this.props.settings.darkMode ? homeScreenStyles.borderD : homeScreenStyles.borderL;
-    }
-
     statusBarBg = () => {
         return this.props.settings.darkMode ? bgColorD : bgColorL;
     }
@@ -94,8 +66,8 @@ class Screen extends React.Component {
         return this.props.settings.darkMode ? 'light-content' : 'dark-content';
     }
 
-    text = () => {
-        return this.props.settings.darkMode ? styles.textD : styles.textL;
+    style = (stylesheet, styleName) => {
+        return stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
     }
 
     render() {
@@ -105,53 +77,65 @@ class Screen extends React.Component {
                 <View style={{ alignItems: 'center', paddingTop: 20 }}>
                     <View style={{ ...styles.rows, maxHeight: '30%', justifyContent: 'space-evenly' }}>
                         <View style={{ ...styles.columns, flex: 0 }}>
-                            <Icon name={'currency-' + this.props.settings.currency} color={this.text().color} size={30} />
-                            <Text style={this.balanceStyle()}>{this.balance()}</Text>
-                            <Text style={this.balanceSmallStyle()}>.{this.balanceDecimal()}</Text>
+                            <Icon name={'currency-' + this.props.settings.currency} color={this.style(styles, 'text').color} size={30} />
+                            <Text style={this.style(homeScreenStyles, 'balance')}>
+                                {this.balance()}
+                            </Text>
+                            <Text style={this.style(homeScreenStyles, 'balanceSmall')}>
+                                {"." + this.balanceDecimal()}
+                            </Text>
                         </View>
                         <View style={{ ...styles.columns, flex: 0 }}>
-                            <Icon name={'currency-' + this.props.settings.currency} color={this.props.goal.type === 'none' ? 'transparent' : this.text().color} size={15} />
-                            <Text style={{ color: this.iconColor() }}>{this.goalMessage(parseGoal(this.props.records, this.props.goal.amount))} </Text>
+                            <Icon name={'currency-' + this.props.settings.currency} color={this.props.goal.type === 'none' ? 'transparent' : this.text(styles, 'text').color} size={15} />
+                            <Text style={{ color: this.style(iconColors, 'icon') }}>
+                                {this.goalMessage(parseGoal(this.props.records, this.props.goal.amount))}
+                            </Text>
                         </View>
                         <View style={{ ...styles.columns, flex: 0 }}>
                             <Progress.Bar color={this.props.settings.accent} progress={parseGoalPercentage(parseGoal(this.props.records, this.props.goal.amount), this.props.goal.amount)} width={maxWidth / 2} />
                         </View>
                         <View style={{ ...styles.columns, flex: 0, justifyContent: 'space-evenly' }}>
                             <View style={{ ...styles.rows, maxWidth: 70 }}>
-                                <Bubble color={this.props.settings.accent} iconName={'plus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', { darkMode: this.props.settings.darkMode, title: 'Income' })} size={35} />
-                                <Text style={this.centerText()}>Income</Text>
+                                <Bubble color={this.props.settings.accent} iconColor={black} iconName={'plus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', { darkMode: this.props.settings.darkMode, title: 'Income' })} size={35} />
+                                <Text style={this.style(styles, 'centerText')}>
+                                    Income
+                                </Text>
                             </View>
                             <View style={{ width: 15 }} />
                             <View style={{ ...styles.rows, maxWidth: 70 }}>
-                                <Bubble color={this.props.settings.accent} iconName={'minus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', { darkMode: this.props.settings.darkMode, title: 'Expense' })} size={35} />
-                                <Text style={this.centerText()}>Expense</Text>
+                                <Bubble color={this.props.settings.accent} iconColor={black} iconName={'minus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', { darkMode: this.props.settings.darkMode, title: 'Expense' })} size={35} />
+                                <Text style={this.style(styles, 'centerText')}>
+                                    Expense
+                                </Text>
                             </View>
                             <View style={{ width: 15 }} />
                             <View style={{ ...styles.rows, maxWidth: 70 }}>
-                                <Bubble color={this.props.settings.accent} iconName={'flag-outline'} iconSize={25} onPress={() => this.setState({ open: true })} size={35} />
-                                <Text style={this.centerText()}>Set Goal</Text>
+                                <Bubble color={this.props.settings.accent} iconColor={black} iconName={'flag-outline'} iconSize={25} onPress={() => this.setState({ open: true })} size={35} />
+                                <Text style={this.style(styles, 'centerText')}>
+                                    Set Goal
+                                </Text>
                             </View>
                         </View>
                     </View>
 
-                    <SafeAreaView style={this.safeAreaView()}>
+                    <SafeAreaView style={this.style(homeScreenStyles, 'border')}>
                         {this.props.records.length === 0 &&
                             <View style={{ paddingTop: 30 }}>
-                                <Text style={this.message()}>Add a record to start using the app</Text>
+                                <Text style={this.style(homeScreenStyles, 'message')}>
+                                    Add a record to start using the app
+                                </Text>
                             </View>
                         }
                         <SectionList
                             renderItem={({ item }) =>
                                 <SectionItem
-                                    dark={this.props.settings.darkMode}
-                                    accent={this.props.settings.accent}
                                     compactMode={this.props.settings.compactView}
                                     item={item}
                                     onDelete={key => store.dispatch(deleteRecord(key))}
                                     onEdit={item => this.setState({ item: item, rmOpen: true })}
                                 />
                             }
-                            renderSectionHeader={({ section: { title } }) => <SectionHeader dark={this.props.settings.darkMode} title={title} />}
+                            renderSectionHeader={({ section: { title } }) => <SectionHeader title={title} />}
                             sections={parseAll(this.props.records)}
                             stickySectionHeadersEnabled={true}
                             style={{ flex: 1, minWidth: maxWidth, paddingHorizontal: '5%' }}
@@ -161,7 +145,7 @@ class Screen extends React.Component {
 
                 <Modal animationType='slide' transparent={true} visible={this.state.open}>
                     <View style={styles.modalViewContainer}>
-                        <View style={{ ...this.modalView(), height: maxHeight / 4 - 20 }}>
+                        <View style={{ ...this.style(styles, 'modalView'), height: maxHeight / 4 - 20 }}>
                             <View style={styles.rows}>
                                 <ExpandButton dark={this.props.settings.darkMode} onPress={() => this.setState({ open: false })} />
                                 <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, maxHeight: 60 }}>

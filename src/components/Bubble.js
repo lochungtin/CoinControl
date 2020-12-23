@@ -1,23 +1,25 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { connect } from 'react-redux';
 
 import { black, bubbleStyles, white, } from '../styles';
 
-export default class Bubble extends React.Component {
+class Bubble extends React.Component {
 
     constructor(props) {
         super(props);
         const icon = props.iconName !== undefined;
-        const border = icon || props.text !== undefined;
         this.state = {
-            border: border,
+            border: icon || props.text !== undefined,
             icon: icon,
         }
     }
 
     iconColor = () => {
-        return this.props.dark === undefined ? black : (this.props.dark ? white : black);
+        if (this.props.iconColor !== undefined)
+            return this.props.iconColor;
+        return this.props.settings.darkMode ? white : black;
     }
 
     render() {
@@ -40,3 +42,9 @@ export default class Bubble extends React.Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+    settings: state.settings
+});
+
+export default connect(mapStateToProps)(Bubble);

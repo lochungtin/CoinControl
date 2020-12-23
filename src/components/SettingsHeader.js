@@ -9,7 +9,9 @@ class SettingsHeader extends React.Component {
     render() {
         return (
             <View style={settingStyles.titleContainer}>
-                <Text style={this.props.settings.darkMode ? settingStyles.titleStyleD : settingStyles.titleStyleL}>{this.props.title}</Text>
+                <Text style={this.props.settings.darkMode ? settingStyles.titleStyleD : settingStyles.titleStyleL}>
+                    {this.props.title}
+                </Text>
             </View>
         )
     }

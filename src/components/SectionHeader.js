@@ -1,22 +1,28 @@
 import React from 'react';
 import { Text, View, } from 'react-native';
+import { connect } from 'react-redux';
+
 import { homeScreenStyles, styles, } from '../styles';
 
-export default class SectionHeader extends React.Component {
+class SectionHeader extends React.Component {
 
-    container = () => {
-        return this.props.dark ? homeScreenStyles.sectionHeadD : homeScreenStyles.sectionHeadL;
-    }
-
-    text = () => {
-        return this.props.dark ? styles.textD : styles.textL;
+    style = (stylesheet, styleName) => {
+        return stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
     }
 
     render() {
         return (
-            <View style={this.container()}>
-                <Text style={this.text()}>{this.props.title}</Text>
+            <View style={this.style(homeScreenStyles, 'sectionHead')}>
+                <Text style={this.style(styles, 'text')}>
+                    {this.props.title}
+                </Text>
             </View>
         );
     }
 }
+
+const mapStateToProps = state => ({
+    settings: state.settings
+});
+
+export default connect(mapStateToProps)(SectionHeader);

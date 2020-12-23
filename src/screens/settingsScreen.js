@@ -246,7 +246,7 @@ class Screen extends React.Component {
                         </View>
                     </View>
                 </Modal>
-                <ScreenHeader dark={this.props.settings.darkMode} action={() => this.props.navigation.navigate('Home')} name={'Settings'} />
+                <ScreenHeader action={() => this.props.navigation.navigate('Home')} name={'Settings'} />
                 <ScrollView style={settingStyles.scrollView}>
                     <SettingsHeader title={'ACCOUNTS'} />
                     <SettingsItem action={() => this.props.navigation.navigate('Account')} iconL={'login'} text={'Login'} />

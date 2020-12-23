@@ -36,7 +36,9 @@ class SettingsItem extends React.Component {
             return (
                 <View style={this.style('itemContainer')}>
                     <Icon name={this.props.iconL} size={20} color={this.iconColor()} />
-                    <Text style={this.text()}>{this.props.text}</Text>
+                    <Text style={this.text()}>
+                        {this.props.text}
+                    </Text>
                     <View style={settingStyles.settingRight}>
                         <Switch
                             thumbColor={white}
@@ -52,7 +54,9 @@ class SettingsItem extends React.Component {
             return (
                 <TouchableOpacity onPress={this.props.action} style={this.style('itemContainer')}>
                     <Icon name={this.props.iconL} size={20} color={this.iconColor()} />
-                    <Text style={this.text()}>{this.props.text}</Text>
+                    <Text style={this.text()}>
+                        {this.props.text}
+                    </Text>
                     <View style={settingStyles.settingRight}>
                         <Icon name={this.iconRight()} size={20} color={this.iconRColor()} />
                     </View>
