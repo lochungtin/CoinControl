@@ -1,11 +1,11 @@
 import React from 'react'
-import { Modal, Text, TouchableOpacity, View, } from 'react-native';
+import { Text, TouchableOpacity, View, } from 'react-native';
+import Modal from 'react-native-modal';
 import { connect } from 'react-redux';
 
 import Calendar from './Calendar';
 import ExpandButton from './ExpandButton';
 import { datePickerStyles, styles, } from '../styles';
-
 
 class DatePicker extends React.Component {
 
@@ -17,6 +17,10 @@ class DatePicker extends React.Component {
         }
     }
 
+    close = () => {
+        this.setState({ open: false })
+    }
+
     modalStyle = () => {
         return this.props.settings.darkMode ? datePickerStyles.modalViewD : datePickerStyles.modalViewL;
     }
@@ -24,18 +28,21 @@ class DatePicker extends React.Component {
     render() {
         return (
             <View>
-                <Modal animationType={'fade'} transparent={true} visible={this.state.open}>
-                    <View style={datePickerStyles.modalViewContainer}>
-                        <View style={this.modalStyle()}>
-                            <ExpandButton onPress={() => this.setState({ open: false })} />
-                            <Calendar
-                                data={[]}
-                                onPress={(date) => {
-                                    this.props.action(date);
-                                    this.setState({ date: date, open: false });
-                                }}
-                            />
-                        </View>
+                <Modal 
+                    animationIn={'slideInUp'}
+                    isVisible={this.state.open} 
+                    onBackdropPress={this.close}
+                    onBackButtonPress={this.close}
+                >
+                    <View style={this.modalStyle()}>
+                        <ExpandButton onPress={() => this.setState({ open: false })} />
+                        <Calendar
+                            data={[]}
+                            onPress={(date) => {
+                                this.props.action(date);
+                                this.setState({ date: date, open: false });
+                            }}
+                        />
                     </View>
                 </Modal>
                 <View style={{ ...styles.columns, justifyContent: 'space-between' }}>

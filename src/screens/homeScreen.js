@@ -200,19 +200,20 @@ class Screen extends React.Component {
                         </View>
                     </View>
                 </Modal>
+                
                 <RecordModal
-                    dark={this.props.settings.darkMode}
-                    accent={this.props.settings.accent}
-                    category={this.state.item.category}
                     close={() => this.setState({ rmOpen: false })}
-                    date={this.state.item.date}
                     dispatch={record => {
                         store.dispatch(editRecord(record));
                         this.setState({ rmOpen: false });
                     }}
+                    item={this.state.item}
+                    open={this.state.rmOpen}
+
+                    category={this.state.item.category}
+                    date={this.state.item.date}
                     icon={this.state.item.icon}
                     id={this.state.item.key}
-                    open={this.state.rmOpen}
                     title={this.state.item.title}
                     type={this.state.item.type}
                     value={this.state.item.value}

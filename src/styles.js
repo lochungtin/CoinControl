@@ -234,7 +234,6 @@ export const headerStyles = StyleSheet.create({
     },
 });
 
-
 export const scrollerStyles = StyleSheet.create({
     containerD: {
         borderBottomWidth: 1,
@@ -274,21 +273,32 @@ export const scrollerStyles = StyleSheet.create({
 });
 
 export const recordModalStyles = StyleSheet.create({
-    cancelBtnD: {
+    box: {
         backgroundColor: white,
-        borderRadius: 40,
-        paddingHorizontal: 40,
-        paddingVertical: 10,
-        margin: 10,
-        width: '80%',
+        borderBottomWidth: 1,
+        borderBottomColor: shade2,
+        height: '8%',
+        width: '100%'
     },
-    cancelBtnL: {
-        backgroundColor: shade1,
-        borderRadius: 40,
-        paddingHorizontal: 40,
-        paddingVertical: 10,
-        margin: 10,
-        width: '80%'
+});
+
+export const numpadStyles = StyleSheet.create({
+    button: {
+        backgroundColor: white,
+        borderWidth: 1,
+        borderColor: shade2,
+        height: '100%',
+        width: '25%',
+    },
+    numpadRoot: {
+        height: '32%',
+        width: '100%'
+    },
+    numpadRow: {
+        display: 'flex',
+        flexDirection: 'row',
+        height: '25%',
+        width: '100%'
     },
     input: {
         color: black,
