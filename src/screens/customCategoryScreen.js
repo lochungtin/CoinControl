@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import CategoryItem from '../components/CategoryItem';
 import ExpandButton from '../components/ExpandButton';
 import ScreenHeader from '../components/ScreenHeader';
-import { customCategoryIconList } from '../default';
+import { customCategoryIconList } from '../data/default';
 import { addExpenseCategory, addIncomeCategory, deleteExpenseCategory, deleteIncomeCategory, resetKey, updateExpenseSelection, updateIncomeSelection, } from '../redux/action';
 import { store } from '../redux/store';
 import { black, categoryStyles, styles, white, } from '../styles';

@@ -30,7 +30,7 @@ import {
     defaultIncomeCategories,
     defaultIncomeSelection,
     defaultSettings
-} from '../default';
+} from '../data/default';
 
 const updateRecords = (records = [], action) => {
     switch (action.type) {

@@ -1,4 +1,4 @@
-import { goldenBrown } from './styles';
+import { goldenBrown } from '../styles';
 
 export const customCategoryIconList = [
     'alpha-a-circle-outline',
