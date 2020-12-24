@@ -32,7 +32,7 @@ class SectionItem extends React.Component {
                         {this.props.item.category}
                     </Text>
                     <Text style={this.style(homeScreenStyles, 'textVal')}>
-                        {(this.props.item.type === 'Expense' ? '-' : '+') + this.props.item.value}
+                        {this.props.item.value}
                     </Text>
                 </View>
                 {(this.state.open || !this.props.compactMode) &&
@@ -43,7 +43,7 @@ class SectionItem extends React.Component {
                                 Title: {this.props.item.title}
                             </Text>
                             <Text style={{ ...this.style(homeScreenStyles, 'textVal'), color: 'transparent' }}>
-                                {(this.props.item.type === 'Expense' ? '-' : '+') + this.props.item.value}
+                                {this.props.item.value}
                             </Text>
                         </View>
                         <View style={{ ...styles.columns, justifyContent: 'space-between' }}>

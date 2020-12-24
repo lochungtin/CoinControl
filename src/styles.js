@@ -300,7 +300,7 @@ export const recordModalStyles = StyleSheet.create({
         borderWidth: 1,
         borderColor: shade3,
         flexDirection: 'row',
-        height: '8%',
+        minHeight: '8%',
         paddingHorizontal: '5%',
         width: '100%'
     },
@@ -311,7 +311,7 @@ export const recordModalStyles = StyleSheet.create({
         borderWidth: 1,
         borderColor: shade2,
         flexDirection: 'row',
-        height: '8%',
+        minHeight: '8%',
         paddingHorizontal: '5%',
         width: '100%'
     },

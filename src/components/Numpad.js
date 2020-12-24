@@ -1,24 +1,27 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
+import DatePicker from '../components/DatePicker';
 import NumpadButton from './NumpadButton';
-import { black, numpadStyles, styles, white, } from '../styles';
+import { numpadStyles } from '../styles';
 
 class Numpad extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            num: '0',
+            date: this.props.date,
+            dpOpen: false,
+            num: this.props.num.toString(),
             ready: true,
         }
     }
 
     appendNum = num => {
         if (this.state.num === '0' && num !== '.')
-            this.setState({ num: "" + num });
+            this.setState({ num: num.toString() });
         else
             this.setState({ num: this.state.num + num });
     }
@@ -40,7 +43,7 @@ class Numpad extends React.Component {
 
     confirm = () => {
         if (this.state.ready)
-            () => { }
+            this.props.onConfirm(this.state.num);
         else {
             var splt = this.state.num.split(" ");
             var numStack = new Array();
@@ -52,7 +55,7 @@ class Numpad extends React.Component {
                     numStack.push(t);
             }
 
-            this.setState({ num: "" + this.evalRecur(numStack, opStack), ready: true });
+            this.setState({ num: this.evalRecur(numStack, opStack).toString(), ready: true });
         }
     }
 
@@ -65,6 +68,11 @@ class Numpad extends React.Component {
             return this.evalRecur([a + b, ...numStack], opStack);
         else
             return this.evalRecur([a - b, ...numStack], opStack);
+    }
+
+    onChangeDate = date => { 
+        this.props.onChangeDate(date);
+        this.setState({ date: date });
     }
 
     style = styleName => {
@@ -84,7 +92,7 @@ class Numpad extends React.Component {
                             <NumpadButton icon={'numeric-' + num} key={num} onPress={() => this.appendNum(num)} />
                         )
                     })}
-                    <NumpadButton icon={'calendar-month'} special={true}/>
+                    <NumpadButton special={true} value={this.state.date} onPress={() => this.setState({ dpOpen: true })} />
                 </View>
                 <View style={numpadStyles.numpadRow}>
                     {[4, 5, 6].map(num => {
@@ -106,8 +114,9 @@ class Numpad extends React.Component {
                     <NumpadButton icon={'circle-small'} onPress={() => this.appendNum('.')} />
                     <NumpadButton icon={'numeric-0'} onPress={() => this.appendNum(0)} />
                     <NumpadButton icon={'backspace-outline'} onPress={this.backspace} />
-                    <NumpadButton icon={this.state.ready ? 'check' : 'equal'} onPress={this.confirm} special={true}/>
+                    <NumpadButton icon={this.state.ready ? 'check' : 'equal'} onPress={this.confirm} special={true} />
                 </View>
+                <DatePicker action={this.onChangeDate} close={() => this.setState({ dpOpen: false })} open={this.state.dpOpen} />
             </View>
         )
     }

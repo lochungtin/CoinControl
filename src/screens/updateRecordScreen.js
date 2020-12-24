@@ -19,12 +19,12 @@ class Screen extends React.Component {
         this.state = {
             category: '',
             date: moment().format('YYYY-MM-DD'),
-            icon: 'check-box-outline-blank',
+            icon: 'account',
             grid: [
-                categories.slice(0, 4),
-                categories.slice(4, 8),
-                categories.slice(8, 12),
-                categories.slice(12, 16),
+                [0, ...categories.slice(0, 4)],
+                [1, ...categories.slice(4, 8)],
+                [2, ...categories.slice(8, 12)],
+                [3, ...categories.slice(12, 16)],
             ],
             open: false,
             title: '',
@@ -38,10 +38,10 @@ class Screen extends React.Component {
             var categories = this.props.route.params.title === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories;
             this.setState({
                 grid: [
-                    categories.slice(0, 4),
-                    categories.slice(4, 8),
-                    categories.slice(8, 12),
-                    categories.slice(12, 16),
+                    [0, ...categories.slice(0, 4)],
+                    [1, ...categories.slice(4, 8)],
+                    [2, ...categories.slice(8, 12)],
+                    [3, ...categories.slice(12, 16)],
                 ],
             });
         });
@@ -60,69 +60,27 @@ class Screen extends React.Component {
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
                 <ScreenHeader dark={this.props.settings.darkMode} action={() => this.props.navigation.goBack()} name={this.props.route.params.title} />
                 <View style={styles.rows}>
-                    <View style={{ ...styles.columns, maxHeight: 120 }}>
-                        {this.state.grid[0].map(item => (
-                            <View key={item.key} style={{ ...styles.rows, justifyContent: 'space-between' }}>
-                                <Bubble
-                                    color={this.props.settings.accent}
-                                    iconName={item.iconName}
-                                    iconSize={25}
-                                    onPress={() => this.setState({ category: item.key, icon: item.iconName, open: true })}
-                                    selected={this.state.category === item.key}
-                                    size={35}
-                                />
-                                <Text style={this.centerText()}>{item.key}</Text>
+                    {this.state.grid.map(row => {
+                        return (
+                            <View style={{ ...styles.columns, maxHeight: 120 }} key={row[0]}>
+                                {row.slice(1).map(item => (
+                                    <View key={item.key} style={{ ...styles.rows, justifyContent: 'space-between' }}>
+                                        <Bubble
+                                            iconColor={this.props.settings.accent}
+                                            iconName={item.iconName}
+                                            iconSize={25}
+                                            onPress={() => this.setState({ category: item.key, icon: item.iconName, open: true })}
+                                            selected={this.state.category === item.key}
+                                            size={35}
+                                        />
+                                        <Text style={this.centerText()}>{item.key}</Text>
+                                    </View>
+                                ))}
                             </View>
-                        ))}
-                    </View>
-                    <View style={{ ...styles.columns, maxHeight: 120 }}>
-                        {this.state.grid[1].map(item => (
-                            <View key={item.key} style={{ ...styles.rows, justifyContent: 'space-between' }}>
-                                <Bubble
-                                    color={this.props.settings.accent}
-                                    iconName={item.iconName}
-                                    iconSize={25}
-                                    onPress={() => this.setState({ category: item.key, icon: item.iconName, open: true })}
-                                    selected={this.state.category === item.key}
-                                    size={35}
-                                />
-                                <Text style={this.centerText()}>{item.key}</Text>
-                            </View>
-                        ))}
-                    </View>
-                    <View style={{ ...styles.columns, maxHeight: 120 }}>
-                        {this.state.grid[2].map(item => (
-                            <View key={item.key} style={{ ...styles.rows, justifyContent: 'space-between' }}>
-                                <Bubble
-                                    color={this.props.settings.accent}
-                                    iconName={item.iconName}
-                                    iconSize={25}
-                                    onPress={() =>
-                                        this.setState({ category: item.key, icon: item.iconName, open: true })
-                                    }
-                                    selected={this.state.category === item.key}
-                                    size={35}
-                                />
-                                <Text style={this.centerText()}>{item.key}</Text>
-                            </View>
-                        ))}
-                    </View>
-                    <View style={{ ...styles.columns, maxHeight: 120 }}>
-                        {this.state.grid[3].map(item => (
-                            <View key={item.key} style={{ ...styles.rows, justifyContent: 'space-between' }}>
-                                <Bubble
-                                    color={this.props.settings.accent}
-                                    iconName={item.iconName}
-                                    iconSize={25}
-                                    onPress={() => this.setState({ category: item.key, icon: item.iconName, open: true })}
-                                    selected={this.state.category === item.key}
-                                    size={35}
-                                />
-                                <Text style={this.centerText()}>{item.key}</Text>
-                            </View>
-                        ))}
-                    </View>
+                        )
+                    })}
                 </View>
+
                 <ExpandButton onPress={() => this.props.navigation.navigate('Category', { title: this.props.route.params.title })} />
                 {!this.state.open &&
                     <TouchableOpacity onPress={this.props.navigation.goBack} style={this.props.settings.darkMode ? recordStyles.cancelBtnD : recordStyles.cancelBtnL}>
@@ -130,19 +88,19 @@ class Screen extends React.Component {
                     </TouchableOpacity>
                 }
                 <RecordModal
-                    dark={this.props.settings.darkMode}
-                    accent={this.props.settings.accent}
-                    category={this.state.category}
                     close={() => this.setState({ category: '', open: false })}
-                    date={moment().format('YYYY-MM-DD')}
-                    dispatch={record => {
+                    item={{
+                        category: this.state.category,
+                        date: moment().format('YYYY-MM-DD'),
+                        icon: this.state.icon,
+                        type: this.props.route.params.title,
+                    }}
+                    onConfirm={record => {
                         store.dispatch(addRecord(record));
                         this.setState({ category: '', open: false });
                         this.props.navigation.goBack();
                     }}
-                    icon={this.state.icon}
                     open={this.state.open}
-                    type={this.props.route.params.title}
                 />
             </View>
         );

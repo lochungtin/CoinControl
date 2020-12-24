@@ -3,7 +3,7 @@ import { TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import { black, bubbleStyles, white, } from '../styles';
+import { black, bubbleStyles, iconColors, white, } from '../styles';
 
 class Bubble extends React.Component {
 
@@ -27,7 +27,7 @@ class Bubble extends React.Component {
             <TouchableOpacity
                 style={{
                     ...bubbleStyles.bubble,
-                    backgroundColor: this.state.border ? this.props.selected ? white : this.props.color : this.props.color,
+                    backgroundColor: this.state.border ? this.props.selected ? this.props.settings.darkMode ? iconColors.iconL : iconColors.iconD : this.props.color : this.props.color,
                     borderWidth: !this.state.border ? this.props.selected ? 6 : 0 : 0,
                     height: this.props.size !== undefined ? this.props.size : 30,
                     margin: this.props.spacing !== undefined ? this.props.spacing : 7.5,

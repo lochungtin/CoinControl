@@ -203,20 +203,12 @@ class Screen extends React.Component {
                 
                 <RecordModal
                     close={() => this.setState({ rmOpen: false })}
-                    dispatch={record => {
+                    item={this.state.item}
+                    onConfirm={record => {
                         store.dispatch(editRecord(record));
                         this.setState({ rmOpen: false });
                     }}
-                    item={this.state.item}
                     open={this.state.rmOpen}
-
-                    category={this.state.item.category}
-                    date={this.state.item.date}
-                    icon={this.state.item.icon}
-                    id={this.state.item.key}
-                    title={this.state.item.title}
-                    type={this.state.item.type}
-                    value={this.state.item.value}
                 />
             </View>
         );

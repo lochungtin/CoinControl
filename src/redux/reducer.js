@@ -40,7 +40,7 @@ const updateRecords = (records = [], action) => {
         case DELETE_HISTORY:
             return [];
         case DELETE_RECORD:
-            
+            var temp = [...records];
             var found = false;
             var pos = -1;
             while (!found) {
