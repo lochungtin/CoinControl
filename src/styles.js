@@ -143,6 +143,8 @@ export const calendarStyles = StyleSheet.create({
         width: 40
     },
     selectionContainer: {
+        borderWidth: 1,
+        borderRadius: 15,
         height: 40,
         paddingTop: 8,
         width: 40,
@@ -234,107 +236,6 @@ export const headerStyles = StyleSheet.create({
     },
 });
 
-export const scrollerStyles = StyleSheet.create({
-    containerD: {
-        borderBottomWidth: 1,
-        borderColor: white,
-        flex: 1,
-        maxHeight: 50,
-        marginHorizontal: 10,
-        minHeight: 50,
-    },
-    containerL: {
-        borderBottomWidth: 1,
-        borderColor: black,
-        flex: 1,
-        maxHeight: 50,
-        marginHorizontal: 10,
-        minHeight: 50,
-    },
-    list: {
-        height: 50,
-    },
-    item: {
-        justifyContent: 'center',
-        marginHorizontal: 16,
-        maxHeight: 50,
-        minHeight: 50
-    },
-    titleD: {
-        color: white,
-        fontSize: 16,
-        textAlign: 'center',
-    },
-    titleL: {
-        color: black,
-        fontSize: 16,
-        textAlign: 'center',
-    },
-});
-
-export const recordModalStyles = StyleSheet.create({
-    headerD: {
-        alignItems: 'center',
-        display: 'flex',
-        backgroundColor: shade3,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        height: 20,
-        justifyContent: 'center',
-        width: '100%'
-    },
-    headerL: {
-        alignItems: 'center',
-        display: 'flex',
-        backgroundColor: shade2,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        height: 20,
-        justifyContent: 'center',
-        width: '100%'
-    },
-    inputBoxD: {
-        alignItems: 'center',
-        display: 'flex',
-        backgroundColor: bgColorD,
-        borderWidth: 1,
-        borderColor: shade3,
-        flexDirection: 'row',
-        minHeight: '8%',
-        paddingHorizontal: '5%',
-        width: '100%'
-    },
-    inputBoxL: {
-        alignItems: 'center',
-        display: 'flex',
-        backgroundColor: bgColorL,
-        borderWidth: 1,
-        borderColor: shade2,
-        flexDirection: 'row',
-        minHeight: '8%',
-        paddingHorizontal: '5%',
-        width: '100%'
-    },
-    inputD: {
-        borderBottomWidth: 1,
-        borderColor: shade3,
-        color: white,
-        fontSize: 15,
-        marginLeft: '5%',
-        paddingLeft: '5%',
-        width: '85%'
-    },
-    inputL: {
-        borderBottomWidth: 1,
-        borderColor: shade2,
-        color: black,
-        fontSize: 15,
-        marginLeft: '5%',
-        paddingLeft: '5%',
-        width: '85%'
-    },
-});
-
 export const numpadStyles = StyleSheet.create({
     buttonD: {
         alignItems: 'center',
@@ -402,6 +303,106 @@ export const numpadStyles = StyleSheet.create({
     },
 });
 
+export const recordModalStyles = StyleSheet.create({
+    headerD: {
+        alignItems: 'center',
+        display: 'flex',
+        backgroundColor: shade3,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        height: 20,
+        justifyContent: 'center',
+        width: '100%'
+    },
+    headerL: {
+        alignItems: 'center',
+        display: 'flex',
+        backgroundColor: shade2,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        height: 20,
+        justifyContent: 'center',
+        width: '100%'
+    },
+    inputBoxD: {
+        alignItems: 'center',
+        display: 'flex',
+        backgroundColor: bgColorD,
+        borderWidth: 1,
+        borderColor: shade3,
+        flexDirection: 'row',
+        minHeight: '8%',
+        paddingHorizontal: '5%',
+        width: '100%'
+    },
+    inputBoxL: {
+        alignItems: 'center',
+        display: 'flex',
+        backgroundColor: bgColorL,
+        borderWidth: 1,
+        borderColor: shade2,
+        flexDirection: 'row',
+        minHeight: '8%',
+        paddingHorizontal: '5%',
+        width: '100%'
+    },
+    inputD: {
+        borderBottomWidth: 1,
+        borderColor: shade3,
+        color: white,
+        fontSize: 15,
+        marginLeft: '5%',
+        paddingLeft: '5%',
+        width: '85%'
+    },
+    inputL: {
+        borderBottomWidth: 1,
+        borderColor: shade2,
+        color: black,
+        fontSize: 15,
+        marginLeft: '5%',
+        paddingLeft: '5%',
+        width: '85%'
+    },
+});
+
+export const scrollerStyles = StyleSheet.create({
+    containerD: {
+        borderBottomWidth: 1,
+        borderColor: white,
+        flex: 1,
+        maxHeight: 50,
+        marginHorizontal: 10,
+        minHeight: 50,
+    },
+    containerL: {
+        borderBottomWidth: 1,
+        borderColor: black,
+        flex: 1,
+        maxHeight: 50,
+        marginHorizontal: 10,
+        minHeight: 50,
+    },
+    list: {
+        height: 50,
+    },
+    item: {
+        justifyContent: 'center',
+        marginHorizontal: 16,
+        maxHeight: 50,
+        minHeight: 50
+    },
+    titleD: {
+        color: white,
+        fontSize: 16,
+        textAlign: 'center',
+    },
+    titleL: {
+        color: black,
+        fontSize: 16,
+        textAlign: 'center',
+    },
+});
 
 // screen styles
 

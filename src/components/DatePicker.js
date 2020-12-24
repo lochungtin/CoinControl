@@ -31,11 +31,11 @@ class DatePicker extends React.Component {
                 <View style={this.modalStyle()}>
                     <ExpandButton onPress={this.props.close} />
                     <Calendar
-                        data={[]}
                         onPress={(date) => {
                             this.props.action(date);
                             this.props.close();
                         }}
+                        selected={this.props.selected}
                     />
                 </View>
             </Modal>

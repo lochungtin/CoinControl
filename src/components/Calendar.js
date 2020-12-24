@@ -144,6 +144,7 @@ class Calendar extends React.Component {
                                         day={this.makeDay(item)}
                                         disabled={this.disabled[this.state.grid.indexOf(row)](item)}
                                         key={item}
+                                        selected={this.makeDay(item) === this.props.selected}
                                         onPress={(date) => this.props.onPress(date)}
                                     />
                                 );

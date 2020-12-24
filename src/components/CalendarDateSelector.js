@@ -20,7 +20,7 @@ class CalendarDateSelector extends React.Component {
     render() {
         return (
             <TouchableOpacity
-                style={calendarStyles.selectionContainer}
+                style={{...calendarStyles.selectionContainer, borderColor: this.props.selected ? this.props.settings.accent : 'transparent'}}
                 onPress={() => {
                     if (!this.props.disabled)
                         this.props.onPress(this.props.day);

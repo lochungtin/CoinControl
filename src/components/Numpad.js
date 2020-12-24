@@ -116,7 +116,12 @@ class Numpad extends React.Component {
                     <NumpadButton icon={'backspace-outline'} onPress={this.backspace} />
                     <NumpadButton icon={this.state.ready ? 'check' : 'equal'} onPress={this.confirm} special={true} />
                 </View>
-                <DatePicker action={this.onChangeDate} close={() => this.setState({ dpOpen: false })} open={this.state.dpOpen} />
+                <DatePicker 
+                    action={this.onChangeDate} 
+                    close={() => this.setState({ dpOpen: false })} 
+                    open={this.state.dpOpen} 
+                    selected={this.state.date}
+                />
             </View>
         )
     }
