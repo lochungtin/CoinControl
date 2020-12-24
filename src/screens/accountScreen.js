@@ -1,55 +1,49 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Text, View, Button} from 'react-native';
 import { connect } from 'react-redux';
 
 import { styles } from '../styles';
 import { GoogleSignin } from '@react-native-community/google-signin';
-import auth from '@react-native-firebase/auth';
-
+import auth,{firebase} from '@react-native-firebase/auth';
 
 GoogleSignin.configure({
-  webClientId: '486441035059-8l61ntdopa47itlm7kknd6acpvmn04q4.apps.googleusercontent.com',
+  webClientId: '486441035059-mqd6rf0e178kn2uke7k2pfdtii632qb1.apps.googleusercontent.com', offlineAccess: false,
+   
 });
 
-    
 class Screen extends React.Component {
 
     constructor(props) {
         super(props);
     }
-    async  googleLogin() {
+      _signIn = async () => {
+        try {
+          await GoogleSignin.hasPlayServices();
+          const {accessToken, idToken} = await GoogleSignin.signIn();
+          const credential = auth.GoogleAuthProvider.credential(
+            idToken,
+            accessToken,
+          );
+          await auth().signInWithCredential(credential);
+        } catch (error) {console.log(error)}}
+
+    async  onGoogleButtonPress() {
+        // Get the users ID token
         const { idToken } = await GoogleSignin.signIn();
-        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-        console.log("fjoabi",googleCredential);
-        return auth().signInWithCredential(googleCredential);
-        
-      }
-    onLoginOrRegister = () => {
-    GoogleSignin.signIn()
-        .then((data) => {
-        // Create a new Firebase credential with the token
-        const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken);
-        // Login with the credential
-        return firebase.auth().signInWithCredential(credential);
-        })
-        .then((user) => {
-        // If you need to do anything with the user, do it here
-        // The user will be logged in automatically by the
-        // `onAuthStateChanged` listener we set up in App.js earlier
-        })
-        .catch((error) => {
-        const { code, message } = error;
-        // For details of error codes, see the docs
-        // The message contains the default Firebase string
-        // representation of the error
-        });
-    }
+
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+    // Sign-in the user with the credential
+    // googleCredential.token = googleCredential.token.idToken;
+
+    return auth().signInWithCredential(googleCredential);
+        }
 
     render() {
         return (
             <View style={styles.screen}>
                 <Text>Account Screen</Text>
-                <Button onPress={this.googleLogin} title="googleLogin">
+                <Button onPress={this._signIn } title="googleLogin">
                 </Button>
             </View>
         );

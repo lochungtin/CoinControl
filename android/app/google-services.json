@@ -8,43 +8,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:486441035059:android:7c02c9a8d0fd6b0f268a46",
-        "android_client_info": {
-          "package_name": "Coin.Control_2020"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "486441035059-8l61ntdopa47itlm7kknd6acpvmn04q4.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyB2P2d8EC13ZDeR_EXlT3ksXsIdJCmnBb4"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "486441035059-8l61ntdopa47itlm7kknd6acpvmn04q4.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:486441035059:android:d5c79101b81e8ab5268a46",
+        "mobilesdk_app_id": "1:486441035059:android:70a5984d35e255cb268a46",
         "android_client_info": {
           "package_name": "com.coincontrol"
         }
       },
       "oauth_client": [
         {
-          "client_id": "486441035059-k1ccbnskhbl1tqh0v8d9bjrghv9vtf64.apps.googleusercontent.com",
+          "client_id": "486441035059-mqd6rf0e178kn2uke7k2pfdtii632qb1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.coincontrol",
