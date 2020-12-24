@@ -40,3 +40,22 @@ allprojects {
         maven { url 'https://www.jitpack.io' }
     }
 }
+project.ext {
+  set('react-native', [
+    versions: [
+      // Overriding Build/Android SDK Versions
+      android : [
+        minSdk    : 16,
+        targetSdk : 30,
+        compileSdk: 30,
+        buildTools: "30.0.2"
+      ],
+
+      // Overriding Library SDK Versions
+      firebase: [
+        // Override Firebase SDK Version
+        bom           : "26.0.0"
+      ],
+    ],
+  ])
+}
