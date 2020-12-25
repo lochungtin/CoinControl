@@ -8,8 +8,20 @@ import { settingStyles } from '../styles';
 
 class SettingsItem extends React.Component {
 
+    constructor(props) {
+        super(props);
+    }
+
+    action = () => {
+        this.props.action();
+        if (this.props.ste !== undefined)
+            this.props.ste();
+    }
+
+    close = () => this.setState({ open: false });
+
     iconColor = () => {
-        if (this.props.disabled) 
+        if (this.props.disabled)
             return this.style('textDisabled').color;
         return this.props.settings.darkMode ? shade2 : shade3;
     }
@@ -53,15 +65,24 @@ class SettingsItem extends React.Component {
             )
         else
             return (
-                <TouchableOpacity onPress={this.props.action} style={this.style('itemContainer')}>
-                    <Icon name={this.props.iconL} size={20} color={this.iconColor()} />
-                    <Text style={this.text()}>
-                        {this.props.text}
-                    </Text>
-                    <View style={settingStyles.settingRight}>
-                        <Icon name={this.iconRight()} size={20} color={this.iconRColor()} />
-                    </View>
-                </TouchableOpacity>
+                <View>
+                    <TouchableOpacity onPress={this.action}>
+                        <View style={this.style('itemContainer')}>
+                            <Icon name={this.props.iconL} size={20} color={this.iconColor()} />
+                            <Text style={this.text()}>
+                                {this.props.text}
+                            </Text>
+                            <View style={settingStyles.settingRight}>
+                                <Icon name={this.iconRight()} size={20} color={this.iconRColor()} />
+                            </View>
+                        </View>
+                        {this.props.children && this.props.open &&
+                            <View style={this.style('itemChildContainer')}>
+                                {this.props.children}
+                            </View>
+                        }
+                    </TouchableOpacity>
+                </View>
             )
     }
 }

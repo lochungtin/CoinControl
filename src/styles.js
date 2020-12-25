@@ -366,6 +366,34 @@ export const recordModalStyles = StyleSheet.create({
     },
 });
 
+export const scPairStyles = StyleSheet.create({
+    cancelD: {
+        alignItems: 'center',
+        backgroundColor: white,
+        borderRadius: 40,
+        backgroundColor: shade2,
+        paddingVertical: 10,
+        width: 150,
+    },
+    cancelL: {
+        alignItems: 'center',
+        backgroundColor: shade2,
+        borderRadius: 40,
+        elevation: 2,
+        paddingHorizontal: 40,
+        paddingVertical: 10,
+        width: 150,
+    },
+    save: {
+        alignItems: 'center',
+        backgroundColor: white,
+        borderRadius: 40,
+        elevation: 2,
+        paddingVertical: 10,
+        width: 150,
+    },
+})
+
 export const timePickerStyles = StyleSheet.create({
     amTextD:{
         color: white,
@@ -575,21 +603,23 @@ export const recordStyles = StyleSheet.create({
 });
 
 export const settingStyles = StyleSheet.create({
-    cancelBtnD: {
-        backgroundColor: white,
-        borderRadius: 40,
-        paddingHorizontal: 40,
-        paddingVertical: 10,
-        margin: 10,
-        width: '47.5%',
+    itemChildContainerD: {
+        alignItems: 'center',
+        backgroundColor: shade4,
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        paddingHorizontal: '5%',
+        paddingVertical: '2%',
     },
-    cancelBtnL: {
+    itemChildContainerL: {
+        alignItems: 'center',
         backgroundColor: shade1,
-        borderRadius: 40,
-        paddingHorizontal: 40,
-        paddingVertical: 10,
-        margin: 10,
-        width: '47.5%',
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        paddingHorizontal: '5%',
+        paddingVertical: '2%',
     },
     itemContainerD: {
         alignItems: 'center',
@@ -608,45 +638,6 @@ export const settingStyles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: '5%',
         paddingVertical: '2%',
-    },
-    modalTextD: {
-        color: white,
-        fontSize: 15,
-        textAlign: 'center',
-    },
-    modalTextL: {
-        color: black,
-        fontSize: 15,
-        textAlign: 'center',
-    },
-    modalViewContainer: {
-        alignItems: 'center',
-        flex: 1,
-        justifyContent: 'flex-end',
-    },
-    modalViewD: {
-        alignItems: 'center',
-        backgroundColor: shade4,
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-        height: maxHeight / 10,
-        justifyContent: 'center',
-        opacity: 0.9,
-        paddingTop: '1%',
-        paddingHorizontal: '5%',
-        width: maxWidth,
-    },
-    modalViewL: {
-        alignItems: 'center',
-        backgroundColor: shade1,
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-        height: maxHeight / 10,
-        justifyContent: 'center',
-        opacity: 0.9,
-        paddingTop: '1%',
-        paddingHorizontal: '5%',
-        width: maxWidth,
     },
     textD: {
         color: white,

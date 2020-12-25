@@ -6,12 +6,13 @@ import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
 import ColorPicker from '../components/ColorPicker';
+import SCPair from '../components/SaveCancelPair';
 import ScreenHeader from '../components/ScreenHeader';
 import SettingsHeader from '../components/SettingsHeader';
 import SettingsItem from '../components/SettingsItem';
 import TimePicker from '../components/TimePicker';
 import NotifService from '../notifications/notifService';
-import { defaultExpenseCategory, defaultExpenseSelection, defaultIncomeCategory, defaultIncomeSelection, defaultSettings, deleteHistory, resetAllKeys, updateSettings, } from '../redux/action';
+import { defaultExpenseCategory, defaultExpenseSelection, defaultGoal, defaultIncomeCategory, defaultIncomeSelection, defaultSettings, deleteHistory, resetAllKeys, updateSettings, } from '../redux/action';
 import { store } from '../redux/store';
 
 import { settingStyles, styles, } from '../styles';
@@ -21,7 +22,12 @@ class Screen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            CADOpen: false,
             cpOpen: false,
+            cupOpen: false,
+            RDCOpen: false,
+            RDSOpen: false,
+            scroll: false,
             tpOpen: false,
         }
 
@@ -30,7 +36,7 @@ class Screen extends React.Component {
             this.onNotif.bind(this),
         );
 
-        this.currencies = ['usd', 'gbp', 'jpy', 'eur', 'twd'];
+        this.currencies = ['usd', 'gbp', 'jpy', 'eur', 'twd', 'krw', 'rub'];
     }
 
     addZero = num => {
@@ -52,6 +58,23 @@ class Screen extends React.Component {
         store.dispatch(updateSettings({ key: 'notification', update: !this.props.settings.notification }));
     }
 
+    clear = lvl => {
+        if (lvl === 3) {
+            store.dispatch(deleteHistory());
+            store.dispatch(defaultGoal());
+        }
+        if (lvl > 1) {
+            store.dispatch(defaultExpenseCategory());
+            store.dispatch(defaultExpenseSelection());
+            store.dispatch(defaultIncomeCategory());
+            store.dispatch(defaultIncomeSelection());
+            store.dispatch(resetAllKeys());
+        }
+        if (lvl === 1)
+            store.dispatch(defaultSettings());
+        this.setState({ RDCOpen: false, RDSOpen: false, CADOpen: false });
+    }
+
     cpOnClose = () => this.setState({ cpOpen: false });
 
     onRegister = token => this.setState({ registerToken: token.token, fcmRegistered: true });
@@ -60,19 +83,43 @@ class Screen extends React.Component {
 
     handlePerm = perms => Alert.alert('Permissions', JSON.stringify(perms));
 
+    scroll = () => this.setState({ scroll: true });
+
+    ste = () => {
+        if (this.state.scroll)
+            this.scrollView.scrollToEnd();
+        this.setState({ scroll: false });
+    }
+
     tpOnClose = () => this.setState({ tpOpen: false });
 
     render() {
         return (
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
                 <ScreenHeader action={() => this.props.navigation.navigate('Home')} name={'Settings'} />
-                <ScrollView style={settingStyles.scrollView}>
+                <ScrollView onContentSizeChange={this.ste} ref={ref => this.scrollView = ref} style={settingStyles.scrollView}>
                     <SettingsHeader title={'ACCOUNTS'} />
                     <SettingsItem action={() => this.props.navigation.navigate('Account')} iconL={'login'} text={'Login'} />
                     <SettingsItem action={() => this.props.navigation.navigate('Account')} iconL={'account'} text={'Account Settings'} />
 
                     <SettingsHeader title={'GENERAL'} />
-                    <SettingsItem action={() => this.setState({ currencyPicker: true })} iconL={'currency-usd'} iconR={'currency-' + this.props.settings.currency} text={'Currency'} />
+                    <SettingsItem action={() => this.setState({ cupOpen: !this.state.cupOpen })} iconL={'currency-usd'} iconR={'currency-' + this.props.settings.currency} text={'Currency'} open={this.state.cupOpen}>
+                        {this.currencies.map(item => {
+                            return (
+                                <Bubble
+                                    color={this.props.settings.accent}
+                                    key={item}
+                                    iconName={'currency-' + item}
+                                    iconSize={20}
+                                    onPress={() => {
+                                        store.dispatch(updateSettings({ key: 'currency', update: item }));
+                                        this.setState({ cupOpen: false });
+                                    }}
+                                    selected={this.props.settings.currency !== item}
+                                />
+                            )
+                        })}
+                    </SettingsItem>
 
                     <SettingsHeader title={'THEMES'} />
                     <SettingsItem action={() => this.setState({ cpOpen: true })} iconL={'palette'} iconR={'circle'} iconRColor={this.props.settings.accent} text={'Accent Color'} />
@@ -88,9 +135,15 @@ class Screen extends React.Component {
                     <SettingsItem action={() => this.setState({ tpOpen: true })} disabled={!this.props.settings.notification} iconL={'subdirectory-arrow-right'} text={this.props.settings.notifSchedule} />
 
                     <SettingsHeader title={'DANGER ZONE'} />
-                    <SettingsItem action={() => this.setState({ resetCategory: true })} iconL={'backup-restore'} text={'Reset Default Categories'} />
-                    <SettingsItem action={() => this.setState({ resetSettings: true })} iconL={'backup-restore'} text={'Reset Default Settings'} />
-                    <SettingsItem action={() => this.setState({ resetAll: true })} iconL={'trash-can'} text={'Clear All Data'} />
+                    <SettingsItem action={() => this.setState({ RDCOpen: !this.state.RDCOpen })} iconL={'backup-restore'} open={this.state.RDCOpen} ste={this.scroll} text={'Reset Default Categories'}>
+                        <SCPair onCancel={() => this.setState({ RDCOpen: false })} onConfirm={() => this.clear(2)} />
+                    </SettingsItem>
+                    <SettingsItem action={() => this.setState({ RDSOpen: !this.state.RDSOpen })} iconL={'backup-restore'} open={this.state.RDSOpen} ste={this.scroll} text={'Reset Default Settings'}>
+                        <SCPair onCancel={() => this.setState({ RDSOpen: false })} onConfirm={() => this.clear(1)} />
+                    </SettingsItem>
+                    <SettingsItem action={() => this.setState({ CADOpen: !this.state.CADOpen })} iconL={'trash-can'} open={this.state.CADOpen} ste={this.scroll} text={'Clear All Data'}>
+                        <SCPair onCancel={() => this.setState({ CADOpen: false })} onConfirm={() => this.clear(3)} />
+                    </SettingsItem>
                 </ScrollView>
 
                 <ColorPicker
@@ -111,68 +164,6 @@ class Screen extends React.Component {
                         this.setState({ tpOpen: false });
                     }}
                 />
-                <Modal
-                    animationIn={'slideInUp'}
-                    backdropOpacity={0}
-                    isVisible={false}
-                    onBackdropPress={this.close}
-                    onBackButtonPress={this.close}
-                    onSwipeComplete={this.close}
-                    swipeDirection='down'
-                    style={{ flexDirection: 'row', alignItems: 'flex-end', padding: 0, margin: 0 }}
-                >
-                    <View style={styles.columns}>
-                        {this.currencies.map(item => {
-                            return (
-                                <Bubble
-                                    color={this.props.settings.accent}
-                                    key={item}
-                                    iconName={'currency-' + item}
-                                    iconSize={20}
-                                    onPress={() => {
-                                        store.dispatch(updateSettings({ key: 'currency', update: item }));
-                                        this.setState({ currencyPicker: false });
-                                    }}
-                                    selected={this.props.settings.currency === item}
-                                />
-                            )
-                        })}
-                    </View>
-                </Modal>
-                <Modal animationType={'slide'} transparent={true} visible={false}>
-                    <View style={settingStyles.modalViewContainer}>
-                        <View style={this.props.settings.darkMode ? settingStyles.modalViewD : settingStyles.modalViewL}>
-                            <Text style={this.props.settings.darkMode ? settingStyles.modalTextD : settingStyles.modalTextL}>{
-                                (this.state.resetAll ? 'Clear ALL data?' : '') +
-                                (this.state.resetCategory ? 'Revert to Default Categories?' : '') +
-                                (this.state.resetSettings ? 'Revert to Default Settings?' : '')
-                            }</Text>
-                            <View style={styles.columns}>
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        if (this.state.resetAll)
-                                            store.dispatch(deleteHistory());
-                                        if (this.state.resetCategory) {
-                                            store.dispatch(defaultExpenseCategory());
-                                            store.dispatch(defaultExpenseSelection());
-                                            store.dispatch(defaultIncomeCategory());
-                                            store.dispatch(defaultIncomeSelection());
-                                            store.dispatch(resetAllKeys());
-                                        }
-                                        if (this.state.resetSettings)
-                                            store.dispatch(defaultSettings());
-                                        this.setState({ resetAll: false, resetCategory: false, resetSettings: false });
-                                    }}
-                                    style={{ ...styles.roundView, backgroundColor: this.props.settings.accent, width: '47.5%' }}>
-                                    <Text style={styles.centerTextL}>Confirm</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.setState({ resetAll: false, resetCategory: false, resetSettings: false })} style={this.props.settings.darkMode ? settingStyles.cancelBtnD : settingStyles.cancelBtnL}>
-                                    <Text style={styles.centerTextL}>Cancel</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
-                </Modal>
             </View >
         );
     }

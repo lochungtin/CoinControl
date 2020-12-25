@@ -11,7 +11,7 @@ export const black = '#0C0C0C';
 
 // default theme
 
-export const goldenBrown = '#f1c40f';
+export const goldenBrown = '#f8c471';
 
 // color selection
 
