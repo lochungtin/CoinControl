@@ -92,13 +92,13 @@ class Screen extends React.Component {
                             </Text>
                         </View>
                         <View style={{ ...styles.columns, flex: 0 }}>
-                            <Icon name={'currency-' + this.props.settings.currency} color={this.props.goal.type === 'none' ? 'transparent' : this.text(styles, 'text').color} size={15} />
+                            <Icon name={'currency-' + this.props.settings.currency} color={this.props.goal.type === 'none' ? 'transparent' : this.style(styles, 'text').color} size={15} />
                             <Text style={{ color: this.goalMessageColor() }}>
                                 {this.goalMessage(parseGoal(this.props.records, this.props.goal.amount))}
                             </Text>
                         </View>
                         <View style={{ ...styles.columns, flex: 0 }}>
-                            <Progress.Bar color={this.props.settings.accent} progress={parseGoalPercentage(parseGoal(this.props.records, this.props.goal.amount), this.props.goal.amount)} width={maxWidth / 2} />
+                            <Progress.Bar color={this.props.settings.accent} progress={1 - parseGoalPercentage(parseGoal(this.props.records, this.props.goal.amount), this.props.goal.amount)} width={maxWidth / 2} />
                         </View>
                         <View style={{ ...styles.columns, flex: 0, justifyContent: 'space-evenly' }}>
                             <View style={{ ...styles.rows, maxWidth: 70 }}>

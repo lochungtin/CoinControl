@@ -53,7 +53,6 @@ class TimePicker extends React.Component {
         return (
             <Modal
                 animationIn={'slideInUp'}
-                backdropOpacity={0}
                 isVisible={this.props.open}
                 onBackdropPress={this.close}
                 onBackButtonPress={this.close}

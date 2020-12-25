@@ -28,6 +28,8 @@ class DatePicker extends React.Component {
                 isVisible={this.props.open}
                 onBackdropPress={this.props.close}
                 onBackButtonPress={this.props.close}
+                onSwipeComplete={this.close}
+                swipeDirection='down'
             >
                 <View style={this.modalStyle()}>
                     <ExpandButton onPress={this.props.close} />
