@@ -5,6 +5,7 @@ import Modal from 'react-native-modal';
 import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
+import ColorPicker from '../components/ColorPicker';
 import ExpandButton from '../components/ExpandButton';
 import ScreenHeader from '../components/ScreenHeader';
 import SettingsHeader from '../components/SettingsHeader';
@@ -19,6 +20,7 @@ class Screen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            cpPicker: false,
             currencyPicker: false
         }
 
@@ -34,15 +36,71 @@ class Screen extends React.Component {
         return num < 10 ? '0' + num : num;
     }
 
+    cpOnClose = () => this.setState({ cpOpen: false });
+
     onRegister = token => this.setState({ registerToken: token.token, fcmRegistered: true });
 
-    onNotif = notif => {}
+    onNotif = notif => { }
 
     handlePerm = perms => Alert.alert('Permissions', JSON.stringify(perms));
 
     render() {
         return (
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
+                <ScreenHeader action={() => this.props.navigation.navigate('Home')} name={'Settings'} />
+                <ScrollView style={settingStyles.scrollView}>
+                    <SettingsHeader title={'ACCOUNTS'} />
+                    <SettingsItem action={() => this.props.navigation.navigate('Account')} iconL={'login'} text={'Login'} />
+                    <SettingsItem action={() => this.props.navigation.navigate('Account')} iconL={'account'} text={'Account Settings'} />
+
+                    <SettingsHeader title={'GENERAL'} />
+                    <SettingsItem action={() => this.setState({ currencyPicker: true })} iconL={'currency-usd'} iconR={'currency-' + this.props.settings.currency} text={'Currency'} />
+
+                    <SettingsHeader title={'THEMES'} />
+                    <SettingsItem action={() => this.setState({ cpOpen: true })} iconL={'palette'} iconR={'circle'} iconRColor={this.props.settings.accent} text={'Accent Color'} />
+                    <SettingsItem action={() => store.dispatch(updateSettings({ key: 'darkMode', update: !this.props.settings.darkMode }))} iconL={'moon-waning-crescent'} state={this.props.settings.darkMode} switch={true} text={'Dark Mode'} />
+
+                    <SettingsHeader title={'CATEGORIES'} />
+                    <SettingsItem action={() => this.props.navigation.navigate('Category', { title: 'Expense' })} iconL={'shopping'} text={'Expense Categories'} />
+                    <SettingsItem action={() => this.props.navigation.navigate('Category', { title: 'Income' })} iconL={'cash'} text={'Income Categories'} />
+                    <SettingsItem action={() => this.setState({ resetCategory: true })} iconL={'backup-restore'} text={'Reset Default Categories'} />
+
+                    <SettingsHeader title={'ADVANCED'} />
+                    <SettingsItem action={() => store.dispatch(updateSettings({ key: 'compactView', update: !this.props.settings.compactView }))} iconL={'card-text'} state={this.props.settings.compactView} switch={true} text={'Compact View'} />
+                    <SettingsItem
+                        action={() => {
+                            this.notif.cancelAll();
+                            if (!this.props.settings.notification) {
+                                var set = moment().set({
+                                    'hour': parseInt(this.props.settings.notifSchedule.substring(0, 2)),
+                                    'minute': parseInt(this.props.settings.notifSchedule.substring(3, 5)),
+                                    'second': 0,
+                                });
+                                if (set.isBefore(moment()))
+                                    set.add(1, 'day');
+                                this.notif.scheduleNotif(set, this.props.settings.accent);
+                            }
+                            store.dispatch(updateSettings({ key: 'notification', update: !this.props.settings.notification }))
+                        }}
+                        iconL={'bell'}
+                        state={this.props.settings.notification}
+                        switch={true}
+                        text={'Notifications'}
+                    />
+                    <SettingsItem action={() => this.setState({ timePicker: true, modal: true })} disabled={!this.props.settings.notification} iconL={'subdirectory-arrow-right'} text={this.props.settings.notifSchedule} />
+                    <SettingsItem action={() => this.setState({ resetSettings: true })} iconL={'backup-restore'} text={'Reset Default Settings'} />
+                    <SettingsItem action={() => this.setState({ resetAll: true })} iconL={'trash-can'} text={'Clear All Data'} />
+                </ScrollView>
+
+                <ColorPicker
+                    color={this.props.settings.accent}
+                    close={this.cpOnClose} 
+                    open={this.state.cpOpen} 
+                    onPress={item => {
+                        store.dispatch(updateSettings({ key: 'accent', update: item }));
+                        this.setState({ cpOpen: false });
+                    }}
+                />
                 <Modal
                     animationIn={'slideInUp'}
                     backdropOpacity={0}
@@ -105,50 +163,6 @@ class Screen extends React.Component {
                         </View>
                     </View>
                 </Modal>
-                <ScreenHeader action={() => this.props.navigation.navigate('Home')} name={'Settings'} />
-                <ScrollView style={settingStyles.scrollView}>
-                    <SettingsHeader title={'ACCOUNTS'} />
-                    <SettingsItem action={() => this.props.navigation.navigate('Account')} iconL={'login'} text={'Login'} />
-                    <SettingsItem action={() => this.props.navigation.navigate('Account')} iconL={'account'} text={'Account Settings'} />
-
-                    <SettingsHeader title={'GENERAL'} />
-                    <SettingsItem action={() => this.setState({ currencyPicker: true })} iconL={'currency-usd'} iconR={'currency-' + this.props.settings.currency} text={'Currency'} />
-
-                    <SettingsHeader title={'THEMES'} />
-                    <SettingsItem action={() => this.setState({ colorPicker: true, modal: true })} iconL={'palette'} iconR={'circle'} iconRColor={this.props.settings.accent} text={'Accent Color'} />
-                    <SettingsItem action={() => store.dispatch(updateSettings({ key: 'darkMode', update: !this.props.settings.darkMode }))} iconL={'moon-waning-crescent'} state={this.props.settings.darkMode} switch={true} text={'Dark Mode'} />
-
-                    <SettingsHeader title={'CATEGORIES'} />
-                    <SettingsItem action={() => this.props.navigation.navigate('Category', { title: 'Expense' })} iconL={'shopping'} text={'Expense Categories'} />
-                    <SettingsItem action={() => this.props.navigation.navigate('Category', { title: 'Income' })} iconL={'cash'} text={'Income Categories'} />
-                    <SettingsItem action={() => this.setState({ resetCategory: true })} iconL={'backup-restore'} text={'Reset Default Categories'} />
-
-                    <SettingsHeader title={'ADVANCED'} />
-                    <SettingsItem action={() => store.dispatch(updateSettings({ key: 'compactView', update: !this.props.settings.compactView }))} iconL={'card-text'} state={this.props.settings.compactView} switch={true} text={'Compact View'} />
-                    <SettingsItem
-                        action={() => {
-                            this.notif.cancelAll();
-                            if (!this.props.settings.notification) {
-                                var set = moment().set({
-                                    'hour': parseInt(this.props.settings.notifSchedule.substring(0, 2)),
-                                    'minute': parseInt(this.props.settings.notifSchedule.substring(3, 5)),
-                                    'second': 0,
-                                });
-                                if (set.isBefore(moment()))
-                                    set.add(1, 'day');
-                                this.notif.scheduleNotif(set, this.props.settings.accent);
-                            }
-                            store.dispatch(updateSettings({ key: 'notification', update: !this.props.settings.notification }))
-                        }}
-                        iconL={'bell'}
-                        state={this.props.settings.notification}
-                        switch={true}
-                        text={'Notifications'}
-                    />
-                    <SettingsItem action={() => this.setState({ timePicker: true, modal: true })} disabled={!this.props.settings.notification} iconL={'subdirectory-arrow-right'} text={this.props.settings.notifSchedule} />
-                    <SettingsItem action={() => this.setState({ resetSettings: true })} iconL={'backup-restore'} text={'Reset Default Settings'} />
-                    <SettingsItem action={() => this.setState({ resetAll: true })} iconL={'trash-can'} text={'Clear All Data'} />
-                </ScrollView>
             </View >
         );
     }

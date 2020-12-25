@@ -28,7 +28,8 @@ class Bubble extends React.Component {
                 style={{
                     ...bubbleStyles.bubble,
                     backgroundColor: this.state.border ? this.props.selected ? this.props.settings.darkMode ? iconColors.iconL : iconColors.iconD : this.props.color : this.props.color,
-                    borderWidth: !this.state.border ? this.props.selected ? 6 : 0 : 0,
+                    borderWidth: !this.state.border ? this.props.selected ? 3 : 0 : 0,
+                    borderColor: this.props.settings.darkMode ? white : black,
                     height: this.props.size !== undefined ? this.props.size : 30,
                     margin: this.props.spacing !== undefined ? this.props.spacing : 7.5,
                     width: this.props.size !== undefined ? this.props.size : 30,

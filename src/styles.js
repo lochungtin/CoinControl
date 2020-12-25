@@ -159,6 +159,19 @@ export const calendarStyles = StyleSheet.create({
     }
 });
 
+export const colorPickerStyles = StyleSheet.create({
+    colorPickerRootD: { 
+        alignItems: 'center',
+        backgroundColor: bgColorD,
+        borderRadius: 20,
+        height: 350,
+        elevation: 10,
+        padding: 10, 
+        justifyContent: "space-between",
+        width: 300,
+    },
+});
+
 export const datePickerStyles = StyleSheet.create({
     calendar: {
         width: 350,
