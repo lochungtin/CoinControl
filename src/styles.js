@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet } from 'react-native';
-import { shade1, shade2, shade3, shade4 } from './data/color';
+import { black, bgColorD, bgColorL, shade1, shade2, shade3, shade4, white } from './data/color';
 
 // dimensions
 
