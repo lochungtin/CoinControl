@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 
 import Bubble from './Bubble';
 import ExpandButton from './ExpandButton';
+
 import { blue, colorLabels, green, purple, red, teal, yellow, } from '../data/color';
-import { colorPickerStyles, styles } from '../styles';
+import { customModalStyles, styles, } from '../styles';
 
 class ColorPicker extends React.Component {
 
@@ -20,7 +21,10 @@ class ColorPicker extends React.Component {
         }
     }
 
-    close = () => this.props.close();
+    close = () => {
+        this.props.close();
+        this.setState({ category: this.find(this.state.colors, this.props.color) });
+    }
 
     formation = arr => {
         return [
@@ -40,7 +44,7 @@ class ColorPicker extends React.Component {
     }
 
     style = styleName => {
-        return colorPickerStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
+        return customModalStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
     }
 
     render() {
@@ -55,7 +59,7 @@ class ColorPicker extends React.Component {
                 swipeDirection='down'
                 style={{ alignItems: 'center', padding: 0, margin: 0 }}
             >
-                <View style={this.style('colorPickerRoot')}>
+                <View style={{ ...this.style('root'), height: 350 }}>
                     <ExpandButton onPress={this.close} />
                     <View style={{ alignItems: 'center' }}>
                         {this.formation(this.state.colors[this.state.category]).map(row => {

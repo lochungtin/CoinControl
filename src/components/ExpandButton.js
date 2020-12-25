@@ -3,7 +3,7 @@ import { TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import { black, white, } from '../styles';
+import { black, white, } from '../data/color';
 
 class ExpandButton extends React.Component {
 

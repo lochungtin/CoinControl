@@ -6,22 +6,23 @@ import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
 import ColorPicker from '../components/ColorPicker';
-import ExpandButton from '../components/ExpandButton';
 import ScreenHeader from '../components/ScreenHeader';
 import SettingsHeader from '../components/SettingsHeader';
 import SettingsItem from '../components/SettingsItem';
+import TimePicker from '../components/TimePicker';
 import NotifService from '../notifications/notifService';
 import { defaultExpenseCategory, defaultExpenseSelection, defaultIncomeCategory, defaultIncomeSelection, defaultSettings, deleteHistory, resetAllKeys, updateSettings, } from '../redux/action';
 import { store } from '../redux/store';
-import { colors, settingStyles, styles, } from '../styles';
+
+import { settingStyles, styles, } from '../styles';
 
 class Screen extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            cpPicker: false,
-            currencyPicker: false
+            cpOpen: false,
+            tpOpen: false,
         }
 
         this.notif = new NotifService(
@@ -36,6 +37,21 @@ class Screen extends React.Component {
         return num < 10 ? '0' + num : num;
     }
 
+    cancelNotifs = () => {
+        this.notif.cancelAll();
+        if (!this.props.settings.notification) {
+            var set = moment().set({
+                'hour': parseInt(this.props.settings.notifSchedule.substring(0, 2)),
+                'minute': parseInt(this.props.settings.notifSchedule.substring(3, 5)),
+                'second': 0,
+            });
+            if (set.isBefore(moment()))
+                set.add(1, 'day');
+            this.notif.scheduleNotif(set, this.props.settings.accent);
+        }
+        store.dispatch(updateSettings({ key: 'notification', update: !this.props.settings.notification }));
+    }
+
     cpOnClose = () => this.setState({ cpOpen: false });
 
     onRegister = token => this.setState({ registerToken: token.token, fcmRegistered: true });
@@ -43,6 +59,8 @@ class Screen extends React.Component {
     onNotif = notif => { }
 
     handlePerm = perms => Alert.alert('Permissions', JSON.stringify(perms));
+
+    tpOnClose = () => this.setState({ tpOpen: false });
 
     render() {
         return (
@@ -63,48 +81,40 @@ class Screen extends React.Component {
                     <SettingsHeader title={'CATEGORIES'} />
                     <SettingsItem action={() => this.props.navigation.navigate('Category', { title: 'Expense' })} iconL={'shopping'} text={'Expense Categories'} />
                     <SettingsItem action={() => this.props.navigation.navigate('Category', { title: 'Income' })} iconL={'cash'} text={'Income Categories'} />
-                    <SettingsItem action={() => this.setState({ resetCategory: true })} iconL={'backup-restore'} text={'Reset Default Categories'} />
 
                     <SettingsHeader title={'ADVANCED'} />
                     <SettingsItem action={() => store.dispatch(updateSettings({ key: 'compactView', update: !this.props.settings.compactView }))} iconL={'card-text'} state={this.props.settings.compactView} switch={true} text={'Compact View'} />
-                    <SettingsItem
-                        action={() => {
-                            this.notif.cancelAll();
-                            if (!this.props.settings.notification) {
-                                var set = moment().set({
-                                    'hour': parseInt(this.props.settings.notifSchedule.substring(0, 2)),
-                                    'minute': parseInt(this.props.settings.notifSchedule.substring(3, 5)),
-                                    'second': 0,
-                                });
-                                if (set.isBefore(moment()))
-                                    set.add(1, 'day');
-                                this.notif.scheduleNotif(set, this.props.settings.accent);
-                            }
-                            store.dispatch(updateSettings({ key: 'notification', update: !this.props.settings.notification }))
-                        }}
-                        iconL={'bell'}
-                        state={this.props.settings.notification}
-                        switch={true}
-                        text={'Notifications'}
-                    />
-                    <SettingsItem action={() => this.setState({ timePicker: true, modal: true })} disabled={!this.props.settings.notification} iconL={'subdirectory-arrow-right'} text={this.props.settings.notifSchedule} />
+                    <SettingsItem action={this.cancelNotifs} iconL={'bell'} state={this.props.settings.notification} switch={true} text={'Notifications'} />
+                    <SettingsItem action={() => this.setState({ tpOpen: true })} disabled={!this.props.settings.notification} iconL={'subdirectory-arrow-right'} text={this.props.settings.notifSchedule} />
+
+                    <SettingsHeader title={'DANGER ZONE'} />
+                    <SettingsItem action={() => this.setState({ resetCategory: true })} iconL={'backup-restore'} text={'Reset Default Categories'} />
                     <SettingsItem action={() => this.setState({ resetSettings: true })} iconL={'backup-restore'} text={'Reset Default Settings'} />
                     <SettingsItem action={() => this.setState({ resetAll: true })} iconL={'trash-can'} text={'Clear All Data'} />
                 </ScrollView>
 
                 <ColorPicker
                     color={this.props.settings.accent}
-                    close={this.cpOnClose} 
-                    open={this.state.cpOpen} 
+                    close={this.cpOnClose}
+                    open={this.state.cpOpen}
                     onPress={item => {
                         store.dispatch(updateSettings({ key: 'accent', update: item }));
                         this.setState({ cpOpen: false });
                     }}
                 />
+                <TimePicker
+                    close={this.tpOnClose}
+                    open={this.state.tpOpen}
+                    time={this.props.settings.notifSchedule}
+                    onPress={item => {
+                        store.dispatch(updateSettings({ key: 'notifSchedule', update: item }));
+                        this.setState({ tpOpen: false });
+                    }}
+                />
                 <Modal
                     animationIn={'slideInUp'}
                     backdropOpacity={0}
-                    isVisible={this.state.currencyPicker}
+                    isVisible={false}
                     onBackdropPress={this.close}
                     onBackButtonPress={this.close}
                     onSwipeComplete={this.close}

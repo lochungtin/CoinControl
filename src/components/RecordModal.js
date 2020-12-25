@@ -1,12 +1,14 @@
 import React from 'react';
-import { TextInput, View } from 'react-native';
+import { TextInput, View, } from 'react-native';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import ExpandButton from './ExpandButton';
 import Numpad from './Numpad';
-import { black, iconColors, recordModalStyles, styles, white, } from '../styles';
+
+import { black, shade2, shade3, white, } from '../data/color';
+import { recordModalStyles, styles, } from '../styles';
 
 class RecordModal extends React.Component {
 
@@ -43,8 +45,12 @@ class RecordModal extends React.Component {
         this.props.onConfirm(rec);
     }
 
-    style = (stylesheet, styleName) => {
-        return stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
+    placeholderColor = () => {
+        return this.props.settings.darkMode ? shade2 : shade3;
+    }
+
+    style = styleName => {
+        return recordModalStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
     }
 
     render() {
@@ -60,16 +66,16 @@ class RecordModal extends React.Component {
                 style={{ flexDirection: 'row', alignItems: 'flex-end', padding: 0, margin: 0 }}
             >
                 <View style={styles.rows}>
-                    <View style={this.style(recordModalStyles, 'header')}>
+                    <View style={this.style('header')}>
                         <ExpandButton color={this.iconColor()} onPress={this.close} />
                     </View>
-                    <View style={this.style(recordModalStyles, 'inputBox')}>
+                    <View style={this.style('inputBox')}>
                         <Icon name={this.props.item.icon} color={this.props.settings.accent} size={30} />
                         <TextInput
                             onChangeText={text => this.setState({ newTitle: text, editTitle: true })}
                             placeholder={'Title (Optional)'}
-                            placeholderTextColor={this.style(iconColors, 'icon')}
-                            style={this.style(recordModalStyles, 'input')}
+                            placeholderTextColor={this.placeholderColor()}
+                            style={this.style('input')}
                             value={this.state.editTitle ? this.state.newTitle : this.props.item.title}
                         />
                     </View>

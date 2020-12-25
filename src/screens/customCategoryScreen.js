@@ -9,9 +9,9 @@ import ScreenHeader from '../components/ScreenHeader';
 import { customCategoryIconList } from '../data/default';
 import { addExpenseCategory, addIncomeCategory, deleteExpenseCategory, deleteIncomeCategory, resetKey, updateExpenseSelection, updateIncomeSelection, } from '../redux/action';
 import { store } from '../redux/store';
-import { black, categoryStyles, styles, white, } from '../styles';
 
-
+import { black, white, } from '../data/color';
+import { categoryStyles, styles, } from '../styles';
 
 class Screen extends React.Component {
 

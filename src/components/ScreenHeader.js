@@ -3,7 +3,8 @@ import { TouchableOpacity, Text, View, } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import { black, headerStyles, white, } from '../styles';
+import { black, white, } from '../data/color';
+import { headerStyles } from '../styles';
 
 class ScreenHeader extends React.Component {
 

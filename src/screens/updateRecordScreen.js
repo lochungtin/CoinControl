@@ -4,12 +4,13 @@ import { Text, TouchableOpacity, View, } from 'react-native';
 import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
+import ExpandButton from '../components/ExpandButton';
 import RecordModal from '../components/RecordModal';
 import ScreenHeader from '../components/ScreenHeader';
 import { store } from '../redux/store';
 import { addRecord } from '../redux/action';
+
 import { recordStyles, styles, } from '../styles';
-import ExpandButton from '../components/ExpandButton';
 
 class Screen extends React.Component {
 

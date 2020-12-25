@@ -2,7 +2,8 @@ import React from 'react';
 import { TouchableOpacity, Text, View, } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { black, styles, white, } from '../styles';
+import { black, white, } from '../data/color';
+import { styles } from '../styles';
 
 export default class CategoryItem extends React.Component {
     constructor(props) {
@@ -19,8 +20,8 @@ export default class CategoryItem extends React.Component {
                 <Icon name={this.props.item.iconName} size={25} color={this.props.accent} />
                 <Text style={{ color: this.color(), width: '50%' }}>{this.props.item.key}</Text>
                 <View style={{ width: '20%' }}>
-                    {!this.props.item.default && this.props.expand && 
-                        <View style={{...styles.columns, justifyContent: 'space-between', }}>
+                    {!this.props.item.default && this.props.expand &&
+                        <View style={{ ...styles.columns, justifyContent: 'space-between', }}>
                             <TouchableOpacity onPress={() => this.props.action(this.props.item.key)}>
                                 <Icon name={'trash-can'} size={25} color={this.color()} />
                             </TouchableOpacity>

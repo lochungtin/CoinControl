@@ -3,7 +3,7 @@ import React from 'react';
 import { TouchableOpacity, Text, } from 'react-native';
 import { connect } from 'react-redux';
 
-import { calendarStyles, } from '../styles';
+import { calendarStyles } from '../styles';
 
 class CalendarDateSelector extends React.Component {
 

@@ -1,16 +1,17 @@
 import React from 'react';
-import { Switch, TouchableOpacity, Text, View } from 'react-native';
+import { Switch, TouchableOpacity, Text, View, } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import { settingStyles, iconColors, white, } from '../styles';
+import { shade2, shade3, white, } from '../data/color';
+import { settingStyles } from '../styles';
 
 class SettingsItem extends React.Component {
 
     iconColor = () => {
         if (this.props.disabled) 
             return this.style('textDisabled').color;
-        return this.props.settings.darkMode ? iconColors.iconD : iconColors.iconL;
+        return this.props.settings.darkMode ? shade2 : shade3;
     }
 
     iconRColor = () => {

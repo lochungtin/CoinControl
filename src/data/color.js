@@ -1,4 +1,21 @@
-export const colorLabels = ['#f1c40f', '#2ecc71', '#48c9b0', '#3498db', '#9b59b6', '#e74c3c',]
+// shades
+
+export const white = '#FCFCFC';
+export const bgColorL = '#ECECEC';
+export const shade1 = '#DCDCDC';
+export const shade2 = '#CCCCCC';
+export const shade3 = '#3C3C3C';
+export const shade4 = '#2C2C2C';
+export const bgColorD = '#1C1C1C';
+export const black = '#0C0C0C';
+
+// default theme
+
+export const goldenBrown = '#f1c40f';
+
+// color selection
+
+export const colorLabels = ['#f1c40f', '#2ecc71', '#48c9b0', '#3498db', '#9b59b6', '#e74c3c',];
 
 export const yellow = [
     '#f7dc6f', '#f4d03f', '#f1c40f', '#d4ac0d', '#b7950b', '#9a7d0a', '#7d6608',

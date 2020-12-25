@@ -12,7 +12,9 @@ import { str2rgb } from '../functions/colors';
 import { parseLabel, parseSector, parseWeek, } from '../functions/parser';
 import { store } from '../redux/store';
 import { updateExpenseSelection, updateIncomeSelection, } from '../redux/action';
-import { black, bgColorD, bgColorL, chartScreenStyles, iconColors, maxWidth, styles, white, } from '../styles';
+
+import { black, bgColorD, bgColorL, shade2, shade3, white, } from '../data/color';
+import { chartScreenStyles, maxWidth, styles, } from '../styles';
 
 class Screen extends React.Component {
 
@@ -29,7 +31,7 @@ class Screen extends React.Component {
     }
 
     iconColor = () => {
-        return this.props.settings.darkMode ? iconColors.iconD : iconColors.iconL;
+        return this.props.settings.darkMode ? shade2 : shade3;
     }
 
     message = () => {
@@ -183,7 +185,7 @@ class Screen extends React.Component {
                                                     store.dispatch(updateExpenseSelection(temp));
                                                 }
                                                 else {
-                                                    
+
                                                     var temp = [...this.props.incomeSelection];
                                                     var position = temp.indexOf(itemName);
                                                     temp.splice(position, 1);

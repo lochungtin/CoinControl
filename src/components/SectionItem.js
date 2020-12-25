@@ -4,7 +4,9 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
-import { black, homeScreenStyles, white, styles, } from '../styles';
+
+import { black, white, } from '../data/color';
+import { homeScreenStyles, styles, } from '../styles';
 
 class SectionItem extends React.Component {
 

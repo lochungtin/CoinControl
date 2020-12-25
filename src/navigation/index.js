@@ -13,7 +13,8 @@ import customCategoryScreen from '../screens/customCategoryScreen';
 import homeScreen from '../screens/homeScreen';
 import settingsScreen from '../screens/settingsScreen';
 import updateRecordScreen from '../screens/updateRecordScreen';
-import { bgColorD, bgColorL, white, black } from '../styles';
+
+import { black, bgColorD, bgColorL, white, } from '../data/color';
 
 const Main = createStackNavigator();
 const Settings = createStackNavigator();

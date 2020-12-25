@@ -1,10 +1,11 @@
 import React from 'react';
-import { Text, View } from 'react-native'
+import { Text, View, } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import DatePicker from '../components/DatePicker';
 import NumpadButton from './NumpadButton';
+
 import { numpadStyles } from '../styles';
 
 class Numpad extends React.Component {

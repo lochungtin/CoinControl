@@ -1,30 +1,10 @@
 import { Dimensions, StyleSheet } from 'react-native';
+import { shade1, shade2, shade3, shade4 } from './data/color';
 
 // dimensions
 
 export const maxHeight = Dimensions.get('screen').height;
 export const maxWidth = Dimensions.get('screen').width;
-
-// colors
-
-export const colors = ['#ff3064', '#F2D996', '#34e0a4', '#63cbf7', '#873beb'];
-export const goldenBrown = '#F2D996';
-
-const shade1 = '#E0E0E0';
-const shade2 = '#ACACAC';
-const shade3 = '#3C3C3C';
-const shade4 = '#2C2C2C';
-
-export const black = '#0C0C0C';
-export const white = '#FCFCFC';
-
-export const bgColorD = '#1C1C1C';
-export const bgColorL = white;
-
-export const iconColors = {
-    iconD: shade2,
-    iconL: shade3,
-}
 
 // general styles
 
@@ -94,7 +74,6 @@ export const styles = StyleSheet.create({
     },
 });
 
-
 // component styles
 
 export const bubbleStyles = StyleSheet.create({
@@ -159,15 +138,23 @@ export const calendarStyles = StyleSheet.create({
     }
 });
 
-export const colorPickerStyles = StyleSheet.create({
-    colorPickerRootD: { 
+export const customModalStyles = StyleSheet.create({
+    rootD: { 
         alignItems: 'center',
         backgroundColor: bgColorD,
         borderRadius: 20,
-        height: 350,
         elevation: 10,
-        padding: 10, 
         justifyContent: "space-between",
+        padding: 10, 
+        width: 300,
+    },
+    rootL: { 
+        alignItems: 'center',
+        backgroundColor: bgColorL,
+        borderRadius: 20,
+        elevation: 10,
+        justifyContent: "space-between",
+        padding: 10, 
         width: 300,
     },
 });
@@ -376,44 +363,6 @@ export const recordModalStyles = StyleSheet.create({
         marginLeft: '5%',
         paddingLeft: '5%',
         width: '85%'
-    },
-});
-
-export const scrollerStyles = StyleSheet.create({
-    containerD: {
-        borderBottomWidth: 1,
-        borderColor: white,
-        flex: 1,
-        maxHeight: 50,
-        marginHorizontal: 10,
-        minHeight: 50,
-    },
-    containerL: {
-        borderBottomWidth: 1,
-        borderColor: black,
-        flex: 1,
-        maxHeight: 50,
-        marginHorizontal: 10,
-        minHeight: 50,
-    },
-    list: {
-        height: 50,
-    },
-    item: {
-        justifyContent: 'center',
-        marginHorizontal: 16,
-        maxHeight: 50,
-        minHeight: 50
-    },
-    titleD: {
-        color: white,
-        fontSize: 16,
-        textAlign: 'center',
-    },
-    titleL: {
-        color: black,
-        fontSize: 16,
-        textAlign: 'center',
     },
 });
 

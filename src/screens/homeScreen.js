@@ -12,7 +12,9 @@ import RecordModal from '../components/RecordModal';
 import { parseAll, parseGoal, parseGoalPercentage, parseTotal, } from '../functions/parser';
 import { defaultGoal, deleteRecord, editRecord, updateGoal } from '../redux/action';
 import { store } from '../redux/store';
-import { bgColorD, bgColorL, black, iconColors, homeScreenStyles, maxWidth, maxHeight, styles, white, } from '../styles';
+
+import { black, bgColorD, bgColorL, shade2, shade3, white, } from '../data/color';
+import { homeScreenStyles, maxWidth, maxHeight, styles, } from '../styles';
 
 class Screen extends React.Component {
 
@@ -58,6 +60,10 @@ class Screen extends React.Component {
         }
     }
 
+    goalMessageColor = () => {
+        return this.props.settings.darkMode ? shade2 : shade3;
+    }
+
     statusBarBg = () => {
         return this.props.settings.darkMode ? bgColorD : bgColorL;
     }
@@ -87,7 +93,7 @@ class Screen extends React.Component {
                         </View>
                         <View style={{ ...styles.columns, flex: 0 }}>
                             <Icon name={'currency-' + this.props.settings.currency} color={this.props.goal.type === 'none' ? 'transparent' : this.text(styles, 'text').color} size={15} />
-                            <Text style={{ color: this.style(iconColors, 'icon') }}>
+                            <Text style={{ color: this.goalMessageColor() }}>
                                 {this.goalMessage(parseGoal(this.props.records, this.props.goal.amount))}
                             </Text>
                         </View>
