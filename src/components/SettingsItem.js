@@ -43,7 +43,7 @@ class SettingsItem extends React.Component {
                     <View style={settingStyles.settingRight}>
                         <Switch
                             thumbColor={white}
-                            trackColor={{ false: this.style('icon'), true: this.props.settings.accent }}
+                            trackColor={{ false: this.iconColor(), true: this.props.settings.accent }}
                             value={this.props.state}
                             onChange={() => this.props.action(!this.props.state)}
                         />

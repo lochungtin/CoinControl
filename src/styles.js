@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet } from 'react-native';
-import { black, bgColorD, bgColorL, shade1, shade2, shade3, shade4, white } from './data/color';
+import { black, bgColorD, bgColorL, shade1, shade2, shade3, shade4, white, } from './data/color';
 
 // dimensions
 
@@ -363,6 +363,19 @@ export const recordModalStyles = StyleSheet.create({
         marginLeft: '5%',
         paddingLeft: '5%',
         width: '85%'
+    },
+});
+
+export const timePickerStyles = StyleSheet.create({
+    amTextD:{
+        color: white,
+        fontSize: 20, 
+        fontWeight: 'bold', 
+    },
+    amTextL:{
+        color: black,
+        fontSize: 20, 
+        fontWeight: 'bold', 
     },
 });
 

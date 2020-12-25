@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native'
+import { Text, TouchableOpacity, } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
@@ -23,6 +23,12 @@ class Bubble extends React.Component {
         return this.props.settings.darkMode ? white : black;
     }
 
+    fontColor = () => {
+        if (this.props.color !== 'transparent')
+            return this.props.settings.darkMode ? black : white;
+        return this.props.settings.darkMode ? white : black;
+    }
+
     render() {
         return (
             <TouchableOpacity
@@ -37,6 +43,11 @@ class Bubble extends React.Component {
                 }}
                 onPress={this.props.onPress}
             >
+                {this.props.text &&
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: this.fontColor() }}>
+                        {this.props.text}
+                    </Text>
+                }
                 {this.state.icon &&
                     <Icon name={this.props.iconName} size={this.props.iconSize} color={this.iconColor()} />
                 }
