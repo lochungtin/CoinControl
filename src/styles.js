@@ -163,20 +163,6 @@ export const datePickerStyles = StyleSheet.create({
     calendar: {
         width: 350,
     },
-    modalViewContainer: {
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 10
-    },
-    editBtn: {
-        borderRadius: 20,
-        elevation: 5,
-        height: 40,
-        padding: 10,
-        width: '47%',
-    },
     modalViewD: {
         alignItems: 'center',
         backgroundColor: bgColorD,
@@ -583,30 +569,10 @@ export const homeScreenStyles = StyleSheet.create({
     },
 });
 
-export const recordStyles = StyleSheet.create({
-    cancelBtnD: {
-        backgroundColor: white,
-        borderRadius: 40,
-        paddingHorizontal: 40,
-        paddingVertical: 10,
-        margin: 10,
-        width: '80%',
-    },
-    cancelBtnL: {
-        backgroundColor: shade1,
-        borderRadius: 40,
-        paddingHorizontal: 40,
-        paddingVertical: 10,
-        margin: 10,
-        width: '80%'
-    },
-});
-
 export const settingStyles = StyleSheet.create({
     itemChildContainerD: {
         alignItems: 'center',
         backgroundColor: shade4,
-        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         paddingHorizontal: '5%',
@@ -615,7 +581,6 @@ export const settingStyles = StyleSheet.create({
     itemChildContainerL: {
         alignItems: 'center',
         backgroundColor: shade1,
-        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         paddingHorizontal: '5%',
@@ -624,7 +589,6 @@ export const settingStyles = StyleSheet.create({
     itemContainerD: {
         alignItems: 'center',
         backgroundColor: shade4,
-        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: '5%',
@@ -633,7 +597,6 @@ export const settingStyles = StyleSheet.create({
     itemContainerL: {
         alignItems: 'center',
         backgroundColor: shade1,
-        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: '5%',

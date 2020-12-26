@@ -1,16 +1,15 @@
 import moment from 'moment';
 import React from 'react';
-import { Text, TouchableOpacity, View, } from 'react-native';
+import { Text, View, } from 'react-native';
 import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
-import ExpandButton from '../components/ExpandButton';
 import RecordModal from '../components/RecordModal';
 import ScreenHeader from '../components/ScreenHeader';
 import { store } from '../redux/store';
 import { addRecord } from '../redux/action';
 
-import { recordStyles, styles, } from '../styles';
+import { styles, } from '../styles';
 
 class Screen extends React.Component {
 
@@ -82,12 +81,6 @@ class Screen extends React.Component {
                     })}
                 </View>
 
-                <ExpandButton onPress={() => this.props.navigation.navigate('Category', { title: this.props.route.params.title })} />
-                {!this.state.open &&
-                    <TouchableOpacity onPress={this.props.navigation.goBack} style={this.props.settings.darkMode ? recordStyles.cancelBtnD : recordStyles.cancelBtnL}>
-                        <Text style={styles.centerTextL}>Cancel</Text>
-                    </TouchableOpacity>
-                }
                 <RecordModal
                     close={() => this.setState({ category: '', open: false })}
                     item={{
