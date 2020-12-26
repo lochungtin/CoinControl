@@ -58,7 +58,11 @@ class Screen extends React.Component {
     render() {
         return (
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
-                <ScreenHeader dark={this.props.settings.darkMode} action={() => this.props.navigation.goBack()} name={this.props.route.params.title} />
+                <ScreenHeader 
+                    action={() => this.props.navigation.navigate('Icons')} 
+                    back={() => this.props.navigation.goBack()} 
+                    name={this.props.route.params.title} 
+                />
                 <View style={styles.rows}>
                     {this.state.grid.map(row => {
                         return (

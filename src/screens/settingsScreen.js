@@ -96,7 +96,7 @@ class Screen extends React.Component {
     render() {
         return (
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
-                <ScreenHeader action={() => this.props.navigation.navigate('Home')} name={'Settings'} />
+                <ScreenHeader back={() => this.props.navigation.navigate('Home')} name={'Settings'} />
                 <ScrollView onContentSizeChange={this.ste} ref={ref => this.scrollView = ref} style={settingStyles.scrollView}>
                     <SettingsHeader title={'ACCOUNTS'} />
                     <SettingsItem action={() => this.props.navigation.navigate('Account')} iconL={'login'} text={'Login'} />

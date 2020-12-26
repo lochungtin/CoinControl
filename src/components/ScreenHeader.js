@@ -8,6 +8,10 @@ import { headerStyles } from '../styles';
 
 class ScreenHeader extends React.Component {
 
+    iconColor = () => {
+        return this.props.settings.darkMode ? white : black;
+    }
+
     style = styleName => {
         return headerStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
     }
@@ -15,14 +19,17 @@ class ScreenHeader extends React.Component {
     render() {
         return (
             <View style={this.style('header')}>
-                <TouchableOpacity onPress={this.props.action}>
-                    <Icon name={'arrow-left'} size={25} color={this.props.settings.darkMode ? white : black} />
+                <TouchableOpacity onPress={this.props.back}>
+                    <Icon name={'arrow-left'} size={25} color={this.iconColor()} />
                 </TouchableOpacity>
                 <View style={headerStyles.textContainer}>
                     <Text style={this.style('text')}>
                         {this.props.name}
                     </Text>
                 </View>
+                <TouchableOpacity onPress={this.props.action}>
+                    <Icon name={'plus'} size={25} color={this.props.action ? this.iconColor() : 'transparent'} />
+                </TouchableOpacity>
             </View>
         )
     }
