@@ -477,13 +477,13 @@ export const homeScreenStyles = StyleSheet.create({
     borderD: {
         borderColor: shade4,
         borderTopWidth: 2,
-        maxHeight: '70%',
+        height: '70%',
         minWidth: maxWidth,
     },
     borderL: {
         borderColor: shade1,
         borderTopWidth: 2,
-        maxHeight: '70%',
+        height: '70%',
         minWidth: maxWidth,
     },
     bubbleD: {

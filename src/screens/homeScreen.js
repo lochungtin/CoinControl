@@ -81,8 +81,8 @@ class Screen extends React.Component {
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
                 <StatusBar backgroundColor={this.statusBarBg()} barStyle={this.statusBarStyle()} />
                 <View style={{ alignItems: 'center', paddingTop: 20 }}>
-                    <View style={{ ...styles.rows, maxHeight: '30%', justifyContent: 'space-evenly' }}>
-                        <View style={{ ...styles.columns, flex: 0 }}>
+                    <View style={{ ...styles.rows, height: '30%', justifyContent: 'space-evenly' }}>
+                        <View style={styles.columns}>
                             <Icon name={'currency-' + this.props.settings.currency} color={this.style(styles, 'text').color} size={30} />
                             <Text style={this.style(homeScreenStyles, 'balance')}>
                                 {this.balance()}
@@ -91,31 +91,29 @@ class Screen extends React.Component {
                                 {"." + this.balanceDecimal()}
                             </Text>
                         </View>
-                        <View style={{ ...styles.columns, flex: 0 }}>
+                        <View style={styles.columns}>
                             <Icon name={'currency-' + this.props.settings.currency} color={this.props.goal.type === 'none' ? 'transparent' : this.style(styles, 'text').color} size={15} />
                             <Text style={{ color: this.goalMessageColor() }}>
                                 {this.goalMessage(parseGoal(this.props.records, this.props.goal.amount))}
                             </Text>
                         </View>
-                        <View style={{ ...styles.columns, flex: 0 }}>
+                        <View style={styles.columns}>
                             <Progress.Bar color={this.props.settings.accent} progress={1 - parseGoalPercentage(parseGoal(this.props.records, this.props.goal.amount), this.props.goal.amount)} width={maxWidth / 2} />
                         </View>
-                        <View style={{ ...styles.columns, flex: 0, justifyContent: 'space-evenly' }}>
-                            <View style={{ ...styles.rows, maxWidth: 70 }}>
+                        <View style={{ ...styles.columns, width: 250, justifyContent: 'space-evenly' }}>
+                            <View style={styles.rows}>
                                 <Bubble color={this.props.settings.accent} iconColor={black} iconName={'plus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', { darkMode: this.props.settings.darkMode, title: 'Income' })} size={35} />
                                 <Text style={this.style(styles, 'centerText')}>
                                     Income
                                 </Text>
                             </View>
-                            <View style={{ width: 15 }} />
-                            <View style={{ ...styles.rows, maxWidth: 70 }}>
+                            <View style={styles.rows}>
                                 <Bubble color={this.props.settings.accent} iconColor={black} iconName={'minus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', { darkMode: this.props.settings.darkMode, title: 'Expense' })} size={35} />
                                 <Text style={this.style(styles, 'centerText')}>
                                     Expense
                                 </Text>
                             </View>
-                            <View style={{ width: 15 }} />
-                            <View style={{ ...styles.rows, maxWidth: 70 }}>
+                            <View style={styles.rows}>
                                 <Bubble color={this.props.settings.accent} iconColor={black} iconName={'flag-outline'} iconSize={25} onPress={() => this.setState({ open: true })} size={35} />
                                 <Text style={this.style(styles, 'centerText')}>
                                     Set Goal
@@ -206,7 +204,7 @@ class Screen extends React.Component {
                         </View>
                     </View>
                 </Modal>
-                
+
                 <RecordModal
                     close={() => this.setState({ rmOpen: false })}
                     item={this.state.item}
