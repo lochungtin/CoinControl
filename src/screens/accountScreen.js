@@ -9,7 +9,8 @@ import {
     GoogleSigninButton,
     statusCodes,
   } from '@react-native-community/google-signin';
-
+  import { DEFAULT_LOGIN,UPDATE_LOGIN } from '../redux/action';
+  import { store } from '../redux/store';
 
   GoogleSignin.configure({
     webClientId: '486441035059-8l61ntdopa47itlm7kknd6acpvmn04q4.apps.googleusercontent.com'
@@ -25,7 +26,10 @@ class Screen extends React.Component {
         try {
           await GoogleSignin.hasPlayServices(); 
           const userInfo = await GoogleSignin.signIn();
+          isSignedIn = await GoogleSignin.isSignedIn();
           console.log(userInfo);
+          store.dispatch(updateLogin(isSignedIn
+        ));
         } catch (error) {
           if (error.code === statusCodes.SIGN_IN_CANCELLED) {
             // user cancelled the login flow
@@ -46,10 +50,8 @@ class Screen extends React.Component {
         try {
           await GoogleSignin.revokeAccess();
           await GoogleSignin.signOut();
-          this.setState({ user: null }); // Remember to remove the user from your app's state as well
-          console.log("HEre");
+          this.setState({ user: null }); 
         } catch (error) {
-            console.log("THIS");
           console.error(error);
         }
       };
@@ -72,6 +74,7 @@ class Screen extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  isLogin: state.isLogin,
 
 })
 

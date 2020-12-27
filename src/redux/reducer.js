@@ -22,6 +22,8 @@ import {
     UPDATE_GOAL,
     UPDATE_INCOME_SELECTION,
     UPDATE_SETTINGS, 
+    DEFAULT_LOGIN,
+    UPDATE_LOGIN, 
 } from './action';
 import {
     defaultExpenseCategories,
@@ -29,7 +31,8 @@ import {
     defaultGoal,
     defaultIncomeCategories,
     defaultIncomeSelection,
-    defaultSettings
+    defaultSettings,
+    defaultLogin 
 } from '../default';
 
 const updateRecords = (records = [], action) => {
@@ -159,6 +162,15 @@ const updateSettings = (settings = {}, action) => {
     }
     return settings;
 }
+const updateLogin = (isLogin = {}, action) => {
+    switch (action.type) {
+        case DEFAULT_LOGIN:
+            return defaultLogin;
+        case UPDATE_LOGIN:
+            return action.payload;
+    }
+    return isLogin;
+}
 
 export default combineReducers({
     expenseCategories: updateExpenseCategory,
@@ -168,4 +180,5 @@ export default combineReducers({
     incomeSelection: updateIncomeSelection,
     records: updateRecords,
     settings: updateSettings,
+    isLogin:updateLogin
 });

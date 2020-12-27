@@ -5,7 +5,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import { defaultExpenseCategory, defaultExpenseSelection, defaultGoal, defaultIncomeCategory, defaultIncomeSelection, defaultSettings, } from '../redux/action';
+import { defaultExpenseCategory, defaultExpenseSelection, defaultGoal, defaultIncomeCategory, defaultIncomeSelection, defaultSettings,defaultLogin } from '../redux/action';
 import { store } from '../redux/store';
 import accountScreen from '../screens/accountScreen';
 import chartScreen from '../screens/chartScreen';
@@ -25,6 +25,8 @@ class AppNav extends React.Component {
 
     constructor(props) {
         super(props);
+        if (this.checkNull(props.isLogin))
+            store.dispatch(defaultLogin());
         if (this.checkNull(props.expenseCategories))
             store.dispatch(defaultExpenseCategory());
         if (this.checkNull(props.expenseSelection))
@@ -120,8 +122,10 @@ class AppNav extends React.Component {
         return (
             <NavigationContainer>
                 <AuthStack.Navigator>
+                { !this.props.isLogin ? (
                      <AuthStack.Screen name="Login" component={accountScreen} />
-                     <AuthStack.Screen name="Content" component={this.contentScreens} />
+                ) : (
+                     <AuthStack.Screen name="Content" component={this.contentScreens} />)}
                 </AuthStack.Navigator>
             </NavigationContainer>
         )

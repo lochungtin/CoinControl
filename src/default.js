@@ -67,3 +67,8 @@ export const defaultSettings = {
     notification: true,
     notifSchedule: '23:00',
 }
+
+
+export const defaultLogin = {
+    isLogin: false,
+}
