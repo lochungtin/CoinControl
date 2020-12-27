@@ -29,7 +29,6 @@ export const styles = StyleSheet.create({
     },
     rows: {
         alignItems: 'center',
-        flex: 1,
         flexDirection: 'column',
     },
     screenD: {
@@ -200,7 +199,6 @@ export const headerStyles = StyleSheet.create({
 export const numpadStyles = StyleSheet.create({
     buttonD: {
         alignItems: 'center',
-        display: 'flex',
         backgroundColor: bgColorD,
         borderWidth: 1,
         borderColor: shade3,
@@ -210,7 +208,6 @@ export const numpadStyles = StyleSheet.create({
     },
     buttonL: {
         alignItems: 'center',
-        display: 'flex',
         backgroundColor: bgColorL,
         borderWidth: 1,
         borderColor: shade2,
@@ -220,17 +217,15 @@ export const numpadStyles = StyleSheet.create({
     },
     numpadRoot: {
         height: '40%',
-        width: '100%'
+        width: maxWidth
     },
     numpadRow: {
-        display: 'flex',
         flexDirection: 'row',
         height: '20%',
         width: '100%'
     },
     outputD: {
         alignItems: 'center',
-        display: 'flex',
         backgroundColor: bgColorD,
         borderWidth: 1,
         borderColor: shade3,
@@ -242,7 +237,6 @@ export const numpadStyles = StyleSheet.create({
     },
     outputL: {
         alignItems: 'center',
-        display: 'flex',
         backgroundColor: bgColorL,
         borderWidth: 1,
         borderColor: shade2,
@@ -267,7 +261,6 @@ export const numpadStyles = StyleSheet.create({
 export const recordModalStyles = StyleSheet.create({
     headerD: {
         alignItems: 'center',
-        display: 'flex',
         backgroundColor: shade3,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
@@ -277,7 +270,6 @@ export const recordModalStyles = StyleSheet.create({
     },
     headerL: {
         alignItems: 'center',
-        display: 'flex',
         backgroundColor: shade2,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
@@ -287,7 +279,6 @@ export const recordModalStyles = StyleSheet.create({
     },
     inputBoxD: {
         alignItems: 'center',
-        display: 'flex',
         backgroundColor: bgColorD,
         borderWidth: 1,
         borderColor: shade3,
@@ -298,7 +289,6 @@ export const recordModalStyles = StyleSheet.create({
     },
     inputBoxL: {
         alignItems: 'center',
-        display: 'flex',
         backgroundColor: bgColorL,
         borderWidth: 1,
         borderColor: shade2,
@@ -370,34 +360,30 @@ export const timePickerStyles = StyleSheet.create({
 
 // screen styles
 
-export const categoryStyles = StyleSheet.create({
-    cancelBtnD: {
-        backgroundColor: white,
-        borderRadius: 40,
-        paddingHorizontal: 40,
+export const iconSelectionScreen = StyleSheet.create({
+    headerD: {
+        alignItems: 'center',
+        backgroundColor: shade4,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 30,
         paddingVertical: 10,
-        margin: 10,
-        width: '45%',
     },
-    cancelBtnL: {
+    headerL: {
+        alignItems: 'center',
         backgroundColor: shade1,
-        borderRadius: 40,
-        paddingHorizontal: 40,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 30,
         paddingVertical: 10,
-        margin: 10,
-        width: '45%',
     },
-    listD: {
-        borderColor: shade4,
-        borderTopWidth: 2,
-        borderBottomWidth: 2,
-        height: '70%',
+    headerTextD: {
+        color: white,
+        fontWeight: 'bold',
     },
-    listL: {
-        borderColor: shade1,
-        borderTopWidth: 2,
-        borderBottomWidth: 2,
-        height: '70%',
+    headerTextL: {
+        color: black,
+        fontWeight: 'bold',
     },
 })
 

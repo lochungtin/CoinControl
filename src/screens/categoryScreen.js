@@ -66,9 +66,9 @@ class Screen extends React.Component {
                 <View style={styles.rows}>
                     {this.state.grid.map(row => {
                         return (
-                            <View style={{ ...styles.columns, height: 100 }} key={row[0]}>
+                            <View style={{ ...styles.columns, height: 100  }} key={row[0]}>
                                 {row.slice(1).map(item => (
-                                    <View key={item.key} style={{ ...styles.rows, justifyContent: 'center' }}>
+                                    <View key={item.key} style={{ ...styles.rows, justifyContent: 'space-between', width: "25%"}}>
                                         <Bubble
                                             iconColor={this.props.settings.accent}
                                             iconName={item.iconName}

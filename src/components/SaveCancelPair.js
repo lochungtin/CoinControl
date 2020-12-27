@@ -12,7 +12,7 @@ class SCPair extends React.Component {
 
     render() {
         return (
-            <View style={{...styles.columns, justifyContent:'space-evenly'}}>
+            <View style={{...styles.columns, justifyContent:'space-evenly', width: '100%'}}>
                 <TouchableOpacity onPress={this.props.onConfirm} style={{ ...scPairStyles.save, backgroundColor: this.props.settings.accent }}>
                     <Text style={this.style('text')}>
                         Confirm
