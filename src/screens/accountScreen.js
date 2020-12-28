@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Text, View, Button} from 'react-native';
+import { Text, View, Button,Alert} from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { black, bgColorD, bgColorL, chartScreenStyles, iconColors, maxWidth, styles, white, } from '../styles';
@@ -9,7 +9,7 @@ import {
     GoogleSigninButton,
     statusCodes,
   } from '@react-native-community/google-signin';
-  import { DEFAULT_LOGIN,UPDATE_LOGIN } from '../redux/action';
+  import { updateLogin } from '../redux/action';
   import { store } from '../redux/store';
 
   GoogleSignin.configure({
@@ -20,16 +20,25 @@ class Screen extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+          isLoggedIn :this.props.isLogin.isLogin,
+        }
     }
     
     signIn = async () => {
         try {
+          if(this.state.isLoggedIn){
+            Alert.alert("Alert", "Please log out if you want to switch your account");
+            return;
+          }
           await GoogleSignin.hasPlayServices(); 
           const userInfo = await GoogleSignin.signIn();
-          isSignedIn = await GoogleSignin.isSignedIn();
           console.log(userInfo);
+          //const isSignedIn = await GoogleSignin.isSignedIn();
+          //console.log("hehe",isSignedIn);
+          store.dispatch(updateLogin({isLogin: true}));
+          this.setState({state:this.props.isLogin.isLogin})
           this.props.navigation.navigate('Settings');
-          //store.dispatch(updateLogin(isSignedIn));
         } catch (error) {
           if (error.code === statusCodes.SIGN_IN_CANCELLED) {
             // user cancelled the login flow
@@ -41,7 +50,7 @@ class Screen extends React.Component {
             console.log("PLAY_SERVICES_NOT_AVAILABLE")
             // play services not available or outdated
           } else {
-            console.log("AJ FK")
+            console.log(error)
             // some other error happened
           }
         }
@@ -51,9 +60,15 @@ class Screen extends React.Component {
           await GoogleSignin.revokeAccess();
           await GoogleSignin.signOut();
           this.setState({ user: null });
-          this.props.navigation.navigate('Settings'); 
+          store.dispatch(updateLogin({isLogin: false}));
+          this.setState({state:this.props.isLogin.isLogin})
+          //this.props.navigation.navigate('Settings'); 
         } catch (error) {
+          if (error.code === statusCodes.SIGN_IN_REQUIRED) {
+            Alert.alert("Alert", "You have not logged in");
+          }else{
           console.error(error);
+          }
         }
       };
    
