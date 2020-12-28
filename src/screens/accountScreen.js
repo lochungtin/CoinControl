@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { Text, View, Button} from 'react-native';
 import { connect } from 'react-redux';
-import { styles } from '../styles';
-
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { black, bgColorD, bgColorL, chartScreenStyles, iconColors, maxWidth, styles, white, } from '../styles';
 
 import {
     GoogleSignin,
@@ -28,8 +28,8 @@ class Screen extends React.Component {
           const userInfo = await GoogleSignin.signIn();
           isSignedIn = await GoogleSignin.isSignedIn();
           console.log(userInfo);
-          store.dispatch(updateLogin(isSignedIn
-        ));
+          this.props.navigation.navigate('Settings');
+          //store.dispatch(updateLogin(isSignedIn));
         } catch (error) {
           if (error.code === statusCodes.SIGN_IN_CANCELLED) {
             // user cancelled the login flow
@@ -50,7 +50,8 @@ class Screen extends React.Component {
         try {
           await GoogleSignin.revokeAccess();
           await GoogleSignin.signOut();
-          this.setState({ user: null }); 
+          this.setState({ user: null });
+          this.props.navigation.navigate('Settings'); 
         } catch (error) {
           console.error(error);
         }
@@ -58,16 +59,22 @@ class Screen extends React.Component {
    
     render() {
         return (
-            <View style={styles.screen}>
-                <Text>Account Screen</Text>
-                <GoogleSigninButton
-                style={{ width: 192, height: 48 }}
-                size={GoogleSigninButton.Size.Wide}
-                color={GoogleSigninButton.Color.Dark}
-                onPress={this.signIn} />
+          <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
+                <View style={{ ...styles.rows, justifyContent: 'space-between', paddingTop: 50 }}>
+                    <View style={{ ...styles.columns, justifyContent: 'center', maxHeight: 35, }}>
+                    </View>
+                <View style={styles.screen}>
+                    <Text>Account Screen</Text>
+                    <GoogleSigninButton
+                    style={{ width: 192, height: 48 }}
+                    size={GoogleSigninButton.Size.Wide}
+                    color={GoogleSigninButton.Color.Dark}
+                    onPress={this.signIn} />
 
                 <Button onPress={this.signOut } title="LogOut">
                 </Button>
+                </View>
+                </View>
             </View>
         );
     }
@@ -75,6 +82,7 @@ class Screen extends React.Component {
 
 const mapStateToProps = state => ({
   isLogin: state.isLogin,
+  settings: state.settings,
 
 })
 

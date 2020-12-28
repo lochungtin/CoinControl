@@ -64,7 +64,9 @@ class AppNav extends React.Component {
             </Settings.Navigator>
         )
     }
-    contentScreens () {
+    
+
+    render() {
         return (
             <NavigationContainer>
                 <Root.Navigator
@@ -113,20 +115,6 @@ class AppNav extends React.Component {
                     />
                 </Root.Navigator>
                 
-            </NavigationContainer>
-            );
-        };
-    
-
-    render() {
-        return (
-            <NavigationContainer>
-                <AuthStack.Navigator>
-                { !this.props.isLogin ? (
-                     <AuthStack.Screen name="Login" component={accountScreen} />
-                ) : (
-                     <AuthStack.Screen name="Content" component={this.contentScreens} />)}
-                </AuthStack.Navigator>
             </NavigationContainer>
         )
     }
