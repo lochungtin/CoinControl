@@ -80,7 +80,7 @@ const updateRecords = (records = [], action) => {
     return records;
 }
 
-const updateExpenseCategory = (categories = [], action) => {
+const updateExpenseCategory = (categories = defaultExpenseCategories, action) => {
     switch (action.type) {
         case DEFAULT_EXPENSE_CATEGORY:
             return defaultExpenseCategories;
@@ -99,7 +99,7 @@ const updateExpenseCategory = (categories = [], action) => {
     return categories;
 }
 
-const updateExpenseSelection = (selection = [], action) => {
+const updateExpenseSelection = (selection = defaultExpenseSelection, action) => {
     switch (action.type) {
         case DEFAULT_EXPENSE_SELECTION:
             return defaultExpenseSelection;
@@ -109,7 +109,7 @@ const updateExpenseSelection = (selection = [], action) => {
     return selection;
 }
 
-const updateGoal = (goal = {}, action) => {
+const updateGoal = (goal = defaultGoal, action) => {
     switch (action.type) {
         case DEFAULT_GOAL:
             return defaultGoal;
@@ -119,7 +119,7 @@ const updateGoal = (goal = {}, action) => {
     return goal;
 }
 
-const updateIncomeCategory = (categories = [], action) => {
+const updateIncomeCategory = (categories = defaultIncomeCategories, action) => {
     switch (action.type) {
         case DEFAULT_INCOME_CATEGORY:
             return defaultIncomeCategories;
@@ -138,7 +138,7 @@ const updateIncomeCategory = (categories = [], action) => {
     return categories;
 }
 
-const updateIncomeSelection = (selection = [], action) => {
+const updateIncomeSelection = (selection = defaultIncomeSelection, action) => {
     switch (action.type) {
         case DEFAULT_INCOME_SELECTION:
             return defaultIncomeSelection;
@@ -148,7 +148,7 @@ const updateIncomeSelection = (selection = [], action) => {
     return selection;
 }
 
-const updateSettings = (settings = {}, action) => {
+const updateSettings = (settings = defaultSettings, action) => {
     switch (action.type) {
         case DEFAULT_SETTINGS:
             return defaultSettings;

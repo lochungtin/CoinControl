@@ -5,8 +5,6 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import { defaultExpenseCategory, defaultExpenseSelection, defaultGoal, defaultIncomeCategory, defaultIncomeSelection, defaultSettings, } from '../redux/action';
-import { store } from '../redux/store';
 import accountScreen from '../screens/accountScreen';
 import chartScreen from '../screens/chartScreen';
 import customCategoryScreen from '../screens/iconSelectionScreen';
@@ -21,24 +19,6 @@ const Settings = createStackNavigator();
 const Root = createBottomTabNavigator();
 
 class AppNav extends React.Component {
-
-    constructor(props) {
-        super(props);
-        if (this.checkNull(props.expenseCategories))
-            store.dispatch(defaultExpenseCategory());
-        if (this.checkNull(props.expenseSelection))
-            store.dispatch(defaultExpenseSelection());
-        if (this.checkNull(props.goal))
-            store.dispatch(defaultGoal());
-        if (this.checkNull(props.incomeCategories))
-            store.dispatch(defaultIncomeCategory());
-        if (this.checkNull(props.incomeSelection))
-            store.dispatch(defaultIncomeSelection());
-        if (this.checkNull(props.settings))
-            store.dispatch(defaultSettings());
-    }
-
-    checkNull = obj => obj === undefined || Object.keys(obj).length === 0;
 
     main = () => (
         <Main.Navigator>
