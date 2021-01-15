@@ -6,9 +6,7 @@ import Bubble from './Bubble';
 
 class Clock extends React.Component {
 
-    bubbleColor = data => {
-        return this.props.selected === data ? this.props.settings.accent : 'transparent';
-    }
+    bubbleColor = data => this.props.selected === data ? this.props.settings.accent : 'transparent';
 
     makeGrid = data => {
         const r = this.props.dim / 2;

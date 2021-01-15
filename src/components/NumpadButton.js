@@ -8,9 +8,7 @@ import { numpadStyles } from '../styles';
 
 class NumpadButton extends React.Component {
 
-    style = () => {
-        return this.props.settings.darkMode ? numpadStyles.buttonD : numpadStyles.buttonL
-    }
+    style = () => this.props.settings.darkMode ? numpadStyles.buttonD : numpadStyles.buttonL;
 
     iconColor = () => {
         if (this.props.special)

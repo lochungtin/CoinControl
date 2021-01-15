@@ -115,6 +115,65 @@ export const calendarStyles = StyleSheet.create({
     }
 });
 
+export const categoryModalStyles = StyleSheet.create({
+    headerD: {
+        alignItems: 'center',
+        backgroundColor: shade3,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        height: 20,
+        justifyContent: 'center',
+        width: '100%'
+    },
+    headerL: {
+        alignItems: 'center',
+        backgroundColor: shade2,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        height: 20,
+        justifyContent: 'center',
+        width: '100%'
+    },
+    contentD: {
+        alignItems: 'center',
+        backgroundColor: bgColorD,
+        borderWidth: 1,
+        borderColor: shade3,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        minHeight: '8%',
+        paddingHorizontal: '5%',
+        width: '100%'
+    },
+    contentL: {
+        alignItems: 'center',
+        backgroundColor: bgColorL,
+        borderWidth: 1,
+        borderColor: shade2,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        minHeight: '8%',
+        paddingHorizontal: '5%',
+        width: '100%'
+    },
+    inputD: {
+        borderBottomWidth: 1,
+        borderColor: shade3,
+        color: white,
+        fontSize: 15,
+        paddingLeft: '5%',
+        width: '70%'
+    },
+    inputL: {
+        borderBottomWidth: 1,
+        borderColor: shade2,
+        color: black,
+        fontSize: 15,
+        paddingLeft: '5%',
+        width: '70%'
+    },
+});
+
 export const customModalStyles = StyleSheet.create({
     rootD: { 
         alignItems: 'center',

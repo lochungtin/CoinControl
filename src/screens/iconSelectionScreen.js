@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View, } from 'react-native';
+import Modal from 'react-native-modal';
 import { connect } from 'react-redux';
 
 import ScreenHeader from '../components/ScreenHeader';
@@ -7,8 +8,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { icons } from '../data/icons';
 
-import { black, white, } from '../data/color';
 import { iconSelectionScreen, styles, } from '../styles';
+import CategoryModal from '../components/CategoryModal';
 
 class Screen extends React.Component {
 
@@ -19,8 +20,10 @@ class Screen extends React.Component {
             opened[type] = true;
         }
         this.state = {
-            types: Object.keys(icons),
+            inputOpen: false,
             opened: opened,
+            selection: 'none',
+            types: Object.keys(icons),
         };
     }
 
@@ -34,27 +37,20 @@ class Screen extends React.Component {
             }
             grid.push([...row, ...filler]);
         }
-        console.log(grid);
         return grid;
     }
 
-    iconColor = icon => {
-        return icon.startsWith('numeric') ? 'transparent' : this.props.settings.accent;
-    }
+    iconColor = icon => icon.startsWith('numeric') ? 'transparent' : this.props.settings.accent;
 
-    openIcon = open => {
-        return open ? 'chevron-down' : 'chevron-right';
-    }
+    openIcon = open => open ? 'chevron-down' : 'chevron-right';
 
     toggleOpen = type => {
-        var newState = {...this.state.opened};
+        var newState = { ...this.state.opened };
         newState[type] = !newState[type];
         this.setState({ opened: newState });
     }
 
-    style = styleName => {
-        return iconSelectionScreen[styleName + (this.props.settings.darkMode ? "D" : "L")];
-    }
+    style = styleName => iconSelectionScreen[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
     render() {
         return (
@@ -76,7 +72,9 @@ class Screen extends React.Component {
                                         <View style={{ ...styles.columns, height: 70, justifyContent: 'space-evenly' }}>
                                             {row.map(icon => {
                                                 return (
-                                                    <Icon name={icon} size={35} color={this.iconColor(icon)} key={icon} />
+                                                    <TouchableOpacity onPress={() => this.setState({ inputOpen: true, selection: icon })}>
+                                                        <Icon name={icon} size={35} color={this.iconColor(icon)} key={icon} />
+                                                    </TouchableOpacity>
                                                 );
                                             })}
                                         </View>
@@ -86,6 +84,11 @@ class Screen extends React.Component {
                         );
                     })}
                 </ScrollView>
+                <CategoryModal
+                    close={() => this.setState({ inputOpen: false, selection: 'none' })}
+                    icon={this.state.selection}
+                    open={this.state.inputOpen}
+                />
             </View>
         );
     }

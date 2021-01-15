@@ -51,9 +51,7 @@ class Screen extends React.Component {
         this._unsubscribe();
     }
 
-    centerText = () => {
-        return this.props.settings.darkMode ? styles.centerTextD : styles.centerTextL;
-    }
+    centerText = () => this.props.settings.darkMode ? styles.centerTextD : styles.centerTextL;
 
     render() {
         return (

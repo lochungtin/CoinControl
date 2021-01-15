@@ -6,13 +6,9 @@ import { chartScreenStyles, styles, } from '../styles';
 
 export default class PieLabels extends React.Component {
 
-    category = () => {
-        return this.props.dark ? chartScreenStyles.categoryTextD : chartScreenStyles.categoryTextL;
-    }
+    category = () => this.props.dark ? chartScreenStyles.categoryTextD : chartScreenStyles.categoryTextL;
 
-    percentage = () => {
-        return this.props.dark ? chartScreenStyles.percentageTextD : chartScreenStyles.percentageTextL;
-    }
+    percentage = () => this.props.dark ? chartScreenStyles.percentageTextD : chartScreenStyles.percentageTextL;
 
     render() {
         return (

@@ -76,9 +76,7 @@ class Numpad extends React.Component {
         this.setState({ date: date });
     }
 
-    style = styleName => {
-        return numpadStyles[styleName + (this.props.settings.darkMode ? 'D' : 'L')];
-    }
+    style = styleName => numpadStyles[styleName + (this.props.settings.darkMode ? 'D' : 'L')];
 
     render() {
         return (

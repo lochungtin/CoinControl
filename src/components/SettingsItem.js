@@ -32,17 +32,11 @@ class SettingsItem extends React.Component {
         return this.iconColor();
     }
 
-    iconRight = () => {
-        return this.props.iconR === undefined ? 'arrow-right' : this.props.iconR;
-    }
+    iconRight = () => this.props.iconR === undefined ? 'arrow-right' : this.props.iconR;
 
-    text = () => {
-        return this.props.disabled ? this.style('textDisabled') : this.style('text');
-    }
+    text = () => this.props.disabled ? this.style('textDisabled') : this.style('text');
 
-    style = styleName => {
-        return settingStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
-    }
+    style = styleName => settingStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
     render() {
         if (this.props.switch)

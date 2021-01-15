@@ -26,21 +26,13 @@ class Screen extends React.Component {
         }
     }
 
-    centerText = () => {
-        return this.props.settings.darkMode ? styles.centerTextD : styles.centerTextL;
-    }
+    centerText = () => this.props.settings.darkMode ? styles.centerTextD : styles.centerTextL;
 
-    iconColor = () => {
-        return this.props.settings.darkMode ? shade2 : shade3;
-    }
+    iconColor = () => this.props.settings.darkMode ? shade2 : shade3;
 
-    message = () => {
-        return this.props.settings.darkMode ? chartScreenStyles.messageD : chartScreenStyles.messageL;
-    }
+    message = () => this.props.settings.darkMode ? chartScreenStyles.messageD : chartScreenStyles.messageL;
 
-    selected = (list = [], itemName) => {
-        return list.includes(itemName);
-    }
+    selected = (list = [], itemName) => list.includes(itemName);
 
     text = type => {
         if (this.state.type === type)
@@ -48,9 +40,7 @@ class Screen extends React.Component {
         return this.props.settings.darkMode ? styles.textD : styles.textL;
     }
 
-    title = () => {
-        return this.props.settings.darkMode ? chartScreenStyles.titleD : chartScreenStyles.titleL;
-    }
+    title = () => this.props.settings.darkMode ? chartScreenStyles.titleD : chartScreenStyles.titleL;
 
     typeSelection = type => {
         if (this.props.settings.darkMode)
@@ -63,11 +53,11 @@ class Screen extends React.Component {
         return (
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
                 <View style={{ ...styles.rows, justifyContent: 'space-between', paddingTop: 50 }}>
-                    <View style={{ ...styles.columns, justifyContent: 'center', maxHeight: 35, }}>
+                    <View style={{ ...styles.columns, justifyContent: 'center', height: 35, }}>
                         <Icon name={'chart-line'} color={this.text().color} size={35} />
                         <Text style={this.title()}> Analytics</Text>
                     </View>
-                    <View style={{ ...styles.columns, maxHeight: 10, justifyContent: 'space-evenly', minWidth: maxWidth, }}>
+                    <View style={{ ...styles.columns, height: 80, justifyContent: 'space-evenly', width: '100%' }}>
                         <TouchableOpacity onPress={() => this.setState({ type: 'Income' })} style={this.typeSelection('Income')}>
                             <Text style={this.text('Income')}>INCOME</Text>
                         </TouchableOpacity>
@@ -76,7 +66,7 @@ class Screen extends React.Component {
                         </TouchableOpacity>
                     </View>
                     {!this.state.edit &&
-                        <ScrollView style={{ maxHeight: 480, }}>
+                        <ScrollView style={{ height: 480, }}>
                             <View style={styles.rows}>
                                 <View style={{ height: 10 }} />
                                 <Text style={{ ...this.text(), width: '85%' }}>{"This Week's " + this.state.type}</Text>

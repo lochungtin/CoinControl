@@ -32,9 +32,7 @@ class TimePicker extends React.Component {
         this.setState({ clickCounter: 0, hourSelected: splt[0], minSelected: splt[1], pm: parseInt(splt[0]) > 12 });
     }
 
-    trackColor = () => {
-        return this.props.settings.darkMode ? shade2 : shade3;
-    }
+    trackColor = () => this.props.settings.darkMode ? shade2 : shade3;
 
     onPress = num => {
         if (this.state.clickCounter === 0)
@@ -45,9 +43,7 @@ class TimePicker extends React.Component {
         }
     }
 
-    style = (stylesheet, styleName) => {
-        return stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
-    }
+    style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
     render() {
         return (

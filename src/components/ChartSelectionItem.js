@@ -12,13 +12,9 @@ export default class ChartSelectionItem extends React.Component {
         super(props);
     }
 
-    color = () => {
-        return this.props.dark ? white : black;
-    }
+    color = () => this.props.dark ? white : black;
 
-    icon = () => {
-        return this.props.selected ? 'checkbox-marked-circle-outline' : 'checkbox-blank-circle-outline';
-    }
+    icon = () => this.props.selected ? 'checkbox-marked-circle-outline' : 'checkbox-blank-circle-outline';
 
     render() {
         return (

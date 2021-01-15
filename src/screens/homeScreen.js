@@ -40,9 +40,7 @@ class Screen extends React.Component {
         this._unsubscribe();
     }
 
-    balance = () => {
-        return Math.floor(parseTotal(this.props.records));
-    }
+    balance = () => Math.floor(parseTotal(this.props.records));
 
     balanceDecimal = () => {
         var total = Math.abs(parseTotal(this.props.records));
@@ -60,21 +58,13 @@ class Screen extends React.Component {
         }
     }
 
-    goalMessageColor = () => {
-        return this.props.settings.darkMode ? shade2 : shade3;
-    }
+    goalMessageColor = () => this.props.settings.darkMode ? shade2 : shade3;
 
-    statusBarBg = () => {
-        return this.props.settings.darkMode ? bgColorD : bgColorL;
-    }
+    statusBarBg = () => this.props.settings.darkMode ? bgColorD : bgColorL;
 
-    statusBarStyle = () => {
-        return this.props.settings.darkMode ? 'light-content' : 'dark-content';
-    }
+    statusBarStyle = () => this.props.settings.darkMode ? 'light-content' : 'dark-content';
 
-    style = (stylesheet, styleName) => {
-        return stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
-    }
+    style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
     render() {
         return (

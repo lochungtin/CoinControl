@@ -38,29 +38,23 @@ class AppNav extends React.Component {
             store.dispatch(defaultSettings());
     }
 
-    checkNull = obj => {
-        return obj === undefined || Object.keys(obj).length === 0;
-    }
+    checkNull = obj => obj === undefined || Object.keys(obj).length === 0;
 
-    main = () => {
-        return (
-            <Main.Navigator>
-                <Main.Screen name='Home' component={homeScreen} options={{ headerShown: false }} />
-                <Main.Screen name='Update' component={updateRecordScreen} options={{ headerShown: false }} />
-                <Main.Screen name='Icons' component={customCategoryScreen} options={{ headerShown: false }} />
-            </Main.Navigator>
-        )
-    }
+    main = () => (
+        <Main.Navigator>
+            <Main.Screen name='Home' component={homeScreen} options={{ headerShown: false }} />
+            <Main.Screen name='Update' component={updateRecordScreen} options={{ headerShown: false }} />
+            <Main.Screen name='Icons' component={customCategoryScreen} options={{ headerShown: false }} />
+        </Main.Navigator>
+    );
 
-    settings = () => {
-        return (
-            <Settings.Navigator>
-                <Settings.Screen name='Settings' component={settingsScreen} options={{ headerShown: false }} />
-                <Settings.Screen name='Account' component={accountScreen} options={{ headerShown: false }} />
-                <Settings.Screen name='Icons' component={customCategoryScreen} options={{ headerShown: false }} />
-            </Settings.Navigator>
-        )
-    }
+    settings = () => (
+        <Settings.Navigator>
+            <Settings.Screen name='Settings' component={settingsScreen} options={{ headerShown: false }} />
+            <Settings.Screen name='Account' component={accountScreen} options={{ headerShown: false }} />
+            <Settings.Screen name='Icons' component={customCategoryScreen} options={{ headerShown: false }} />
+        </Settings.Navigator>
+    );
 
     render() {
         return (

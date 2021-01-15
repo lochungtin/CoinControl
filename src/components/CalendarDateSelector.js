@@ -13,9 +13,7 @@ class CalendarDateSelector extends React.Component {
         return this.props.disabled ? this.style('disabled') : this.style('centerText');
     }
 
-    style = styleName => {
-        return calendarStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
-    }
+    style = styleName => calendarStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
     render() {
         return (

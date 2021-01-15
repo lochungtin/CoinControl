@@ -6,9 +6,7 @@ import { homeScreenStyles, styles, } from '../styles';
 
 class SectionHeader extends React.Component {
 
-    style = (stylesheet, styleName) => {
-        return stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
-    }
+    style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
     render() {
         return (

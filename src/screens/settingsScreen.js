@@ -39,9 +39,7 @@ class Screen extends React.Component {
         this.currencies = ['usd', 'gbp', 'jpy', 'eur', 'twd', 'krw', 'rub'];
     }
 
-    addZero = num => {
-        return num < 10 ? '0' + num : num;
-    }
+    addZero = num => num < 10 ? '0' + num : num;
 
     cancelNotifs = () => {
         this.notif.cancelAll();

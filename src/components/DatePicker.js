@@ -17,9 +17,7 @@ class DatePicker extends React.Component {
         }
     }
 
-    modalStyle = () => {
-        return this.props.settings.darkMode ? datePickerStyles.modalViewD : datePickerStyles.modalViewL;
-    }
+    modalStyle = () => this.props.settings.darkMode ? datePickerStyles.modalViewD : datePickerStyles.modalViewL;
 
     render() {
         return (

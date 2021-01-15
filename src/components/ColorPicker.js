@@ -43,9 +43,7 @@ class ColorPicker extends React.Component {
         return 0;
     }
 
-    style = styleName => {
-        return customModalStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
-    }
+    style = styleName => customModalStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
     render() {
         return (

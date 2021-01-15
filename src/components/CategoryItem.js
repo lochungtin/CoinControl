@@ -10,9 +10,7 @@ export default class CategoryItem extends React.Component {
         super(props);
     }
 
-    color = () => {
-        return this.props.dark ? white : black;
-    }
+    color = () => this.props.dark ? white : black;
 
     render() {
         return (

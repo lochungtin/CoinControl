@@ -37,9 +37,7 @@ class Calendar extends React.Component {
         this.updateRows(this.state.month, this.state.year);
     }
 
-    addZero = num => {
-        return num < 10 ? '0' + num : num;
-    }
+    addZero = num => num < 10 ? '0' + num : num;
 
     create2DArray = (rows, columns) => {
         var arr = new Array(rows);
@@ -64,9 +62,7 @@ class Calendar extends React.Component {
         return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
     }
 
-    makeDay = date => {
-        return this.state.year + '-' + this.addZero(this.state.month) + '-' + this.addZero(date);
-    }
+    makeDay = date => this.state.year + '-' + this.addZero(this.state.month) + '-' + this.addZero(date);
 
     selectedDay = (row, date) => {
         this.setState({ selectedDay: date, selectedRow: row });

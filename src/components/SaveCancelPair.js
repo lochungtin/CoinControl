@@ -6,9 +6,7 @@ import { scPairStyles, styles } from '../styles';
 
 class SCPair extends React.Component {
 
-    style = styleName => {
-        return scPairStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
-    }
+    style = styleName => scPairStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
     render() {
         return (

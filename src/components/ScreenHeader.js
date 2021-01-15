@@ -8,13 +8,9 @@ import { headerStyles } from '../styles';
 
 class ScreenHeader extends React.Component {
 
-    iconColor = () => {
-        return this.props.settings.darkMode ? white : black;
-    }
+    iconColor = () => this.props.settings.darkMode ? white : black;
 
-    style = styleName => {
-        return headerStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
-    }
+    style = styleName => headerStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
     render() {
         return (

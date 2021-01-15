@@ -26,9 +26,7 @@ class RecordModal extends React.Component {
         this.props.close();
     }
 
-    iconColor = () => {
-        return this.props.settings.darkMode ? white : black;
-    }
+    iconColor = () => this.props.settings.darkMode ? white : black;
 
     onChangeDate = date => this.setState({ newDate: date });
 
@@ -45,13 +43,9 @@ class RecordModal extends React.Component {
         this.props.onConfirm(rec);
     }
 
-    placeholderColor = () => {
-        return this.props.settings.darkMode ? shade2 : shade3;
-    }
+    placeholderColor = () => this.props.settings.darkMode ? shade2 : shade3;
 
-    style = styleName => {
-        return recordModalStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
-    }
+    style = styleName => recordModalStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
     render() {
         return (
