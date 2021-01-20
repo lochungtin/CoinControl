@@ -557,20 +557,12 @@ export const homeScreenStyles = StyleSheet.create({
         paddingBottom: '3%',
         paddingTop: '4%', 
     },
-    sectionItemD: { 
-        backgroundColor: shade3,
+    sectionItem: { 
         borderRadius: 40,
         paddingHorizontal: 40,
         paddingVertical: 10,
         margin: 10,
-    }, 
-    sectionItemL: { 
-        backgroundColor: shade1,
-        borderRadius: 40,
-        paddingHorizontal: 40,
-        paddingVertical: 10,
-        margin: 10,
-    }, 
+    },
     textCatD: { 
         color: white,
         width: '50%' 
