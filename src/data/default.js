@@ -2,43 +2,43 @@ import { goldenBrown, colorLabels } from './color';
 
 export const defaultExpenseCategories = {
     '20012021-004001': {
-        default: true, color: goldenBrown, name: 'Bills', iconName: 'text-box-outline'
+        color: goldenBrown, name: 'Bills', iconName: 'text-box-outline'
     },
     '20012021-004002': {
-        default: true, color: colorLabels[0], name: 'Entertainment', iconName: 'gamepad-variant-outline'
+        color: colorLabels[0], name: 'Entertainment', iconName: 'gamepad-variant-outline'
     },
     '20012021-004003': {
-        default: true, color: colorLabels[1], name: 'Food', iconName: 'food-fork-drink'
+        color: colorLabels[1], name: 'Food', iconName: 'food-fork-drink'
     },
     '20012021-004004': {
-        default: true, color: colorLabels[2], name: 'Groceries', iconName: 'cart-outline'
+        color: colorLabels[2], name: 'Groceries', iconName: 'cart-outline'
     },
     '20012021-004005': {
-        default: true, color: colorLabels[3], name: 'Office', iconName: 'paperclip'
+        color: colorLabels[3], name: 'Office', iconName: 'paperclip'
     },
     '20012021-004006': {
-        default: true, color: colorLabels[4], name: 'Shopping', iconName: 'shopping-outline'
+        color: colorLabels[4], name: 'Shopping', iconName: 'shopping-outline'
     },
     '20012021-004007': {
-        default: true, color: colorLabels[5], name: 'Transport', iconName: 'train-car'
+        color: colorLabels[5], name: 'Transport', iconName: 'train-car'
     },
 }
 
 export const defaultIncomeCategories = {
     '20012021-004008': {
-        default: true, color: goldenBrown, name: 'Allowance', iconName: 'wallet-outline'
+        color: goldenBrown, name: 'Allowance', iconName: 'wallet-outline'
     },
     '20012021-004009': {
-        default: true, color: colorLabels[0], name: 'Loan', iconName: 'bank'
+        color: colorLabels[0], name: 'Loan', iconName: 'bank'
     },
     '20012021-004010': {
-        default: true, color: colorLabels[1], name: 'Returns', iconName: 'keyboard-backspace'
+        color: colorLabels[1], name: 'Returns', iconName: 'keyboard-backspace'
     },
     '20012021-004011': {
-        default: true, color: colorLabels[2], name: 'Other', iconName: 'information-variant'
+        color: colorLabels[2], name: 'Other', iconName: 'information-variant'
     },
     '20012021-004012': {
-        default: true, color: colorLabels[3], name: 'Salary', iconName: 'cash'
+        color: colorLabels[3], name: 'Salary', iconName: 'cash'
     },
 }
 

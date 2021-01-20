@@ -8,9 +8,11 @@ import { connect } from 'react-redux';
 import Bubble from './Bubble';
 import ColorPicker from './ColorPicker';
 import ExpandButton from './ExpandButton';
+import { addExpenseCategory, addIncomeCategory, deleteExpenseCategory, defaultIncomeCategory, } from '../redux/action';
+import { store } from '../redux/store';
 
 import { black, shade2, shade3, white, } from '../data/color';
-import { categoryModalStyles, styles, } from '../styles';
+import { categoryModalStyles } from '../styles';
 
 class CategoryModal extends React.Component {
 
@@ -31,7 +33,13 @@ class CategoryModal extends React.Component {
     }
 
     confirm = () => {
-
+        if (this.state.newTitle !== '') {
+            if (this.props.type === 'Expense')
+                store.dispatch(addExpenseCategory({ color: this.state.color, iconName: this.props.icon, name: this.state.newTitle, }));
+            else
+                store.dispatch(addIncomeCategory({ color: this.state.color, iconName: this.props.icon, name: this.state.newTitle, }));
+            this.props.close();
+        }
     }
 
     cpClose = () => {
@@ -58,7 +66,7 @@ class CategoryModal extends React.Component {
                 onBackButtonPress={this.close}
                 onModalShow={this.focus}
                 onSwipeComplete={this.close}
-                swipeDirection={this.swipe()}
+                swipeDirection={'down'}
                 style={{ flexDirection: 'row', alignItems: 'flex-end', padding: 0, margin: 0 }}
             >
                 <View style={{ width: '100%' }}>

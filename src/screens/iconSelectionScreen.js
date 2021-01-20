@@ -85,10 +85,10 @@ class Screen extends React.Component {
                     })}
                 </ScrollView>
                 <CategoryModal
-                    confirm={catObj => {}}
                     close={() => this.setState({ inputOpen: false, selection: 'none' })}
                     icon={this.state.selection}
                     open={this.state.inputOpen}
+                    type={this.props.route.params}
                 />
             </View>
         );

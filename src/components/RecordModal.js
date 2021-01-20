@@ -51,7 +51,7 @@ class RecordModal extends React.Component {
         var rec = { ...this.props.item };
 
         if (rec.value !== num)
-            rec.value = parseInt(num);
+            rec.value = parseFloat(num);
         if (rec.date !== this.state.newDate && this.state.newDate !== '')
             rec.date = this.state.newDate;
         if (rec.title !== this.state.newTitle)

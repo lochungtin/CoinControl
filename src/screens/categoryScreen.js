@@ -47,7 +47,7 @@ class Screen extends React.Component {
         if (arr.length % 4 !== 0)
             for (let j = grid[grid.length - 1].length; j < 4; j++)
                 grid[grid.length - 1].push('');
-                
+
         return grid;
     }
 
@@ -67,7 +67,7 @@ class Screen extends React.Component {
         return (
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
                 <ScreenHeader
-                    action={() => this.props.navigation.navigate('Icons')}
+                    action={() => this.props.navigation.navigate('Icons', this.props.route.params.title)}
                     back={() => this.props.navigation.goBack()}
                     name={this.props.route.params.title}
                 />

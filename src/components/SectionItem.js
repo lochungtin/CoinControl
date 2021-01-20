@@ -17,10 +17,10 @@ class SectionItem extends React.Component {
         }
     }
 
-    bgColor = () => {
+    bgColor = toggle => {
         if (this.props.settings.darkMode)
-            return this.props.item.type === 'Expense' ? shade4 : shade3;
-        return this.props.item.type === 'Expense' ? shade1: shade2;
+            return this.props.item.type === 'Expense' ^ toggle ? shade4 : shade3;
+        return this.props.item.type === 'Expense' ^ toggle ? shade1: shade2;
     }
 
     catValue = () => {
@@ -36,7 +36,7 @@ class SectionItem extends React.Component {
 
     render() {
         return (
-            <TouchableOpacity onPress={() => this.setState({ open: !this.state.open })} style={{...homeScreenStyles.sectionItem, backgroundColor: this.bgColor()}}>
+            <TouchableOpacity onPress={() => this.setState({ open: !this.state.open })} style={{...homeScreenStyles.sectionItem, backgroundColor: this.bgColor(false)}}>
                 <View style={{ ...styles.columns, justifyContent: 'space-between' }}>
                     <Icon name={this.catValue().iconName} size={20} color={this.catValue().color} />
                     <Text style={this.style(homeScreenStyles, 'textCat')}>
@@ -62,13 +62,13 @@ class SectionItem extends React.Component {
                         <View style={{ ...styles.columns, justifyContent: 'space-between' }}>
                             <View style={{ width: '70%' }} />
                             <Bubble
-                                color={this.style(homeScreenStyles, 'bubble').backgroundColor}
+                                color={this.bgColor(true)}
                                 iconName={'pencil-outline'}
                                 iconColor={this.props.settings.accent}
                                 onPress={() => this.props.onEdit(this.props.item)}
                             />
                             <Bubble
-                                color={this.style(homeScreenStyles, 'bubble').backgroundColor}
+                                color={this.bgColor(true)}
                                 iconName={'trash-can'}
                                 iconColor={this.props.settings.accent}
                                 onPress={() => this.props.onDelete(this.props.item.key)}
