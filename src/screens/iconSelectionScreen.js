@@ -69,10 +69,10 @@ class Screen extends React.Component {
                                 </TouchableOpacity>
                                 {this.state.opened[type] && this.makeGrid(icons[type]).map(row => {
                                     return (
-                                        <View style={{ ...styles.columns, height: 70, justifyContent: 'space-evenly' }}>
+                                        <View key={row} style={{ ...styles.columns, height: 70, justifyContent: 'space-evenly' }}>
                                             {row.map(icon => {
                                                 return (
-                                                    <TouchableOpacity onPress={() => this.setState({ inputOpen: true, selection: icon })}>
+                                                    <TouchableOpacity key={icon} onPress={() => this.setState({ inputOpen: true, selection: icon })}>
                                                         <Icon name={icon} size={35} color={this.iconColor(icon)} key={icon} />
                                                     </TouchableOpacity>
                                                 );
@@ -85,6 +85,7 @@ class Screen extends React.Component {
                     })}
                 </ScrollView>
                 <CategoryModal
+                    confirm={catObj => {}}
                     close={() => this.setState({ inputOpen: false, selection: 'none' })}
                     icon={this.state.selection}
                     open={this.state.inputOpen}

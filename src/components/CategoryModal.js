@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React from 'react';
 import { TextInput, View, } from 'react-native';
 import Modal from 'react-native-modal';
@@ -14,6 +15,7 @@ import { categoryModalStyles, styles, } from '../styles';
 class CategoryModal extends React.Component {
 
     constructor(props) {
+        console.log(moment().format("DDMMYYYY-HHmmss"))
         super(props);
         this.state = {
             color: props.settings.accent,
@@ -23,9 +25,18 @@ class CategoryModal extends React.Component {
     }
 
     close = () => {
-        this.setState({ title: '' });
+        this.setState({ newTitle: '' });
         this.textInput.blur();
         this.props.close();
+    }
+
+    confirm = () => {
+
+    }
+
+    cpClose = () => {
+        this.setState({ cpOpen: false });
+        this.focus();
     }
 
     focus = () => this.textInput.focus();
@@ -66,13 +77,11 @@ class CategoryModal extends React.Component {
                             style={this.style('input')}
                         />
                         <Bubble onPress={() => this.setState({ cpOpen: true })} color={this.state.color} size={25} />
+                        <Bubble iconName={'check'} iconColor={this.props.settings.accent} onPress={() => this.confirm()} iconSize={25} />
                     </View>
                 </View>
                 <ColorPicker
-                    close={() => {
-                        this.setState({ cpOpen: false });
-                        this.focus();
-                    }}
+                    close={this.cpClose}
                     open={this.state.cpOpen}
                     onPress={hex => this.setState({ color: hex, cpOpen: false })}
                 />

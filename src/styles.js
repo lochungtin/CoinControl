@@ -342,6 +342,7 @@ export const recordModalStyles = StyleSheet.create({
         borderWidth: 1,
         borderColor: shade3,
         flexDirection: 'row',
+        justifyContent: 'space-between',
         minHeight: '8%',
         paddingHorizontal: '5%',
         width: '100%'
@@ -352,6 +353,7 @@ export const recordModalStyles = StyleSheet.create({
         borderWidth: 1,
         borderColor: shade2,
         flexDirection: 'row',
+        justifyContent: 'space-between',
         minHeight: '8%',
         paddingHorizontal: '5%',
         width: '100%'
@@ -363,7 +365,7 @@ export const recordModalStyles = StyleSheet.create({
         fontSize: 15,
         marginLeft: '5%',
         paddingLeft: '5%',
-        width: '85%'
+        width: '70%'
     },
     inputL: {
         borderBottomWidth: 1,
@@ -372,7 +374,7 @@ export const recordModalStyles = StyleSheet.create({
         fontSize: 15,
         marginLeft: '5%',
         paddingLeft: '5%',
-        width: '85%'
+        width: '70%'
     },
 });
 

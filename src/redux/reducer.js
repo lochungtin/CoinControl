@@ -4,7 +4,9 @@ import { combineReducers } from 'redux';
 import {
     ADD_RECORD,
     ADD_EXPENSE_CATEGORY,
+    ADD_EXPENSE_SELECTION,
     ADD_INCOME_CATEGORY,
+    ADD_INCOME_SELECTION,
     DEFAULT_EXPENSE_CATEGORY,
     DEFAULT_EXPENSE_SELECTION,
     DEFAULT_GOAL,
@@ -12,16 +14,18 @@ import {
     DEFAULT_INCOME_SELECTION,
     DEFAULT_SETTINGS,
     DELETE_EXPENSE_CATEGORY,
+    DELETE_EXPENSE_SELECTION,
     DELETE_INCOME_CATEGORY,
+    DELETE_INCOME_SELECTION,
     DELETE_RECORD,
     DELETE_HISTORY,
+    EDIT_EXPENSE_CATEGORY, 
+    EDIT_INCOME_CATEGORY,
     EDIT_RECORD,
     RESET_KEY,
     RESET_ALLKEYS,
-    UPDATE_EXPENSE_SELECTION,
     UPDATE_GOAL,
-    UPDATE_INCOME_SELECTION,
-    UPDATE_SETTINGS, 
+    UPDATE_SETTINGS,
 } from './action';
 import {
     defaultExpenseCategories,
@@ -31,6 +35,8 @@ import {
     defaultIncomeSelection,
     defaultSettings
 } from '../data/default';
+
+const genKey = () => moment().format('DDMMYYYY-HHmmss');
 
 const updateRecords = (records = [], action) => {
     switch (action.type) {
@@ -85,16 +91,15 @@ const updateExpenseCategory = (categories = defaultExpenseCategories, action) =>
         case DEFAULT_EXPENSE_CATEGORY:
             return defaultExpenseCategories;
         case ADD_EXPENSE_CATEGORY:
-            return [...categories, action.payload];
-        case DELETE_EXPENSE_CATEGORY:
-            var temp = [...categories];
-            var position
-            for (position = 0; position < temp.length; position++) {
-                if (temp[position].key === action.payload)
-                    break;
-            }
-            temp.splice(position, 1);
+            var temp = {...categories};
+            temp[genKey()] = action.payload;
             return temp;
+        case DELETE_EXPENSE_CATEGORY:
+            var temp = {...categories};
+            delete temp[action.payload];
+            return temp;
+        case EDIT_EXPENSE_CATEGORY:
+            return {...categories, ...action.payload}
     }
     return categories;
 }
@@ -103,8 +108,8 @@ const updateExpenseSelection = (selection = defaultExpenseSelection, action) => 
     switch (action.type) {
         case DEFAULT_EXPENSE_SELECTION:
             return defaultExpenseSelection;
-        case UPDATE_EXPENSE_SELECTION:
-            return action.payload;
+        case ADD_EXPENSE_SELECTION:
+            return [...selection, action.payload];
     }
     return selection;
 }
@@ -124,16 +129,15 @@ const updateIncomeCategory = (categories = defaultIncomeCategories, action) => {
         case DEFAULT_INCOME_CATEGORY:
             return defaultIncomeCategories;
         case ADD_INCOME_CATEGORY:
-            return [...categories, action.payload];
-        case DELETE_INCOME_CATEGORY:
-            var temp = [...categories];
-            var position
-            for (position = 0; position < temp.length; position++) {
-                if (temp[position].key === action.payload)
-                    break;
-            }
-            temp.splice(position, 1);
+            var temp = {...categories};
+            temp[genKey()] = action.payload;
             return temp;
+        case DELETE_INCOME_CATEGORY:
+            var temp = {...categories};
+            delete temp[action.payload];
+            return temp;
+        case EDIT_INCOME_CATEGORY:
+                return {...categories, ...action.payload}
     }
     return categories;
 }
@@ -142,8 +146,9 @@ const updateIncomeSelection = (selection = defaultIncomeSelection, action) => {
     switch (action.type) {
         case DEFAULT_INCOME_SELECTION:
             return defaultIncomeSelection;
-        case UPDATE_INCOME_SELECTION:
-            return action.payload;
+        case ADD_INCOME_SELECTION:
+            return [...selection, action.payload];
+
     }
     return selection;
 }

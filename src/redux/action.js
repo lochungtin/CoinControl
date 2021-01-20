@@ -51,6 +51,12 @@ export const deleteExpenseCategory = payload => ({
     payload: payload,
 });
 
+export const EDIT_EXPENSE_CATEGORY = 'EDIT_EXPENSE_CATEGORY';
+export const editExpenseCategory = payload => ({
+    type: EDIT_EXPENSE_CATEGORY,
+    payload: payload,
+});
+
 // Goal Related
 export const DEFAULT_GOAL = 'DEFAULT_GOAL';
 export const defaultGoal = () => ({
@@ -81,7 +87,25 @@ export const deleteIncomeCategory = payload => ({
     payload: payload,
 });
 
+export const EDIT_INCOME_CATEGORY = 'EDIT_INCOME_CATEGORY';
+export const editIncomeCategory = payload => ({
+    type: EDIT_INCOME_CATEGORY,
+    payload: payload,
+});
+
 // Selection Related
+export const ADD_EXPENSE_SELECTION = 'ADD_EXPENSE_SELECTION';
+export const addExpenseSelection = payload => ({
+    type: ADD_EXPENSE_SELECTION,
+    payload: payload
+});
+
+export const ADD_INCOME_SELECTION = 'ADD_INCOME_SELECTION';
+export const addIncomeSelection = payload => ({
+    type: ADD_INCOME_SELECTION,
+    payload: payload
+});
+
 export const DEFAULT_EXPENSE_SELECTION = 'DEFAULT_EXPENSE_SELECTION';
 export const defaultExpenseSelection = () => ({
     type: DEFAULT_EXPENSE_SELECTION,
@@ -92,15 +116,15 @@ export const defaultIncomeSelection = () => ({
     type: DEFAULT_INCOME_SELECTION,
 });
 
-export const UPDATE_INCOME_SELECTION = 'UPDATE_INCOME_SELECTION';
-export const updateIncomeSelection = payload => ({
-    type: UPDATE_INCOME_SELECTION,
+export const DELETE_EXPENSE_SELECTION = 'DELETE_EXPENSE_SELECTION';
+export const deleteExpenseSelection = payload => ({
+    type: DELETE_EXPENSE_SELECTION,
     payload: payload
 });
 
-export const UPDATE_EXPENSE_SELECTION = 'UPDATE_EXPENSE_SELECTION';
-export const updateExpenseSelection = payload => ({
-    type: UPDATE_EXPENSE_SELECTION,
+export const DELETE_INCOME_SELECTION = 'DELETE_INCOME_SELECTION';
+export const deleteIncomeSelection = payload => ({
+    type: DELETE_INCOME_SELECTION,
     payload: payload
 });
 

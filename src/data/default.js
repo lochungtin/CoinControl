@@ -1,63 +1,55 @@
-import { goldenBrown } from './color';
+import { goldenBrown, colorLabels } from './color';
 
-export const customCategoryIconList = [
-    'alpha-a-circle-outline',
-    'alpha-b-circle-outline',
-    'alpha-c-circle-outline',
-    'alpha-d-circle-outline',
-    'alpha-e-circle-outline',
-    'alpha-f-circle-outline',
-    'alpha-g-circle-outline',
-    'alpha-h-circle-outline',
-    'alpha-i-circle-outline',
-    'alpha-j-circle-outline',
-    'alpha-k-circle-outline',
-    'alpha-l-circle-outline',
-    'alpha-m-circle-outline',
-]
+export const defaultExpenseCategories = {
+    '20012021-004001': {
+        default: true, color: goldenBrown, name: 'Bills', iconName: 'text-box-outline'
+    },
+    '20012021-004002': {
+        default: true, color: colorLabels[0], name: 'Entertainment', iconName: 'gamepad-variant-outline'
+    },
+    '20012021-004003': {
+        default: true, color: colorLabels[1], name: 'Food', iconName: 'food-fork-drink'
+    },
+    '20012021-004004': {
+        default: true, color: colorLabels[2], name: 'Groceries', iconName: 'cart-outline'
+    },
+    '20012021-004005': {
+        default: true, color: colorLabels[3], name: 'Office', iconName: 'paperclip'
+    },
+    '20012021-004006': {
+        default: true, color: colorLabels[4], name: 'Shopping', iconName: 'shopping-outline'
+    },
+    '20012021-004007': {
+        default: true, color: colorLabels[5], name: 'Transport', iconName: 'train-car'
+    },
+}
 
-export const defaultExpenseCategories = [
-    { default: true, key: 'Bills', iconName: 'text-box-outline' },
-    { default: true, key: 'Entertainment', iconName: 'gamepad-variant-outline' },
-    { default: true, key: 'Food', iconName: 'food-fork-drink' },
-    { default: true, key: 'Groceries', iconName: 'cart-outline' },
-    { default: true, key: 'Office', iconName: 'paperclip' },
-    { default: true, key: 'Other', iconName: 'information-variant' },
-    { default: true, key: 'Shopping', iconName: 'shopping-outline' },
-    { default: true, key: 'Transport', iconName: 'train-car' },
-]
+export const defaultIncomeCategories = {
+    '20012021-004008': {
+        default: true, color: goldenBrown, name: 'Allowance', iconName: 'wallet-outline'
+    },
+    '20012021-004009': {
+        default: true, color: colorLabels[0], name: 'Loan', iconName: 'bank'
+    },
+    '20012021-004010': {
+        default: true, color: colorLabels[1], name: 'Returns', iconName: 'keyboard-backspace'
+    },
+    '20012021-004011': {
+        default: true, color: colorLabels[2], name: 'Other', iconName: 'information-variant'
+    },
+    '20012021-004012': {
+        default: true, color: colorLabels[3], name: 'Salary', iconName: 'cash'
+    },
+}
 
-export const defaultExpenseSelection = [
-    'Bills',
-    'Entertainment',
-    'Food',
-    'Groceries',
-    'Office',
-    'Other',
-    'Shopping',
-    'Transport',
-]
+export const defaultExpenseSelection = ['20012021-004001', '20012021-004002', '20012021-004003', '20012021-004004', '20012021-004005', '20012021-004006', '20012021-004007'];
+
+export const defaultIncomeSelection = ['20012021-004008', '20012021-004009', '20012021-004010', '20012021-004004', '20012021-004005', '20012021-004006', '20012021-004007']
 
 export const defaultGoal = {
     amount: 0,
     type: 'none',
 }
-
-export const defaultIncomeCategories = [
-    { default: true, key: 'Allowance', iconName: 'wallet-outline' },
-    { default: true, key: 'Loan', iconName: 'bank' },
-    { default: true, key: 'Returns', iconName: 'keyboard-backspace' },
-    { default: true, key: 'Other', iconName: 'information-variant' },
-    { default: true, key: 'Salary', iconName: 'cash' },
-]
-
-export const defaultIncomeSelection = [
-    'Allowance',
-    'Loan',
-    'Returns',
-    'Other',
-    'Salary',
-]
 
 export const defaultSettings = {
     accent: goldenBrown,

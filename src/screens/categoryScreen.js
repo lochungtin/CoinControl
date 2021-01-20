@@ -17,34 +17,18 @@ class Screen extends React.Component {
         super(props);
         var categories = props.route.params.title === 'Expense' ? props.expenseCategories : props.incomeCategories;
         this.state = {
-            category: '',
+            categories: categories,
+            catKey: '',
             date: moment().format('YYYY-MM-DD'),
-            icon: 'account',
-            grid: [
-                [0, ...categories.slice(0, 4)],
-                [1, ...categories.slice(4, 8)],
-                [2, ...categories.slice(8, 12)],
-                [3, ...categories.slice(12, 16)],
-            ],
+            grid: this.makeGrid(Object.keys(categories)),
             open: false,
-            title: '',
             type: props.route.params.title,
             value: 0,
         }
     }
 
     componentDidMount() {
-        this._unsubscribe = this.props.navigation.addListener('focus', () => {
-            var categories = this.props.route.params.title === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories;
-            this.setState({
-                grid: [
-                    [0, ...categories.slice(0, 4)],
-                    [1, ...categories.slice(4, 8)],
-                    [2, ...categories.slice(8, 12)],
-                    [3, ...categories.slice(12, 16)],
-                ],
-            });
-        });
+        this._unsubscribe = this.props.navigation.addListener('focus', this.update);
     }
 
     componentWillUnmount() {
@@ -53,47 +37,77 @@ class Screen extends React.Component {
 
     centerText = () => this.props.settings.darkMode ? styles.centerTextD : styles.centerTextL;
 
+    makeGrid = arr => {
+        arr.sort((a, b) => a > b);
+
+        var grid = [];
+        for (let i = 0; i < arr.length; i += 4)
+            grid.push(arr.slice(i, i + 4));
+
+        if (arr.length % 4 !== 0)
+            for (let j = grid[grid.length - 1].length; j < 4; j++)
+                grid[grid.length - 1].push('');
+                
+        return grid;
+    }
+
+    genRnKey = () => Math.floor((1 + Math.random() * 0x10000)).toString(16);
+
+    update = () => {
+        var categories = this.props.route.params.title === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories;
+        this.setState({
+            catKey: '',
+            categories: categories,
+            grid: this.makeGrid(Object.keys(categories)),
+            open: false,
+        });
+    }
+
     render() {
         return (
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
-                <ScreenHeader 
-                    action={() => this.props.navigation.navigate('Icons')} 
-                    back={() => this.props.navigation.goBack()} 
-                    name={this.props.route.params.title} 
+                <ScreenHeader
+                    action={() => this.props.navigation.navigate('Icons')}
+                    back={() => this.props.navigation.goBack()}
+                    name={this.props.route.params.title}
                 />
                 <View style={styles.rows}>
                     {this.state.grid.map(row => {
                         return (
-                            <View style={{ ...styles.columns, height: 100  }} key={row[0]}>
-                                {row.slice(1).map(item => (
-                                    <View key={item.key} style={{ ...styles.rows, justifyContent: 'space-between', width: "25%"}}>
-                                        <Bubble
-                                            iconColor={this.props.settings.accent}
-                                            iconName={item.iconName}
-                                            iconSize={25}
-                                            onPress={() => this.setState({ category: item.key, icon: item.iconName, open: true })}
-                                            selected={this.state.category === item.key}
-                                            size={35}
-                                        />
-                                        <Text style={this.centerText()}>{item.key}</Text>
+                            <View style={{ ...styles.columns, height: 100 }} key={this.genRnKey()}>
+                                {row.map(key => (
+                                    <View style={{ ...styles.rows, justifyContent: 'space-between', width: "25%" }} key={this.genRnKey()}>
+                                        {key !== '' ?
+                                            <View style={{ ...styles.rows, justifyContent: 'space-between' }}>
+                                                <Bubble
+                                                    iconColor={this.state.categories[key].color}
+                                                    iconName={this.state.categories[key].iconName}
+                                                    iconSize={25}
+                                                    onPress={() => this.setState({ catKey: key, open: true })}
+                                                    selected={this.state.catKey === key}
+                                                    size={35}
+                                                />
+                                                <Text style={this.centerText()}>{this.state.categories[key].name}</Text>
+                                            </View> :
+                                            <View style={{ ...styles.rows, justifyContent: 'space-between', width: "25%" }} />
+                                        }
                                     </View>
                                 ))}
                             </View>
-                        )
+                        );
                     })}
                 </View>
 
                 <RecordModal
-                    close={() => this.setState({ category: '', open: false })}
+                    close={this.update}
                     item={{
-                        category: this.state.category,
+                        catKey: this.state.catKey,
                         date: moment().format('YYYY-MM-DD'),
-                        icon: this.state.icon,
                         type: this.props.route.params.title,
                     }}
                     onConfirm={record => {
                         store.dispatch(addRecord(record));
-                        this.setState({ category: '', open: false });
+                        this.setState({ catKey: '', open: false });
                         this.props.navigation.goBack();
                     }}
                     open={this.state.open}
