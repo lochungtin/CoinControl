@@ -22,8 +22,6 @@ import {
     EDIT_EXPENSE_CATEGORY, 
     EDIT_INCOME_CATEGORY,
     EDIT_RECORD,
-    RESET_KEY,
-    RESET_ALLKEYS,
     UPDATE_GOAL,
     UPDATE_SETTINGS,
 } from './action';
@@ -65,23 +63,6 @@ const updateRecords = (records = [], action) => {
             }
             temp.splice(pos, 1, action.payload);
             return temp;
-        case RESET_KEY:
-            var temp = [...records];
-            for (const record of temp) {
-                if (record.category === action.payload) {
-                    record.category = 'Other';
-                    record.icon = 'information-variant';
-                }
-            }
-            return temp;
-        case RESET_ALLKEYS:
-            var temp = [...records];
-            for (const record of temp) {
-                if (!defaultExpenseCategories.includes(record.category) || !defaultIncomeCategories.includes(record.category)) {
-                    record.category = 'Other';
-                    record.icon = 'information-variant';
-                }
-            }
     }
     return records;
 }

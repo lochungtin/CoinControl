@@ -12,7 +12,7 @@ import SettingsHeader from '../components/SettingsHeader';
 import SettingsItem from '../components/SettingsItem';
 import TimePicker from '../components/TimePicker';
 import NotifService from '../notifications/notifService';
-import { defaultExpenseCategory, defaultExpenseSelection, defaultGoal, defaultIncomeCategory, defaultIncomeSelection, defaultSettings, deleteHistory, resetAllKeys, updateSettings, } from '../redux/action';
+import { defaultExpenseCategory, defaultExpenseSelection, defaultGoal, defaultIncomeCategory, defaultIncomeSelection, defaultSettings, deleteHistory, updateSettings, } from '../redux/action';
 import { store } from '../redux/store';
 
 import { settingStyles, styles, } from '../styles';
@@ -66,7 +66,6 @@ class Screen extends React.Component {
             store.dispatch(defaultExpenseSelection());
             store.dispatch(defaultIncomeCategory());
             store.dispatch(defaultIncomeSelection());
-            store.dispatch(resetAllKeys());
         }
         if (lvl === 1)
             store.dispatch(defaultSettings());
@@ -124,8 +123,8 @@ class Screen extends React.Component {
                     <SettingsItem action={() => store.dispatch(updateSettings({ key: 'darkMode', update: !this.props.settings.darkMode }))} iconL={'moon-waning-crescent'} state={this.props.settings.darkMode} switch={true} text={'Dark Mode'} />
 
                     <SettingsHeader title={'CATEGORIES'} />
-                    <SettingsItem action={() => this.props.navigation.navigate('Category', { title: 'Expense' })} iconL={'shopping'} text={'Expense Categories'} />
-                    <SettingsItem action={() => this.props.navigation.navigate('Category', { title: 'Income' })} iconL={'cash'} text={'Income Categories'} />
+                    <SettingsItem action={() => this.props.navigation.navigate('Icons', 'Expense')} iconL={'shopping'} text={'Expense Categories'} />
+                    <SettingsItem action={() => this.props.navigation.navigate('Icons', 'Income')} iconL={'cash'} text={'Income Categories'} />
 
                     <SettingsHeader title={'ADVANCED'} />
                     <SettingsItem action={() => store.dispatch(updateSettings({ key: 'compactView', update: !this.props.settings.compactView }))} iconL={'card-text'} state={this.props.settings.compactView} switch={true} text={'Compact View'} />

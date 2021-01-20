@@ -22,17 +22,6 @@ export const deleteRecord = payload => ({
     payload: payload,
 });
 
-export const RESET_KEY = 'RESET_KEY';
-export const resetKey = payload => ({
-    type: RESET_KEY,
-    payload: payload,
-});
-
-export const RESET_ALLKEYS = 'RESET_ALLKEYS';
-export const resetAllKeys = () => ({
-    type: RESET_ALLKEYS,
-});
-
 // Expense Category Related
 export const ADD_EXPENSE_CATEGORY = 'ADD_EXPENSE_CATEGORY';
 export const addExpenseCategory = payload => ({
