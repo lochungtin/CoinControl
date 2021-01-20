@@ -24,7 +24,7 @@ class ScreenHeader extends React.Component {
                     </Text>
                 </View>
                 <TouchableOpacity onPress={this.props.action}>
-                    <Icon name={'plus'} size={25} color={this.props.action ? this.iconColor() : 'transparent'} />
+                    <Icon name={this.props.icon ? this.props.icon : 'plus'} size={25} color={this.props.action ? this.iconColor() : 'transparent'} />
                 </TouchableOpacity>
             </View>
         )

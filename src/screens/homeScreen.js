@@ -92,13 +92,13 @@ class Screen extends React.Component {
                         </View>
                         <View style={{ ...styles.columns, width: 250, justifyContent: 'space-evenly' }}>
                             <View style={styles.rows}>
-                                <Bubble color={this.props.settings.accent} iconColor={black} iconName={'plus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', { darkMode: this.props.settings.darkMode, title: 'Income' })} size={35} />
+                                <Bubble color={this.props.settings.accent} iconColor={black} iconName={'plus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', 'Income')} size={35} />
                                 <Text style={this.style(styles, 'centerText')}>
                                     Income
                                 </Text>
                             </View>
                             <View style={styles.rows}>
-                                <Bubble color={this.props.settings.accent} iconColor={black} iconName={'minus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', { darkMode: this.props.settings.darkMode, title: 'Expense' })} size={35} />
+                                <Bubble color={this.props.settings.accent} iconColor={black} iconName={'minus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', 'Expense')} size={35} />
                                 <Text style={this.style(styles, 'centerText')}>
                                     Expense
                                 </Text>

@@ -446,6 +446,24 @@ export const iconSelectionScreen = StyleSheet.create({
         color: black,
         fontWeight: 'bold',
     },
+    stack: {
+        height: 35,
+        width: 35,
+    },
+    stackChild: {
+        left: 0,
+        position: 'absolute',
+        top: 0,
+    },
+    stackDelete: {
+        alignItems: 'center',
+        backgroundColor: '#e74c3c', 
+        borderRadius: 10, 
+        elevation: 10,
+        height: 20, 
+        justifyContent: 'center',
+        width: 20,
+    },
 })
 
 export const chartScreenStyles = StyleSheet.create({

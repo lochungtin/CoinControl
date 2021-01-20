@@ -15,14 +15,14 @@ class Screen extends React.Component {
 
     constructor(props) {
         super(props);
-        var categories = props.route.params.title === 'Expense' ? props.expenseCategories : props.incomeCategories;
+        var categories = props.route.params === 'Expense' ? props.expenseCategories : props.incomeCategories;
         this.state = {
             categories: categories,
             catKey: '',
             date: moment().format('YYYY-MM-DD'),
             grid: this.makeGrid(Object.keys(categories)),
             open: false,
-            type: props.route.params.title,
+            type: props.route.params,
             value: 0,
         }
     }
@@ -54,7 +54,7 @@ class Screen extends React.Component {
     genRnKey = () => Math.floor((1 + Math.random() * 0x10000)).toString(16);
 
     update = () => {
-        var categories = this.props.route.params.title === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories;
+        var categories = this.props.route.params === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories;
         this.setState({
             catKey: '',
             categories: categories,
@@ -67,9 +67,10 @@ class Screen extends React.Component {
         return (
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
                 <ScreenHeader
-                    action={() => this.props.navigation.navigate('Icons', this.props.route.params.title)}
+                    action={() => this.props.navigation.navigate('Icons', this.props.route.params)}
                     back={() => this.props.navigation.goBack()}
-                    name={this.props.route.params.title}
+                    icon={'plus'}
+                    name={this.props.route.params}
                 />
                 <View style={styles.rows}>
                     {this.state.grid.map(row => {
@@ -103,7 +104,7 @@ class Screen extends React.Component {
                     item={{
                         catKey: this.state.catKey,
                         date: moment().format('YYYY-MM-DD'),
-                        type: this.props.route.params.title,
+                        type: this.props.route.params,
                     }}
                     onConfirm={record => {
                         store.dispatch(addRecord(record));

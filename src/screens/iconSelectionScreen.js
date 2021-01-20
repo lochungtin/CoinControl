@@ -10,21 +10,42 @@ import { icons } from '../data/icons';
 
 import { iconSelectionScreen, styles, } from '../styles';
 import CategoryModal from '../components/CategoryModal';
+import { white } from '../data/color';
+import { store } from '../redux/store';
+import { deleteExpenseCategory, deleteIncomeCategory } from '../redux/action';
 
 class Screen extends React.Component {
 
     constructor(props) {
         super(props);
-        var opened = {};
+        var opened = { inUse: false };
         for (const type of Object.keys(icons)) {
             opened[type] = true;
         }
         this.state = {
+            deleteMode: false,
             inputOpen: false,
             opened: opened,
             selection: 'none',
+            type: props.route.params,
             types: Object.keys(icons),
         };
+    }
+
+    catValue = key => {
+        const cat = (this.state.type === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories)[key];
+        if (cat === undefined)
+            return { color: 'transparent', iconName: 'crop-free', };
+        return cat;
+    }
+
+    deleteCat = key => {
+        if (this.state.deleteMode) {
+            if (this.state.type === 'Expense')
+                store.dispatch(deleteExpenseCategory(key));
+            else
+                store.dispatch(deleteIncomeCategory(key));
+        }
     }
 
     makeGrid = arr => {
@@ -42,7 +63,16 @@ class Screen extends React.Component {
 
     iconColor = icon => icon.startsWith('numeric') ? 'transparent' : this.props.settings.accent;
 
+    genRnKey = () => Math.floor((1 + Math.random() * 0x10000)).toString(16);
+
     openIcon = open => open ? 'chevron-down' : 'chevron-right';
+
+    toggleDelete = () => {
+        if (!this.state.deleteMode && !this.state.opened.inUse)
+            this.toggleOpen('inUse');
+        
+        this.setState({ deleteMode: !this.state.deleteMode });
+    }
 
     toggleOpen = type => {
         var newState = { ...this.state.opened };
@@ -56,9 +86,33 @@ class Screen extends React.Component {
         return (
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
                 <ScreenHeader
+                    action={this.toggleDelete}
                     back={() => this.props.navigation.goBack()}
+                    icon={'trash-can-outline'}
                     name={'Custom Categories'}
                 />
+                <View style={{ width: '100%' }}>
+                    <TouchableOpacity onPress={() => this.toggleOpen('inUse')} style={this.style('header')}>
+                        <Text style={this.style('headerText')}>IN USE</Text>
+                        <Icon name={this.openIcon(this.state.opened['inUse'])} size={20} color={this.style('headerText').color} />
+                    </TouchableOpacity>
+                    {this.state.opened['inUse'] && this.makeGrid(Object.keys(this.state.type === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories)).map(row => {
+                        return (
+                            <View key={row} style={{ ...styles.columns, height: 70, justifyContent: 'space-evenly' }}>
+                                {row.map(key => {
+                                    return (
+                                        <TouchableOpacity key={this.genRnKey()} onPress={() => this.deleteCat(key)} style={iconSelectionScreen.stack}>
+                                            <Icon name={this.catValue(key).iconName} size={35} color={this.catValue(key).color} style={iconSelectionScreen.stackChild} />
+                                            {this.catValue(key).color !== 'transparent' && this.state.deleteMode && <View style={{ ...iconSelectionScreen.stackChild, ...iconSelectionScreen.stackDelete }}>
+                                                <Icon name={'close'} size={20} color={white} />
+                                            </View>}
+                                        </TouchableOpacity>
+                                    );
+                                })}
+                            </View>
+                        );
+                    })}
+                </View>
                 <ScrollView style={{ width: '100%' }}>
                     {this.state.types.map(type => {
                         return (
@@ -73,7 +127,7 @@ class Screen extends React.Component {
                                             {row.map(icon => {
                                                 return (
                                                     <TouchableOpacity key={icon} onPress={() => this.setState({ inputOpen: true, selection: icon })}>
-                                                        <Icon name={icon} size={35} color={this.iconColor(icon)} key={icon} />
+                                                        <Icon name={icon} size={35} color={this.iconColor(icon)} />
                                                     </TouchableOpacity>
                                                 );
                                             })}
@@ -88,7 +142,7 @@ class Screen extends React.Component {
                     close={() => this.setState({ inputOpen: false, selection: 'none' })}
                     icon={this.state.selection}
                     open={this.state.inputOpen}
-                    type={this.props.route.params}
+                    type={this.state.type}
                 />
             </View>
         );

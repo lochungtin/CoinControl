@@ -17,7 +17,6 @@ import { categoryModalStyles } from '../styles';
 class CategoryModal extends React.Component {
 
     constructor(props) {
-        console.log(moment().format("DDMMYYYY-HHmmss"))
         super(props);
         this.state = {
             color: props.settings.accent,
