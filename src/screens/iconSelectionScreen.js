@@ -1,6 +1,5 @@
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View, } from 'react-native';
-import Modal from 'react-native-modal';
 import { connect } from 'react-redux';
 
 import ScreenHeader from '../components/ScreenHeader';
