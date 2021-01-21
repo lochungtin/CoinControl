@@ -1,20 +1,19 @@
 import React from 'react';
-import { Modal, SafeAreaView, SectionList, StatusBar, Text, TextInput, TouchableOpacity, View, } from 'react-native';
+import { SafeAreaView, SectionList, StatusBar, Text, View, } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
-import ExpandButton from '../components/ExpandButton';
 import SectionHeader from '../components/SectionHeader';
 import SectionItem from '../components/SectionItem';
-import RecordModal from '../components/RecordModal';
+import RecordModal from '../components/Modals/RecordModal';
 import { parseAll, parseGoal, parseGoalPercentage, parseTotal, } from '../functions/parser';
-import { defaultGoal, deleteRecord, editRecord, updateGoal } from '../redux/action';
+import { deleteRecord, editRecord, } from '../redux/action';
 import { store } from '../redux/store';
 
-import { black, bgColorD, bgColorL, shade2, shade3, white, } from '../data/color';
-import { homeScreenStyles, maxWidth, maxHeight, styles, } from '../styles';
+import { black, bgColorD, bgColorL, shade2, shade3, } from '../data/color';
+import { homeScreenStyles, maxWidth, styles, } from '../styles';
 
 class Screen extends React.Component {
 
@@ -23,8 +22,8 @@ class Screen extends React.Component {
         this.state = {
             amount: 0,
             expand: '',
+            gmOpen: false,
             item: {},
-            open: false,
             rmOpen: false,
             toGoal: parseGoal(this.props.records, this.props.goal.amount),
         }
@@ -104,7 +103,7 @@ class Screen extends React.Component {
                                 </Text>
                             </View>
                             <View style={styles.rows}>
-                                <Bubble color={this.props.settings.accent} iconColor={black} iconName={'flag-outline'} iconSize={25} onPress={() => this.setState({ open: true })} size={35} />
+                                <Bubble color={this.props.settings.accent} iconColor={black} iconName={'flag-outline'} iconSize={25} onPress={() => this.setState({ gmOpen: true })} size={35} />
                                 <Text style={this.style(styles, 'centerText')}>
                                     Set Goal
                                 </Text>
@@ -137,65 +136,7 @@ class Screen extends React.Component {
                     </SafeAreaView>
                 </View>
 
-                <Modal animationType='slide' transparent={true} visible={this.state.open}>
-                    <View style={styles.modalViewContainer}>
-                        <View style={{ ...this.style(styles, 'modalView'), height: maxHeight / 4 - 20 }}>
-                            <View style={styles.rows}>
-                                <ExpandButton onPress={() => this.setState({ open: false })} />
-                                <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, maxHeight: 60 }}>
-                                    <Icon name={'cash'} size={35} color={black} />
-                                    <TextInput
-                                        keyboardType={'numeric'}
-                                        placeholder={'Amount'}
-                                        onChangeText={(text) => this.setState({ amount: parseInt(text) })}
-                                        style={{ color: black, textAlign: 'center', width: '95%' }}
-                                    />
-                                </View>
-                                <View style={{ ...styles.columns, justifyContent: 'space-between' }}>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            if (this.state.amount !== 0) {
-                                                store.dispatch(updateGoal({
-                                                    amount: this.state.amount,
-                                                    type: 'weekly',
-                                                }));
-                                                this.setState({ open: false });
-                                            }
-                                        }}
-                                        style={{ ...styles.roundView, backgroundColor: white, paddingHorizontal: 10, width: '30%' }}
-                                    >
-                                        <Text style={styles.centerTextL}>Weekly</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            if (this.state.amount !== 0) {
-                                                store.dispatch(updateGoal({
-                                                    amount: this.state.amount,
-                                                    type: 'monthly',
-                                                }));
-                                                this.setState({ open: false });
-                                            }
-                                        }}
-                                        style={{ ...styles.roundView, backgroundColor: white, paddingHorizontal: 10, width: '30%' }}
-                                    >
-                                        <Text style={styles.centerTextL}>Monthly</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            store.dispatch(defaultGoal());
-                                            this.setState({ open: false });
-                                        }}
-                                        style={{ ...styles.roundView, backgroundColor: this.props.settings.accent, paddingHorizontal: 10, width: '30%' }}
-                                    >
-                                        <Text style={styles.centerTextL}>None</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                </Modal>
-
-                <RecordModal
+                 <RecordModal
                     close={() => this.setState({ rmOpen: false })}
                     item={this.state.item}
                     onConfirm={record => {

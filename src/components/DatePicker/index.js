@@ -3,10 +3,10 @@ import { View } from 'react-native';
 import Modal from 'react-native-modal';
 import { connect } from 'react-redux';
 
-import Calendar from './Calendar';
-import ExpandButton from './ExpandButton';
+import Calendar from '../Calendar';
+import ExpandButton from '../ExpandButton';
 
-import { datePickerStyles } from '../styles';
+import { datePickerStyles } from '../../styles';
 
 class DatePicker extends React.Component {
 

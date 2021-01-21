@@ -4,7 +4,7 @@ import { Text, View, } from 'react-native';
 import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
-import RecordModal from '../components/RecordModal';
+import RecordModal from '../components/Modals/RecordModal';
 import ScreenHeader from '../components/ScreenHeader';
 import { store } from '../redux/store';
 import { addRecord } from '../redux/action';

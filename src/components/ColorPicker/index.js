@@ -3,11 +3,11 @@ import { View } from 'react-native'
 import Modal from 'react-native-modal';
 import { connect } from 'react-redux';
 
-import Bubble from './Bubble';
-import ExpandButton from './ExpandButton';
+import Bubble from '../Bubble';
+import ExpandButton from '../ExpandButton';
 
-import { blue, colorLabels, green, purple, red, teal, yellow, } from '../data/color';
-import { customModalStyles, styles, } from '../styles';
+import { blue, colorLabels, green, purple, red, teal, yellow, } from '../../data/color';
+import { customModalStyles, styles, } from '../../styles';
 
 class ColorPicker extends React.Component {
 

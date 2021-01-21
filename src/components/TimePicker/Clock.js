@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native'
 import { connect } from 'react-redux';
 
-import Bubble from './Bubble';
+import Bubble from '../Bubble';
 
 class Clock extends React.Component {
 

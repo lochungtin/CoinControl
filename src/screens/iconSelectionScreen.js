@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { icons } from '../data/icons';
 
 import { iconSelectionScreen, styles, } from '../styles';
-import CategoryModal from '../components/CategoryModal';
+import CategoryModal from '../components/Modals/CategoryModal';
 import { white } from '../data/color';
 import { store } from '../redux/store';
 import { deleteExpenseCategory, deleteIncomeCategory } from '../redux/action';

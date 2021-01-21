@@ -3,10 +3,9 @@ import { Text, View, } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import DatePicker from '../components/DatePicker';
 import NumpadButton from './NumpadButton';
 
-import { numpadStyles } from '../styles';
+import { numpadStyles } from '../../styles';
 
 class Numpad extends React.Component {
 
@@ -71,11 +70,6 @@ class Numpad extends React.Component {
             return this.evalRecur([a - b, ...numStack], opStack);
     }
 
-    onChangeDate = date => { 
-        this.props.onChangeDate(date);
-        this.setState({ date: date });
-    }
-
     style = styleName => numpadStyles[styleName + (this.props.settings.darkMode ? 'D' : 'L')];
 
     render() {
@@ -115,12 +109,6 @@ class Numpad extends React.Component {
                     <NumpadButton icon={'backspace-outline'} onPress={this.backspace} />
                     <NumpadButton icon={this.state.ready ? 'check' : 'equal'} onPress={this.confirm} special={true} />
                 </View>
-                <DatePicker 
-                    action={this.onChangeDate} 
-                    close={() => this.setState({ dpOpen: false })} 
-                    open={this.state.dpOpen} 
-                    selected={this.state.date}
-                />
             </View>
         )
     }

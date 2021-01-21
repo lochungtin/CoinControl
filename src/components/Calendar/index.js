@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import CalendarDateSelector from './CalendarDateSelector';
-import { calendarStyles, styles, } from '../styles';
+import { calendarStyles, styles, } from '../../styles';
 
 class Calendar extends React.Component {
 

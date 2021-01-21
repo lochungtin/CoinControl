@@ -4,15 +4,16 @@ import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import Bubble from './Bubble';
-import ColorPicker from './ColorPicker';
-import ExpandButton from './ExpandButton';
-import Numpad from './Numpad';
-import { editExpenseCategory, editIncomeCategory } from '../redux/action';
-import { store } from '../redux/store';
+import Bubble from '../Bubble';
+import ColorPicker from '../ColorPicker';
+import DatePicker from '../DatePicker';
+import ExpandButton from '../ExpandButton';
+import Numpad from '../Numpad';
+import { editExpenseCategory, editIncomeCategory } from '../../redux/action';
+import { store } from '../../redux/store';
 
-import { black, shade2, shade3, white, } from '../data/color';
-import { recordModalStyles, styles, } from '../styles';
+import { black, shade2, shade3, white, } from '../../data/color';
+import { recordModalStyles, styles, } from '../../styles';
 
 class RecordModal extends React.Component {
 
@@ -20,6 +21,7 @@ class RecordModal extends React.Component {
         super(props);
         this.state = {
             cpOpen: false,
+            dpOpen: false,
             editTitle: false,
             newDate: '',
             newTitle: '',
@@ -104,6 +106,13 @@ class RecordModal extends React.Component {
                     close={() => () => this.setState({ cpOpen: false })}
                     open={this.state.cpOpen}
                     onPress={hex => this.cpConfirm(hex)}
+                />
+
+                <DatePicker
+                    action={this.onChangeDate}
+                    close={() => this.setState({ dpOpen: false })}
+                    open={this.state.dpOpen}
+                    selected={this.state.date}
                 />
             </Modal>
         )

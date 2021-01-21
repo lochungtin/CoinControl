@@ -3,7 +3,7 @@ if (__DEV__) {
 }
 
 import React from 'react';
-import AppNav from './src/navigation/index'
+import AppNav from './src/navigation'
 
 import { Provider } from 'react-redux';
 import { store, persistor } from './src/redux/store';

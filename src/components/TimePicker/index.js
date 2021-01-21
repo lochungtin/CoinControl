@@ -4,10 +4,10 @@ import Modal from 'react-native-modal';
 import { connect } from 'react-redux';
 
 import Clock from './Clock';
-import ExpandButton from './ExpandButton';
+import ExpandButton from '../ExpandButton';
 
-import { shade2, shade3, white } from '../data/color';
-import { customModalStyles, styles, timePickerStyles } from '../styles';
+import { shade2, shade3, white } from '../../data/color';
+import { customModalStyles, styles, timePickerStyles } from '../../styles';
 
 class TimePicker extends React.Component {
 

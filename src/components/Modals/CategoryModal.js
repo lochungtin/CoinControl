@@ -1,18 +1,17 @@
-import moment from 'moment';
 import React from 'react';
 import { TextInput, View, } from 'react-native';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import Bubble from './Bubble';
-import ColorPicker from './ColorPicker';
-import ExpandButton from './ExpandButton';
-import { addExpenseCategory, addIncomeCategory, deleteExpenseCategory, defaultIncomeCategory, } from '../redux/action';
-import { store } from '../redux/store';
+import Bubble from '../Bubble';
+import ColorPicker from '../ColorPicker';
+import ExpandButton from '../ExpandButton';
+import { addExpenseCategory, addIncomeCategory, deleteExpenseCategory, defaultIncomeCategory, } from '../../redux/action';
+import { store } from '../../redux/store';
 
-import { black, shade2, shade3, white, } from '../data/color';
-import { categoryModalStyles } from '../styles';
+import { black, shade2, shade3, white, } from '../../data/color';
+import { categoryModalStyles } from '../../styles';
 
 class CategoryModal extends React.Component {
 
