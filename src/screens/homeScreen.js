@@ -1,18 +1,20 @@
 import React from 'react';
-import { SafeAreaView, SectionList, StatusBar, Text, View, } from 'react-native';
+import { SafeAreaView, SectionList, Text, View, } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
+import ConfirmationModal from '../components/Modals/ConfirmationModal';
+import RecordModal from '../components/Modals/RecordModal';
 import SectionHeader from '../components/SectionHeader';
 import SectionItem from '../components/SectionItem';
-import RecordModal from '../components/Modals/RecordModal';
 import { parseAll, parseGoal, parseGoalPercentage, parseTotal, } from '../functions/parser';
-import { deleteRecord, editRecord, } from '../redux/action';
+import { defaultGoal, deleteRecord, editRecord, } from '../redux/action';
 import { store } from '../redux/store';
 
-import { black, bgColorD, bgColorL, shade2, shade3, } from '../data/color';
+import { black, shade2, shade3, } from '../data/color';
+import { homePromptText } from '../data/text';
 import { homeScreenStyles, maxWidth, styles, } from '../styles';
 
 class Screen extends React.Component {
@@ -21,11 +23,11 @@ class Screen extends React.Component {
         super(props);
         this.state = {
             amount: 0,
-            expand: '',
+            confirmType: '',
+            focus: '',
             gmOpen: false,
             item: {},
             rmOpen: false,
-            toGoal: parseGoal(this.props.records, this.props.goal.amount),
         }
     }
 
@@ -46,6 +48,17 @@ class Screen extends React.Component {
         return Math.floor((total - Math.floor(total)) * 100);
     }
 
+    confirm = () => {
+        if (this.state.confirmType === 'dr') {
+            store.dispatch(deleteRecord(this.state.focus));
+            this.setState({ focus: '' });
+        }
+        else
+            store.dispatch(defaultGoal());
+
+        this.setState({ confirmType: '' });
+    }
+
     goalMessage = (amount) => {
         switch (this.props.goal.type) {
             case 'monthly':
@@ -59,16 +72,11 @@ class Screen extends React.Component {
 
     goalMessageColor = () => this.props.settings.darkMode ? shade2 : shade3;
 
-    statusBarBg = () => this.props.settings.darkMode ? bgColorD : bgColorL;
-
-    statusBarStyle = () => this.props.settings.darkMode ? 'light-content' : 'dark-content';
-
     style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
     render() {
         return (
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
-                <StatusBar backgroundColor={this.statusBarBg()} barStyle={this.statusBarStyle()} />
                 <View style={{ alignItems: 'center', paddingTop: 20 }}>
                     <View style={{ ...styles.rows, height: '30%', justifyContent: 'space-evenly' }}>
                         <View style={styles.columns}>
@@ -124,7 +132,7 @@ class Screen extends React.Component {
                                 <SectionItem
                                     compactMode={this.props.settings.compactView}
                                     item={item}
-                                    onDelete={key => store.dispatch(deleteRecord(key))}
+                                    onDelete={key => this.setState({ confirmType: 'dr', focus: key })}
                                     onEdit={item => this.setState({ item: item, rmOpen: true })}
                                 />
                             }
@@ -136,7 +144,7 @@ class Screen extends React.Component {
                     </SafeAreaView>
                 </View>
 
-                 <RecordModal
+                <RecordModal
                     close={() => this.setState({ rmOpen: false })}
                     item={this.state.item}
                     onConfirm={record => {
@@ -144,6 +152,13 @@ class Screen extends React.Component {
                         this.setState({ rmOpen: false });
                     }}
                     open={this.state.rmOpen}
+                />
+
+                <ConfirmationModal
+                    close={() => this.setState({ confirmType: '' })}
+                    confirm={this.confirm}
+                    open={this.state.confirmType !== ''}
+                    text={homePromptText[this.state.confirmType]}
                 />
             </View>
         );

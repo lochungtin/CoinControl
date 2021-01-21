@@ -2,6 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
+import { StatusBar } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
@@ -19,6 +20,10 @@ const Settings = createStackNavigator();
 const Root = createBottomTabNavigator();
 
 class AppNav extends React.Component {
+
+    statusBarBg = () => this.props.settings.darkMode ? bgColorD : bgColorL;
+
+    statusBarStyle = () => this.props.settings.darkMode ? 'light-content' : 'dark-content';
 
     main = () => (
         <Main.Navigator>
@@ -39,6 +44,7 @@ class AppNav extends React.Component {
     render() {
         return (
             <NavigationContainer>
+                <StatusBar backgroundColor={this.statusBarBg()} barStyle={this.statusBarStyle()} />
                 <Root.Navigator
                     initialRouteName='Home'
                     screenOptions={({ route }) => ({
