@@ -69,9 +69,16 @@ class Screen extends React.Component {
         this.setState({ confirmType: 0 });
     }
 
+    onNotif = notif => { }
+
     onRegister = token => this.setState({ registerToken: token.token, fcmRegistered: true });
 
-    onNotif = notif => { }
+    openConfirmation = id => {
+        if (!this.props.settings.prompt[settingsPromptText[id.toString()].key])
+            this.setState({confirmType: id});
+        else
+            this.clear(id);
+    }
 
     handlePerm = perms => Alert.alert('Permissions', JSON.stringify(perms));
 
@@ -119,9 +126,9 @@ class Screen extends React.Component {
                     <SettingsItem action={() => this.setState({ tpOpen: true })} disabled={!this.props.settings.notification} iconL={'subdirectory-arrow-right'} text={this.props.settings.notifSchedule} />
 
                     <SettingsHeader title={'DANGER ZONE'} />
-                    <SettingsItem action={() => this.setState({ confirmType: 2 })} iconL={'backup-restore'} text={'Reset Default Categories'} />
-                    <SettingsItem action={() => this.setState({ confirmType: 1 })} iconL={'backup-restore'} text={'Reset Default Settings'} />
-                    <SettingsItem action={() => this.setState({ confirmType: 3 })} iconL={'trash-can'} text={'Clear All Data'} />
+                    <SettingsItem action={() => this.openConfirmation(2)} iconL={'backup-restore'} text={'Reset Default Categories'} />
+                    <SettingsItem action={() => this.openConfirmation(1)} iconL={'backup-restore'} text={'Reset Default Settings'} />
+                    <SettingsItem action={() => this.openConfirmation(3)} iconL={'trash-can'} text={'Clear All Data'} />
                 </ScrollView>
 
                 <ColorPicker
