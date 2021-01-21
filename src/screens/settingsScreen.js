@@ -22,10 +22,10 @@ class Screen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            confirmType: 0,
             cpOpen: false,
             cupOpen: false,
             tpOpen: false,
-            confirmType: 0,
         }
 
         this.notif = new NotifService(
@@ -64,7 +64,7 @@ class Screen extends React.Component {
             store.dispatch(defaultIncomeCategory());
             store.dispatch(defaultIncomeSelection());
         }
-        if (type === 1)
+        if (type === 1 || type === 3)
             store.dispatch(defaultSettings());
         this.setState({ confirmType: 0 });
     }

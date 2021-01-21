@@ -1,17 +1,19 @@
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View, } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import ScreenHeader from '../components/ScreenHeader';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
-import { icons } from '../data/icons';
-
-import { iconSelectionScreen, styles, } from '../styles';
+import ConfirmationModal from '../components/Modals/ConfirmationModal';
 import CategoryModal from '../components/Modals/CategoryModal';
-import { white } from '../data/color';
-import { store } from '../redux/store';
+import ScreenHeader from '../components/ScreenHeader';
 import { deleteExpenseCategory, deleteIncomeCategory } from '../redux/action';
+import { store } from '../redux/store';
+
+import { white } from '../data/color';
+import { icons } from '../data/icons';
+import { categoryPromptText } from '../data/text';
+import { iconSelectionScreen, styles, } from '../styles';
+
 
 class Screen extends React.Component {
 
@@ -22,7 +24,9 @@ class Screen extends React.Component {
             opened[type] = true;
         }
         this.state = {
+            confirmType: '',
             deleteMode: false,
+            focus: '',
             inputOpen: false,
             opened: opened,
             selection: 'none',
@@ -44,6 +48,8 @@ class Screen extends React.Component {
                 store.dispatch(deleteExpenseCategory(key));
             else
                 store.dispatch(deleteIncomeCategory(key));
+
+            this.setState({ confirmType: '', focus: '' });
         }
     }
 
@@ -66,10 +72,17 @@ class Screen extends React.Component {
 
     openIcon = open => open ? 'chevron-down' : 'chevron-right';
 
+    openConfirmation = key => {
+        if (!this.props.settings.prompt.dc)
+            this.setState({ confirmType: 'dc', focus: key });
+        else
+            this.deleteCat(key);
+    }
+
     toggleDelete = () => {
         if (!this.state.deleteMode && !this.state.opened.inUse)
             this.toggleOpen('inUse');
-        
+
         this.setState({ deleteMode: !this.state.deleteMode });
     }
 
@@ -100,7 +113,7 @@ class Screen extends React.Component {
                             <View key={row} style={{ ...styles.columns, height: 70, justifyContent: 'space-evenly' }}>
                                 {row.map(key => {
                                     return (
-                                        <TouchableOpacity key={this.genRnKey()} onPress={() => this.deleteCat(key)} style={iconSelectionScreen.stack}>
+                                        <TouchableOpacity key={this.genRnKey()} onPress={() => this.openConfirmation(key)} style={iconSelectionScreen.stack}>
                                             <Icon name={this.catValue(key).iconName} size={35} color={this.catValue(key).color} style={iconSelectionScreen.stackChild} />
                                             {this.catValue(key).color !== 'transparent' && this.state.deleteMode && <View style={{ ...iconSelectionScreen.stackChild, ...iconSelectionScreen.stackDelete }}>
                                                 <Icon name={'close'} size={20} color={white} />
@@ -137,11 +150,18 @@ class Screen extends React.Component {
                         );
                     })}
                 </ScrollView>
+
                 <CategoryModal
                     close={() => this.setState({ inputOpen: false, selection: 'none' })}
                     icon={this.state.selection}
                     open={this.state.inputOpen}
                     type={this.state.type}
+                />
+                <ConfirmationModal
+                    close={() => this.setState({ confirmType: '' })}
+                    confirm={() => this.deleteCat(this.state.focus)}
+                    open={this.state.confirmType !== ''}
+                    text={categoryPromptText[this.state.confirmType]}
                 />
             </View>
         );

@@ -62,7 +62,7 @@ export const defaultSettings = {
         rdc: false,
         rds: false,
         cad: false,
-        tg: false,
+        dc: false,
         dr: false,
     }
 }

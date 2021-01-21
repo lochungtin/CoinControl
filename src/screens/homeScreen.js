@@ -48,15 +48,9 @@ class Screen extends React.Component {
         return Math.floor((total - Math.floor(total)) * 100);
     }
 
-    confirm = () => {
-        if (this.state.confirmType === 'dr') {
-            store.dispatch(deleteRecord(this.state.focus));
-            this.setState({ focus: '' });
-        }
-        else
-            store.dispatch(defaultGoal());
-
-        this.setState({ confirmType: '' });
+    deleteRecord = key => {
+        store.dispatch(deleteRecord(key));
+        this.setState({ confirmType: '', focus: '' });
     }
 
     goalMessage = (amount) => {
@@ -71,6 +65,13 @@ class Screen extends React.Component {
     }
 
     goalMessageColor = () => this.props.settings.darkMode ? shade2 : shade3;
+
+    openConfirmation = key => {
+        if (!this.props.settings.prompt.dr)
+            this.setState({ confirmType: 'dr', focus: key });
+        else
+            this.deleteRecord(key);
+    }
 
     style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
@@ -132,7 +133,7 @@ class Screen extends React.Component {
                                 <SectionItem
                                     compactMode={this.props.settings.compactView}
                                     item={item}
-                                    onDelete={key => this.setState({ confirmType: 'dr', focus: key })}
+                                    onDelete={key => this.openConfirmation(key)}
                                     onEdit={item => this.setState({ item: item, rmOpen: true })}
                                 />
                             }
@@ -156,7 +157,7 @@ class Screen extends React.Component {
 
                 <ConfirmationModal
                     close={() => this.setState({ confirmType: '' })}
-                    confirm={this.confirm}
+                    confirm={() => this.deleteRecord(this.state.focus)}
                     open={this.state.confirmType !== ''}
                     text={homePromptText[this.state.confirmType]}
                 />

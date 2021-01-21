@@ -2,7 +2,7 @@ export const settingsPromptText = {
     '2': {
         key: 'rdc',
         title: 'Reset Default Categories',
-        detail: 'All custom cateogies will be erased. Records that belong to custom categories will changed to "other".',
+        detail: 'All custom cateogies will be erased. Records that belong to custom categories will be changed to "other".',
     },
     '1': {
         key: 'rds',
@@ -17,14 +17,17 @@ export const settingsPromptText = {
 };
 
 export const homePromptText = {
-    tg: {
-        key: 'tg',
-        title: 'Terminate Goal',
-        detail: 'The current goal will be set to 0 and progress will be lost.',
-    },
     dr: {
         key: 'dr',
         title: 'Detele Record',
         detail: 'You are about to delete a record. This step is irreversable.'
+    }
+}
+
+export const categoryPromptText = {
+    dc: {
+        key: 'dc',
+        title: 'Delete Category',
+        detail: 'You are about to delete a category. Records that belong to custom categories will be changed to "other".',
     }
 }
