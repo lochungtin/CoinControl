@@ -11,7 +11,7 @@ import { addExpenseCategory, addIncomeCategory, deleteExpenseCategory, defaultIn
 import { store } from '../../redux/store';
 
 import { black, shade2, shade3, white, } from '../../data/color';
-import { categoryModalStyles } from '../../styles';
+import { categoryModalStyles, generalBottomModalStyles } from '../../styles';
 
 class CategoryModal extends React.Component {
 
@@ -51,7 +51,7 @@ class CategoryModal extends React.Component {
 
     placeholderColor = () => this.props.settings.darkMode ? shade2 : shade3;
 
-    style = styleName => categoryModalStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
+    style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
     swipe = () => this.state.cpOpen ? 'none' : 'down';
 
@@ -68,10 +68,10 @@ class CategoryModal extends React.Component {
                 style={{ flexDirection: 'row', alignItems: 'flex-end', padding: 0, margin: 0 }}
             >
                 <View style={{ width: '100%' }}>
-                    <View style={this.style('header')}>
+                    <View style={this.style(generalBottomModalStyles, 'header')}>
                         <ExpandButton color={this.iconColor()} onPress={this.close} />
                     </View>
-                    <View style={this.style('content')}>
+                    <View style={this.style(categoryModalStyles, 'content')}>
                         {this.props.icon !== 'none' &&
                             <Icon name={this.props.icon} color={this.state.color} size={30} />
                         }
@@ -80,7 +80,7 @@ class CategoryModal extends React.Component {
                             placeholder={'Title (Optional)'}
                             placeholderTextColor={this.placeholderColor()}
                             ref={ref => this.textInput = ref}
-                            style={this.style('input')}
+                            style={this.style(categoryModalStyles, 'input')}
                         />
                         <Bubble onPress={() => this.setState({ cpOpen: true })} color={this.state.color} size={25} />
                         <Bubble iconName={'check'} iconColor={this.props.settings.accent} onPress={() => this.confirm()} iconSize={25} />

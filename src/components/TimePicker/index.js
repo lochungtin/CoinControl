@@ -7,7 +7,7 @@ import Clock from './Clock';
 import ExpandButton from '../ExpandButton';
 
 import { shade2, shade3, white } from '../../data/color';
-import { customModalStyles, styles, timePickerStyles } from '../../styles';
+import { pickerModalStyles, styles, timePickerStyles } from '../../styles';
 
 class TimePicker extends React.Component {
 
@@ -56,7 +56,7 @@ class TimePicker extends React.Component {
                 swipeDirection='down'
                 style={{ alignItems: 'center', padding: 0, margin: 0 }}
             >
-                <View style={{ ...this.style(customModalStyles, 'root'), height: 350 }}>
+                <View style={{ ...this.style(pickerModalStyles, 'root'), height: 350 }}>
                     <ExpandButton onPress={this.close} />
                     <Clock
                         data={this.data[this.state.clickCounter]}

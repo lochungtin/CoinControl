@@ -25,7 +25,6 @@ export const styles = StyleSheet.create({
         borderRadius: 40,
         paddingHorizontal: 40,
         paddingVertical: 10,
-        margin: 10,
     },
     rows: {
         alignItems: 'center',
@@ -116,24 +115,6 @@ export const calendarStyles = StyleSheet.create({
 });
 
 export const categoryModalStyles = StyleSheet.create({
-    headerD: {
-        alignItems: 'center',
-        backgroundColor: shade3,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        height: 20,
-        justifyContent: 'center',
-        width: '100%'
-    },
-    headerL: {
-        alignItems: 'center',
-        backgroundColor: shade2,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        height: 20,
-        justifyContent: 'center',
-        width: '100%'
-    },
     contentD: {
         alignItems: 'center',
         backgroundColor: bgColorD,
@@ -174,25 +155,49 @@ export const categoryModalStyles = StyleSheet.create({
     },
 });
 
-export const customModalStyles = StyleSheet.create({
-    rootD: { 
+export const confirmationModalStyles = StyleSheet.create({
+    buttonText: {
+        color: white
+    },
+    contentD: {
         alignItems: 'center',
         backgroundColor: bgColorD,
-        borderRadius: 20,
-        elevation: 10,
-        justifyContent: "space-between",
-        padding: 10, 
-        width: 300,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 30,
+        paddingVertical: 15,
+        width: maxWidth,
     },
-    rootL: { 
+    contentL: {
         alignItems: 'center',
         backgroundColor: bgColorL,
-        borderRadius: 20,
-        elevation: 10,
-        justifyContent: "space-between",
-        padding: 10, 
-        width: 300,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 30,
+        paddingVertical: 15,
+        width: maxWidth,
     },
+    detailD: {
+        color: white,
+        fontSize: 17,
+        textAlign: 'justify',
+    }, 
+    detailL: {
+        color: black,
+        fontSize: 17,
+        textAlign: 'justify',
+    }, 
+    dsaD: {
+        color: white,
+        fontSize: 15,
+    },
+    dsaL: {
+        color: black,
+        fontSize: 15,
+    },
+    title: {
+        fontSize: 23,
+    }
 });
 
 export const datePickerStyles = StyleSheet.create({
@@ -215,6 +220,27 @@ export const datePickerStyles = StyleSheet.create({
         margin: 20,
         padding: 5,
     }
+});
+
+export const generalBottomModalStyles = StyleSheet.create({
+    headerD: {
+        alignItems: 'center',
+        backgroundColor: shade3,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        height: 20,
+        justifyContent: 'center',
+        width: '100%'
+    },
+    headerL: {
+        alignItems: 'center',
+        backgroundColor: shade2,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        height: 20,
+        justifyContent: 'center',
+        width: '100%'
+    },
 });
 
 export const headerStyles = StyleSheet.create({
@@ -317,25 +343,28 @@ export const numpadStyles = StyleSheet.create({
     },
 });
 
+export const pickerModalStyles = StyleSheet.create({
+    rootD: { 
+        alignItems: 'center',
+        backgroundColor: bgColorD,
+        borderRadius: 20,
+        elevation: 10,
+        justifyContent: "space-between",
+        padding: 10, 
+        width: 300,
+    },
+    rootL: { 
+        alignItems: 'center',
+        backgroundColor: bgColorL,
+        borderRadius: 20,
+        elevation: 10,
+        justifyContent: "space-between",
+        padding: 10, 
+        width: 300,
+    },
+});
+
 export const recordModalStyles = StyleSheet.create({
-    headerD: {
-        alignItems: 'center',
-        backgroundColor: shade3,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        height: 20,
-        justifyContent: 'center',
-        width: '100%'
-    },
-    headerL: {
-        alignItems: 'center',
-        backgroundColor: shade2,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        height: 20,
-        justifyContent: 'center',
-        width: '100%'
-    },
     inputBoxD: {
         alignItems: 'center',
         backgroundColor: bgColorD,
@@ -377,34 +406,6 @@ export const recordModalStyles = StyleSheet.create({
         width: '70%'
     },
 });
-
-export const scPairStyles = StyleSheet.create({
-    cancelD: {
-        alignItems: 'center',
-        backgroundColor: white,
-        borderRadius: 40,
-        backgroundColor: shade2,
-        paddingVertical: 10,
-        width: 150,
-    },
-    cancelL: {
-        alignItems: 'center',
-        backgroundColor: shade2,
-        borderRadius: 40,
-        elevation: 2,
-        paddingHorizontal: 40,
-        paddingVertical: 10,
-        width: 150,
-    },
-    save: {
-        alignItems: 'center',
-        backgroundColor: white,
-        borderRadius: 40,
-        elevation: 2,
-        paddingVertical: 10,
-        width: 150,
-    },
-})
 
 export const timePickerStyles = StyleSheet.create({
     amTextD:{

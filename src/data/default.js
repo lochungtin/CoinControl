@@ -58,4 +58,11 @@ export const defaultSettings = {
     darkMode: true,
     notification: true,
     notifSchedule: '23:00',
+    prompt: {
+        rdc: false,
+        rds: false,
+        cad: false,
+        tg: false,
+        dr: false,
+    }
 }

@@ -13,7 +13,7 @@ import { editExpenseCategory, editIncomeCategory } from '../../redux/action';
 import { store } from '../../redux/store';
 
 import { black, shade2, shade3, white, } from '../../data/color';
-import { recordModalStyles, styles, } from '../../styles';
+import { generalBottomModalStyles, recordModalStyles, styles, } from '../../styles';
 
 class RecordModal extends React.Component {
 
@@ -64,7 +64,7 @@ class RecordModal extends React.Component {
 
     placeholderColor = () => this.props.settings.darkMode ? shade2 : shade3;
 
-    style = styleName => recordModalStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
+    style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
     render() {
         return (
@@ -80,16 +80,16 @@ class RecordModal extends React.Component {
             >
                 {this.props.open &&
                     <View style={styles.rows}>
-                        <View style={this.style('header')}>
+                        <View style={this.style(generalBottomModalStyles, 'header')}>
                             <ExpandButton color={this.iconColor()} onPress={this.close} />
                         </View>
-                        <View style={this.style('inputBox')}>
+                        <View style={this.style(recordModalStyles, 'inputBox')}>
                             <Icon name={this.catValue().iconName} color={this.catValue().color} size={30} />
                             <TextInput
                                 onChangeText={text => this.setState({ newTitle: text, editTitle: true })}
                                 placeholder={'Title (Optional)'}
                                 placeholderTextColor={this.placeholderColor()}
-                                style={this.style('input')}
+                                style={this.style(recordModalStyles, 'input')}
                                 value={this.state.editTitle ? this.state.newTitle : this.props.item.title}
                             />
                             <Bubble onPress={() => this.setState({ cpOpen: true })} color={this.catValue().color} size={25} />
@@ -107,7 +107,6 @@ class RecordModal extends React.Component {
                     open={this.state.cpOpen}
                     onPress={hex => this.cpConfirm(hex)}
                 />
-
                 <DatePicker
                     action={this.onChangeDate}
                     close={() => this.setState({ dpOpen: false })}

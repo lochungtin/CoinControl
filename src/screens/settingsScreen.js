@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
 import ColorPicker from '../components/ColorPicker';
-import SCPair from '../components/SaveCancelPair';
+import ConfirmationModal from '../components/Modals/ConfirmationModal';
 import ScreenHeader from '../components/ScreenHeader';
 import SettingsHeader from '../components/SettingsHeader';
 import SettingsItem from '../components/SettingsItem';
@@ -15,19 +15,17 @@ import { defaultExpenseCategory, defaultExpenseSelection, defaultGoal, defaultIn
 import { store } from '../redux/store';
 
 import { settingStyles, styles, } from '../styles';
+import { settingsPromptText } from '../data/text';
 
 class Screen extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            CADOpen: false,
             cpOpen: false,
             cupOpen: false,
-            RDCOpen: false,
-            RDSOpen: false,
-            scroll: false,
             tpOpen: false,
+            confirmType: 0,
         }
 
         this.notif = new NotifService(
@@ -55,23 +53,21 @@ class Screen extends React.Component {
         store.dispatch(updateSettings({ key: 'notification', update: !this.props.settings.notification }));
     }
 
-    clear = lvl => {
-        if (lvl === 3) {
+    clear = type => {
+        if (type === 3) {
             store.dispatch(deleteHistory());
             store.dispatch(defaultGoal());
         }
-        if (lvl > 1) {
+        if (type > 1) {
             store.dispatch(defaultExpenseCategory());
             store.dispatch(defaultExpenseSelection());
             store.dispatch(defaultIncomeCategory());
             store.dispatch(defaultIncomeSelection());
         }
-        if (lvl === 1)
+        if (type === 1)
             store.dispatch(defaultSettings());
-        this.setState({ RDCOpen: false, RDSOpen: false, CADOpen: false });
+        this.setState({ confirmType: 0 });
     }
-
-    cpOnClose = () => this.setState({ cpOpen: false });
 
     onRegister = token => this.setState({ registerToken: token.token, fcmRegistered: true });
 
@@ -79,24 +75,16 @@ class Screen extends React.Component {
 
     handlePerm = perms => Alert.alert('Permissions', JSON.stringify(perms));
 
-    scroll = () => this.setState({ scroll: true });
-
-    ste = () => {
-        if (this.state.scroll)
-            this.scrollView.scrollToEnd();
-        this.setState({ scroll: false });
-    }
-
-    tpOnClose = () => this.setState({ tpOpen: false });
+    nav = (screen, params) => this.props.navigation.navigate(screen, params);
 
     render() {
         return (
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
-                <ScreenHeader back={() => this.props.navigation.navigate('Home')} name={'Settings'} />
-                <ScrollView onContentSizeChange={this.ste} ref={ref => this.scrollView = ref} style={settingStyles.scrollView}>
+                <ScreenHeader back={() => this.nav('Home')} name={'Settings'} />
+                <ScrollView style={settingStyles.scrollView}>
                     <SettingsHeader title={'ACCOUNTS'} />
-                    <SettingsItem action={() => this.props.navigation.navigate('Account')} iconL={'login'} text={'Login'} />
-                    <SettingsItem action={() => this.props.navigation.navigate('Account')} iconL={'account'} text={'Account Settings'} />
+                    <SettingsItem action={() => this.nav('Account')} iconL={'login'} text={'Login'} />
+                    <SettingsItem action={() => this.nav('Account')} iconL={'account'} text={'Account Settings'} />
 
                     <SettingsHeader title={'GENERAL'} />
                     <SettingsItem action={() => this.setState({ cupOpen: !this.state.cupOpen })} iconL={'currency-usd'} iconR={'currency-' + this.props.settings.currency} text={'Currency'} open={this.state.cupOpen}>
@@ -113,7 +101,7 @@ class Screen extends React.Component {
                                     }}
                                     selected={this.props.settings.currency !== item}
                                 />
-                            )
+                            );
                         })}
                     </SettingsItem>
 
@@ -122,8 +110,8 @@ class Screen extends React.Component {
                     <SettingsItem action={() => store.dispatch(updateSettings({ key: 'darkMode', update: !this.props.settings.darkMode }))} iconL={'moon-waning-crescent'} state={this.props.settings.darkMode} switch={true} text={'Dark Mode'} />
 
                     <SettingsHeader title={'CATEGORIES'} />
-                    <SettingsItem action={() => this.props.navigation.navigate('Icons', 'Expense')} iconL={'shopping'} text={'Expense Categories'} />
-                    <SettingsItem action={() => this.props.navigation.navigate('Icons', 'Income')} iconL={'cash'} text={'Income Categories'} />
+                    <SettingsItem action={() => this.nav('Icons', 'Expense')} iconL={'shopping'} text={'Expense Categories'} />
+                    <SettingsItem action={() => this.nav('Icons', 'Income')} iconL={'cash'} text={'Income Categories'} />
 
                     <SettingsHeader title={'ADVANCED'} />
                     <SettingsItem action={() => store.dispatch(updateSettings({ key: 'compactView', update: !this.props.settings.compactView }))} iconL={'card-text'} state={this.props.settings.compactView} switch={true} text={'Compact View'} />
@@ -131,20 +119,14 @@ class Screen extends React.Component {
                     <SettingsItem action={() => this.setState({ tpOpen: true })} disabled={!this.props.settings.notification} iconL={'subdirectory-arrow-right'} text={this.props.settings.notifSchedule} />
 
                     <SettingsHeader title={'DANGER ZONE'} />
-                    <SettingsItem action={() => this.setState({ RDCOpen: !this.state.RDCOpen })} iconL={'backup-restore'} open={this.state.RDCOpen} ste={this.scroll} text={'Reset Default Categories'}>
-                        <SCPair onCancel={() => this.setState({ RDCOpen: false })} onConfirm={() => this.clear(2)} />
-                    </SettingsItem>
-                    <SettingsItem action={() => this.setState({ RDSOpen: !this.state.RDSOpen })} iconL={'backup-restore'} open={this.state.RDSOpen} ste={this.scroll} text={'Reset Default Settings'}>
-                        <SCPair onCancel={() => this.setState({ RDSOpen: false })} onConfirm={() => this.clear(1)} />
-                    </SettingsItem>
-                    <SettingsItem action={() => this.setState({ CADOpen: !this.state.CADOpen })} iconL={'trash-can'} open={this.state.CADOpen} ste={this.scroll} text={'Clear All Data'}>
-                        <SCPair onCancel={() => this.setState({ CADOpen: false })} onConfirm={() => this.clear(3)} />
-                    </SettingsItem>
+                    <SettingsItem action={() => this.setState({ confirmType: 2 })} iconL={'backup-restore'} text={'Reset Default Categories'} />
+                    <SettingsItem action={() => this.setState({ confirmType: 1 })} iconL={'backup-restore'} text={'Reset Default Settings'} />
+                    <SettingsItem action={() => this.setState({ confirmType: 3 })} iconL={'trash-can'} text={'Clear All Data'} />
                 </ScrollView>
 
                 <ColorPicker
                     color={this.props.settings.accent}
-                    close={this.cpOnClose}
+                    close={() => this.setState({ cpOpen: false })}
                     open={this.state.cpOpen}
                     onPress={item => {
                         store.dispatch(updateSettings({ key: 'accent', update: item }));
@@ -152,13 +134,19 @@ class Screen extends React.Component {
                     }}
                 />
                 <TimePicker
-                    close={this.tpOnClose}
+                    close={() => this.setState({ tpOpen: false })}
                     open={this.state.tpOpen}
                     time={this.props.settings.notifSchedule}
                     onPress={item => {
                         store.dispatch(updateSettings({ key: 'notifSchedule', update: item }));
                         this.setState({ tpOpen: false });
                     }}
+                />
+                <ConfirmationModal
+                    close={() => this.setState({ confirmType: 0 })}
+                    confirm={() => this.clear(this.state.confirmType)}
+                    open={this.state.confirmType !== 0}
+                    text={settingsPromptText[this.state.confirmType.toString()]}
                 />
             </View >
         );

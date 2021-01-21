@@ -12,12 +12,6 @@ class SettingsItem extends React.Component {
         super(props);
     }
 
-    action = () => {
-        this.props.action();
-        if (this.props.ste !== undefined)
-            this.props.ste();
-    }
-
     close = () => this.setState({ open: false });
 
     iconColor = () => {
@@ -48,10 +42,10 @@ class SettingsItem extends React.Component {
                     </Text>
                     <View style={settingStyles.settingRight}>
                         <Switch
+                            onChange={() => this.props.action(!this.props.state)}
                             thumbColor={white}
                             trackColor={{ false: this.iconColor(), true: this.props.settings.accent }}
                             value={this.props.state}
-                            onChange={() => this.props.action(!this.props.state)}
                         />
                     </View>
                 </View>
@@ -60,7 +54,7 @@ class SettingsItem extends React.Component {
         else
             return (
                 <View>
-                    <TouchableOpacity onPress={this.action}>
+                    <TouchableOpacity onPress={this.props.action}>
                         <View style={this.style('itemContainer')}>
                             <Icon name={this.props.iconL} size={20} color={this.iconColor()} />
                             <Text style={this.text()}>

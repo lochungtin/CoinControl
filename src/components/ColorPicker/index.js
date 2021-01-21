@@ -7,7 +7,7 @@ import Bubble from '../Bubble';
 import ExpandButton from '../ExpandButton';
 
 import { blue, colorLabels, green, purple, red, teal, yellow, } from '../../data/color';
-import { customModalStyles, styles, } from '../../styles';
+import { pickerModalStyles, styles, } from '../../styles';
 
 class ColorPicker extends React.Component {
 
@@ -43,7 +43,7 @@ class ColorPicker extends React.Component {
         return 0;
     }
 
-    style = styleName => customModalStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
+    style = styleName => pickerModalStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
     render() {
         return (
