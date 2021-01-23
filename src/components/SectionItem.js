@@ -18,13 +18,14 @@ class SectionItem extends React.Component {
     }
 
     bgColor = toggle => {
+        const type = this.item('type');
         if (this.props.settings.darkMode)
-            return this.props.item.type === 'Expense' ^ toggle ? shade4 : shade3;
-        return this.props.item.type === 'Expense' ^ toggle ? shade1: shade2;
+            return type === 'Expense' ^ toggle ? shade4 : shade3;
+        return type === 'Expense' ^ toggle ? shade1 : shade2;
     }
 
     catValue = () => {
-        const cat = (this.props.item.type === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories)[this.props.item.catKey];
+        const cat = (this.item('type') === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories)[this.item('catKey')];
         if (cat === undefined)
             return { color: white, iconName: 'crop-free', name: 'other', };
         return cat;
@@ -32,30 +33,35 @@ class SectionItem extends React.Component {
 
     iconColor = () => this.props.settings.darkMode ? white : black;
 
+    item = value => {
+        const keyset = this.props.itemkey.split(':');
+        return this.props.data.data[keyset[0]][keyset[1]][value]
+    }
+
     style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
     render() {
         return (
-            <TouchableOpacity onPress={() => this.setState({ open: !this.state.open })} style={{...homeScreenStyles.sectionItem, backgroundColor: this.bgColor(false)}}>
+            <TouchableOpacity onPress={() => this.setState({ open: !this.state.open })} style={{ ...homeScreenStyles.sectionItem, backgroundColor: this.bgColor(false) }}>
                 <View style={{ ...styles.columns, justifyContent: 'space-between' }}>
                     <Icon name={this.catValue().iconName} size={20} color={this.catValue().color} />
                     <Text style={this.style(homeScreenStyles, 'textCat')}>
                         {this.catValue().name}
                     </Text>
                     <Text style={this.style(homeScreenStyles, 'textVal')}>
-                        {this.props.item.value}
+                        {this.item('value')}
                     </Text>
                 </View>
                 {(this.state.open || !this.props.compactMode) &&
                     <>
-                        {this.props.item.title !== '' &&
+                        {this.item('title') !== '' &&
                             <View style={{ ...styles.columns, justifyContent: 'space-between' }}>
                                 <Icon name={this.catValue().iconName} size={20} color={'transparent'} />
                                 <Text style={this.style(homeScreenStyles, 'textCat')}>
-                                    Title: {this.props.item.title}
+                                    Title: {this.item('title')}
                                 </Text>
                                 <Text style={{ ...this.style(homeScreenStyles, 'textVal'), color: 'transparent' }}>
-                                    {this.props.item.value}
+                                    {this.item('value')}
                                 </Text>
                             </View>
                         }
@@ -65,13 +71,13 @@ class SectionItem extends React.Component {
                                 color={this.bgColor(true)}
                                 iconName={'pencil-outline'}
                                 iconColor={this.props.settings.accent}
-                                onPress={() => this.props.onEdit(this.props.item)}
+                                onPress={() => this.props.onEdit(this.props.itemkey)}
                             />
                             <Bubble
                                 color={this.bgColor(true)}
                                 iconName={'trash-can'}
                                 iconColor={this.props.settings.accent}
-                                onPress={() => this.props.onDelete(this.props.item.key)}
+                                onPress={() => this.props.onDelete(this.props.itemkey)}
                             />
                         </View>
                     </>
@@ -83,6 +89,7 @@ class SectionItem extends React.Component {
 }
 
 const mapStateToProps = state => ({
+    data: state.data,
     expenseCategories: state.expenseCategories,
     incomeCategories: state.incomeCategories,
     settings: state.settings

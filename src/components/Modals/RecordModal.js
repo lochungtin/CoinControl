@@ -28,7 +28,7 @@ class RecordModal extends React.Component {
         }
     }
 
-    catValue = () => (this.props.item.type === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories)[this.props.item.catKey];
+    catValue = () => (this.item('type') === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories)[this.item('catKey')];
 
     close = () => {
         this.setState({ editTitle: false });
@@ -38,8 +38,8 @@ class RecordModal extends React.Component {
     cpConfirm = hex => {
         this.setState({ cpOpen: false });
         var payload = {}
-        payload[this.props.item.catKey] = { ...this.catValue(), color: hex };
-        if (this.props.item.type === 'Expense')
+        payload[this.item('catKey')] = { ...this.catValue(), color: hex };
+        if (this.item('type') === 'Expense')
             store.dispatch(editExpenseCategory(payload));
         else
             store.dispatch(editIncomeCategory(payload));
@@ -47,10 +47,25 @@ class RecordModal extends React.Component {
 
     iconColor = () => this.props.settings.darkMode ? white : black;
 
+    item = value => {
+        if (this.props.itemkey) {
+            const keyset = this.props.itemkey.split(':');
+            return this.props.data.data[keyset[0]][keyset[1]][value]
+        }
+        return this.props.item[value];
+    }
+
     onChangeDate = date => this.setState({ newDate: date });
 
     onConfirm = num => {
-        var rec = { ...this.props.item };
+        var rec = {
+            catKey: this.item('catKey'),
+            date: this.item('date'),
+            type: this.item('type'),
+        };
+
+        if (this.props.itemkey)
+            rec.key = this.props.itemkey;
 
         if (rec.value !== num)
             rec.value = parseFloat(num);
@@ -66,14 +81,18 @@ class RecordModal extends React.Component {
 
     style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
+    update = () => {
+
+    }
+
     render() {
         return (
             <Modal
                 animationIn={'slideInUp'}
-                backdropOpacity={0}
                 isVisible={this.props.open}
                 onBackdropPress={this.close}
                 onBackButtonPress={this.close}
+                onModalShow={this.update}
                 onSwipeComplete={this.close}
                 swipeDirection='down'
                 style={{ flexDirection: 'row', alignItems: 'flex-end', padding: 0, margin: 0 }}
@@ -90,20 +109,20 @@ class RecordModal extends React.Component {
                                 placeholder={'Title (Optional)'}
                                 placeholderTextColor={this.placeholderColor()}
                                 style={this.style(recordModalStyles, 'input')}
-                                value={this.state.editTitle ? this.state.newTitle : this.props.item.title}
+                                value={this.state.editTitle ? this.state.newTitle : this.item('title')}
                             />
                             <Bubble onPress={() => this.setState({ cpOpen: true })} color={this.catValue().color} size={25} />
                         </View>
                         <Numpad
                             onChangeDate={this.onChangeDate}
                             onConfirm={this.onConfirm}
-                            date={this.props.item.date}
-                            num={this.props.item.value === undefined ? '0' : this.props.item.value}
+                            date={this.item('date')}
+                            num={this.item('value') === undefined ? '0' : this.item('value')}
                         />
                     </View>
                 }
                 <ColorPicker
-                    close={() => () => this.setState({ cpOpen: false })}
+                    close={() => this.setState({ cpOpen: false })}
                     open={this.state.cpOpen}
                     onPress={hex => this.cpConfirm(hex)}
                 />
@@ -119,6 +138,7 @@ class RecordModal extends React.Component {
 }
 
 const mapStateToProps = state => ({
+    data: state.data,
     expenseCategories: state.expenseCategories,
     incomeCategories: state.incomeCategories,
     settings: state.settings

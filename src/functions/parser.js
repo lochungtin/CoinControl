@@ -3,27 +3,51 @@ import moment from 'moment';
 import { mix } from './colors';
 import { mergeSort } from './mergeSort';
 
-export const parseAll = records => {
+const stringComparing = (a, b) => a < b;
+
+export const parseAll = (records, goal) => {
     var data = [];
-    var entries = {};
+    var spending, percentage, total = 0;
+    
+    // get goal cut off date
+    var cutOff = 'Z';
+    if (goal.type === 'weekly')
+        cutOff = moment().weekday(0).format('DDMMYYYY');
+    else if (goal.type === 'monthly')
+        cutOff = moment().date(1).format('DDMMYYYY');
 
-    for (const record of records) {
-        var date = record.date;
-        if (!Object.keys(entries).includes(date))
-            entries[date] = [];
-        entries[date].push(record);
-    }
+    Object.keys(records).sort(stringComparing).forEach(dayKey => {
+        var arr = [];
+        Object.keys(records[dayKey]).sort(stringComparing).forEach(key => {
+            const record = records[dayKey][key];
+            // main sorting
+            arr.push(record);
 
-    var sorted = mergeSort(Object.keys(entries));
+            if (record.type === 'Expense') {
+                // add to total amount
+                total += record.amount;
 
-    for (const entry of sorted) {
-        data.push({
-            title: entry,
-            data: entries[entry]
+                if (stringComparing(cutOff, dateKey))
+                    // add to goal amount
+                    spending += parseFloat(record.amount);
+            }
         });
-    }
+        data.push(arr);
+    });
+
+    // goal percentage
+    if (goal.amount !== 0)
+        percentage = (spending - goal.amount) / goal.amount;
 
     return data;
+    return {
+        data: data,
+        goal: { 
+            total: spending, 
+            percentage: percentage
+        },
+        total: total
+    };
 }
 
 export const parseGoal = (records, goal) => {

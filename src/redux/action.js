@@ -82,41 +82,6 @@ export const editIncomeCategory = payload => ({
     payload: payload,
 });
 
-// Selection Related
-export const ADD_EXPENSE_SELECTION = 'ADD_EXPENSE_SELECTION';
-export const addExpenseSelection = payload => ({
-    type: ADD_EXPENSE_SELECTION,
-    payload: payload
-});
-
-export const ADD_INCOME_SELECTION = 'ADD_INCOME_SELECTION';
-export const addIncomeSelection = payload => ({
-    type: ADD_INCOME_SELECTION,
-    payload: payload
-});
-
-export const DEFAULT_EXPENSE_SELECTION = 'DEFAULT_EXPENSE_SELECTION';
-export const defaultExpenseSelection = () => ({
-    type: DEFAULT_EXPENSE_SELECTION,
-});
-
-export const DEFAULT_INCOME_SELECTION = 'DEFAULT_INCOME_SELECTION';
-export const defaultIncomeSelection = () => ({
-    type: DEFAULT_INCOME_SELECTION,
-});
-
-export const DELETE_EXPENSE_SELECTION = 'DELETE_EXPENSE_SELECTION';
-export const deleteExpenseSelection = payload => ({
-    type: DELETE_EXPENSE_SELECTION,
-    payload: payload
-});
-
-export const DELETE_INCOME_SELECTION = 'DELETE_INCOME_SELECTION';
-export const deleteIncomeSelection = payload => ({
-    type: DELETE_INCOME_SELECTION,
-    payload: payload
-});
-
 // Settings Related
 export const DEFAULT_SETTINGS = 'DEFAULT_SETTINGS';
 export const defaultSettings = () => ({

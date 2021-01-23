@@ -22,7 +22,7 @@ export const homePromptText = {
         title: 'Detele Record',
         detail: 'You are about to delete a record. This step is irreversable.'
     }
-}
+};
 
 export const categoryPromptText = {
     dc: {
@@ -30,4 +30,10 @@ export const categoryPromptText = {
         title: 'Delete Category',
         detail: 'You are about to delete a category. Records that belong to custom categories will be changed to "other".',
     }
+};
+
+export const goalText = {
+    none: 'No Goals Set',
+    week: 'left for the week',
+    month: 'left for the month',
 }

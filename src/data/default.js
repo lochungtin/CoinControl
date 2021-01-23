@@ -1,5 +1,22 @@
 import { goldenBrown, colorLabels } from './color';
 
+export const defaultData = {
+    display: [],
+    data: {},
+    goal: {
+        remaining: 0,
+        percentage: 0,
+    },
+    goalSettings: {
+        amount: 0,
+        type: 'none',
+    },
+    total: {
+        amount: 0,
+        amountDec: 0,
+    },
+}
+
 export const defaultExpenseCategories = {
     '20012021-004001': {
         color: goldenBrown, name: 'Bills', iconName: 'text-box-outline'
@@ -22,7 +39,7 @@ export const defaultExpenseCategories = {
     '20012021-004007': {
         color: colorLabels[5], name: 'Transport', iconName: 'train-car'
     },
-}
+};
 
 export const defaultIncomeCategories = {
     '20012021-004008': {
@@ -40,16 +57,11 @@ export const defaultIncomeCategories = {
     '20012021-004012': {
         color: colorLabels[3], name: 'Salary', iconName: 'cash'
     },
-}
+};
 
 export const defaultExpenseSelection = ['20012021-004001', '20012021-004002', '20012021-004003', '20012021-004004', '20012021-004005', '20012021-004006', '20012021-004007'];
 
-export const defaultIncomeSelection = ['20012021-004008', '20012021-004009', '20012021-004010', '20012021-004004', '20012021-004005', '20012021-004006', '20012021-004007']
-
-export const defaultGoal = {
-    amount: 0,
-    type: 'none',
-}
+export const defaultIncomeSelection = ['20012021-004008', '20012021-004009', '20012021-004010', '20012021-004004', '20012021-004005', '20012021-004006', '20012021-004007'];
 
 export const defaultSettings = {
     accent: goldenBrown,
@@ -65,4 +77,4 @@ export const defaultSettings = {
         dc: false,
         dr: false,
     }
-}
+};

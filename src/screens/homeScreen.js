@@ -4,17 +4,16 @@ import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import Bubble from '../components/Bubble';
+import HomeNavButton from '../components/HomeNavButton';
 import ConfirmationModal from '../components/Modals/ConfirmationModal';
 import RecordModal from '../components/Modals/RecordModal';
 import SectionHeader from '../components/SectionHeader';
 import SectionItem from '../components/SectionItem';
-import { parseAll, parseGoal, parseGoalPercentage, parseTotal, } from '../functions/parser';
-import { defaultGoal, deleteRecord, editRecord, } from '../redux/action';
+import { deleteRecord, editRecord, } from '../redux/action';
 import { store } from '../redux/store';
 
-import { black, shade2, shade3, } from '../data/color';
-import { homePromptText } from '../data/text';
+import { shade2, shade3, } from '../data/color';
+import { homePromptText, goalText } from '../data/text';
 import { homeScreenStyles, maxWidth, styles, } from '../styles';
 
 class Screen extends React.Component {
@@ -22,46 +21,16 @@ class Screen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            amount: 0,
             confirmType: '',
             focus: '',
             gmOpen: false,
-            item: {},
             rmOpen: false,
         }
     }
 
-    componentDidMount() {
-        this._unsubscribe = this.props.navigation.addListener('focus', () => {
-            this.setState({ toGoal: parseGoal(this.props.records, this.props.goal.amount) });
-        });
-    }
-
-    componentWillUnmount() {
-        this._unsubscribe();
-    }
-
-    balance = () => Math.floor(parseTotal(this.props.records));
-
-    balanceDecimal = () => {
-        var total = Math.abs(parseTotal(this.props.records));
-        return Math.floor((total - Math.floor(total)) * 100);
-    }
-
     deleteRecord = key => {
         store.dispatch(deleteRecord(key));
-        this.setState({ confirmType: '', focus: '' });
-    }
-
-    goalMessage = (amount) => {
-        switch (this.props.goal.type) {
-            case 'monthly':
-                return amount + ' left for this month';
-            case 'weekly':
-                return amount + ' left for this week';
-            default:
-                return 'No Goals Currently';
-        }
+        this.setState({ confirmType: '' });
     }
 
     goalMessageColor = () => this.props.settings.darkMode ? shade2 : shade3;
@@ -77,51 +46,38 @@ class Screen extends React.Component {
 
     render() {
         return (
-            <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
+            <View style={this.style(styles, 'screen')}>
                 <View style={{ alignItems: 'center', paddingTop: 20 }}>
                     <View style={{ ...styles.rows, height: '30%', justifyContent: 'space-evenly' }}>
                         <View style={styles.columns}>
                             <Icon name={'currency-' + this.props.settings.currency} color={this.style(styles, 'text').color} size={30} />
                             <Text style={this.style(homeScreenStyles, 'balance')}>
-                                {this.balance()}
+                                {this.props.data.total.amount}
                             </Text>
                             <Text style={this.style(homeScreenStyles, 'balanceSmall')}>
-                                {"." + this.balanceDecimal()}
+                                {"." + this.props.data.total.amountDec}
                             </Text>
                         </View>
                         <View style={styles.columns}>
-                            <Icon name={'currency-' + this.props.settings.currency} color={this.props.goal.type === 'none' ? 'transparent' : this.style(styles, 'text').color} size={15} />
+                            {this.props.data.goalSettings.type !== 'none' &&
+                                <Icon name={'currency-' + this.props.settings.currency} color={this.goalMessageColor()} size={15} />
+                            }
                             <Text style={{ color: this.goalMessageColor() }}>
-                                {this.goalMessage(parseGoal(this.props.records, this.props.goal.amount))}
+                                {(this.props.data.goalSettings.type !== 'none' ? this.props.data.goal.remaining : '') + goalText[this.props.data.goalSettings.type]}
                             </Text>
                         </View>
                         <View style={styles.columns}>
-                            <Progress.Bar color={this.props.settings.accent} progress={1 - parseGoalPercentage(parseGoal(this.props.records, this.props.goal.amount), this.props.goal.amount)} width={maxWidth / 2} />
+                            <Progress.Bar color={this.props.settings.accent} progress={this.props.data.goal.percentage} width={maxWidth / 2} />
                         </View>
                         <View style={{ ...styles.columns, width: 250, justifyContent: 'space-evenly' }}>
-                            <View style={styles.rows}>
-                                <Bubble color={this.props.settings.accent} iconColor={black} iconName={'plus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', 'Income')} size={35} />
-                                <Text style={this.style(styles, 'centerText')}>
-                                    Income
-                                </Text>
-                            </View>
-                            <View style={styles.rows}>
-                                <Bubble color={this.props.settings.accent} iconColor={black} iconName={'minus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', 'Expense')} size={35} />
-                                <Text style={this.style(styles, 'centerText')}>
-                                    Expense
-                                </Text>
-                            </View>
-                            <View style={styles.rows}>
-                                <Bubble color={this.props.settings.accent} iconColor={black} iconName={'flag-outline'} iconSize={25} onPress={() => this.setState({ gmOpen: true })} size={35} />
-                                <Text style={this.style(styles, 'centerText')}>
-                                    Set Goal
-                                </Text>
-                            </View>
+                            <HomeNavButton icon={'plus'} onPress={() => this.props.navigation.navigate('Update', 'Income')} text={'Income'} />
+                            <HomeNavButton icon={'minus'} onPress={() => this.props.navigation.navigate('Update', 'Expense')} text={'Income'} />
+                            <HomeNavButton icon={'flag-outline'} onPress={() => this.setState({ gmOpen: true })} text={'Income'} />
                         </View>
                     </View>
 
                     <SafeAreaView style={this.style(homeScreenStyles, 'border')}>
-                        {this.props.records.length === 0 &&
+                        {this.props.data.display.length === 0 &&
                             <View style={{ paddingTop: 30 }}>
                                 <Text style={this.style(homeScreenStyles, 'message')}>
                                     Add a record to start using the app
@@ -129,16 +85,19 @@ class Screen extends React.Component {
                             </View>
                         }
                         <SectionList
+                            keyExtractor={(item, index) => item + index}
                             renderItem={({ item }) =>
                                 <SectionItem
                                     compactMode={this.props.settings.compactView}
-                                    item={item}
+                                    itemkey={item}
                                     onDelete={key => this.openConfirmation(key)}
-                                    onEdit={item => this.setState({ item: item, rmOpen: true })}
+                                    onEdit={key => this.setState({ focus: key, rmOpen: true })}
                                 />
                             }
-                            renderSectionHeader={({ section: { title } }) => <SectionHeader title={title} />}
-                            sections={parseAll(this.props.records)}
+                            renderSectionHeader={({ section: { title } }) =>
+                                <SectionHeader title={title} />
+                            }
+                            sections={this.props.data.display}
                             stickySectionHeadersEnabled={true}
                             style={{ flex: 1, minWidth: maxWidth, paddingHorizontal: '5%' }}
                         />
@@ -147,17 +106,16 @@ class Screen extends React.Component {
 
                 <RecordModal
                     close={() => this.setState({ rmOpen: false })}
-                    item={this.state.item}
+                    itemkey={this.state.focus}
                     onConfirm={record => {
                         store.dispatch(editRecord(record));
                         this.setState({ rmOpen: false });
                     }}
                     open={this.state.rmOpen}
                 />
-
                 <ConfirmationModal
                     close={() => this.setState({ confirmType: '' })}
-                    confirm={() => this.deleteRecord(this.state.focus)}
+                    onConfirm={() => this.deleteRecord(this.state.focus)}
                     open={this.state.confirmType !== ''}
                     text={homePromptText[this.state.confirmType]}
                 />
@@ -167,9 +125,8 @@ class Screen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    goal: state.goal,
-    records: state.records,
+    data: state.data,
     settings: state.settings
-})
+});
 
 export default connect(mapStateToProps)(Screen);

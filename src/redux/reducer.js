@@ -1,70 +1,95 @@
-import moment from 'moment';
 import { combineReducers } from 'redux';
 
 import {
     ADD_RECORD,
     ADD_EXPENSE_CATEGORY,
-    ADD_EXPENSE_SELECTION,
     ADD_INCOME_CATEGORY,
-    ADD_INCOME_SELECTION,
     DEFAULT_EXPENSE_CATEGORY,
-    DEFAULT_EXPENSE_SELECTION,
     DEFAULT_GOAL,
     DEFAULT_INCOME_CATEGORY,
-    DEFAULT_INCOME_SELECTION,
     DEFAULT_SETTINGS,
     DELETE_EXPENSE_CATEGORY,
-    DELETE_EXPENSE_SELECTION,
     DELETE_INCOME_CATEGORY,
-    DELETE_INCOME_SELECTION,
     DELETE_RECORD,
     DELETE_HISTORY,
-    EDIT_EXPENSE_CATEGORY, 
+    EDIT_EXPENSE_CATEGORY,
     EDIT_INCOME_CATEGORY,
     EDIT_RECORD,
     UPDATE_GOAL,
     UPDATE_SETTINGS,
 } from './action';
 import {
+    defaultData,
     defaultExpenseCategories,
-    defaultExpenseSelection,
-    defaultGoal,
     defaultIncomeCategories,
-    defaultIncomeSelection,
     defaultSettings
 } from '../data/default';
 
-const genKey = () => moment().format('DDMMYYYY-HHmmss');
+const genKey = () => genRNKey() + genRNKey() + '-' + genRNKey();
+const genRNKey = () => Math.floor((1 + Math.random() * 0x10000)).toString(16);
 
-const updateRecords = (records = [], action) => {
+const addRecord = (base, datekey, rnkey, payload) => {
+    // create new date object
+    if (base.data[datekey] === undefined)
+        base.data[datekey] = {};
+
+    // add payload to data
+    base.data[datekey][rnkey] = payload;
+
+    // create new date object for display
+    if (base.display.findIndex(obj => obj.title === datekey))
+        base.display.push({ title: datekey, data: [] });
+
+    // add datetime key to obj.data array
+    base.display[base.display.length - 1].data.push(datekey + ':' + rnkey);
+
+    // sort display array by date
+    base.display.sort((a, b) => a.title < b.title * -1 + a.title > b.title * 1);
+}
+
+const deleteRecord = (base, datekey, rnkey) => {
+    // delete from data
+    delete base.data[datekey][rnkey];
+
+    // delete from display
+    const outerIndex = base.display.findIndex(obj => obj.title === datekey);
+    const innerIndex = base.display[outerIndex].data.indexOf(datekey + ':' + rnkey);
+    base.display[outerIndex].data.splice(innerIndex, 1);
+
+    // delete display label if empty
+    if (base.display[outerIndex].data.length === 0)
+        base.display.splice(outerIndex, 1);
+}
+
+const updateData = (data = defaultData, action) => {
+    var temp = { ...data };
     switch (action.type) {
-        case ADD_RECORD:
-            action.payload['key'] = moment().format();
-            return [...records, action.payload];
         case DELETE_HISTORY:
-            return [];
-        case DELETE_RECORD:
-            var temp = [...records];
-            var found = false;
-            var pos = -1;
-            while (!found) {
-                if (temp[++pos].key === action.payload)
-                    found = true;
-            }
-            temp.splice(pos, 1);
+            return defaultData;
+
+        case ADD_RECORD:
+            var rnkey = genKey();
+            var datekey = action.payload.date;
+
+            addRecord(temp, datekey, rnkey, { ...action.payload, key: datekey + ':' + rnkey });
+            console.log(temp);
             return temp;
+
         case EDIT_RECORD:
-            var temp = [...records];
-            var found = false;
-            var pos = -1;
-            while (!found) {
-                if (temp[++pos].key === action.payload.key)
-                    found = true;
-            }
-            temp.splice(pos, 1, action.payload);
+            var keyset = action.payload.key.split(':');
+            var datekey = action.payload.date;
+
+            deleteRecord(temp, keyset[0], keyset[1]);
+            addRecord(temp, datekey, keyset[1], { ...action.payload, key: datekey + ':' + keyset[1] });
+            return temp;
+
+        case DELETE_RECORD:
+            var keyset = action.payload.split(':');
+
+            deleteRecord(temp, keyset[0], keyset[1]);
             return temp;
     }
-    return records;
+    return data;
 }
 
 const updateExpenseCategory = (categories = defaultExpenseCategories, action) => {
@@ -72,37 +97,17 @@ const updateExpenseCategory = (categories = defaultExpenseCategories, action) =>
         case DEFAULT_EXPENSE_CATEGORY:
             return defaultExpenseCategories;
         case ADD_EXPENSE_CATEGORY:
-            var temp = {...categories};
+            var temp = { ...categories };
             temp[genKey()] = action.payload;
             return temp;
         case DELETE_EXPENSE_CATEGORY:
-            var temp = {...categories};
+            var temp = { ...categories };
             delete temp[action.payload];
             return temp;
         case EDIT_EXPENSE_CATEGORY:
-            return {...categories, ...action.payload}
+            return { ...categories, ...action.payload }
     }
     return categories;
-}
-
-const updateExpenseSelection = (selection = defaultExpenseSelection, action) => {
-    switch (action.type) {
-        case DEFAULT_EXPENSE_SELECTION:
-            return defaultExpenseSelection;
-        case ADD_EXPENSE_SELECTION:
-            return [...selection, action.payload];
-    }
-    return selection;
-}
-
-const updateGoal = (goal = defaultGoal, action) => {
-    switch (action.type) {
-        case DEFAULT_GOAL:
-            return defaultGoal;
-        case UPDATE_GOAL:
-            return action.payload;
-    }
-    return goal;
 }
 
 const updateIncomeCategory = (categories = defaultIncomeCategories, action) => {
@@ -110,28 +115,17 @@ const updateIncomeCategory = (categories = defaultIncomeCategories, action) => {
         case DEFAULT_INCOME_CATEGORY:
             return defaultIncomeCategories;
         case ADD_INCOME_CATEGORY:
-            var temp = {...categories};
+            var temp = { ...categories };
             temp[genKey()] = action.payload;
             return temp;
         case DELETE_INCOME_CATEGORY:
-            var temp = {...categories};
+            var temp = { ...categories };
             delete temp[action.payload];
             return temp;
         case EDIT_INCOME_CATEGORY:
-                return {...categories, ...action.payload}
+            return { ...categories, ...action.payload }
     }
     return categories;
-}
-
-const updateIncomeSelection = (selection = defaultIncomeSelection, action) => {
-    switch (action.type) {
-        case DEFAULT_INCOME_SELECTION:
-            return defaultIncomeSelection;
-        case ADD_INCOME_SELECTION:
-            return [...selection, action.payload];
-
-    }
-    return selection;
 }
 
 const updateSettings = (settings = defaultSettings, action) => {
@@ -147,11 +141,8 @@ const updateSettings = (settings = defaultSettings, action) => {
 }
 
 export default combineReducers({
+    data: updateData,
     expenseCategories: updateExpenseCategory,
-    expenseSelection: updateExpenseSelection,
-    goal: updateGoal,
     incomeCategories: updateIncomeCategory,
-    incomeSelection: updateIncomeSelection,
-    records: updateRecords,
     settings: updateSettings,
 });

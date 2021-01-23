@@ -11,7 +11,7 @@ import SettingsHeader from '../components/SettingsHeader';
 import SettingsItem from '../components/SettingsItem';
 import TimePicker from '../components/TimePicker';
 import NotifService from '../notifications/notifService';
-import { defaultExpenseCategory, defaultExpenseSelection, defaultGoal, defaultIncomeCategory, defaultIncomeSelection, defaultSettings, deleteHistory, updateSettings, } from '../redux/action';
+import { defaultExpenseCategory, defaultGoal, defaultIncomeCategory, defaultSettings, deleteHistory, updateSettings, } from '../redux/action';
 import { store } from '../redux/store';
 
 import { settingStyles, styles, } from '../styles';
@@ -60,9 +60,7 @@ class Screen extends React.Component {
         }
         if (type > 1) {
             store.dispatch(defaultExpenseCategory());
-            store.dispatch(defaultExpenseSelection());
             store.dispatch(defaultIncomeCategory());
-            store.dispatch(defaultIncomeSelection());
         }
         if (type === 1 || type === 3)
             store.dispatch(defaultSettings());
@@ -75,7 +73,7 @@ class Screen extends React.Component {
 
     openConfirmation = id => {
         if (!this.props.settings.prompt[settingsPromptText[id.toString()].key])
-            this.setState({confirmType: id});
+            this.setState({ confirmType: id });
         else
             this.clear(id);
     }
@@ -151,7 +149,7 @@ class Screen extends React.Component {
                 />
                 <ConfirmationModal
                     close={() => this.setState({ confirmType: 0 })}
-                    confirm={() => this.clear(this.state.confirmType)}
+                    onConfirm={() => this.clear(this.state.confirmType)}
                     open={this.state.confirmType !== 0}
                     text={settingsPromptText[this.state.confirmType.toString()]}
                 />
