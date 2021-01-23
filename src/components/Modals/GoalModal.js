@@ -51,6 +51,8 @@ class GoalModal extends React.Component {
 
     swipeControl = () => this.state.cpOpen || this.state.dpOpen ? undefined : 'down';
 
+    update = () => this.setState({ goalType: this.props.data.goalSettings.type });
+
     render() {
         return (
             <Modal
@@ -58,6 +60,7 @@ class GoalModal extends React.Component {
                 isVisible={this.props.open}
                 onBackdropPress={this.close}
                 onBackButtonPress={this.close}
+                onModalShow={this.update}
                 onSwipeComplete={this.close}
                 swipeDirection={this.swipeControl()}
                 style={{ flexDirection: 'row', alignItems: 'flex-end', padding: 0, margin: 0 }}
