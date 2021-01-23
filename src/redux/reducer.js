@@ -45,9 +45,18 @@ const addRecord = (base, datekey, rnkey, payload) => {
 
     // sort display array by date
     base.display.sort((a, b) => a.title < b.title * -1 + a.title > b.title * 1);
+
+    // update total
+    const total = (parseFloat(base.total) + (payload.type === 'Expense' ? -1 : 1) * payload.value);
+    base.total = (total + (total % 1 !== 0 ? '0' : '.00')).toString();
 }
 
 const deleteRecord = (base, datekey, rnkey) => {
+    // update total
+    const record = base.data[datekey][rnkey];
+    const total = (parseFloat(base.total) + (record.type === 'Expense' ? 1 : -1) * record.value);
+    base.total = (total + (total % 1 !== 0 ? '0' : '.00')).toString();
+
     // delete from data
     delete base.data[datekey][rnkey];
 
@@ -59,6 +68,10 @@ const deleteRecord = (base, datekey, rnkey) => {
     // delete display label if empty
     if (base.display[outerIndex].data.length === 0)
         base.display.splice(outerIndex, 1);
+}
+
+const updateGoal = base => {
+    
 }
 
 const updateData = (data = defaultData, action) => {
@@ -73,7 +86,7 @@ const updateData = (data = defaultData, action) => {
 
             addRecord(temp, datekey, rnkey, { ...action.payload, key: datekey + ':' + rnkey });
             console.log(temp);
-            return temp;
+            break;
 
         case EDIT_RECORD:
             var keyset = action.payload.key.split(':');
@@ -81,15 +94,17 @@ const updateData = (data = defaultData, action) => {
 
             deleteRecord(temp, keyset[0], keyset[1]);
             addRecord(temp, datekey, keyset[1], { ...action.payload, key: datekey + ':' + keyset[1] });
-            return temp;
+            break;
 
         case DELETE_RECORD:
             var keyset = action.payload.split(':');
 
             deleteRecord(temp, keyset[0], keyset[1]);
-            return temp;
+            break;
     }
-    return data;
+    updateGoal(temp);
+
+    return temp;
 }
 
 const updateExpenseCategory = (categories = defaultExpenseCategories, action) => {

@@ -52,10 +52,10 @@ class Screen extends React.Component {
                         <View style={styles.columns}>
                             <Icon name={'currency-' + this.props.settings.currency} color={this.style(styles, 'text').color} size={30} />
                             <Text style={this.style(homeScreenStyles, 'balance')}>
-                                {this.props.data.total.amount}
+                                {this.props.data.total.split('.')[0]}
                             </Text>
                             <Text style={this.style(homeScreenStyles, 'balanceSmall')}>
-                                {"." + this.props.data.total.amountDec}
+                                {"." + this.props.data.total.split('.')[1].substring(0, 2)}
                             </Text>
                         </View>
                         <View style={styles.columns}>

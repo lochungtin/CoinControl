@@ -11,10 +11,7 @@ export const defaultData = {
         amount: 0,
         type: 'none',
     },
-    total: {
-        amount: 0,
-        amountDec: 0,
-    },
+    total: "0.00",
 }
 
 export const defaultExpenseCategories = {

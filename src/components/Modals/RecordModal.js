@@ -83,10 +83,6 @@ class RecordModal extends React.Component {
 
     swipeControl = () => this.state.cpOpen || this.state.dpOpen ? undefined : 'down';
 
-    update = () => {
-
-    }
-
     render() {
         return (
             <Modal
@@ -141,7 +137,7 @@ class RecordModal extends React.Component {
                     />
                 </>}
             </Modal>
-        )
+        );
     }
 }
 
