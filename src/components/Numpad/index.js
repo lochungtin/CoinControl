@@ -85,7 +85,11 @@ class Numpad extends React.Component {
                             <NumpadButton icon={'numeric-' + num} key={num} onPress={() => this.appendNum(num)} />
                         )
                     })}
-                    <NumpadButton special={true} value={this.state.date} onPress={() => this.setState({ dpOpen: true })} />
+                    <NumpadButton
+                        onPress={this.props.onSpecialPress}
+                    >
+                        {this.props.children}
+                    </NumpadButton>
                 </View>
                 <View style={numpadStyles.numpadRow}>
                     {[4, 5, 6].map(num => {

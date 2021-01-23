@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput, View, } from 'react-native';
+import { Text, TextInput, View, } from 'react-native';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
@@ -81,6 +81,8 @@ class RecordModal extends React.Component {
 
     style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
+    swipeControl = () => this.state.cpOpen || this.state.dpOpen ? undefined : 'down';
+
     update = () => {
 
     }
@@ -94,10 +96,10 @@ class RecordModal extends React.Component {
                 onBackButtonPress={this.close}
                 onModalShow={this.update}
                 onSwipeComplete={this.close}
-                swipeDirection='down'
+                swipeDirection={this.swipeControl()}
                 style={{ flexDirection: 'row', alignItems: 'flex-end', padding: 0, margin: 0 }}
             >
-                {this.props.open &&
+                {this.props.open && <>
                     <View style={styles.rows}>
                         <View style={this.style(generalBottomModalStyles, 'header')}>
                             <ExpandButton color={this.iconColor()} onPress={this.close} />
@@ -114,24 +116,30 @@ class RecordModal extends React.Component {
                             <Bubble onPress={() => this.setState({ cpOpen: true })} color={this.catValue().color} size={25} />
                         </View>
                         <Numpad
-                            onChangeDate={this.onChangeDate}
                             onConfirm={this.onConfirm}
-                            date={this.item('date')}
+                            onSpecialPress={() => this.setState({ dpOpen: true })}
                             num={this.item('value') === undefined ? '0' : this.item('value')}
-                        />
+                        >
+                            <Text style={{ color: this.props.settings.accent }}>
+                                Date
+                            </Text>
+                            <Text style={{ color: this.props.settings.accent }}>
+                                {(this.state.newDate === '' ? this.item('date') : this.state.newDate).substring(5).replace(/-/, '/')}
+                            </Text>
+                        </Numpad>
                     </View>
-                }
-                <ColorPicker
-                    close={() => this.setState({ cpOpen: false })}
-                    open={this.state.cpOpen}
-                    onPress={hex => this.cpConfirm(hex)}
-                />
-                <DatePicker
-                    action={this.onChangeDate}
-                    close={() => this.setState({ dpOpen: false })}
-                    open={this.state.dpOpen}
-                    selected={this.state.date}
-                />
+                    <ColorPicker
+                        close={() => this.setState({ cpOpen: false })}
+                        open={this.state.cpOpen}
+                        onPress={hex => this.cpConfirm(hex)}
+                    />
+                    <DatePicker
+                        action={this.onChangeDate}
+                        close={() => this.setState({ dpOpen: false })}
+                        open={this.state.dpOpen}
+                        selected={(this.state.newDate === '' ? this.item('date') : this.state.newDate)}
+                    />
+                </>}
             </Modal>
         )
     }

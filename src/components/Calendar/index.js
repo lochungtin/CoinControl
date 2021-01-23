@@ -41,9 +41,9 @@ class Calendar extends React.Component {
 
     create2DArray = (rows, columns) => {
         var arr = new Array(rows);
-        for (var i = 0; i < rows; i++) {
+        for (var i = 0; i < rows; i++)
             arr[i] = new Array(columns);
-        }
+
         return arr;
     }
 
@@ -97,7 +97,7 @@ class Calendar extends React.Component {
     render() {
         return (
             <View style={calendarStyles.container}>
-                <View style={{ ...styles.columns, minHeight: 20, justifyContent: 'space-between' }}>
+                <View style={{ ...styles.columns, height: 45, justifyContent: 'space-between' }}>
                     <TouchableOpacity
                         onPress={() => {
                             if (!(this.state.year === 1970 && this.state.month === 1)) {
@@ -133,7 +133,7 @@ class Calendar extends React.Component {
                 </View>
                 {this.state.grid.map(row => {
                     return (
-                        <View key={row} style={{ ...styles.columns, minHeight: 20, justifyContent: 'space-between' }} >
+                        <View key={row} style={{ ...styles.columns, height: 45, justifyContent: 'space-between' }} >
                             {row.map(item => {
                                 return (
                                     <CalendarDateSelector
