@@ -90,7 +90,6 @@ class RecordModal extends React.Component {
                 isVisible={this.props.open}
                 onBackdropPress={this.close}
                 onBackButtonPress={this.close}
-                onModalShow={this.update}
                 onSwipeComplete={this.close}
                 swipeDirection={this.swipeControl()}
                 style={{ flexDirection: 'row', alignItems: 'flex-end', padding: 0, margin: 0 }}

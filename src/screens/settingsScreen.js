@@ -54,10 +54,8 @@ class Screen extends React.Component {
     }
 
     clear = type => {
-        if (type === 3) {
+        if (type === 3)
             store.dispatch(deleteHistory());
-            store.dispatch(defaultGoal());
-        }
         if (type > 1) {
             store.dispatch(defaultExpenseCategory());
             store.dispatch(defaultIncomeCategory());

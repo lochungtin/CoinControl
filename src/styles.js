@@ -50,6 +50,204 @@ export const styles = StyleSheet.create({
     },
 });
 
+// modal styles
+
+export const confirmationModalStyles = StyleSheet.create({
+    buttonText: {
+        color: white
+    },
+    contentD: {
+        alignItems: 'center',
+        backgroundColor: bgColorD,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 30,
+        paddingVertical: 15,
+        width: maxWidth,
+    },
+    contentL: {
+        alignItems: 'center',
+        backgroundColor: bgColorL,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 30,
+        paddingVertical: 15,
+        width: maxWidth,
+    },
+    detailD: {
+        color: white,
+        fontSize: 17,
+        textAlign: 'justify',
+    }, 
+    detailL: {
+        color: black,
+        fontSize: 17,
+        textAlign: 'justify',
+    }, 
+    dsaD: {
+        color: white,
+        fontSize: 15,
+    },
+    dsaL: {
+        color: black,
+        fontSize: 15,
+    },
+    title: {
+        fontSize: 23,
+    }
+});
+
+export const categoryModalStyles = StyleSheet.create({
+    contentD: {
+        alignItems: 'center',
+        backgroundColor: bgColorD,
+        borderWidth: 1,
+        borderColor: shade3,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        minHeight: '8%',
+        paddingHorizontal: '5%',
+        width: '100%'
+    },
+    contentL: {
+        alignItems: 'center',
+        backgroundColor: bgColorL,
+        borderWidth: 1,
+        borderColor: shade2,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        minHeight: '8%',
+        paddingHorizontal: '5%',
+        width: '100%'
+    },
+    inputD: {
+        borderBottomWidth: 1,
+        borderColor: shade3,
+        color: white,
+        fontSize: 15,
+        paddingLeft: '5%',
+        width: '70%'
+    },
+    inputL: {
+        borderBottomWidth: 1,
+        borderColor: shade2,
+        color: black,
+        fontSize: 15,
+        paddingLeft: '5%',
+        width: '70%'
+    },
+});
+
+export const generalBottomModalStyles = StyleSheet.create({
+    headerD: {
+        alignItems: 'center',
+        backgroundColor: shade3,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        height: 20,
+        justifyContent: 'center',
+        width: '100%'
+    },
+    headerL: {
+        alignItems: 'center',
+        backgroundColor: shade2,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        height: 20,
+        justifyContent: 'center',
+        width: '100%'
+    },
+});
+
+export const goalModalStyles = StyleSheet.create({
+    selectionContainerD: {
+        alignItems: 'center',
+        backgroundColor: bgColorD,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        height: '8%',
+        width: maxWidth,
+    },
+    selectionContainerL: {
+        alignItems: 'center',
+        backgroundColor: bgColorL,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        height: '8%',
+        width: maxWidth,
+    },
+    selectionBox: {
+        alignItems: 'center',
+        height: '100%',
+        justifyContent: 'center',
+        minWidth: '33.3%'
+    }
+});
+
+export const pickerModalStyles = StyleSheet.create({
+    rootD: { 
+        alignItems: 'center',
+        backgroundColor: bgColorD,
+        borderRadius: 20,
+        elevation: 10,
+        justifyContent: "space-between",
+        padding: 10, 
+        width: 300,
+    },
+    rootL: { 
+        alignItems: 'center',
+        backgroundColor: bgColorL,
+        borderRadius: 20,
+        elevation: 10,
+        justifyContent: "space-between",
+        padding: 10, 
+        width: 300,
+    },
+});
+
+export const recordModalStyles = StyleSheet.create({
+    inputBoxD: {
+        alignItems: 'center',
+        backgroundColor: bgColorD,
+        borderWidth: 1,
+        borderColor: shade3,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        minHeight: '8%',
+        paddingHorizontal: '5%',
+        width: '100%'
+    },
+    inputBoxL: {
+        alignItems: 'center',
+        backgroundColor: bgColorL,
+        borderWidth: 1,
+        borderColor: shade2,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        minHeight: '8%',
+        paddingHorizontal: '5%',
+        width: '100%'
+    },
+    inputD: {
+        borderBottomWidth: 1,
+        borderColor: shade3,
+        color: white,
+        fontSize: 15,
+        marginLeft: '5%',
+        paddingLeft: '5%',
+        width: '70%'
+    },
+    inputL: {
+        borderBottomWidth: 1,
+        borderColor: shade2,
+        color: black,
+        fontSize: 15,
+        marginLeft: '5%',
+        paddingLeft: '5%',
+        width: '70%'
+    },
+});
+
 // component styles
 
 export const bubbleStyles = StyleSheet.create({
@@ -114,92 +312,6 @@ export const calendarStyles = StyleSheet.create({
     }
 });
 
-export const categoryModalStyles = StyleSheet.create({
-    contentD: {
-        alignItems: 'center',
-        backgroundColor: bgColorD,
-        borderWidth: 1,
-        borderColor: shade3,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        minHeight: '8%',
-        paddingHorizontal: '5%',
-        width: '100%'
-    },
-    contentL: {
-        alignItems: 'center',
-        backgroundColor: bgColorL,
-        borderWidth: 1,
-        borderColor: shade2,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        minHeight: '8%',
-        paddingHorizontal: '5%',
-        width: '100%'
-    },
-    inputD: {
-        borderBottomWidth: 1,
-        borderColor: shade3,
-        color: white,
-        fontSize: 15,
-        paddingLeft: '5%',
-        width: '70%'
-    },
-    inputL: {
-        borderBottomWidth: 1,
-        borderColor: shade2,
-        color: black,
-        fontSize: 15,
-        paddingLeft: '5%',
-        width: '70%'
-    },
-});
-
-export const confirmationModalStyles = StyleSheet.create({
-    buttonText: {
-        color: white
-    },
-    contentD: {
-        alignItems: 'center',
-        backgroundColor: bgColorD,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingHorizontal: 30,
-        paddingVertical: 15,
-        width: maxWidth,
-    },
-    contentL: {
-        alignItems: 'center',
-        backgroundColor: bgColorL,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingHorizontal: 30,
-        paddingVertical: 15,
-        width: maxWidth,
-    },
-    detailD: {
-        color: white,
-        fontSize: 17,
-        textAlign: 'justify',
-    }, 
-    detailL: {
-        color: black,
-        fontSize: 17,
-        textAlign: 'justify',
-    }, 
-    dsaD: {
-        color: white,
-        fontSize: 15,
-    },
-    dsaL: {
-        color: black,
-        fontSize: 15,
-    },
-    title: {
-        fontSize: 23,
-    }
-});
-
 export const datePickerStyles = StyleSheet.create({
     calendar: {
         width: 350,
@@ -220,27 +332,6 @@ export const datePickerStyles = StyleSheet.create({
         margin: 20,
         padding: 5,
     }
-});
-
-export const generalBottomModalStyles = StyleSheet.create({
-    headerD: {
-        alignItems: 'center',
-        backgroundColor: shade3,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        height: 20,
-        justifyContent: 'center',
-        width: '100%'
-    },
-    headerL: {
-        alignItems: 'center',
-        backgroundColor: shade2,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        height: 20,
-        justifyContent: 'center',
-        width: '100%'
-    },
 });
 
 export const headerStyles = StyleSheet.create({
@@ -340,70 +431,6 @@ export const numpadStyles = StyleSheet.create({
         color: black,
         fontSize: 20,
         fontWeight: 'bold'
-    },
-});
-
-export const pickerModalStyles = StyleSheet.create({
-    rootD: { 
-        alignItems: 'center',
-        backgroundColor: bgColorD,
-        borderRadius: 20,
-        elevation: 10,
-        justifyContent: "space-between",
-        padding: 10, 
-        width: 300,
-    },
-    rootL: { 
-        alignItems: 'center',
-        backgroundColor: bgColorL,
-        borderRadius: 20,
-        elevation: 10,
-        justifyContent: "space-between",
-        padding: 10, 
-        width: 300,
-    },
-});
-
-export const recordModalStyles = StyleSheet.create({
-    inputBoxD: {
-        alignItems: 'center',
-        backgroundColor: bgColorD,
-        borderWidth: 1,
-        borderColor: shade3,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        minHeight: '8%',
-        paddingHorizontal: '5%',
-        width: '100%'
-    },
-    inputBoxL: {
-        alignItems: 'center',
-        backgroundColor: bgColorL,
-        borderWidth: 1,
-        borderColor: shade2,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        minHeight: '8%',
-        paddingHorizontal: '5%',
-        width: '100%'
-    },
-    inputD: {
-        borderBottomWidth: 1,
-        borderColor: shade3,
-        color: white,
-        fontSize: 15,
-        marginLeft: '5%',
-        paddingLeft: '5%',
-        width: '70%'
-    },
-    inputL: {
-        borderBottomWidth: 1,
-        borderColor: shade2,
-        color: black,
-        fontSize: 15,
-        marginLeft: '5%',
-        paddingLeft: '5%',
-        width: '70%'
     },
 });
 

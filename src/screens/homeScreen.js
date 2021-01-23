@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import HomeNavButton from '../components/HomeNavButton';
 import ConfirmationModal from '../components/Modals/ConfirmationModal';
+import GoalModal from '../components/Modals/GoalModal';
 import RecordModal from '../components/Modals/RecordModal';
 import SectionHeader from '../components/SectionHeader';
 import SectionItem from '../components/SectionItem';
@@ -63,7 +64,7 @@ class Screen extends React.Component {
                                 <Icon name={'currency-' + this.props.settings.currency} color={this.goalMessageColor()} size={15} />
                             }
                             <Text style={{ color: this.goalMessageColor() }}>
-                                {(this.props.data.goalSettings.type !== 'none' ? this.props.data.goal.remaining : '') + goalText[this.props.data.goalSettings.type]}
+                                {(this.props.data.goalSettings.type !== 'none' ? this.props.data.goal.remaining : '') + " " + goalText[this.props.data.goalSettings.type]}
                             </Text>
                         </View>
                         <View style={styles.columns}>
@@ -71,8 +72,8 @@ class Screen extends React.Component {
                         </View>
                         <View style={{ ...styles.columns, width: 250, justifyContent: 'space-evenly' }}>
                             <HomeNavButton icon={'plus'} onPress={() => this.props.navigation.navigate('Update', 'Income')} text={'Income'} />
-                            <HomeNavButton icon={'minus'} onPress={() => this.props.navigation.navigate('Update', 'Expense')} text={'Income'} />
-                            <HomeNavButton icon={'flag-outline'} onPress={() => this.setState({ gmOpen: true })} text={'Income'} />
+                            <HomeNavButton icon={'minus'} onPress={() => this.props.navigation.navigate('Update', 'Expense')} text={'Expense'} />
+                            <HomeNavButton icon={'flag-outline'} onPress={() => this.setState({ gmOpen: true })} text={'Set Goal'} />
                         </View>
                     </View>
 
@@ -85,6 +86,7 @@ class Screen extends React.Component {
                             </View>
                         }
                         <SectionList
+                            key={this.props.data}
                             keyExtractor={(item, index) => item + index}
                             renderItem={({ item }) =>
                                 <SectionItem
@@ -112,6 +114,10 @@ class Screen extends React.Component {
                         this.setState({ rmOpen: false });
                     }}
                     open={this.state.rmOpen}
+                />
+                <GoalModal
+                    close={() => this.setState({ gmOpen: false })}
+                    open={this.state.gmOpen}
                 />
                 <ConfirmationModal
                     close={() => this.setState({ confirmType: '' })}

@@ -82,7 +82,7 @@ class Numpad extends React.Component {
                 <View style={numpadStyles.numpadRow}>
                     {[1, 2, 3].map(num => {
                         return (
-                            <NumpadButton icon={'numeric-' + num} key={num} onPress={() => this.appendNum(num)} />
+                            <NumpadButton disabled={this.props.disabled} icon={'numeric-' + num} key={num} onPress={() => this.appendNum(num)} />
                         )
                     })}
                     <NumpadButton
@@ -94,24 +94,24 @@ class Numpad extends React.Component {
                 <View style={numpadStyles.numpadRow}>
                     {[4, 5, 6].map(num => {
                         return (
-                            <NumpadButton icon={'numeric-' + num} key={num} onPress={() => this.appendNum(num)} />
+                            <NumpadButton disabled={this.props.disabled} icon={'numeric-' + num} key={num} onPress={() => this.appendNum(num)} />
                         )
                     })}
-                    <NumpadButton icon={'plus'} onPress={() => this.appendOp(' + ')} />
+                    <NumpadButton disabled={this.props.disabled} icon={'plus'} onPress={() => this.appendOp(' + ')} />
                 </View>
                 <View style={numpadStyles.numpadRow}>
                     {[7, 8, 9].map(num => {
                         return (
-                            <NumpadButton icon={'numeric-' + num} key={num} onPress={() => this.appendNum(num)} />
+                            <NumpadButton disabled={this.props.disabled} icon={'numeric-' + num} key={num} onPress={() => this.appendNum(num)} />
                         )
                     })}
-                    <NumpadButton icon={'minus'} onPress={() => this.appendOp(' - ')} />
+                    <NumpadButton disabled={this.props.disabled} icon={'minus'} onPress={() => this.appendOp(' - ')} />
                 </View>
                 <View style={numpadStyles.numpadRow}>
-                    <NumpadButton icon={'circle-small'} onPress={() => this.appendNum('.')} />
-                    <NumpadButton icon={'numeric-0'} onPress={() => this.appendNum(0)} />
-                    <NumpadButton icon={'backspace-outline'} onPress={this.backspace} />
-                    <NumpadButton icon={this.state.ready ? 'check' : 'equal'} onPress={this.confirm} special={true} />
+                    <NumpadButton disabled={this.props.disabled} icon={'circle-small'} onPress={() => this.appendNum('.')} />
+                    <NumpadButton disabled={this.props.disabled} icon={'numeric-0'} onPress={() => this.appendNum(0)} />
+                    <NumpadButton disabled={this.props.disabled} icon={'backspace-outline'} onPress={this.backspace} />
+                    <NumpadButton disabled={this.props.disabled} icon={this.state.ready ? 'check' : 'equal'} onPress={this.confirm} special={true} />
                 </View>
             </View>
         )

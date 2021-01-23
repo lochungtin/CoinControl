@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { combineReducers } from 'redux';
 
 import {
@@ -71,7 +72,31 @@ const deleteRecord = (base, datekey, rnkey) => {
 }
 
 const updateGoal = base => {
-    
+    switch(base.goalSettings.type) {
+        case 'none':
+            base.goal = defaultData.goal;
+            return;
+        case 'week':
+            var week = moment().week();
+            var dates = Object.keys(base.data).filter(date => moment(date, "YYYY-MM-DD").week() === week);
+            break;
+            
+        case 'month':
+            var thisMonth = moment().format("YYYY-MM");
+            var dates = Object.keys(base.data).filter(date => date.startsWith(thisMonth));
+            break;            
+    }
+
+    var totalExpense = 0;
+    dates.forEach(date => {
+        Object.keys(base.data[date]).forEach(key => {
+            const record = base.data[date][key];
+            totalExpense += (record.type === 'Expense') * record.value;
+        });
+    });
+
+    base.goal.remaining = base.goalSettings.amount - totalExpense;
+    base.goal.percentage = 1 - ((base.goalSettings.amount - totalExpense) / base.goalSettings.amount);
 }
 
 const updateData = (data = defaultData, action) => {
@@ -85,7 +110,6 @@ const updateData = (data = defaultData, action) => {
             var datekey = action.payload.date;
 
             addRecord(temp, datekey, rnkey, { ...action.payload, key: datekey + ':' + rnkey });
-            console.log(temp);
             break;
 
         case EDIT_RECORD:
@@ -101,9 +125,20 @@ const updateData = (data = defaultData, action) => {
 
             deleteRecord(temp, keyset[0], keyset[1]);
             break;
-    }
-    updateGoal(temp);
+        
+        case UPDATE_GOAL:
+            temp.goalSettings = action.payload;
+            break;
 
+        case DEFAULT_GOAL:
+            temp.goalSettings = defaultData.goalSettings;
+            break;
+
+        default:
+            return data;
+    }
+
+    updateGoal(temp);
     return temp;
 }
 
