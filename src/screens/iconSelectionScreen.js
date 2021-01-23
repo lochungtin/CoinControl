@@ -170,9 +170,7 @@ class Screen extends React.Component {
 
 const mapStateToProps = state => ({
     expenseCategories: state.expenseCategories,
-    expenseSelection: state.expenseSelection,
     incomeCategories: state.incomeCategories,
-    incomeSelection: state.incomeSelection,
     settings: state.settings,
 })
 

@@ -1,10 +1,8 @@
 import React from 'react';
 import { Text, TouchableOpacity, View, } from 'react-native';
 import Modal from 'react-native-modal';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import Bubble from '../Bubble';
 import ExpandButton from '../ExpandButton';
 import Numpad from '../Numpad';
 import { defaultGoal, updateGoal } from '../../redux/action';
