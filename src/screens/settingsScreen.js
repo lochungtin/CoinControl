@@ -11,7 +11,7 @@ import SettingsHeader from '../components/SettingsHeader';
 import SettingsItem from '../components/SettingsItem';
 import TimePicker from '../components/TimePicker';
 import NotifService from '../notifications/notifService';
-import { defaultExpenseCategory, defaultGoal, defaultIncomeCategory, defaultSettings, deleteHistory, updateSettings, } from '../redux/action';
+import { defaultExpenseCategory, defaultIncomeCategory, defaultSettings, deleteHistory, updateSettings, } from '../redux/action';
 import { store } from '../redux/store';
 
 import { settingStyles, styles, } from '../styles';

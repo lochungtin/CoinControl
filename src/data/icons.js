@@ -1,4 +1,12 @@
 export const icons = {
+    banking: [
+        "bank",
+        "cash",
+        "information-outline",
+        "information-variant",
+        "wallet-outline",
+        "text-box-outline",
+    ],
     entertainment: [
         "balloon",
         "book-outline",
@@ -7,7 +15,7 @@ export const icons = {
         "diamond-stone",
         "filmstrip-box-multiple",
         "firework",
-        "gamepad-square-outline",
+        "gamepad-variant-outline",
         "microsoft-xbox",
         "microsoft-xbox-controller",
         "movie-open-outline",
@@ -22,6 +30,7 @@ export const icons = {
         "chef-hat",
         "fish",
         "food-drumstick",
+        "food-fork-drink",
         "food-variant",
         "glass-wine",
         "noodles",
@@ -58,12 +67,12 @@ export const icons = {
         "file-outline",
         "folder-open-outline",
         "fountain-pen",
+        "paperclip",
         "pen",
         "pencil-outline",
     ],
     other: [
         "account",
-        "bank",
         "bell",
         "cat",
         "christianity",
@@ -72,7 +81,7 @@ export const icons = {
         "fingerprint",
         "flag-outline",
         "hook",
-        "information-outline",
+        "keyboard-backspace",
         "lock",
         "paw",
         "rabbit",
@@ -87,6 +96,7 @@ export const icons = {
         "gift",
         "lipstick",
         "ring",
+        "shopping-outline",
         "watch",
     ],
     sports: [
@@ -125,7 +135,10 @@ export const icons = {
         "bus-side",
         "car",
         "ferry",
+        "garage",
+        "gas-station",
         "motorbike",
         "rollerblade",
+        "train-car",
     ]
 }

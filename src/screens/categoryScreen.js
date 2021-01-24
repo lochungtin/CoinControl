@@ -9,7 +9,7 @@ import ScreenHeader from '../components/ScreenHeader';
 import { store } from '../redux/store';
 import { addRecord } from '../redux/action';
 
-import { styles, } from '../styles';
+import { styles } from '../styles';
 
 class Screen extends React.Component {
 

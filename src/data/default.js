@@ -56,10 +56,6 @@ export const defaultIncomeCategories = {
     },
 };
 
-export const defaultExpenseSelection = ['20012021-004001', '20012021-004002', '20012021-004003', '20012021-004004', '20012021-004005', '20012021-004006', '20012021-004007'];
-
-export const defaultIncomeSelection = ['20012021-004008', '20012021-004009', '20012021-004010', '20012021-004004', '20012021-004005', '20012021-004006', '20012021-004007'];
-
 export const defaultSettings = {
     accent: goldenBrown,
     compactView: true,

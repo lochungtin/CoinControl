@@ -50,6 +50,25 @@ export const styles = StyleSheet.create({
     },
 });
 
+// card styles
+
+export const generalCardStyles = StyleSheet.create({
+    cardD: {
+        backgroundColor: shade4,
+        borderRadius: 10,
+        marginVertical: 5,
+        paddingVertical: 10,
+        width: '95%',
+    },
+    cardL: {
+        backgroundColor: shade1,
+        borderRadius: 10,
+        marginVertical: 5,
+        paddingVertical: 10,
+        width: '95%',
+    },
+});
+
 // modal styles
 
 export const confirmationModalStyles = StyleSheet.create({
