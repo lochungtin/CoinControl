@@ -20,6 +20,17 @@ class GoalCard extends React.Component {
 
     color = () => this.props.settings.darkMode ? white : black;
 
+    processValue = val => {
+        const splt = val.toString().split('.');
+        if (splt.length === 0)
+            return val + '.00';
+        if (splt[1].length === 1)
+            return val + '0';
+        else
+            return splt[0] + '.' + splt[1].substring(0, 2);
+    }
+    
+
     style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
     trackColor = () => this.props.settings.darkMode ? shade3 : shade2;
@@ -46,7 +57,7 @@ class GoalCard extends React.Component {
                                         </Text>
                                         <Text style={this.style(styles, 'centerText')}>
                                             <Icon name={'currency-' + this.props.settings.currency} color={this.color()} size={13} />
-                                            {this.props.goalType.amount - this.props.data.remaining + ' spent for'}
+                                            {this.processValue(this.props.goalType.amount - this.props.data.remaining) + ' spent for'}
                                         </Text>
                                         <Text style={this.style(styles, 'centerText')}>
                                             {'the ' + this.props.goalType.type}

@@ -74,6 +74,17 @@ const deleteRecord = (base, datekey, rnkey) => {
         base.display.splice(outerIndex, 1);
 }
 
+const processValue = val => {
+    const splt = val.toString().split('.');
+    if (splt.length === 0)
+        return val + '.00';
+    if (splt[1].length === 1)
+        return val + '0';
+    else
+        return splt[0] + '.' + splt[1].substring(0, 2);
+}
+
+
 const updateGoal = base => {
     switch (base.goalSettings.type) {
         case 'none':
@@ -98,7 +109,7 @@ const updateGoal = base => {
         });
     });
 
-    base.goal.remaining = base.goalSettings.amount - totalExpense;
+    base.goal.remaining = processValue(base.goalSettings.amount - totalExpense);
     base.goal.percentage = 1 - ((base.goalSettings.amount - totalExpense) / base.goalSettings.amount);
 }
 
