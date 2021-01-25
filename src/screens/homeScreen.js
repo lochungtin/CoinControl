@@ -51,7 +51,7 @@ class Screen extends React.Component {
 
     processValue = val => {
         const splt = val.toString().split('.');
-        if (splt.length === 0)
+        if (splt.length === 1)
             return val + '.00';
         if (splt[1].length === 1)
             return val + '0';
