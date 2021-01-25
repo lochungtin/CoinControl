@@ -22,7 +22,6 @@ class PieCard extends React.Component {
         this.state = {
             focus: '',
             type: type,
-            open: true,
         }
     }
 
@@ -52,24 +51,31 @@ class PieCard extends React.Component {
     render() {
         return (
             <>
-                <Card icon={'chart-donut'} title={'PERCENTAGES'} toggle={open => this.setState({ open })}>
-                    {this.state.open && <>
-                        <TypeSwitch default={this.state.type} update={type => this.setState({ type, focus: '' })} />
-                        <PieChart style={{ height: 175, margin: 10 }} data={this.mapData()} innerRadius={'60%'}>
-                            <View style={generalCardStyles.centerLabel}>
-                                <Text style={this.style(generalCardStyles, 'amountText')}>
-                                    <Icon name={'currency-' + this.props.settings.currency} color={this.color()} size={20} />
-                                    {this.props.total[this.state.type]}
-                                </Text>
-                            </View>
-                        </PieChart>
-                        <Text style={this.style(styles, 'text')}>
-                            click on sections to view details
+                <Card icon={'chart-donut'} title={'PERCENTAGES'}>
+                    {(Object.keys(this.props.data['expense']).length > 0 || Object.keys(this.props.data['income']).length > 0) ?
+                        <>
+                            <TypeSwitch default={this.state.type} update={type => this.setState({ type, focus: '' })} />
+                            <PieChart style={{ height: 175, margin: 10 }} data={this.mapData()} innerRadius={'60%'}>
+                                <View style={generalCardStyles.centerLabel}>
+                                    <Text style={this.style(generalCardStyles, 'amountText')}>
+                                        <Icon name={'currency-' + this.props.settings.currency} color={this.color()} size={20} />
+                                        {this.props.total[this.state.type]}
+                                    </Text>
+                                </View>
+                            </PieChart>
+                            <Text style={this.style(styles, 'text')}>
+                                click on sections to view details
                         </Text>
-                    </>}
+                        </> :
+                        <View style={{ paddingTop: 15 }}>
+                            <Text style={this.style(styles, 'centerText')}>
+                                No Records Found
+                            </Text>
+                        </View>
+                    }
                 </Card>
 
-                {this.state.open && this.state.focus !== '' &&
+                {this.state.focus !== '' && Object.keys(this.props.data[this.state.type]).length > 0 &&
                     <Card color={this.catValue(this.state.focus, 'color')} icon={this.catValue(this.state.focus, 'iconName')} title={this.catValue(this.state.focus, 'name').toUpperCase()} noExpansion>
                         <LabeledProcess
                             color={this.catValue(this.state.focus, 'color')}

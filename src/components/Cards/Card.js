@@ -15,29 +15,17 @@ class Card extends React.Component {
         }
     }
 
-    icon = () => {
-        if (this.props.onPress)
-            return 'dots-horizontal';
-        return 'chevron-' + (this.state.open ? 'right' : 'down');
-    }
-
     iconColor = () => this.props.color || this.props.settings.accent;
 
     toggleIconColor = () => {
-        if (this.props.noExpansion)
+        if (!this.props.onPress)
             return 'transparent';
         return this.props.settings.darkMode ? white : black;
     }
 
     onPress = () => {
-        if (!this.props.noExpansion) {
-            if (this.props.onPress)
-                this.props.onPress();
-            else {
-                this.setState({ open: !this.state.open });
-                this.props.toggle(!this.state.open);
-            }
-        }
+        if (this.props.onPress)
+            this.props.onPress();
     }
 
     style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
@@ -51,7 +39,7 @@ class Card extends React.Component {
                         {this.props.title}
                     </Text>
                     <TouchableOpacity onPress={this.onPress}>
-                        <Icon name={this.icon()} color={this.toggleIconColor()} size={20} />
+                        <Icon name={'dots-horizontal'} color={this.toggleIconColor()} size={20} />
                     </TouchableOpacity>
                 </View>
                 {this.props.children}

@@ -19,7 +19,6 @@ class TrendCard extends React.Component {
 
         this.state = {
             type: type,
-            open: true,
         }
     }
 
@@ -29,34 +28,32 @@ class TrendCard extends React.Component {
 
     render() {
         return (
-            <Card icon={'chart-line'} title={'7 DAY CASHFLOW'} toggle={open => this.setState({ open })}>
-                {this.state.open && <>
-                    <TypeSwitch default={this.state.type} update={type => this.setState({ type })} />
-                    <View style={{ height: 175, flexDirection: 'row' }}>
-                        <YAxis
-                            data={this.props.data[this.state.type]}
-                            contentInset={{ top: 20, bottom: 20 }}
-                            svg={{
-                                fill: this.color(),
-                                fontSize: 15,
-                            }}
-                            numberOfTicks={5}
-                            formatLabel={(value) => value}
-                        />
-                        <LineChart
-                            style={{ flex: 1, marginLeft: 16 }}
-                            data={this.props.data[this.state.type]}
-                            svg={{ 
-                                stroke: this.props.settings.accent, 
-                                strokeWidth: 2 
-                            }}
-                            contentInset={{ top: 20, bottom: 20 }}
-                        >
-                            <Grid />
-                        </LineChart>
-                    </View>
-                    <Text style={{color: this.color()}}>today</Text>
-                </>}
+            <Card icon={'chart-line'} title={'7 DAY CASHFLOW'}>
+                <TypeSwitch default={this.state.type} update={type => this.setState({ type })} />
+                <View style={{ height: 175, flexDirection: 'row' }}>
+                    <YAxis
+                        data={this.props.data[this.state.type]}
+                        contentInset={{ top: 20, bottom: 20 }}
+                        svg={{
+                            fill: this.color(),
+                            fontSize: 15,
+                        }}
+                        numberOfTicks={5}
+                        formatLabel={(value) => value}
+                    />
+                    <LineChart
+                        style={{ flex: 1, marginLeft: 16 }}
+                        data={this.props.data[this.state.type]}
+                        svg={{
+                            stroke: this.props.settings.accent,
+                            strokeWidth: 2
+                        }}
+                        contentInset={{ top: 20, bottom: 20 }}
+                    >
+                        <Grid />
+                    </LineChart>
+                </View>
+                <Text style={{ color: this.color() }}>today</Text>
             </Card>
         );
     }

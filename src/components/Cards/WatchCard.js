@@ -18,7 +18,6 @@ class WatchCard extends React.Component {
 
         this.state = {
             type: type,
-            open: true,
         }
     }
 
@@ -26,10 +25,8 @@ class WatchCard extends React.Component {
 
     render() {
         return (
-            <Card icon={'eye-outline'} title={'WATCHLIST'} toggle={open => this.setState({ open })}>
-                {this.state.open && <>
-                    <TypeSwitch default={this.state.type} update={type => this.setState({ type })} />
-                </>}
+            <Card icon={'eye-outline'} title={'WATCHLIST'}>
+                <TypeSwitch default={this.state.type} update={type => this.setState({ type })} />
             </Card>
         );
     }

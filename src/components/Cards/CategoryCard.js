@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Card from './Card';
 import TypeSwitch from './TypeSwitch';
 
-import { generalCardStyles, styles } from '../../styles';
+import { styles } from '../../styles';
 import LabeledProcess from './LabeledProcess';
 
 
@@ -20,7 +20,6 @@ class CategoryCard extends React.Component {
 
         this.state = {
             type: type,
-            open: true,
         }
     }
 
@@ -32,28 +31,35 @@ class CategoryCard extends React.Component {
 
     render() {
         return (
-            <Card icon={'label-multiple-outline'} title={'CATEGORIES'} toggle={open => this.setState({ open })}>
-                {this.state.open && <>
-                    <TypeSwitch default={this.state.type} update={type => this.setState({ type })} />
-                    {Object.keys(this.props.data[this.state.type])
-                        .sort((a, b) => this.percentage(b) - this.percentage(a))
-                        .map(key => {
-                            return (
-                                <View style={{...styles.columns, alignItems: 'flex-start'}}>
-                                    <Icon name={this.catValue(key, 'iconName')} color={this.catValue(key, 'color')} size={35} />
-                                    <LabeledProcess
-                                        color={this.catValue(key, 'color')}
-                                        lValue={this.props.data[this.state.type][key].counter}
-                                        percentage={this.percentage(key)}
-                                        rValue={this.props.total[this.state.type + 'Total']}
-                                    />
-                                </View>
-                            );
-                        })}
-                    <Text style={this.style(styles, 'centerText')}>
-                        QUANTITY COUNT
-                    </Text>
-                </>}
+            <Card icon={'label-multiple-outline'} title={'CATEGORIES'}>
+                {(Object.keys(this.props.data['expense']).length > 0 || Object.keys(this.props.data['income']).length > 0) ?
+                    <>
+                        <TypeSwitch default={this.state.type} update={type => this.setState({ type })} />
+                        {Object.keys(this.props.data[this.state.type])
+                            .sort((a, b) => this.percentage(b) - this.percentage(a))
+                            .map(key => {
+                                return (
+                                    <View style={{ ...styles.columns, alignItems: 'flex-start' }} key={key}>
+                                        <Icon name={this.catValue(key, 'iconName')} color={this.catValue(key, 'color')} size={35} />
+                                        <LabeledProcess
+                                            color={this.catValue(key, 'color')}
+                                            lValue={this.props.data[this.state.type][key].counter}
+                                            percentage={this.percentage(key)}
+                                            rValue={this.props.total[this.state.type + 'Total']}
+                                        />
+                                    </View>
+                                );
+                            })}
+                        <Text style={this.style(styles, 'centerText')}>
+                            QUANTITY COUNT
+                        </Text>
+                    </> :
+                    <View style={{ paddingTop: 15 }}>
+                        <Text style={this.style(styles, 'centerText')}>
+                            No Records Found
+                        </Text>
+                    </View>
+                }
             </Card>
         );
     }

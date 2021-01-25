@@ -41,10 +41,10 @@ class Screen extends React.Component {
                         title={'GENERAL ANALYTICS'}
                     />
                     <TrendCard data={this.state.data.recent} />
-                    <PieCard data={this.state.data.categories} total={this.state.data.total}/>
+                    <PieCard data={this.state.data.categories} total={this.state.data.total} />
                     <WatchCard data={this.state.data.watchlist} />
                     <GoalCard data={this.props.data.goal} goalType={this.props.data.goalSettings} />
-                    <CategoryCard data={this.state.data.categories} total={this.state.data.total}/>
+                    <CategoryCard data={this.state.data.categories} total={this.state.data.total} />
                 </ScrollView>
             </View>
         );
