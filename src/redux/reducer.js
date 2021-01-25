@@ -2,9 +2,10 @@ import moment from 'moment';
 import { combineReducers } from 'redux';
 
 import {
-    ADD_RECORD,
     ADD_EXPENSE_CATEGORY,
     ADD_INCOME_CATEGORY,
+    ADD_RECORD,
+    ADD_WATCHLIST,
     DEFAULT_EXPENSE_CATEGORY,
     DEFAULT_GOAL,
     DEFAULT_INCOME_CATEGORY,
@@ -16,6 +17,7 @@ import {
     EDIT_EXPENSE_CATEGORY,
     EDIT_INCOME_CATEGORY,
     EDIT_RECORD,
+    REMOVE_WATCHLIST,
     UPDATE_GOAL,
     UPDATE_SETTINGS,
 } from './action';
@@ -23,7 +25,8 @@ import {
     defaultData,
     defaultExpenseCategories,
     defaultIncomeCategories,
-    defaultSettings
+    defaultSettings,
+    defaultWatchlist,
 } from '../data/default';
 
 const genKey = () => genRNKey() + genRNKey() + '-' + genRNKey();
@@ -72,7 +75,7 @@ const deleteRecord = (base, datekey, rnkey) => {
 }
 
 const updateGoal = base => {
-    switch(base.goalSettings.type) {
+    switch (base.goalSettings.type) {
         case 'none':
             base.goal = defaultData.goal;
             return;
@@ -80,11 +83,11 @@ const updateGoal = base => {
             var week = moment().week();
             var dates = Object.keys(base.data).filter(date => moment(date, "YYYY-MM-DD").week() === week);
             break;
-            
+
         case 'month':
             var thisMonth = moment().format("YYYY-MM");
             var dates = Object.keys(base.data).filter(date => date.startsWith(thisMonth));
-            break;            
+            break;
     }
 
     var totalExpense = 0;
@@ -125,7 +128,7 @@ const updateData = (data = defaultData, action) => {
 
             deleteRecord(temp, keyset[0], keyset[1]);
             break;
-        
+
         case UPDATE_GOAL:
             temp.goalSettings = action.payload;
             break;
@@ -190,9 +193,24 @@ const updateSettings = (settings = defaultSettings, action) => {
     return settings;
 }
 
+const updateWatchlist = (watchlist = defaultWatchlist, action) => {
+    var temp = { ...watchlist };
+    switch (action.payload) {
+        case ADD_WATCHLIST:
+            temp[action.payload.type].push(action.payload.key);
+            break;
+        case REMOVE_WATCHLIST:
+            const index = temp[action.payload.type].indexOf(action.payload.key);
+            temp[action.payload.type].splice(index, 1);
+            break;
+    }
+    return temp;
+}
+
 export default combineReducers({
     data: updateData,
     expenseCategories: updateExpenseCategory,
     incomeCategories: updateIncomeCategory,
     settings: updateSettings,
+    watchlist: updateWatchlist,
 });

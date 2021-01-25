@@ -1,14 +1,14 @@
-// Record Related
+// Data Related
 export const ADD_RECORD = 'ADD_RECORD';
 export const addRecord = payload => ({
     type: ADD_RECORD,
-    payload: payload,
+    payload,
 });
 
 export const EDIT_RECORD = 'EDIT_RECORD';
 export const editRecord = payload => ({
     type: EDIT_RECORD,
-    payload: payload,
+    payload,
 });
 
 export const DELETE_HISTORY = 'DELETE_HISTORY';
@@ -19,14 +19,25 @@ export const deleteHistory = () => ({
 export const DELETE_RECORD = 'DELETE_RECORD';
 export const deleteRecord = payload => ({
     type: DELETE_RECORD,
-    payload: payload,
+    payload,
+});
+
+export const DEFAULT_GOAL = 'DEFAULT_GOAL';
+export const defaultGoal = () => ({
+    type: DEFAULT_GOAL,
+});
+
+export const UPDATE_GOAL = 'UPDATE_GOAL';
+export const updateGoal = payload => ({
+    type: UPDATE_GOAL,
+    payload,
 });
 
 // Expense Category Related
 export const ADD_EXPENSE_CATEGORY = 'ADD_EXPENSE_CATEGORY';
 export const addExpenseCategory = payload => ({
     type: ADD_EXPENSE_CATEGORY,
-    payload: payload,
+    payload,
 });
 
 export const DEFAULT_EXPENSE_CATEGORY = 'DEFAULT_EXPENSE_CATEGORY';
@@ -37,32 +48,20 @@ export const defaultExpenseCategory = () => ({
 export const DELETE_EXPENSE_CATEGORY = 'DELETE_EXPENSE_CATEGORY';
 export const deleteExpenseCategory = payload => ({
     type: DELETE_EXPENSE_CATEGORY,
-    payload: payload,
+    payload,
 });
 
 export const EDIT_EXPENSE_CATEGORY = 'EDIT_EXPENSE_CATEGORY';
 export const editExpenseCategory = payload => ({
     type: EDIT_EXPENSE_CATEGORY,
-    payload: payload,
-});
-
-// Goal Related
-export const DEFAULT_GOAL = 'DEFAULT_GOAL';
-export const defaultGoal = () => ({
-    type: DEFAULT_GOAL,
-});
-
-export const UPDATE_GOAL = 'UPDATE_GOAL';
-export const updateGoal = payload => ({
-    type: UPDATE_GOAL,
-    payload: payload,
+    payload,
 });
 
 // Income Category Related
 export const ADD_INCOME_CATEGORY = 'ADD_INCOME_CATEGORY';
 export const addIncomeCategory = payload => ({
     type: ADD_INCOME_CATEGORY,
-    payload: payload,
+    payload,
 });
 
 export const DEFAULT_INCOME_CATEGORY = 'DEFAULT_INCOME_CATEGORY';
@@ -73,13 +72,13 @@ export const defaultIncomeCategory = () => ({
 export const DELETE_INCOME_CATEGORY = 'DELETE_INCOME_CATEGORY';
 export const deleteIncomeCategory = payload => ({
     type: DELETE_INCOME_CATEGORY,
-    payload: payload,
+    payload,
 });
 
 export const EDIT_INCOME_CATEGORY = 'EDIT_INCOME_CATEGORY';
 export const editIncomeCategory = payload => ({
     type: EDIT_INCOME_CATEGORY,
-    payload: payload,
+    payload,
 });
 
 // Settings Related
@@ -91,5 +90,17 @@ export const defaultSettings = () => ({
 export const UPDATE_SETTINGS = 'UPDATE_SETTINGS';
 export const updateSettings = payload => ({
     type: UPDATE_SETTINGS,
-    payload: payload,
+    payload,
+});
+
+// Watch List Related
+export const ADD_WATCHLIST = 'ADD_WATCHLIST';
+export const addWatchlist = payload => ({
+    payload,
+});
+
+export const REMOVE_WATCHLIST = 'REMOVE_WATCHLIST';
+export const removeWatchlist = payload => ({
+    type: REMOVE_WATCHLIST,
+    payload,
 });

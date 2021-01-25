@@ -21,13 +21,23 @@ class Card extends React.Component {
         return 'chevron-' + (this.state.open ? 'right' : 'down');
     }
 
-    iconColor = () => this.props.settings.darkMode ? white : black;
+    iconColor = () => this.props.color || this.props.settings.accent;
+
+    toggleIconColor = () => {
+        if (this.props.noExpansion)
+            return 'transparent';
+        return this.props.settings.darkMode ? white : black;
+    }
 
     onPress = () => {
-        if (this.props.onPress)
-            this.props.onPress();
-        else
-            this.setState({ open: !this.state.open });
+        if (!this.props.noExpansion) {
+            if (this.props.onPress)
+                this.props.onPress();
+            else {
+                this.setState({ open: !this.state.open });
+                this.props.toggle(!this.state.open);
+            }
+        }
     }
 
     style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
@@ -36,12 +46,12 @@ class Card extends React.Component {
         return (
             <View style={this.style(generalCardStyles, 'card')}>
                 <View style={{ ...styles.columns, justifyContent: 'space-between', width: '100%' }}>
-                    <Icon name={this.props.icon} color={this.props.settings.accent} size={20} />
+                    <Icon name={this.props.icon} color={this.iconColor()} size={20} />
                     <Text style={this.style(generalCardStyles, 'title')}>
                         {this.props.title}
                     </Text>
                     <TouchableOpacity onPress={this.onPress}>
-                        <Icon name={this.icon()} color={this.iconColor()} size={20} />
+                        <Icon name={this.icon()} color={this.toggleIconColor()} size={20} />
                     </TouchableOpacity>
                 </View>
                 {this.props.children}

@@ -83,6 +83,28 @@ export const generalCardStyles = StyleSheet.create({
     },
 });
 
+export const pieCardStyles = StyleSheet.create({
+    amountTextD: {
+        color: white,
+        fontSize: 22,
+    },
+    amountTextL: {
+        color: black,
+        fontSize: 22,
+    },
+    centerLabel: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        width: '100%',
+    },
+    progressBox: {
+        alignItems: 'center',
+        paddingVertical: 10,
+        width: '100%'
+    },
+});
+
 // modal styles
 
 export const confirmationModalStyles = StyleSheet.create({
