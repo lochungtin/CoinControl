@@ -9,6 +9,13 @@ import {
     GoogleSigninButton,
     statusCodes,
   } from '@react-native-community/google-signin';
+  import {
+    LoginButton,
+    AccessToken,
+    GraphRequest,
+    GraphRequestManager,
+  } from 'react-native-fbsdk';
+
   import { updateLogin } from '../redux/action';
   import { store } from '../redux/store';
 
@@ -24,6 +31,28 @@ class Screen extends React.Component {
           isLoggedIn :this.props.isLogin.isLogin,
         }
     }
+
+    getInfoFromToken = token => {
+      const PROFILE_REQUEST_PARAMS = {
+        fields: {
+          string: 'id, name,  first_name, last_name',
+        },
+      };
+    const profileRequest = new GraphRequest(
+        '/me',
+        {token, parameters: PROFILE_REQUEST_PARAMS},
+        (error, result) => {
+          if (error) {
+            console.log('login info has error: ' + error);
+          } else {
+            this.setState({userInfo: result});
+            console.log('result:', result);
+          }
+        },
+      );
+      new GraphRequestManager().addRequest(profileRequest).start();
+    };
+  
     
     signIn = async () => {
         try {
@@ -85,6 +114,22 @@ class Screen extends React.Component {
                     size={GoogleSigninButton.Size.Wide}
                     color={GoogleSigninButton.Color.Dark}
                     onPress={this.signIn} />
+                    
+                    <LoginButton
+                    onLoginFinished={(error, result) => {
+                      if (error) {
+                        console.log('login has error: ' + result.error);
+                      } else if (result.isCancelled) {
+                        console.log('login is cancelled.');
+                      } else {
+                        AccessToken.getCurrentAccessToken().then(data => {
+                          const accessToken = data.accessToken.toString();
+                          this.getInfoFromToken(accessToken);
+                        });
+                      }
+                    }}
+                    onLogoutFinished={() => this.setState({userInfo: {}})}
+                  />
 
                 <Button onPress={this.signOut } title="LogOut">
                 </Button>
