@@ -56,16 +56,30 @@ export const generalCardStyles = StyleSheet.create({
     cardD: {
         backgroundColor: shade4,
         borderRadius: 10,
+        marginHorizontal: '2.5%',
         marginVertical: 5,
+        paddingHorizontal: 10,
         paddingVertical: 10,
         width: '95%',
     },
     cardL: {
         backgroundColor: shade1,
         borderRadius: 10,
+        marginHorizontal: '2.5%',
         marginVertical: 5,
+        paddingHorizontal: 10,
         paddingVertical: 10,
         width: '95%',
+    },
+    titleD: {
+        color: white,
+        fontSize: 17,
+        width: '70%',
+    },
+    titleL: {
+        color: black,
+        fontSize: 17,
+        width: '70%',
     },
 });
 

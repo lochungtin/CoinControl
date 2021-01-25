@@ -1,20 +1,12 @@
 import React from 'react';
-import { Text, View, } from 'react-native';
 import { connect } from 'react-redux';
 
-import { generalCardStyles, styles } from '../../styles';
+import Card from './Card';
 
-class Card extends React.Component {
-
-    style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
-
+class TitleCard extends React.Component {
     render() {
         return (
-            <View style={this.style(generalCardStyles, 'card')}>
-                <Text style={this.style(styles, 'centerText')}>
-                    {this.props.title}
-                </Text>
-            </View>
+            <Card icon={this.props.icon} title={this.props.title} onPress={this.props.onPress}/>
         );
     }
 }
@@ -23,4 +15,4 @@ const mapStateToProps = state => ({
     settings: state.settings
 });
 
-export default connect(mapStateToProps)(Card);
+export default connect(mapStateToProps)(TitleCard);
