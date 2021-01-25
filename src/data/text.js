@@ -33,7 +33,8 @@ export const categoryPromptText = {
 };
 
 export const goalText = {
+    exceed: 'Spending exceeds goal limit',
+    month: 'left for the month',
     none: 'No Goals Set',
     week: 'left for the week',
-    month: 'left for the month',
 }

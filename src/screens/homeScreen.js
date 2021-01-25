@@ -34,6 +34,12 @@ class Screen extends React.Component {
         this.setState({ confirmType: '' });
     }
 
+    goalMessage = () => {
+        if (this.props.data.goal.percentage > 1)
+            return goalText.exceed;
+        return (this.props.data.goalSettings.type !== 'none' ? this.processValue(this.props.data.goal.remaining) : '') + " " + goalText[this.props.data.goalSettings.type]
+    }
+
     goalMessageColor = () => this.props.settings.darkMode ? shade2 : shade3;
 
     openConfirmation = key => {
@@ -41,6 +47,16 @@ class Screen extends React.Component {
             this.setState({ confirmType: 'dr', focus: key });
         else
             this.deleteRecord(key);
+    }
+
+    processValue = val => {
+        const splt = val.toString().split('.');
+        if (splt.length === 0)
+            return val + '.00';
+        if (splt[1].length === 1)
+            return val + '0';
+        else
+            return splt[0] + '.' + splt[1].substring(0, 2);
     }
 
     style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
@@ -60,11 +76,11 @@ class Screen extends React.Component {
                             </Text>
                         </View>
                         <View style={styles.columns}>
-                            {this.props.data.goalSettings.type !== 'none' &&
+                            {this.props.data.goalSettings.type !== 'none' && this.props.data.goal.percentage <= 1 &&
                                 <Icon name={'currency-' + this.props.settings.currency} color={this.goalMessageColor()} size={15} />
                             }
                             <Text style={{ color: this.goalMessageColor() }}>
-                                {(this.props.data.goalSettings.type !== 'none' ? this.props.data.goal.remaining : '') + " " + goalText[this.props.data.goalSettings.type]}
+                                {this.goalMessage()}
                             </Text>
                         </View>
                         <View style={styles.columns}>

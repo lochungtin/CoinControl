@@ -53,6 +53,22 @@ export const styles = StyleSheet.create({
 // card styles
 
 export const generalCardStyles = StyleSheet.create({
+    amountTextD: {
+        color: white,
+        fontSize: 22,
+        textAlign: 'center',
+    },
+    amountTextL: {
+        color: black,
+        fontSize: 22,
+        textAlign: 'center',
+    },
+    centerLabel: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        width: '100%',
+    },
     cardD: {
         backgroundColor: shade4,
         borderRadius: 10,
@@ -84,20 +100,6 @@ export const generalCardStyles = StyleSheet.create({
 });
 
 export const pieCardStyles = StyleSheet.create({
-    amountTextD: {
-        color: white,
-        fontSize: 22,
-    },
-    amountTextL: {
-        color: black,
-        fontSize: 22,
-    },
-    centerLabel: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        width: '100%',
-    },
     progressBox: {
         alignItems: 'center',
         paddingVertical: 10,

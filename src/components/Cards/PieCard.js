@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import Card from './Card';
 import TypeSwitch from './TypeSwitch';
 
-import { maxWidth, pieCardStyles, styles } from '../../styles';
+import { generalCardStyles, maxWidth, pieCardStyles, styles } from '../../styles';
 import { black, white } from '../../data/color';
 
 class PieCard extends React.Component {
@@ -56,9 +56,9 @@ class PieCard extends React.Component {
                     {this.state.open && <>
                         <TypeSwitch default={this.state.type} update={type => this.setState({ type, focus: '' })} />
                         <PieChart style={{ height: 175, margin: 10 }} data={this.mapData()} innerRadius={'60%'}>
-                            <View style={pieCardStyles.centerLabel}>
+                            <View style={generalCardStyles.centerLabel}>
                                 <Icon name={'currency-' + this.props.settings.currency} color={this.color()} size={20} />
-                                <Text style={this.style(pieCardStyles, 'amountText')}>
+                                <Text style={this.style(generalCardStyles, 'amountText')}>
                                     {this.props.total[this.state.type]}
                                 </Text>
                             </View>
@@ -78,7 +78,6 @@ class PieCard extends React.Component {
                                 width={maxWidth / 1.5}
                             />
                             <View style={{ ...styles.columns, justifyContent: 'space-between', padding: 5, width: '80%' }}>
-
                                 <Text style={this.style(styles, 'text')}>
                                     <Icon name={'currency-' + this.props.settings.currency} color={this.color()} size={13} />
                                     {this.props.data[this.state.type][this.state.focus].accumulator}

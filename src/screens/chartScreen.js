@@ -43,7 +43,7 @@ class Screen extends React.Component {
                     <TrendCard data={this.state.data.recent} />
                     <PieCard data={this.state.data.categories} total={this.state.data.total}/>
                     <WatchCard data={this.state.data.watchlist} />
-                    <GoalCard data={this.props.data.goal} settings={this.props.data.goalSettings} />
+                    <GoalCard data={this.props.data.goal} goalType={this.props.data.goalSettings} />
                     <CategoryCard data={this.state.data.categories} />
                 </ScrollView>
             </View>
