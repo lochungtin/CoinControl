@@ -62,7 +62,6 @@ class CardModal extends React.Component {
                                         iconColor={this.props.settings.accent}
                                         iconName={this.icon(this.props.cards[key])}
                                         iconSize={24}
-                                        selected={this.props.cards[key]}
                                         size={24}
                                     />
                                 </View>

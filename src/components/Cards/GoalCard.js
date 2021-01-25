@@ -34,25 +34,25 @@ class GoalCard extends React.Component {
                 <View style={{ height: 175, marginTop: 20 }}>
                     <ProgressCircle
                         backgroundColor={this.trackColor()}
-                        progress={this.props.data.percentage}
+                        progress={this.props.data.goal.percentage}
                         progressColor={this.props.settings.accent}
                         style={{ height: 175 }}
                     >
                         <View style={generalCardStyles.centerLabel}>
-                            {this.props.goalType.type === 'none' ?
+                            {this.props.data.goalSettings.type === 'none' ?
                                 <Text style={this.style(styles, 'text')}>
                                     Add goal to start using this card.
                                 </Text> :
                                 <View>
                                     <Text style={this.style(generalCardStyles, 'amountText')}>
-                                        {Math.round(this.props.data.percentage * 100) + '%'}
+                                        {Math.round(this.props.data.goal.percentage * 100) + '%'}
                                     </Text>
                                     <Text style={this.style(styles, 'centerText')}>
                                         <Icon name={'currency-' + this.props.settings.currency} color={this.color()} size={13} />
-                                        {this.processValue(this.props.goalType.amount - this.props.data.remaining) + ' spent'}
+                                        {this.processValue(this.props.data.goalSettings.amount - this.props.data.goal.remaining) + ' spent'}
                                     </Text>
                                     <Text style={this.style(styles, 'centerText')}>
-                                        {'this ' + this.props.goalType.type}
+                                        {'this ' + this.props.data.goalSettings.type}
                                     </Text>
                                 </View>
                             }
@@ -65,7 +65,8 @@ class GoalCard extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    settings: state.settings
+    data: state.data,
+    settings: state.settings,
 });
 
 export default connect(mapStateToProps)(GoalCard);
