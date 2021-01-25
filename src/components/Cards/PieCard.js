@@ -57,8 +57,8 @@ class PieCard extends React.Component {
                         <TypeSwitch default={this.state.type} update={type => this.setState({ type, focus: '' })} />
                         <PieChart style={{ height: 175, margin: 10 }} data={this.mapData()} innerRadius={'60%'}>
                             <View style={generalCardStyles.centerLabel}>
-                                <Icon name={'currency-' + this.props.settings.currency} color={this.color()} size={20} />
                                 <Text style={this.style(generalCardStyles, 'amountText')}>
+                                    <Icon name={'currency-' + this.props.settings.currency} color={this.color()} size={20} />
                                     {this.props.total[this.state.type]}
                                 </Text>
                             </View>

@@ -40,15 +40,15 @@ const addRecord = (base, datekey, rnkey, payload) => {
     // add payload to data
     base.data[datekey][rnkey] = payload;
 
-    // create new date object for display
-    if (base.display.findIndex(obj => obj.title === datekey))
-        base.display.push({ title: datekey, data: [] });
-
-    // add datetime key to obj.data array
-    base.display[base.display.length - 1].data.push(datekey + ':' + rnkey);
+    // find index of section object
+    const index = base.display.findIndex(obj => obj.title === datekey);
+    if (index == -1)
+        base.display.push({ title: datekey, data: [datekey + ':' + rnkey] });
+    else
+        base.display[index].data.push(datekey + ':' + rnkey)
 
     // sort display array by date
-    base.display.sort((a, b) => a.title < b.title * -1 + a.title > b.title * 1);
+    base.display.sort((a, b) => (a.title < b.title) * 1 + (a.title > b.title) * -1);
 
     // update total
     const total = (parseFloat(base.total) + (payload.type === 'Expense' ? -1 : 1) * payload.value);
@@ -83,7 +83,6 @@ const processValue = val => {
     else
         return splt[0] + '.' + splt[1].substring(0, 2);
 }
-
 
 const updateGoal = base => {
     switch (base.goalSettings.type) {
