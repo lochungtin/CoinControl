@@ -49,6 +49,7 @@ class SectionItem extends React.Component {
                         {this.catValue().name}
                     </Text>
                     <Text style={this.style(homeScreenStyles, 'textVal')}>
+                        <Icon name={'currency-' + this.props.settings.currency} size={13} color={this.iconColor()} />
                         {this.item('value')}
                     </Text>
                 </View>

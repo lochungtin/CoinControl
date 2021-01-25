@@ -2,10 +2,12 @@ import moment from 'moment';
 import { combineReducers } from 'redux';
 
 import {
+    ADD_CARD,
     ADD_EXPENSE_CATEGORY,
     ADD_INCOME_CATEGORY,
     ADD_RECORD,
     ADD_WATCHLIST,
+    DEFAULT_CARDS,
     DEFAULT_EXPENSE_CATEGORY,
     DEFAULT_GOAL,
     DEFAULT_INCOME_CATEGORY,
@@ -17,11 +19,13 @@ import {
     EDIT_EXPENSE_CATEGORY,
     EDIT_INCOME_CATEGORY,
     EDIT_RECORD,
+    HIDE_CARD,
     REMOVE_WATCHLIST,
     UPDATE_GOAL,
     UPDATE_SETTINGS,
 } from './action';
 import {
+    defaultCardConfig,
     defaultData,
     defaultExpenseCategories,
     defaultIncomeCategories,
@@ -74,32 +78,21 @@ const deleteRecord = (base, datekey, rnkey) => {
         base.display.splice(outerIndex, 1);
 }
 
-const updateGoal = base => {
-    switch (base.goalSettings.type) {
-        case 'none':
-            base.goal = defaultData.goal;
-            return;
-        case 'week':
-            var week = moment().week();
-            var dates = Object.keys(base.data).filter(date => moment(date, "YYYY-MM-DD").week() === week);
-            break;
+const updateCards = (cards = defaultCardConfig, action) => {
+    var temp = {...cards}
+    switch (action.type) {
+        case DEFAULT_CARDS:
+            return defaultCardConfig;
 
-        case 'month':
-            var thisMonth = moment().format("YYYY-MM");
-            var dates = Object.keys(base.data).filter(date => date.startsWith(thisMonth));
+        case ADD_CARD:
+            temp[action.payload] = true;
+            break;
+    
+        case HIDE_CARD:
+            temp[action.payload] = false;
             break;
     }
-
-    var totalExpense = 0;
-    dates.forEach(date => {
-        Object.keys(base.data[date]).forEach(key => {
-            const record = base.data[date][key];
-            totalExpense += (record.type === 'Expense') * record.value;
-        });
-    });
-
-    base.goal.remaining = base.goalSettings.amount - totalExpense;
-    base.goal.percentage = 1 - ((base.goalSettings.amount - totalExpense) / base.goalSettings.amount);
+    return temp;
 }
 
 const updateData = (data = defaultData, action) => {
@@ -145,7 +138,35 @@ const updateData = (data = defaultData, action) => {
     return temp;
 }
 
-const updateExpenseCategory = (categories = defaultExpenseCategories, action) => {
+const updateGoal = base => {
+    switch (base.goalSettings.type) {
+        case 'none':
+            base.goal = defaultData.goal;
+            return;
+        case 'week':
+            var week = moment().week();
+            var dates = Object.keys(base.data).filter(date => moment(date, "YYYY-MM-DD").week() === week);
+            break;
+
+        case 'month':
+            var thisMonth = moment().format("YYYY-MM");
+            var dates = Object.keys(base.data).filter(date => date.startsWith(thisMonth));
+            break;
+    }
+
+    var totalExpense = 0;
+    dates.forEach(date => {
+        Object.keys(base.data[date]).forEach(key => {
+            const record = base.data[date][key];
+            totalExpense += (record.type === 'Expense') * record.value;
+        });
+    });
+
+    base.goal.remaining = base.goalSettings.amount - totalExpense;
+    base.goal.percentage = 1 - ((base.goalSettings.amount - totalExpense) / base.goalSettings.amount);
+}
+
+const updateExpenseCategories = (categories = defaultExpenseCategories, action) => {
     switch (action.type) {
         case DEFAULT_EXPENSE_CATEGORY:
             return defaultExpenseCategories;
@@ -163,7 +184,7 @@ const updateExpenseCategory = (categories = defaultExpenseCategories, action) =>
     return categories;
 }
 
-const updateIncomeCategory = (categories = defaultIncomeCategories, action) => {
+const updateIncomeCategories = (categories = defaultIncomeCategories, action) => {
     switch (action.type) {
         case DEFAULT_INCOME_CATEGORY:
             return defaultIncomeCategories;
@@ -208,9 +229,10 @@ const updateWatchlist = (watchlist = defaultWatchlist, action) => {
 }
 
 export default combineReducers({
+    cards: updateCards,
     data: updateData,
-    expenseCategories: updateExpenseCategory,
-    incomeCategories: updateIncomeCategory,
+    expenseCategories: updateExpenseCategories,
+    incomeCategories: updateIncomeCategories,
     settings: updateSettings,
     watchlist: updateWatchlist,
 });

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import Bubble from '../Bubble';
 import ColorPicker from '../ColorPicker';
 import ExpandButton from '../ExpandButton';
-import { addExpenseCategory, addIncomeCategory, deleteExpenseCategory, defaultIncomeCategory, } from '../../redux/action';
+import { addExpenseCategory, addIncomeCategory, } from '../../redux/action';
 import { store } from '../../redux/store';
 
 import { black, shade2, shade3, white, } from '../../data/color';

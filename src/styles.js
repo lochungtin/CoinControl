@@ -109,6 +109,72 @@ export const pieCardStyles = StyleSheet.create({
 
 // modal styles
 
+export const cardModalStyles = StyleSheet.create({
+    selectionTextD: {
+        color: white,
+        fontSize: 16,
+    },
+    selectionTextL: {
+        color: black,
+        fontSize: 16,
+    },
+    selectionRow: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: 240
+    },
+    titleD: {
+        color: white,
+        fontSize: 20,
+    },
+    titleL: {
+        color: black,
+        fontSize: 20,
+    },
+})
+
+export const categoryModalStyles = StyleSheet.create({
+    contentD: {
+        alignItems: 'center',
+        backgroundColor: bgColorD,
+        borderWidth: 1,
+        borderColor: shade3,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        minHeight: '8%',
+        paddingHorizontal: '5%',
+        width: '100%'
+    },
+    contentL: {
+        alignItems: 'center',
+        backgroundColor: bgColorL,
+        borderWidth: 1,
+        borderColor: shade2,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        minHeight: '8%',
+        paddingHorizontal: '5%',
+        width: '100%'
+    },
+    inputD: {
+        borderBottomWidth: 1,
+        borderColor: shade3,
+        color: white,
+        fontSize: 15,
+        paddingLeft: '5%',
+        width: '70%'
+    },
+    inputL: {
+        borderBottomWidth: 1,
+        borderColor: shade2,
+        color: black,
+        fontSize: 15,
+        paddingLeft: '5%',
+        width: '70%'
+    },
+});
+
 export const confirmationModalStyles = StyleSheet.create({
     buttonText: {
         color: white
@@ -152,47 +218,6 @@ export const confirmationModalStyles = StyleSheet.create({
     title: {
         fontSize: 23,
     }
-});
-
-export const categoryModalStyles = StyleSheet.create({
-    contentD: {
-        alignItems: 'center',
-        backgroundColor: bgColorD,
-        borderWidth: 1,
-        borderColor: shade3,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        minHeight: '8%',
-        paddingHorizontal: '5%',
-        width: '100%'
-    },
-    contentL: {
-        alignItems: 'center',
-        backgroundColor: bgColorL,
-        borderWidth: 1,
-        borderColor: shade2,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        minHeight: '8%',
-        paddingHorizontal: '5%',
-        width: '100%'
-    },
-    inputD: {
-        borderBottomWidth: 1,
-        borderColor: shade3,
-        color: white,
-        fontSize: 15,
-        paddingLeft: '5%',
-        width: '70%'
-    },
-    inputL: {
-        borderBottomWidth: 1,
-        borderColor: shade2,
-        color: black,
-        fontSize: 15,
-        paddingLeft: '5%',
-        width: '70%'
-    },
 });
 
 export const generalBottomModalStyles = StyleSheet.create({
@@ -661,8 +686,8 @@ export const homeScreenStyles = StyleSheet.create({
         paddingTop: '4%', 
     },
     sectionItem: { 
-        borderRadius: 40,
-        paddingHorizontal: 40,
+        borderRadius: 15,
+        paddingHorizontal: 30,
         paddingVertical: 10,
         margin: 10,
     },

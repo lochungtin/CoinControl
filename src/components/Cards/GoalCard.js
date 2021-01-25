@@ -49,10 +49,10 @@ class GoalCard extends React.Component {
                                     </Text>
                                     <Text style={this.style(styles, 'centerText')}>
                                         <Icon name={'currency-' + this.props.settings.currency} color={this.color()} size={13} />
-                                        {this.processValue(this.props.goalType.amount - this.props.data.remaining) + ' spent for'}
+                                        {this.processValue(this.props.goalType.amount - this.props.data.remaining) + ' spent'}
                                     </Text>
                                     <Text style={this.style(styles, 'centerText')}>
-                                        {'the ' + this.props.goalType.type}
+                                        {'this ' + this.props.goalType.type}
                                     </Text>
                                 </View>
                             }

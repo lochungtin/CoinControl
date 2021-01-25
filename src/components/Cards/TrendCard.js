@@ -17,9 +17,7 @@ class TrendCard extends React.Component {
         if (props.data.expense.length === 0 && props.data.income.length > 0)
             type = 'income';
 
-        this.state = {
-            type: type,
-        }
+        this.state = { type };
     }
 
     color = () => this.props.settings.darkMode ? white : black;

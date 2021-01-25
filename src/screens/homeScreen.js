@@ -117,7 +117,7 @@ class Screen extends React.Component {
                             }
                             sections={this.props.data.display}
                             stickySectionHeadersEnabled={true}
-                            style={{ flex: 1, minWidth: maxWidth, paddingHorizontal: '5%' }}
+                            style={{ flex: 1, minWidth: maxWidth, paddingHorizontal: '2.5%' }}
                         />
                     </SafeAreaView>
                 </View>

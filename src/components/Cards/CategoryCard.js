@@ -18,9 +18,7 @@ class CategoryCard extends React.Component {
         if (Object.keys(props.data.expense).length === 0 && Object.keys(props.data.income).length > 0)
             type = 'income';
 
-        this.state = {
-            type: type,
-        }
+        this.state = { type };
     }
 
     catValue = (catkey, key) => (this.state.type === 'expense' ? this.props.expenseCategories : this.props.incomeCategories)[catkey][key];

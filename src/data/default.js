@@ -1,5 +1,13 @@
 import { goldenBrown, colorLabels } from './color';
 
+export const defaultCardConfig = {
+    tc: true,
+    pc: true,
+    wc: true,
+    gc: true,
+    cc: true,
+}
+
 export const defaultData = {
     display: [],
     data: {},

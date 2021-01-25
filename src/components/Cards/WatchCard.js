@@ -16,9 +16,7 @@ class WatchCard extends React.Component {
         if (Object.keys(props.data.expense).length === 0 && Object.keys(props.data.income).length > 0)
             type = 'income';
 
-        this.state = {
-            type: type,
-        }
+        this.state = { type };
     }
 
     style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];

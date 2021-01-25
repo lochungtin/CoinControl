@@ -1,3 +1,21 @@
+// Card Related
+export const ADD_CARD = 'ADD_CARD';
+export const addCard = payload => ({
+    type: ADD_CARD,
+    payload,
+});
+
+export const HIDE_CARD = 'HIDE_CARD';
+export const hideCard = payload => ({
+    type: HIDE_CARD,
+    payload,
+});
+
+export const DEFAULT_CARDS = 'DEFAULT_CARDS';
+export const defaultCards = () => ({
+    type: DEFAULT_CARDS,
+});
+
 // Data Related
 export const ADD_RECORD = 'ADD_RECORD';
 export const addRecord = payload => ({
