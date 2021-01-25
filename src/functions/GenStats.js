@@ -12,8 +12,9 @@ export const update = (data, watchlist) => {
         },
         total: {
             expense: 0,
+            expenseTotal: 0,
             income: 0,
-            total: 0,
+            incomeTotal: 0,
         },
         watchlist: {
             expense: {},
@@ -36,7 +37,8 @@ export const update = (data, watchlist) => {
             // totals
             output.total.expense += (record.type === 'Expense') * record.value;
             output.total.income += (record.type === 'Income') * record.value;
-            output.total.total++;
+            output.total.expenseTotal += (record.type === 'Expense') * 1;
+            output.total.incomeTotal += (record.type === 'Income') * 1;
 
             // 7 day cashflow
             if (recent) {

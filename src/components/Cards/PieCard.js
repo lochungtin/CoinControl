@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, View, } from 'react-native';
-import * as Progress from 'react-native-progress';
 import { PieChart } from 'react-native-svg-charts';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
@@ -8,8 +7,9 @@ import { connect } from 'react-redux';
 import Card from './Card';
 import TypeSwitch from './TypeSwitch';
 
-import { generalCardStyles, maxWidth, pieCardStyles, styles } from '../../styles';
+import { generalCardStyles, styles } from '../../styles';
 import { black, white } from '../../data/color';
+import LabeledProcess from './LabeledProcess';
 
 class PieCard extends React.Component {
 
@@ -71,26 +71,18 @@ class PieCard extends React.Component {
 
                 {this.state.open && this.state.focus !== '' &&
                     <Card color={this.catValue(this.state.focus, 'color')} icon={this.catValue(this.state.focus, 'iconName')} title={this.catValue(this.state.focus, 'name').toUpperCase()} noExpansion>
-                        <View style={pieCardStyles.progressBox}>
-                            <Progress.Bar
-                                color={this.catValue(this.state.focus, 'color')}
-                                progress={this.props.data[this.state.type][this.state.focus].accumulator / this.props.total[this.state.type]}
-                                width={maxWidth / 1.5}
-                            />
-                            <View style={{ ...styles.columns, justifyContent: 'space-between', padding: 5, width: '80%' }}>
-                                <Text style={this.style(styles, 'text')}>
-                                    <Icon name={'currency-' + this.props.settings.currency} color={this.color()} size={13} />
-                                    {this.props.data[this.state.type][this.state.focus].accumulator}
-                                </Text>
-                                <Text style={this.style(styles, 'text')}>
-                                    {Math.round(this.props.data[this.state.type][this.state.focus].accumulator / this.props.total[this.state.type] * 100) + '% OF TOTAL'}
-                                </Text>
-                                <Text style={this.style(styles, 'text')}>
-                                    <Icon name={'currency-' + this.props.settings.currency} color={this.color()} size={13} />
-                                    {this.props.total[this.state.type]}
-                                </Text>
-                            </View>
-                        </View>
+                        <LabeledProcess
+                            color={this.catValue(this.state.focus, 'color')}
+                            lValue={<>
+                                <Icon name={'currency-' + this.props.settings.currency} color={this.color()} size={13} />
+                                {this.props.data[this.state.type][this.state.focus].accumulator}
+                            </>}
+                            percentage={this.props.data[this.state.type][this.state.focus].accumulator / this.props.total[this.state.type]}
+                            rValue={<>
+                                <Icon name={'currency-' + this.props.settings.currency} color={this.color()} size={13} />
+                                {this.props.total[this.state.type]}
+                            </>}
+                        />
                     </Card>
                 }
             </>
