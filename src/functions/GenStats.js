@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { NULL_KEY } from '../data/default';
 
 export const update = data => {
     var output = {
@@ -50,7 +51,7 @@ export const update = data => {
             output.categories[cat][record.catKey].accumulator += record.value;
             output.categories[cat][record.catKey].counter++;
 
-        
+
         });
     });
 

@@ -99,6 +99,19 @@ export const editIncomeCategory = payload => ({
     payload,
 });
 
+// General Categories
+
+export const MAKE_ALL_NULL = 'MAKE_ALL_NULL';
+export const makeAllNull = () => ({
+    type: MAKE_ALL_NULL,
+});
+
+export const MAKE_NULL_KEY = 'MAKE_NULL_KEY';
+export const makeNullKey = payload => ({
+    type: MAKE_NULL_KEY,
+    payload,
+});
+
 // Settings Related
 export const DEFAULT_SETTINGS = 'DEFAULT_SETTINGS';
 export const defaultSettings = () => ({

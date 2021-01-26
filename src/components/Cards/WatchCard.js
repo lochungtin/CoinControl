@@ -9,6 +9,7 @@ import LabeledProcess from './LabeledProcess';
 import WatchlistModal from '../Modals/WatchlistModal';
 
 import { shade3, white } from '../../data/color';
+import { NULL_KEY } from '../../data/default';
 import { styles, watchlistCardStyles } from '../../styles';
 
 class WatchCard extends React.Component {
@@ -21,7 +22,10 @@ class WatchCard extends React.Component {
         }
     }
 
-    catValue = (catkey, key) => this.props.expenseCategories[catkey][key];
+    catValue = (catkey, key) => {
+        const cat = this.props.expenseCategories[catkey] || this.props.expenseCategories[NULL_KEY];
+        return cat[key];
+    }
 
     color = () => this.props.settings.darkMode ? white : black;
 

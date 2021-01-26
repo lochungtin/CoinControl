@@ -9,6 +9,7 @@ import LabeledProcess from './LabeledProcess';
 import TypeSwitch from './TypeSwitch';
 
 import { black, white } from '../../data/color';
+import { NULL_KEY } from '../../data/default';
 import { generalCardStyles, styles, } from '../../styles';
 
 class PieCard extends React.Component {
@@ -27,7 +28,10 @@ class PieCard extends React.Component {
 
     color = () => this.props.settings.darkMode ? white : black;
 
-    catValue = (catkey, key) => (this.state.type === 'expense' ? this.props.expenseCategories : this.props.incomeCategories)[catkey][key];
+    catValue = (catkey, key) => {
+        const cat = (this.state.type === 'expense' ? this.props.expenseCategories : this.props.incomeCategories)[catkey] || this.props.expenseCategories[NULL_KEY];
+        return cat[key];
+    }
 
     onSlicePress = key => {
         var focus = key;
@@ -36,15 +40,17 @@ class PieCard extends React.Component {
         this.setState({ focus });
     }
 
-    mapData = () => Object.keys(this.props.data[this.state.type]).map(key => ({
-        value: this.props.data[this.state.type][key].accumulator,
-        svg: {
-            fill: this.catValue(key, 'color'),
-            onPress: () => this.onSlicePress(key)
-        },
-        key
-    }));
-
+    mapData = () => Object.keys(this.props.data[this.state.type]).map(key => {
+        const value = this.props.data[this.state.type][key] || { accumulator: 0 };
+        return ({
+            value: value.accumulator,
+            svg: {
+                fill: this.catValue(key, 'color'),
+                onPress: () => this.onSlicePress(key)
+            },
+            key
+        });
+    });
 
     style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
@@ -75,7 +81,7 @@ class PieCard extends React.Component {
                     }
                 </Card>
 
-                {this.state.focus !== '' && Object.keys(this.props.data[this.state.type]).length > 0 &&
+                {this.state.focus !== '' && Object.keys(this.props.data[this.state.type]).length > 0 && this.props.data[this.state.type][this.state.focus] &&
                     <Card color={this.catValue(this.state.focus, 'color')} icon={this.catValue(this.state.focus, 'iconName')} title={this.catValue(this.state.focus, 'name').toUpperCase()} noExpansion>
                         <LabeledProcess
                             color={this.catValue(this.state.focus, 'color')}

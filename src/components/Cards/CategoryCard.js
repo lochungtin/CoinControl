@@ -4,10 +4,11 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import Card from './Card';
+import LabeledProcess from './LabeledProcess';
 import TypeSwitch from './TypeSwitch';
 
 import { styles } from '../../styles';
-import LabeledProcess from './LabeledProcess';
+import { NULL_KEY } from '../../data/default';
 
 
 class CategoryCard extends React.Component {
@@ -21,7 +22,10 @@ class CategoryCard extends React.Component {
         this.state = { type };
     }
 
-    catValue = (catkey, key) => (this.state.type === 'expense' ? this.props.expenseCategories : this.props.incomeCategories)[catkey][key];
+    catValue = (catkey, key) => {
+        const cat = (this.state.type === 'expense' ? this.props.expenseCategories : this.props.incomeCategories)[catkey] || this.props.expenseCategories[NULL_KEY];
+        return cat[key];
+    }
 
     percentage = key => this.props.data[this.state.type][key].counter / this.props.total[this.state.type + 'Total'];
 

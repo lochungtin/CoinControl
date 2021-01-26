@@ -21,6 +21,8 @@ import {
     EDIT_INCOME_CATEGORY,
     EDIT_RECORD,
     HIDE_CARD,
+    MAKE_ALL_NULL,
+    MAKE_NULL_KEY,
     REMOVE_WATCHLIST,
     UPDATE_GOAL,
     UPDATE_SETTINGS,
@@ -32,6 +34,7 @@ import {
     defaultIncomeCategories,
     defaultSettings,
     defaultWatchlist,
+    NULL_KEY,
 } from '../data/default';
 
 const genKey = () => genRNKey() + genRNKey() + '-' + genRNKey();
@@ -79,6 +82,26 @@ const deleteRecord = (base, datekey, rnkey) => {
         base.display.splice(outerIndex, 1);
 }
 
+const makeAllNull = (base) => {
+    const defaultList = [...Object.keys(defaultExpenseCategories), Object.keys(defaultIncomeCategories)];
+    Object.keys(base.data).forEach(datekey => Object.keys(base.data[datekey]).forEach(recordKey => {
+        var record = base.data[datekey][recordKey];
+        if (!defaultList.includes(record.catKey)) {
+            console.log('clear: ' + recordKey);
+            record.catKey = NULL_KEY;
+        }
+    }));
+}
+
+const makeNullKey = (base, key) => {
+    Object.keys(base.data).forEach(datekey => Object.keys(base.data[datekey]).forEach(recordKey => {
+        console.log('clear: ' + key);
+        var record = base.data[datekey][recordKey];
+        if (record.catKey === key)
+            record.catKey = NULL_KEY;
+    }));
+}
+
 const updateCards = (cards = defaultCardConfig, action) => {
     var temp = { ...cards }
     switch (action.type) {
@@ -100,6 +123,7 @@ const updateData = (data = defaultData, action) => {
     var temp = { ...data };
     switch (action.type) {
         case DELETE_HISTORY:
+            console.log('asdf');
             return defaultData;
 
         case ADD_RECORD:
@@ -129,6 +153,14 @@ const updateData = (data = defaultData, action) => {
 
         case DEFAULT_GOAL:
             temp.goalSettings = defaultData.goalSettings;
+            break;
+
+        case MAKE_ALL_NULL:
+            makeAllNull(temp);
+            break;
+
+        case MAKE_NULL_KEY:
+            makeNullKey(temp, action.payload);
             break;
 
         default:

@@ -9,6 +9,7 @@ import ExpandButton from '../ExpandButton';
 import { addWatchlist, removeWatchlist, } from '../../redux/action';
 import { store } from '../../redux/store';
 
+import { NULL_KEY } from '../../data/default';
 import { pickerModalStyles, styles, watchlistModalStyles, } from '../../styles';
 
 class WatchlistModal extends React.Component {
@@ -20,7 +21,7 @@ class WatchlistModal extends React.Component {
     toggle = key => {
         if (this.props.watchlist.includes(key))
             store.dispatch(removeWatchlist(key));
-        else
+        else if (this.props.watchlist.length < 6)
             store.dispatch(addWatchlist(key));
     }
 

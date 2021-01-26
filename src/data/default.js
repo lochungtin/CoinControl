@@ -26,7 +26,7 @@ export const NULL_KEY = '00000000-0000';
 
 export const defaultExpenseCategories = {
     '00000000-0000': {
-        color: white, name: 'other', iconName: 'crop-free', hidden: true
+        color: white, name: 'other', iconName: 'crop-free'
     },
     '20012021-4001': {
         color: goldenBrown, name: 'Bills', iconName: 'text-box-outline'

@@ -18,16 +18,18 @@ class Screen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            focus: true,
             data: update(props.data.data),
             cmOpen: false,
         }
     }
 
     componentDidMount() {
-        this._unsubscribe = this.props.navigation.addListener('focus', () => this.setState({ data: update(this.props.data.data, this.props.watchlist) }));
+        this._unsubscribe = this.props.navigation.addListener('focus', () => this.setState({ focus: true, data: update(this.props.data.data, this.props.watchlist) }));
     }
 
     componentWillUnmount() {
+        this.setState({ focus: false });
         this._unsubscribe();
     }
 
@@ -36,22 +38,24 @@ class Screen extends React.Component {
     render() {
         return (
             <View style={{ ...this.style(styles, 'screen'), }}>
-                <ScrollView style={{ width: '100%' }}>
-                    <TitleCard
-                        onPress={() => this.setState({ cmOpen: true })}
-                        icon={'chart-bubble'}
-                        title={'GENERAL ANALYTICS'}
+                {this.state.focus && <>
+                    <ScrollView style={{ width: '100%' }}>
+                        <TitleCard
+                            onPress={() => this.setState({ cmOpen: true })}
+                            icon={'chart-bubble'}
+                            title={'GENERAL ANALYTICS'}
+                        />
+                        {this.props.cards.tc && <TrendCard data={this.state.data.recent} />}
+                        {this.props.cards.pc && <PieCard data={this.state.data.categories} total={this.state.data.total} />}
+                        {this.props.cards.wc && <WatchCard data={this.state.data.categories} total={this.state.data.total} />}
+                        {this.props.cards.gc && <GoalCard />}
+                        {this.props.cards.cc && <CategoryCard data={this.state.data.categories} total={this.state.data.total} />}
+                    </ScrollView>
+                    <CardModal
+                        close={() => this.setState({ cmOpen: false })}
+                        open={this.state.cmOpen}
                     />
-                    {this.props.cards.tc && <TrendCard data={this.state.data.recent} />}
-                    {this.props.cards.pc && <PieCard data={this.state.data.categories} total={this.state.data.total} />}
-                    {this.props.cards.wc && <WatchCard data={this.state.data.categories} total={this.state.data.total} />}
-                    {this.props.cards.gc && <GoalCard />}
-                    {this.props.cards.cc && <CategoryCard data={this.state.data.categories} total={this.state.data.total} />}
-                </ScrollView>
-                <CardModal
-                    close={() => this.setState({ cmOpen: false })}
-                    open={this.state.cmOpen}
-                />
+                </>}
             </View>
         );
     }

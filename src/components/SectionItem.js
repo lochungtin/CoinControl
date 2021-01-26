@@ -24,12 +24,7 @@ class SectionItem extends React.Component {
         return type === 'Expense' ^ toggle ? shade1 : shade2;
     }
 
-    catValue = () => {
-        const cat = (this.item('type') === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories)[this.item('catKey')];
-        if (cat === undefined)
-            return { color: white, iconName: 'crop-free', name: 'other', };
-        return cat;
-    }
+    catValue = () => (this.item('type') === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories)[this.item('catKey')];
 
     iconColor = () => this.props.settings.darkMode ? white : black;
 

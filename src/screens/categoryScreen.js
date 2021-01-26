@@ -21,7 +21,7 @@ class Screen extends React.Component {
             categories: categories,
             catKey: '',
             date: moment().format('YYYY-MM-DD'),
-            grid: this.makeGrid(Object.keys(categories)),
+            grid: this.makeGrid(Object.keys(categories).filter(key => key !== NULL_KEY)),
             open: false,
             type: props.route.params,
             value: 0,

@@ -11,7 +11,7 @@ import SettingsHeader from '../components/SettingsHeader';
 import SettingsItem from '../components/SettingsItem';
 import TimePicker from '../components/TimePicker';
 import NotifService from '../notifications/notifService';
-import { defaultCards, defaultExpenseCategory, defaultIncomeCategory, defaultSettings, defaultWatchlist, deleteHistory, updateSettings, } from '../redux/action';
+import { defaultCards, defaultExpenseCategory, defaultIncomeCategory, defaultSettings, defaultWatchlist, deleteHistory, makeAllNull, updateSettings, } from '../redux/action';
 import { store } from '../redux/store';
 
 import { settingStyles, styles, } from '../styles';
@@ -57,6 +57,7 @@ class Screen extends React.Component {
         if (type === 3)
             store.dispatch(deleteHistory());
         if (type > 1) {
+            store.dispatch(makeAllNull());
             store.dispatch(defaultExpenseCategory());
             store.dispatch(defaultIncomeCategory());
             store.dispatch(defaultWatchlist());

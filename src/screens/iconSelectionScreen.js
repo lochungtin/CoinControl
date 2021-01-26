@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import ConfirmationModal from '../components/Modals/ConfirmationModal';
 import CategoryModal from '../components/Modals/CategoryModal';
 import ScreenHeader from '../components/ScreenHeader';
-import { deleteExpenseCategory, deleteIncomeCategory, removeWatchlist } from '../redux/action';
+import { deleteExpenseCategory, deleteIncomeCategory, makeNullKey, removeWatchlist } from '../redux/action';
 import { store } from '../redux/store';
 
 import { white } from '../data/color';
@@ -44,10 +44,11 @@ class Screen extends React.Component {
 
     deleteCat = key => {
         if (this.state.deleteMode) {
+            store.dispatch(makeNullKey(key));
             if (this.state.type === 'Expense') {
-                store.dispatch(deleteExpenseCategory(key));
                 if (this.props.watchlist.includes(key))
                     store.dispatch(removeWatchlist(key));
+                store.dispatch(deleteExpenseCategory(key));
             }
             else
                 store.dispatch(deleteIncomeCategory(key));
@@ -115,21 +116,21 @@ class Screen extends React.Component {
                     </TouchableOpacity>
                     {(this.state.opened['inUse'] || this.state.deleteMode) && this.makeGrid(Object.keys(this.state.type === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories).filter(key => key !== NULL_KEY))
                         .map(row => {
-                        return (
-                            <View key={row} style={{ ...styles.columns, height: 70, justifyContent: 'space-evenly' }}>
-                                {row.map(key => {
-                                    return (
-                                        <TouchableOpacity key={this.genRnKey()} onPress={() => this.openConfirmation(key)} style={iconSelectionScreen.stack}>
-                                            <Icon name={this.catValue(key).iconName} size={35} color={this.catValue(key).color} style={iconSelectionScreen.stackChild} />
-                                            {this.catValue(key).color !== 'transparent' && this.state.deleteMode && <View style={{ ...iconSelectionScreen.stackChild, ...iconSelectionScreen.stackDelete }}>
-                                                <Icon name={'close'} size={20} color={white} />
-                                            </View>}
-                                        </TouchableOpacity>
-                                    );
-                                })}
-                            </View>
-                        );
-                    })}
+                            return (
+                                <View key={row} style={{ ...styles.columns, height: 70, justifyContent: 'space-evenly' }}>
+                                    {row.map(key => {
+                                        return (
+                                            <TouchableOpacity key={this.genRnKey()} onPress={() => this.openConfirmation(key)} style={iconSelectionScreen.stack}>
+                                                <Icon name={this.catValue(key).iconName} size={35} color={this.catValue(key).color} style={iconSelectionScreen.stackChild} />
+                                                {this.catValue(key).color !== 'transparent' && this.state.deleteMode && <View style={{ ...iconSelectionScreen.stackChild, ...iconSelectionScreen.stackDelete }}>
+                                                    <Icon name={'close'} size={20} color={white} />
+                                                </View>}
+                                            </TouchableOpacity>
+                                        );
+                                    })}
+                                </View>
+                            );
+                        })}
                 </View>
                 <ScrollView style={{ width: '100%' }}>
                     {this.state.types.map(type => {
