@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 
 import Bubble from '../Bubble';
 import ExpandButton from '../ExpandButton';
+import { addCard, hideCard, } from '../../redux/action';
 import { store } from '../../redux/store';
-import { addCard, hideCard } from '../../redux/action';
 
 import { cardModalStyles, pickerModalStyles, styles, } from '../../styles';
 
@@ -46,7 +46,7 @@ class CardModal extends React.Component {
                 style={{ alignItems: 'center', padding: 0, margin: 0 }}
             >
                 <View style={{ ...this.style(pickerModalStyles, 'root'), height: 350 }}>
-                    <ExpandButton onPress={this.close} />
+                    <ExpandButton onPress={this.props.close} />
                     <Text style={this.style(cardModalStyles, 'title')}>
                         CARDS
                     </Text>

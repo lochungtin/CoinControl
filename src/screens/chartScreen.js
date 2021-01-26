@@ -18,7 +18,7 @@ class Screen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            data: update(props.data.data, props.watchlist),
+            data: update(props.data.data),
             cmOpen: false,
         }
     }
@@ -44,7 +44,7 @@ class Screen extends React.Component {
                     />
                     {this.props.cards.tc && <TrendCard data={this.state.data.recent} />}
                     {this.props.cards.pc && <PieCard data={this.state.data.categories} total={this.state.data.total} />}
-                    {this.props.cards.wc && <WatchCard data={this.state.data.watchlist} />}
+                    {this.props.cards.wc && <WatchCard data={this.state.data.categories} total={this.state.data.total} />}
                     {this.props.cards.gc && <GoalCard />}
                     {this.props.cards.cc && <CategoryCard data={this.state.data.categories} total={this.state.data.total} />}
                 </ScrollView>

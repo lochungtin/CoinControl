@@ -6,14 +6,14 @@ import { connect } from 'react-redux';
 import ConfirmationModal from '../components/Modals/ConfirmationModal';
 import CategoryModal from '../components/Modals/CategoryModal';
 import ScreenHeader from '../components/ScreenHeader';
-import { deleteExpenseCategory, deleteIncomeCategory } from '../redux/action';
+import { deleteExpenseCategory, deleteIncomeCategory, removeWatchlist } from '../redux/action';
 import { store } from '../redux/store';
 
 import { white } from '../data/color';
+import { NULL_KEY } from '../data/default';
 import { icons } from '../data/icons';
 import { categoryPromptText } from '../data/text';
 import { iconSelectionScreen, styles, } from '../styles';
-
 
 class Screen extends React.Component {
 
@@ -44,8 +44,11 @@ class Screen extends React.Component {
 
     deleteCat = key => {
         if (this.state.deleteMode) {
-            if (this.state.type === 'Expense')
+            if (this.state.type === 'Expense') {
                 store.dispatch(deleteExpenseCategory(key));
+                if (this.props.watchlist.includes(key))
+                    store.dispatch(removeWatchlist(key));
+            }
             else
                 store.dispatch(deleteIncomeCategory(key));
 
@@ -73,10 +76,12 @@ class Screen extends React.Component {
     openIcon = open => open ? 'chevron-down' : 'chevron-right';
 
     openConfirmation = key => {
-        if (!this.props.settings.prompt.dc)
-            this.setState({ confirmType: 'dc', focus: key });
-        else
-            this.deleteCat(key);
+        if (this.state.deleteMode) {
+            if (!this.props.settings.prompt.dc)
+                this.setState({ confirmType: 'dc', focus: key });
+            else
+                this.deleteCat(key);
+        }
     }
 
     toggleDelete = () => {
@@ -108,7 +113,8 @@ class Screen extends React.Component {
                         <Text style={this.style('headerText')}>IN USE</Text>
                         <Icon name={this.openIcon(this.state.opened['inUse'] || this.state.deleteMode)} size={20} color={this.style('headerText').color} />
                     </TouchableOpacity>
-                    {(this.state.opened['inUse'] || this.state.deleteMode) && this.makeGrid(Object.keys(this.state.type === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories)).map(row => {
+                    {(this.state.opened['inUse'] || this.state.deleteMode) && this.makeGrid(Object.keys(this.state.type === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories).filter(key => key !== NULL_KEY))
+                        .map(row => {
                         return (
                             <View key={row} style={{ ...styles.columns, height: 70, justifyContent: 'space-evenly' }}>
                                 {row.map(key => {
@@ -159,7 +165,7 @@ class Screen extends React.Component {
                 />
                 <ConfirmationModal
                     close={() => this.setState({ confirmType: '' })}
-                    confirm={() => this.deleteCat(this.state.focus)}
+                    onConfirm={() => this.deleteCat(this.state.focus)}
                     open={this.state.confirmType !== ''}
                     text={categoryPromptText[this.state.confirmType]}
                 />
@@ -172,6 +178,7 @@ const mapStateToProps = state => ({
     expenseCategories: state.expenseCategories,
     incomeCategories: state.incomeCategories,
     settings: state.settings,
+    watchlist: state.watchlist,
 })
 
 export default connect(mapStateToProps)(Screen);

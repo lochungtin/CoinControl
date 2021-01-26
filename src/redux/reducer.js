@@ -12,6 +12,7 @@ import {
     DEFAULT_GOAL,
     DEFAULT_INCOME_CATEGORY,
     DEFAULT_SETTINGS,
+    DEFAULT_WATCHLIST,
     DELETE_EXPENSE_CATEGORY,
     DELETE_INCOME_CATEGORY,
     DELETE_RECORD,
@@ -79,7 +80,7 @@ const deleteRecord = (base, datekey, rnkey) => {
 }
 
 const updateCards = (cards = defaultCardConfig, action) => {
-    var temp = {...cards}
+    var temp = { ...cards }
     switch (action.type) {
         case DEFAULT_CARDS:
             return defaultCardConfig;
@@ -87,7 +88,7 @@ const updateCards = (cards = defaultCardConfig, action) => {
         case ADD_CARD:
             temp[action.payload] = true;
             break;
-    
+
         case HIDE_CARD:
             temp[action.payload] = false;
             break;
@@ -215,14 +216,15 @@ const updateSettings = (settings = defaultSettings, action) => {
 }
 
 const updateWatchlist = (watchlist = defaultWatchlist, action) => {
-    var temp = { ...watchlist };
-    switch (action.payload) {
+    var temp = [...watchlist];
+    switch (action.type) {
+        case DEFAULT_WATCHLIST:
+            return defaultWatchlist;
         case ADD_WATCHLIST:
-            temp[action.payload.type].push(action.payload.key);
+            temp.push(action.payload);
             break;
         case REMOVE_WATCHLIST:
-            const index = temp[action.payload.type].indexOf(action.payload.key);
-            temp[action.payload.type].splice(index, 1);
+            temp.splice(temp.indexOf(action.payload), 1);
             break;
     }
     return temp;

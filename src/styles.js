@@ -107,6 +107,18 @@ export const pieCardStyles = StyleSheet.create({
     },
 });
 
+export const watchlistCardStyles = StyleSheet.create({
+    categoriesBar: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        marginVertical: 10,
+    },
+    bubbleContainer: {
+        width: 62
+    }
+});
+
 // modal styles
 
 export const cardModalStyles = StyleSheet.create({
@@ -327,6 +339,24 @@ export const recordModalStyles = StyleSheet.create({
         marginLeft: '5%',
         paddingLeft: '5%',
         width: '70%'
+    },
+});
+
+export const watchlistModalStyles = StyleSheet.create({
+    displayTextD: {
+        color: white,
+        width: 150,
+    },
+    displayTextL: {
+        color: black,
+        width: 150,
+    },
+    selectionBox: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        marginVertical: 5,
+        width: 300,
     },
 });
 

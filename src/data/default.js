@@ -1,4 +1,4 @@
-import { goldenBrown, colorLabels } from './color';
+import { goldenBrown, colorLabels, white } from './color';
 
 export const defaultCardConfig = {
     tc: true,
@@ -22,7 +22,12 @@ export const defaultData = {
     total: "0.00",
 }
 
+export const NULL_KEY = '00000000-0000';
+
 export const defaultExpenseCategories = {
+    '00000000-0000': {
+        color: white, name: 'other', iconName: 'crop-free', hidden: true
+    },
     '20012021-4001': {
         color: goldenBrown, name: 'Bills', iconName: 'text-box-outline'
     },
@@ -47,6 +52,9 @@ export const defaultExpenseCategories = {
 };
 
 export const defaultIncomeCategories = {
+    '00000000-0000': {
+        color: white, name: 'other', iconName: 'crop-free', hidden: true
+    },
     '20012021-4008': {
         color: goldenBrown, name: 'Allowance', iconName: 'wallet-outline'
     },
@@ -80,7 +88,4 @@ export const defaultSettings = {
     }
 };
 
-export const defaultWatchlist = {
-    expense: [],
-    income: [],
-}
+export const defaultWatchlist = [];

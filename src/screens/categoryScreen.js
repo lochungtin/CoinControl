@@ -9,6 +9,7 @@ import ScreenHeader from '../components/ScreenHeader';
 import { store } from '../redux/store';
 import { addRecord } from '../redux/action';
 
+import { NULL_KEY } from '../data/default';
 import { styles } from '../styles';
 
 class Screen extends React.Component {
@@ -58,7 +59,7 @@ class Screen extends React.Component {
         this.setState({
             catKey: '',
             categories: categories,
-            grid: this.makeGrid(Object.keys(categories)),
+            grid: this.makeGrid(Object.keys(categories).filter(key => key !== NULL_KEY)),
             open: false,
         });
     }

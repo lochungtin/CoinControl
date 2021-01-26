@@ -3,11 +3,11 @@ if (__DEV__) {
 }
 
 import React from 'react';
-import AppNav from './src/navigation'
-
 import { Provider } from 'react-redux';
-import { store, persistor } from './src/redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
+
+import AppNav from './src/navigation'
+import { store, persistor } from './src/redux/store';
 
 export default class App extends React.Component {
     render() {

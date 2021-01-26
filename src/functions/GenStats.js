@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export const update = (data, watchlist) => {
+export const update = data => {
     var output = {
         categories: {
             expense: {},
@@ -16,14 +16,7 @@ export const update = (data, watchlist) => {
             income: 0,
             incomeTotal: 0,
         },
-        watchlist: {
-            expense: {},
-            income: {},
-        },
     };
-    
-    watchlist.expense.forEach(key => output.watchlist.expense[key] = 0);
-    watchlist.income.forEach(key => output.watchlist.income[key] = 0);
 
     Object.keys(data).forEach(day => {
         const tdyMoment = moment();
@@ -57,13 +50,7 @@ export const update = (data, watchlist) => {
             output.categories[cat][record.catKey].accumulator += record.value;
             output.categories[cat][record.catKey].counter++;
 
-            // watchlist
-            if (watchlist.expense.includes(record.catKey))
-                output.watchlist.expense += record.value;
-            
-            if (watchlist.income.includes(record.catKey))
-                output.watchlist.income += record.value;
-
+        
         });
     });
 

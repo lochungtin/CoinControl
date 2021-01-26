@@ -5,11 +5,11 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import Card from './Card';
+import LabeledProcess from './LabeledProcess';
 import TypeSwitch from './TypeSwitch';
 
-import { generalCardStyles, styles } from '../../styles';
 import { black, white } from '../../data/color';
-import LabeledProcess from './LabeledProcess';
+import { generalCardStyles, styles, } from '../../styles';
 
 class PieCard extends React.Component {
 

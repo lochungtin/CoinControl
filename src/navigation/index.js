@@ -14,6 +14,7 @@ import settingsScreen from '../screens/settingsScreen';
 import updateRecordScreen from '../screens/categoryScreen';
 
 import { black, bgColorD, bgColorL, white, } from '../data/color';
+import reportScreen from '../screens/reportScreen';
 
 const Main = createStackNavigator();
 const Settings = createStackNavigator();
@@ -51,6 +52,9 @@ class AppNav extends React.Component {
                         tabBarIcon: ({ focused, color, size }) => {
                             let name = '';
                             switch (route.name) {
+                                case 'Reports':
+                                    name = 'text-box-multiple-outline';
+                                    break;
                                 case 'Chart':
                                     name = 'chart-donut';
                                     break;
@@ -58,7 +62,7 @@ class AppNav extends React.Component {
                                     name = 'home';
                                     break;
                                 case 'Settings':
-                                    name = 'dots-horizontal-circle-outline';
+                                    name = 'cog';
                                     break;
                             }
                             return <Icon name={name} size={size} color={color} />
@@ -77,18 +81,10 @@ class AppNav extends React.Component {
                         },
                     }}
                 >
+                    <Root.Screen name='Reports' component={reportScreen} />
                     <Root.Screen name='Chart' component={chartScreen} />
                     <Root.Screen name='Home' component={this.main} />
-                    <Root.Screen
-                        name='Settings'
-                        component={this.settings}
-                        listeners={({ navigation, route }) => ({
-                            tabPress: e => {
-                                e.preventDefault();
-                                navigation.navigate('Settings', { darkMode: this.props.settings.darkMode, title: 'Settings' });
-                            },
-                        })}
-                    />
+                    <Root.Screen name='Settings' component={this.settings}/>
                 </Root.Navigator>
             </NavigationContainer>
         )
