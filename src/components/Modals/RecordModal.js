@@ -31,7 +31,7 @@ class RecordModal extends React.Component {
     catValue = () => (this.item('type') === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories)[this.item('catKey')];
 
     close = () => {
-        this.setState({ editTitle: false });
+        this.setState({ editTitle: false, newDate: '' });
         this.props.close();
     }
 
@@ -55,7 +55,7 @@ class RecordModal extends React.Component {
         return this.props.item[value];
     }
 
-    onChangeDate = date => this.setState({ newDate: date });
+    onChangeDate = newDate => this.setState({ newDate });
 
     onConfirm = num => {
         var rec = {
@@ -131,6 +131,7 @@ class RecordModal extends React.Component {
                     <DatePicker
                         action={this.onChangeDate}
                         close={() => this.setState({ dpOpen: false })}
+                        date={(this.state.newDate === '' ? this.item('date') : this.state.newDate)}
                         open={this.state.dpOpen}
                         selected={(this.state.newDate === '' ? this.item('date') : this.state.newDate)}
                     />

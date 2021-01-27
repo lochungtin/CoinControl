@@ -10,13 +10,6 @@ import { datePickerStyles } from '../../styles';
 
 class DatePicker extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            date: this.props.date,
-        }
-    }
-
     modalStyle = () => this.props.settings.darkMode ? datePickerStyles.modalViewD : datePickerStyles.modalViewL;
 
     render() {
@@ -32,6 +25,7 @@ class DatePicker extends React.Component {
                 <View style={this.modalStyle()}>
                     <ExpandButton onPress={this.props.close} />
                     <Calendar
+                        date={this.props.date}
                         onPress={(date) => {
                             this.props.action(date);
                             this.props.close();

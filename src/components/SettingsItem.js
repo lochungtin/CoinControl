@@ -29,8 +29,8 @@ class SettingsItem extends React.Component {
     style = styleName => settingStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
     render() {
-        if (this.props.switch)
-            return (
+        return (<>
+            {this.props.switch ?
                 <View style={this.style('itemContainer')}>
                     <Icon name={this.props.iconL} size={20} color={this.iconColor()} />
                     <Text style={this.text()}>
@@ -44,30 +44,25 @@ class SettingsItem extends React.Component {
                             value={this.props.state}
                         />
                     </View>
-                </View>
-
-            )
-        else
-            return (
-                <View>
-                    <TouchableOpacity onPress={this.props.action}>
-                        <View style={this.style('itemContainer')}>
-                            <Icon name={this.props.iconL} size={20} color={this.iconColor()} />
-                            <Text style={this.text()}>
-                                {this.props.text}
-                            </Text>
-                            <View style={settingStyles.settingRight}>
-                                <Icon name={this.iconRight()} size={20} color={this.iconRColor()} />
-                            </View>
+                </View> :
+                <TouchableOpacity onPress={this.props.action}>
+                    <View style={this.style('itemContainer')}>
+                        <Icon name={this.props.iconL} size={20} color={this.iconColor()} />
+                        <Text style={this.text()}>
+                            {this.props.text}
+                        </Text>
+                        <View style={settingStyles.settingRight}>
+                            <Icon name={this.iconRight()} size={20} color={this.iconRColor()} />
                         </View>
-                        {this.props.children && this.props.open &&
-                            <View style={this.style('itemChildContainer')}>
-                                {this.props.children}
-                            </View>
-                        }
-                    </TouchableOpacity>
-                </View>
-            )
+                    </View>
+                    {this.props.children && this.props.open &&
+                        <View style={this.style('itemChildContainer')}>
+                            {this.props.children}
+                        </View>
+                    }
+                </TouchableOpacity>
+            }
+        </>);
     }
 }
 

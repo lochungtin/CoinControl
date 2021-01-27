@@ -11,13 +11,15 @@ class Calendar extends React.Component {
 
     constructor(props) {
         super(props);
-        const now = moment();
-        const month = now.month() + 1;
-        const year = now.year();
+        const pos = props.date || moment().format('YYYY-MM-DD');
+        const month = parseInt(pos.substring(5, 7));
+        const year = parseInt(pos.substring(0, 4));
+        console.log(props.date);
+
         this.state = {
-            month: month,
-            pos: now.format('YYYY-MM-DD'),
             grid: [],
+            month: month,
+            pos: pos,
             selectedRow: '',
             year: year,
         }

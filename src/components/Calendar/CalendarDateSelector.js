@@ -8,7 +8,7 @@ import { calendarStyles } from '../../styles';
 class CalendarDateSelector extends React.Component {
 
     text = () => {
-        if (this.props.day === moment().format('YYYY-MM-DD'))
+        if (this.props.day === moment().format('YYYY-MM-DD') && !this.props.disabled)
             return { textAlign: 'center', color: this.props.settings.accent }
         return this.props.disabled ? this.style('disabled') : this.style('centerText');
     }
@@ -18,7 +18,7 @@ class CalendarDateSelector extends React.Component {
     render() {
         return (
             <TouchableOpacity
-                style={{...calendarStyles.selectionContainer, borderColor: this.props.selected ? this.props.settings.accent : 'transparent'}}
+                style={{...calendarStyles.selectionContainer, borderColor: this.props.selected && !this.props.disabled ? this.props.settings.accent : 'transparent'}}
                 onPress={() => {
                     if (!this.props.disabled)
                         this.props.onPress(this.props.day);
