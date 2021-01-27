@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { StatusBar } from 'react-native';
+import NavigationBar from 'react-native-navbar-color'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
@@ -13,7 +14,7 @@ import homeScreen from '../screens/homeScreen';
 import settingsScreen from '../screens/settingsScreen';
 import updateRecordScreen from '../screens/categoryScreen';
 
-import { black, bgColorD, bgColorL, white, } from '../data/color';
+import { black, bgColorD, bgColorL, shade2, white, } from '../data/color';
 import reportScreen from '../screens/reportScreen';
 
 const Main = createStackNavigator();
@@ -21,6 +22,10 @@ const Settings = createStackNavigator();
 const Root = createBottomTabNavigator();
 
 class AppNav extends React.Component {
+
+    componentDidMount() {
+        NavigationBar.setColor(this.props.settings.darkMode ? bgColorD : shade2);
+    }
 
     statusBarBg = () => this.props.settings.darkMode ? bgColorD : bgColorL;
 

@@ -1,6 +1,7 @@
 import moment from 'moment';
 import React from 'react';
 import { ScrollView, View, } from 'react-native';
+import NavigationBar from 'react-native-navbar-color'
 import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
@@ -15,6 +16,7 @@ import { defaultCards, defaultExpenseCategory, defaultIncomeCategory, defaultSet
 import { store } from '../redux/store';
 
 import { currencies } from '../data/icons';
+import { bgColorD, shade2, } from '../data/color';
 import { settingsPromptText } from '../data/text';
 import { settingStyles, styles, } from '../styles';
 
@@ -83,6 +85,11 @@ class Screen extends React.Component {
 
     nav = (screen, params) => this.props.navigation.navigate(screen, params);
 
+    toggleDarkMode = () => {
+        NavigationBar.setColor(!this.props.settings.darkMode ? bgColorD : shade2);
+        store.dispatch(updateSettings({ key: 'darkMode', update: !this.props.settings.darkMode }));
+    }
+
     render() {
         return (
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
@@ -113,7 +120,7 @@ class Screen extends React.Component {
 
                     <SettingsHeader title={'THEMES'} />
                     <SettingsItem action={() => this.setState({ cpOpen: true })} iconL={'palette'} iconR={'circle'} iconRColor={this.props.settings.accent} text={'Accent Color'} />
-                    <SettingsItem action={() => store.dispatch(updateSettings({ key: 'darkMode', update: !this.props.settings.darkMode }))} iconL={'moon-waning-crescent'} state={this.props.settings.darkMode} switch={true} text={'Dark Mode'} />
+                    <SettingsItem action={this.toggleDarkMode} iconL={'moon-waning-crescent'} state={this.props.settings.darkMode} switch={true} text={'Dark Mode'} />
 
                     <SettingsHeader title={'CATEGORIES'} />
                     <SettingsItem action={() => this.nav('Icons', 'Expense')} iconL={'shopping'} text={'Expense Categories'} />
