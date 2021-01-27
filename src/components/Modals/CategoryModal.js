@@ -11,7 +11,7 @@ import { addExpenseCategory, addIncomeCategory, } from '../../redux/action';
 import { store } from '../../redux/store';
 
 import { black, shade2, shade3, white, } from '../../data/color';
-import { categoryModalStyles, generalBottomModalStyles } from '../../styles';
+import { categoryModalStyles, generalBottomModalStyles, } from '../../styles';
 
 class CategoryModal extends React.Component {
 

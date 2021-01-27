@@ -8,10 +8,6 @@ import { settingStyles } from '../styles';
 
 class SettingsItem extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     close = () => this.setState({ open: false });
 
     iconColor = () => {

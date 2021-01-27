@@ -8,9 +8,9 @@ import Card from './Card';
 import LabeledProcess from './LabeledProcess';
 import WatchlistModal from '../Modals/WatchlistModal';
 
-import { shade3, white } from '../../data/color';
+import { white } from '../../data/color';
 import { NULL_KEY } from '../../data/default';
-import { styles, watchlistCardStyles } from '../../styles';
+import { styles, watchlistCardStyles, } from '../../styles';
 
 class WatchCard extends React.Component {
 

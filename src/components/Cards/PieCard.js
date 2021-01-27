@@ -8,7 +8,7 @@ import Card from './Card';
 import LabeledProcess from './LabeledProcess';
 import TypeSwitch from './TypeSwitch';
 
-import { black, white } from '../../data/color';
+import { black, white, } from '../../data/color';
 import { NULL_KEY } from '../../data/default';
 import { generalCardStyles, styles, } from '../../styles';
 

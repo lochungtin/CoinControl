@@ -9,7 +9,7 @@ import ColorPicker from '../ColorPicker';
 import DatePicker from '../DatePicker';
 import ExpandButton from '../ExpandButton';
 import Numpad from '../Numpad';
-import { editExpenseCategory, editIncomeCategory } from '../../redux/action';
+import { editExpenseCategory, editIncomeCategory, } from '../../redux/action';
 import { store } from '../../redux/store';
 
 import { black, shade2, shade3, white, } from '../../data/color';

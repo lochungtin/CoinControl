@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Card from './Card';
 import TypeSwitch from './TypeSwitch';
 
-import { black, white } from '../../data/color';
+import { black, white, } from '../../data/color';
 
 
 class TrendCard extends React.Component {

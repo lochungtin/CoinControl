@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import Card from './Card';
 
-import { generalCardStyles, styles } from '../../styles';
+import { generalCardStyles, styles, } from '../../styles';
 import { black, shade2, shade3, white, } from '../../data/color';
 
 class GoalCard extends React.Component {

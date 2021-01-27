@@ -3,7 +3,7 @@ import { Text, View, } from 'react-native';
 import * as Progress from 'react-native-progress';
 import { connect } from 'react-redux';
 
-import { maxWidth, pieCardStyles, styles } from '../../styles';
+import { maxWidth, pieCardStyles, styles, } from '../../styles';
 import { black, white } from '../../data/color';
 
 class PieCard extends React.Component {

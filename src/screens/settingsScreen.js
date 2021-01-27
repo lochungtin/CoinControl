@@ -14,8 +14,9 @@ import NotifService from '../notifications/notifService';
 import { defaultCards, defaultExpenseCategory, defaultIncomeCategory, defaultSettings, defaultWatchlist, deleteHistory, makeAllNull, updateSettings, } from '../redux/action';
 import { store } from '../redux/store';
 
-import { settingStyles, styles, } from '../styles';
+import { currencies } from '../data/icons';
 import { settingsPromptText } from '../data/text';
+import { settingStyles, styles, } from '../styles';
 
 class Screen extends React.Component {
 
@@ -32,8 +33,6 @@ class Screen extends React.Component {
             this.onRegister.bind(this),
             this.onNotif.bind(this),
         );
-
-        this.currencies = ['usd', 'gbp', 'jpy', 'eur', 'twd', 'krw', 'rub'];
     }
 
     addZero = num => num < 10 ? '0' + num : num;
@@ -95,7 +94,7 @@ class Screen extends React.Component {
 
                     <SettingsHeader title={'GENERAL'} />
                     <SettingsItem action={() => this.setState({ cupOpen: !this.state.cupOpen })} iconL={'currency-usd'} iconR={'currency-' + this.props.settings.currency} text={'Currency'} open={this.state.cupOpen}>
-                        {this.currencies.map(item => {
+                        {currencies.map(item => {
                             return (
                                 <Bubble
                                     color={this.props.settings.accent}

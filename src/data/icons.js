@@ -1,3 +1,5 @@
+export const currencies = ['usd', 'gbp', 'jpy', 'eur', 'twd', 'krw', 'rub'];
+
 export const icons = {
     banking: [
         "bank",

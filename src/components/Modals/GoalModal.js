@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import ExpandButton from '../ExpandButton';
 import Numpad from '../Numpad';
-import { defaultGoal, updateGoal } from '../../redux/action';
+import { defaultGoal, updateGoal, } from '../../redux/action';
 import { store } from '../../redux/store';
 
 import { black, shade2, shade3, white, } from '../../data/color';

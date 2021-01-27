@@ -1,6 +1,5 @@
-if (__DEV__) {
+if (__DEV__)
     import('./src/debug/ReactotronConfig').then(() => console.log('Reactotron Configured'))
-}
 
 import React from 'react';
 import { Provider } from 'react-redux';

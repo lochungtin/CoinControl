@@ -9,7 +9,6 @@ import ExpandButton from '../ExpandButton';
 import { addWatchlist, removeWatchlist, } from '../../redux/action';
 import { store } from '../../redux/store';
 
-import { NULL_KEY } from '../../data/default';
 import { pickerModalStyles, styles, watchlistModalStyles, } from '../../styles';
 
 class WatchlistModal extends React.Component {

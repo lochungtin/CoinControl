@@ -12,8 +12,8 @@ import { cardModalStyles, pickerModalStyles, styles, } from '../../styles';
 
 class CardModal extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.mapping = {
             tc: 'CASHFLOW',
             pc: 'PERCENTAGES',
