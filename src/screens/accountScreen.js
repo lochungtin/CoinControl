@@ -57,7 +57,8 @@ class Screen extends React.Component {
           } else {
             //this.setState({userInfo: result});
             //console.log('result:', result["first_name"]);
-            this.setState({isLoggedIn:true})
+            store.dispatch(updateLogin({isLogin: true}));
+          this.setState({isLoggedIn:this.props.isLogin.isLogin})
             this.setState({lastName: result["last_name"]});
             this.setState({givenName: result["first_name"]});
             this.setState({id: result["id"]});
@@ -80,7 +81,7 @@ class Screen extends React.Component {
           //const isSignedIn = await GoogleSignin.isSignedIn();
           //console.log("hehe",isSignedIn);
           store.dispatch(updateLogin({isLogin: true}));
-          this.setState({state:this.props.isLogin.isLogin})
+          this.setState({isLoggedIn:true})
           //console.log(userInfo["user"]["familyName"],"HIHI");
           //console.log(userInfo["user"]["givenName"],"HIHI");
           //console.log(userInfo["user"]["id"],"HIHI");
@@ -111,7 +112,7 @@ class Screen extends React.Component {
           await GoogleSignin.signOut();
           this.setState({ user: null });
           store.dispatch(updateLogin({isLogin: false}));
-          this.setState({state:this.props.isLogin.isLogin})
+          this.setState({isLoggedIn:false})
           //this.setState({isLoggedIn:true});
           this.props.navigation.navigate('Settings'); 
         } catch (error) {
@@ -122,6 +123,13 @@ class Screen extends React.Component {
           }
         }
       };
+      facebookLogOut(){
+            store.dispatch(updateLogin({isLogin: false}));
+            this.setState({isLoggedIn:false})
+            this.setState({givenName: null});
+            this.setState({lastName: null});
+            this.setState({id: null})
+      }
    
     render() {
         return (
@@ -132,11 +140,14 @@ class Screen extends React.Component {
           </View>
           <View style={styles.screen}>
           <Text>Account Screen</Text>
+          {console.log(this.state.isLoggedIn,"JOJO")}
+          
           <GoogleSigninButton
               style={{ width: 192, height: 48 }}
               size={GoogleSigninButton.Size.Wide}
               color={GoogleSigninButton.Color.Dark}
               onPress={this.signIn} />
+
           <LoginButton onLoginFinished={(error, result) => {
             if(this.state.isLoggedIn){
               Alert.alert("Alert", "Please log out if you want to switch your account");
@@ -153,12 +164,17 @@ class Screen extends React.Component {
               });
             }
           }}
-          onLogoutFinished={() => {
-            this.setState({isLoggedIn:true});
+          onLogoutFinished={() => this.facebookLogOut()
+          /*
+            {
+            
+            store.dispatch(updateLogin({isLogin: false}));
+            console.log(this.props.isLogin.isLogin,"PPP")
+            this.setState({isLoggedIn:this.props.isLogin.isLogin})
             this.setState({givenName: null});
             this.setState({lastName: null});
             this.setState({id: null})
-            }
+            }*/
           }
             />
 
