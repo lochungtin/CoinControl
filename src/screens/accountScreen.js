@@ -3,7 +3,6 @@ import { Text, View, Button,Alert} from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { black, bgColorD, bgColorL, chartScreenStyles, iconColors, maxWidth, styles, white, } from '../styles';
-
 import {
     GoogleSignin,
     GoogleSigninButton,
@@ -11,6 +10,7 @@ import {
   } from '@react-native-community/google-signin';
   import {
     LoginButton,
+    LoginManager,
     AccessToken,
     GraphRequest,
     GraphRequestManager,
@@ -19,6 +19,11 @@ import {
   import { updateLogin } from '../redux/action';
   import { store } from '../redux/store';
 
+
+
+  //Lets agree here first. What data do we need from the user
+  // Given Name; Last Name; IDtoken
+  //facebook test user:wrteveesrm_1611780393@tfbnw.net ;password: coincontrol2020
   GoogleSignin.configure({
     webClientId: '486441035059-8l61ntdopa47itlm7kknd6acpvmn04q4.apps.googleusercontent.com'
   });
@@ -29,6 +34,11 @@ class Screen extends React.Component {
         super(props);
         this.state = {
           isLoggedIn :this.props.isLogin.isLogin,
+          givenName: null,
+          lastName:null,
+          idToken:null,
+          LoggedInMethod:null
+
         }
     }
 
@@ -45,8 +55,12 @@ class Screen extends React.Component {
           if (error) {
             console.log('login info has error: ' + error);
           } else {
-            this.setState({userInfo: result});
-            console.log('result:', result);
+            //this.setState({userInfo: result});
+            //console.log('result:', result["first_name"]);
+            this.setState({isLoggedIn:true})
+            this.setState({lastName: result["last_name"]});
+            this.setState({givenName: result["first_name"]});
+            this.setState({id: result["id"]});
           }
         },
       );
@@ -54,7 +68,7 @@ class Screen extends React.Component {
     };
   
     
-    signIn = async () => {
+      signIn = async () => {
         try {
           if(this.state.isLoggedIn){
             Alert.alert("Alert", "Please log out if you want to switch your account");
@@ -67,6 +81,12 @@ class Screen extends React.Component {
           //console.log("hehe",isSignedIn);
           store.dispatch(updateLogin({isLogin: true}));
           this.setState({state:this.props.isLogin.isLogin})
+          //console.log(userInfo["user"]["familyName"],"HIHI");
+          //console.log(userInfo["user"]["givenName"],"HIHI");
+          //console.log(userInfo["user"]["id"],"HIHI");
+          this.setState({familyName:userInfo["user"]["familyName"]});
+          this.setState({givenName:userInfo["user"]["givenName"]});
+          this.setState({idToken:userInfo["user"]["id"]});
           this.props.navigation.navigate('Settings');
         } catch (error) {
           if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -84,6 +104,7 @@ class Screen extends React.Component {
           }
         }
       };
+    
       signOut = async () => {
         try {
           await GoogleSignin.revokeAccess();
@@ -91,7 +112,8 @@ class Screen extends React.Component {
           this.setState({ user: null });
           store.dispatch(updateLogin({isLogin: false}));
           this.setState({state:this.props.isLogin.isLogin})
-          //this.props.navigation.navigate('Settings'); 
+          //this.setState({isLoggedIn:true});
+          this.props.navigation.navigate('Settings'); 
         } catch (error) {
           if (error.code === statusCodes.SIGN_IN_REQUIRED) {
             Alert.alert("Alert", "You have not logged in");
@@ -103,39 +125,48 @@ class Screen extends React.Component {
    
     render() {
         return (
+          
           <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
-                <View style={{ ...styles.rows, justifyContent: 'space-between', paddingTop: 50 }}>
-                    <View style={{ ...styles.columns, justifyContent: 'center', maxHeight: 35, }}>
-                    </View>
-                <View style={styles.screen}>
-                    <Text>Account Screen</Text>
-                    <GoogleSigninButton
-                    style={{ width: 192, height: 48 }}
-                    size={GoogleSigninButton.Size.Wide}
-                    color={GoogleSigninButton.Color.Dark}
-                    onPress={this.signIn} />
-                    
-                    <LoginButton
-                    onLoginFinished={(error, result) => {
-                      if (error) {
-                        console.log('login has error: ' + result.error);
-                      } else if (result.isCancelled) {
-                        console.log('login is cancelled.');
-                      } else {
-                        AccessToken.getCurrentAccessToken().then(data => {
-                          const accessToken = data.accessToken.toString();
-                          this.getInfoFromToken(accessToken);
-                        });
-                      }
-                    }}
-                    onLogoutFinished={() => this.setState({userInfo: {}})}
-                  />
+          <View style={{ ...styles.rows, justifyContent: 'space-between', paddingTop: 50 }}>
+          <View style={{ ...styles.columns, justifyContent: 'center', maxHeight: 35, }}>
+          </View>
+          <View style={styles.screen}>
+          <Text>Account Screen</Text>
+          <GoogleSigninButton
+              style={{ width: 192, height: 48 }}
+              size={GoogleSigninButton.Size.Wide}
+              color={GoogleSigninButton.Color.Dark}
+              onPress={this.signIn} />
+          <LoginButton onLoginFinished={(error, result) => {
+            if(this.state.isLoggedIn){
+              Alert.alert("Alert", "Please log out if you want to switch your account");
+              return;
+            }
+            if (error) {
+              console.log('login has error: ' + result.error);
+            } else if (result.isCancelled) {
+              console.log('login is cancelled.');
+            } else {
+              AccessToken.getCurrentAccessToken().then(data => {
+                const accessToken = data.accessToken.toString();
+                this.getInfoFromToken(accessToken);
+              });
+            }
+          }}
+          onLogoutFinished={() => {
+            this.setState({isLoggedIn:true});
+            this.setState({givenName: null});
+            this.setState({lastName: null});
+            this.setState({id: null})
+            }
+          }
+            />
 
-                <Button onPress={this.signOut } title="LogOut">
-                </Button>
-                </View>
-                </View>
-            </View>
+          <Button onPress={this.signOut } title="Google LogOut">
+          </Button>
+          </View>
+          </View>
+      </View>
         );
     }
 }
