@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, SectionList, Text, View, } from 'react-native';
+import { SafeAreaView, StatusBar, SectionList, Text, View, } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
@@ -64,64 +64,62 @@ class Screen extends React.Component {
     render() {
         return (
             <View style={this.style(styles, 'screen')}>
-                <View style={{ alignItems: 'center', paddingTop: 20 }}>
-                    <View style={{ ...styles.rows, height: '30%', justifyContent: 'space-evenly' }}>
-                        <View style={styles.columns}>
-                            <Icon name={'currency-' + this.props.settings.currency} color={this.style(styles, 'text').color} size={30} />
-                            <Text style={this.style(homeScreenStyles, 'balance')}>
-                                {this.props.data.total.split('.')[0]}
-                            </Text>
-                            <Text style={this.style(homeScreenStyles, 'balanceSmall')}>
-                                {"." + this.props.data.total.split('.')[1].substring(0, 2)}
-                            </Text>
-                        </View>
-                        <View style={styles.columns}>
-                            {this.props.data.goalSettings.type !== 'none' && this.props.data.goal.percentage <= 1 &&
-                                <Icon name={'currency-' + this.props.settings.currency} color={this.goalMessageColor()} size={15} />
-                            }
-                            <Text style={{ color: this.goalMessageColor() }}>
-                                {this.goalMessage()}
-                            </Text>
-                        </View>
-                        <View style={styles.columns}>
-                            <Progress.Bar color={this.props.settings.accent} progress={this.props.data.goal.percentage} width={maxWidth / 1.8} />
-                        </View>
-                        <View style={{ ...styles.columns, width: 250, justifyContent: 'space-evenly' }}>
-                            <HomeNavButton icon={'cloud-sync-outline'} onPress={() => this.props.navigation.navigate('Update', 'Income')} text={'Sync'} />
-                            <HomeNavButton icon={'plus'} onPress={() => this.props.navigation.navigate('Update', 'Income')} text={'Income'} />
-                            <HomeNavButton icon={'minus'} onPress={() => this.props.navigation.navigate('Update', 'Expense')} text={'Expense'} />
-                            <HomeNavButton icon={'flag-outline'} onPress={() => this.setState({ gmOpen: true })} text={'Goals'} />
-                        </View>
+                <View style={{ ...styles.rows, height: '30%', justifyContent: 'space-evenly' }}>
+                    <View style={styles.columns}>
+                        <Icon name={'currency-' + this.props.settings.currency} color={this.style(styles, 'text').color} size={30} />
+                        <Text style={this.style(homeScreenStyles, 'balance')}>
+                            {this.props.data.total.split('.')[0]}
+                        </Text>
+                        <Text style={this.style(homeScreenStyles, 'balanceSmall')}>
+                            {"." + this.props.data.total.split('.')[1].substring(0, 2)}
+                        </Text>
                     </View>
-
-                    <SafeAreaView style={this.style(homeScreenStyles, 'border')}>
-                        {this.props.data.display.length === 0 &&
-                            <View style={{ paddingTop: 30 }}>
-                                <Text style={this.style(homeScreenStyles, 'message')}>
-                                    Add a record to start using the app
-                                </Text>
-                            </View>
+                    <View style={styles.columns}>
+                        {this.props.data.goalSettings.type !== 'none' && this.props.data.goal.percentage <= 1 &&
+                            <Icon name={'currency-' + this.props.settings.currency} color={this.goalMessageColor()} size={15} />
                         }
-                        <SectionList
-                            key={this.props.data}
-                            keyExtractor={(item, index) => item + index}
-                            renderItem={({ item }) =>
-                                <SectionItem
-                                    compactMode={this.props.settings.compactView}
-                                    itemkey={item}
-                                    onDelete={key => this.openConfirmation(key)}
-                                    onEdit={key => this.setState({ focus: key, rmOpen: true })}
-                                />
-                            }
-                            renderSectionHeader={({ section: { title } }) =>
-                                <SectionHeader title={title} />
-                            }
-                            sections={this.props.data.display}
-                            stickySectionHeadersEnabled={true}
-                            style={{ flex: 1, minWidth: maxWidth, paddingHorizontal: '2.5%' }}
-                        />
-                    </SafeAreaView>
+                        <Text style={{ color: this.goalMessageColor() }}>
+                            {this.goalMessage()}
+                        </Text>
+                    </View>
+                    <View style={styles.columns}>
+                        <Progress.Bar color={this.props.settings.accent} progress={this.props.data.goal.percentage} width={maxWidth / 1.8} />
+                    </View>
+                    <View style={{ ...styles.columns, width: 250, justifyContent: 'space-evenly' }}>
+                        <HomeNavButton icon={'cloud-sync-outline'} onPress={() => this.props.navigation.navigate('Update', 'Income')} text={'Sync'} />
+                        <HomeNavButton icon={'plus'} onPress={() => this.props.navigation.navigate('Update', 'Income')} text={'Income'} />
+                        <HomeNavButton icon={'minus'} onPress={() => this.props.navigation.navigate('Update', 'Expense')} text={'Expense'} />
+                        <HomeNavButton icon={'flag-outline'} onPress={() => this.setState({ gmOpen: true })} text={'Goals'} />
+                    </View>
                 </View>
+
+                <SafeAreaView style={this.style(homeScreenStyles, 'border')}>
+                    {this.props.data.display.length === 0 &&
+                        <View style={{ paddingTop: 30 }}>
+                            <Text style={this.style(homeScreenStyles, 'message')}>
+                                Add a record to start using the app
+                            </Text>
+                        </View>
+                    }
+                    <SectionList
+                        key={this.props.data}
+                        keyExtractor={(item, index) => item + index}
+                        renderItem={({ item }) =>
+                            <SectionItem
+                                compactMode={this.props.settings.compactView}
+                                itemkey={item}
+                                onDelete={key => this.openConfirmation(key)}
+                                onEdit={key => this.setState({ focus: key, rmOpen: true })}
+                            />
+                        }
+                        renderSectionHeader={({ section: { title } }) =>
+                            <SectionHeader title={title} />
+                        }
+                        sections={this.props.data.display}
+                        stickySectionHeadersEnabled={true}
+                        style={{ flex: 1, minWidth: maxWidth, paddingHorizontal: '2.5%' }}
+                    />
+                </SafeAreaView>
 
                 <RecordModal
                     close={() => this.setState({ rmOpen: false })}

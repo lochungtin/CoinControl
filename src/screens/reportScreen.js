@@ -10,9 +10,11 @@ class Screen extends React.Component {
         super(props);
     }
 
+    style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
+
     render() {
         return (
-            <View style={styles.screen}>
+            <View style={this.style(styles, 'screen')}>
                 <Text>Account Screen</Text>
             </View>
         );
@@ -20,7 +22,7 @@ class Screen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-
+    settings: state.settings,
 })
 
 export default connect(mapStateToProps)(Screen);

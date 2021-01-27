@@ -12,16 +12,13 @@ class Calendar extends React.Component {
     constructor(props) {
         super(props);
         const pos = props.date || moment().format('YYYY-MM-DD');
-        const month = parseInt(pos.substring(5, 7));
-        const year = parseInt(pos.substring(0, 4));
-        console.log(props.date);
 
         this.state = {
             grid: [],
-            month: month,
+            month: parseInt(pos.substring(5, 7)),
             pos: pos,
             selectedRow: '',
-            year: year,
+            year: parseInt(pos.substring(0, 4)),
         }
         this.days = [
             { key: 0, label: 'S' },
@@ -77,7 +74,7 @@ class Calendar extends React.Component {
         const prevMonthDay = this.findMonthSize(prevMonth === 12 ? year - 1 : year, prevMonth);;
         const currMonthDay = this.findMonthSize(year, month);
 
-        var monthTbl = this.create2DArray(6, 7);
+        var grid = this.create2DArray(6, 7);
 
         var i, row, column, rowMax;
 
@@ -86,14 +83,14 @@ class Calendar extends React.Component {
             row = Math.floor(i / 7);
             column = i % 7;
             if (row == 0 && i < preMonthDayLeft)
-                monthTbl[row][column] = prevMonthDay - (preMonthDayLeft - 1 - i);
+                grid[row][column] = prevMonthDay - (preMonthDayLeft - 1 - i);
             else if (i < preMonthDayLeft + currMonthDay)
-                monthTbl[row][column] = i - preMonthDayLeft + 1;
+                grid[row][column] = i - preMonthDayLeft + 1;
             else
-                monthTbl[row][column] = i - (preMonthDayLeft + currMonthDay) + 1;
+                grid[row][column] = i - (preMonthDayLeft + currMonthDay) + 1;
         }
 
-        this.setState({ grid: monthTbl, month: month, year: year });
+        this.setState({ grid, month, year });
     }
 
     render() {
