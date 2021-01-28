@@ -1,23 +1,14 @@
+import { GoogleSignin, GoogleSigninButton, statusCodes, } from '@react-native-community/google-signin';
 import React from 'react';
 import { Text, View, Button, Alert } from 'react-native';
-import { connect } from 'react-redux';
+import { AccessToken, GraphRequest, GraphRequestManager, LoginButton, } from 'react-native-fbsdk';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { black, bgColorD, bgColorL, chartScreenStyles, iconColors, maxWidth, styles, white, } from '../styles';
-import {
-    GoogleSignin,
-    GoogleSigninButton,
-    statusCodes,
-} from '@react-native-community/google-signin';
-import {
-    LoginButton,
-    LoginManager,
-    AccessToken,
-    GraphRequest,
-    GraphRequestManager,
-} from 'react-native-fbsdk';
+import { connect } from 'react-redux';
 
 import { updateLogin } from '../redux/action';
 import { store } from '../redux/store';
+
+import { styles } from '../styles';
 
 
 
