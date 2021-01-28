@@ -1,222 +1,144 @@
 import React from 'react';
-import { Modal, SafeAreaView, SectionList, StatusBar, Text, TextInput, TouchableOpacity, View, } from 'react-native';
+import { SafeAreaView, SectionList, Text, View, } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import Bubble from '../components/Bubble';
-import ExpandButton from '../components/ExpandButton';
+import HomeNavButton from '../components/HomeNavButton';
+import ConfirmationModal from '../components/Modals/ConfirmationModal';
+import GoalModal from '../components/Modals/GoalModal';
+import RecordModal from '../components/Modals/RecordModal';
 import SectionHeader from '../components/SectionHeader';
 import SectionItem from '../components/SectionItem';
-import RecordModal from '../components/RecordModal';
-import { parseAll, parseGoal, parseGoalPercentage, parseTotal, } from '../functions/parser';
-import { defaultGoal, deleteRecord, editRecord, updateGoal } from '../redux/action';
+import { deleteRecord, editRecord, } from '../redux/action';
 import { store } from '../redux/store';
-import { bgColorD, bgColorL, black, iconColors, homeScreenStyles, maxWidth, maxHeight, styles, white, } from '../styles';
+
+import { shade2, shade3, } from '../data/color';
+import { homePromptText, goalText } from '../data/text';
+import { homeScreenStyles, maxWidth, styles, } from '../styles';
 
 class Screen extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            amount: 0,
-            expand: '',
-            item: {},
-            open: false,
+            confirmType: '',
+            focus: '',
+            gmOpen: false,
             rmOpen: false,
-            toGoal: parseGoal(this.props.records, this.props.goal.amount),
         }
     }
 
-    componentDidMount() {
-        this._unsubscribe = this.props.navigation.addListener('focus', () => {
-            this.setState({ toGoal: parseGoal(this.props.records, this.props.goal.amount) });
-        });
+    deleteRecord = key => {
+        store.dispatch(deleteRecord(key));
+        this.setState({ confirmType: '' });
     }
 
-    componentWillUnmount() {
-        this._unsubscribe();
+    goalMessage = () => {
+        if (this.props.data.goal.percentage > 1)
+            return goalText.exceed;
+        return (this.props.data.goalSettings.type !== 'none' ? this.processValue(this.props.data.goal.remaining) : '') + " " + goalText[this.props.data.goalSettings.type];
     }
 
-    balance = () => {
-        return Math.floor(parseTotal(this.props.records));
+    goalMessageColor = () => this.props.settings.darkMode ? shade2 : shade3;
+
+    openConfirmation = key => {
+        if (!this.props.settings.prompt.dr)
+            this.setState({ confirmType: 'dr', focus: key });
+        else
+            this.deleteRecord(key);
     }
 
-    balanceDecimal = () => {
-        var total = Math.abs(parseTotal(this.props.records));
-        return Math.floor((total - Math.floor(total)) * 100);
+    processValue = val => {
+        const splt = val.toString().split('.');
+        if (splt.length === 1)
+            return val + '.00';
+        if (splt[1].length === 1)
+            return val + '0';
+        else
+            return splt[0] + '.' + splt[1].substring(0, 2);
     }
 
-    goalMessage = (amount) => {
-        switch (this.props.goal.type) {
-            case 'monthly':
-                return amount + ' left for this month';
-            case 'weekly':
-                return amount + ' left for this week';
-            default:
-                return 'No Goals Currently';
-        }
-    }
-
-    statusBarBg = () => {
-        return this.props.settings.darkMode ? bgColorD : bgColorL;
-    }
-
-    statusBarStyle = () => {
-        return this.props.settings.darkMode ? 'light-content' : 'dark-content';
-    }
-
-    style = (stylesheet, styleName) => {
-        return stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
-    }
+    style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
     render() {
         return (
-            <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
-                <StatusBar backgroundColor={this.statusBarBg()} barStyle={this.statusBarStyle()} />
-                <View style={{ alignItems: 'center', paddingTop: 20 }}>
-                    <View style={{ ...styles.rows, maxHeight: '30%', justifyContent: 'space-evenly' }}>
-                        <View style={{ ...styles.columns, flex: 0 }}>
-                            <Icon name={'currency-' + this.props.settings.currency} color={this.style(styles, 'text').color} size={30} />
-                            <Text style={this.style(homeScreenStyles, 'balance')}>
-                                {this.balance()}
-                            </Text>
-                            <Text style={this.style(homeScreenStyles, 'balanceSmall')}>
-                                {"." + this.balanceDecimal()}
-                            </Text>
-                        </View>
-                        <View style={{ ...styles.columns, flex: 0 }}>
-                            <Icon name={'currency-' + this.props.settings.currency} color={this.props.goal.type === 'none' ? 'transparent' : this.text(styles, 'text').color} size={15} />
-                            <Text style={{ color: this.style(iconColors, 'icon') }}>
-                                {this.goalMessage(parseGoal(this.props.records, this.props.goal.amount))}
-                            </Text>
-                        </View>
-                        <View style={{ ...styles.columns, flex: 0 }}>
-                            <Progress.Bar color={this.props.settings.accent} progress={parseGoalPercentage(parseGoal(this.props.records, this.props.goal.amount), this.props.goal.amount)} width={maxWidth / 2} />
-                        </View>
-                        <View style={{ ...styles.columns, flex: 0, justifyContent: 'space-evenly' }}>
-                            <View style={{ ...styles.rows, maxWidth: 70 }}>
-                                <Bubble color={this.props.settings.accent} iconColor={black} iconName={'plus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', { darkMode: this.props.settings.darkMode, title: 'Income' })} size={35} />
-                                <Text style={this.style(styles, 'centerText')}>
-                                    Income
-                                </Text>
-                            </View>
-                            <View style={{ width: 15 }} />
-                            <View style={{ ...styles.rows, maxWidth: 70 }}>
-                                <Bubble color={this.props.settings.accent} iconColor={black} iconName={'minus'} iconSize={25} onPress={() => this.props.navigation.navigate('Update', { darkMode: this.props.settings.darkMode, title: 'Expense' })} size={35} />
-                                <Text style={this.style(styles, 'centerText')}>
-                                    Expense
-                                </Text>
-                            </View>
-                            <View style={{ width: 15 }} />
-                            <View style={{ ...styles.rows, maxWidth: 70 }}>
-                                <Bubble color={this.props.settings.accent} iconColor={black} iconName={'flag-outline'} iconSize={25} onPress={() => this.setState({ open: true })} size={35} />
-                                <Text style={this.style(styles, 'centerText')}>
-                                    Set Goal
-                                </Text>
-                            </View>
-                        </View>
+            <View style={this.style(styles, 'screen')}>
+                <View style={{ ...styles.rows, height: '30%', justifyContent: 'space-evenly' }}>
+                    <View style={styles.columns}>
+                        <Icon name={'currency-' + this.props.settings.currency} color={this.style(styles, 'text').color} size={30} />
+                        <Text style={this.style(homeScreenStyles, 'balance')}>
+                            {this.props.data.total.split('.')[0]}
+                        </Text>
+                        <Text style={this.style(homeScreenStyles, 'balanceSmall')}>
+                            {"." + this.props.data.total.split('.')[1].substring(0, 2)}
+                        </Text>
                     </View>
-
-                    <SafeAreaView style={this.style(homeScreenStyles, 'border')}>
-                        {this.props.records.length === 0 &&
-                            <View style={{ paddingTop: 30 }}>
-                                <Text style={this.style(homeScreenStyles, 'message')}>
-                                    Add a record to start using the app
-                                </Text>
-                            </View>
+                    <View style={styles.columns}>
+                        {this.props.data.goalSettings.type !== 'none' && this.props.data.goal.percentage <= 1 &&
+                            <Icon name={'currency-' + this.props.settings.currency} color={this.goalMessageColor()} size={15} />
                         }
-                        <SectionList
-                            renderItem={({ item }) =>
-                                <SectionItem
-                                    compactMode={this.props.settings.compactView}
-                                    item={item}
-                                    onDelete={key => store.dispatch(deleteRecord(key))}
-                                    onEdit={item => this.setState({ item: item, rmOpen: true })}
-                                />
-                            }
-                            renderSectionHeader={({ section: { title } }) => <SectionHeader title={title} />}
-                            sections={parseAll(this.props.records)}
-                            stickySectionHeadersEnabled={true}
-                            style={{ flex: 1, minWidth: maxWidth, paddingHorizontal: '5%' }}
-                        />
-                    </SafeAreaView>
+                        <Text style={{ color: this.goalMessageColor() }}>
+                            {this.goalMessage()}
+                        </Text>
+                    </View>
+                    <View style={styles.columns}>
+                        <Progress.Bar color={this.props.settings.accent} progress={this.props.data.goal.percentage} width={maxWidth / 1.8} />
+                    </View>
+                    <View style={{ ...styles.columns, width: 250, justifyContent: 'space-evenly' }}>
+                        <HomeNavButton icon={'cloud-sync-outline'} onPress={undefined} text={'Sync'} />
+                        <HomeNavButton icon={'plus'} onPress={() => this.props.navigation.navigate('Update', 'Income')} text={'Income'} />
+                        <HomeNavButton icon={'minus'} onPress={() => this.props.navigation.navigate('Update', 'Expense')} text={'Expense'} />
+                        <HomeNavButton icon={'flag-outline'} onPress={() => this.setState({ gmOpen: true })} text={'Goals'} />
+                    </View>
                 </View>
 
-                <Modal animationType='slide' transparent={true} visible={this.state.open}>
-                    <View style={styles.modalViewContainer}>
-                        <View style={{ ...this.style(styles, 'modalView'), height: maxHeight / 4 - 20 }}>
-                            <View style={styles.rows}>
-                                <ExpandButton onPress={() => this.setState({ open: false })} />
-                                <View style={{ ...styles.roundView, ...styles.columns, backgroundColor: white, maxHeight: 60 }}>
-                                    <Icon name={'cash'} size={35} color={black} />
-                                    <TextInput
-                                        keyboardType={'numeric'}
-                                        placeholder={'Amount'}
-                                        onChangeText={(text) => this.setState({ amount: parseInt(text) })}
-                                        style={{ color: black, textAlign: 'center', width: '95%' }}
-                                    />
-                                </View>
-                                <View style={{ ...styles.columns, justifyContent: 'space-between' }}>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            if (this.state.amount !== 0) {
-                                                store.dispatch(updateGoal({
-                                                    amount: this.state.amount,
-                                                    type: 'weekly',
-                                                }));
-                                                this.setState({ open: false });
-                                            }
-                                        }}
-                                        style={{ ...styles.roundView, backgroundColor: white, paddingHorizontal: 10, width: '30%' }}
-                                    >
-                                        <Text style={styles.centerTextL}>Weekly</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            if (this.state.amount !== 0) {
-                                                store.dispatch(updateGoal({
-                                                    amount: this.state.amount,
-                                                    type: 'monthly',
-                                                }));
-                                                this.setState({ open: false });
-                                            }
-                                        }}
-                                        style={{ ...styles.roundView, backgroundColor: white, paddingHorizontal: 10, width: '30%' }}
-                                    >
-                                        <Text style={styles.centerTextL}>Monthly</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            store.dispatch(defaultGoal());
-                                            this.setState({ open: false });
-                                        }}
-                                        style={{ ...styles.roundView, backgroundColor: this.props.settings.accent, paddingHorizontal: 10, width: '30%' }}
-                                    >
-                                        <Text style={styles.centerTextL}>None</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
+                <SafeAreaView style={this.style(homeScreenStyles, 'border')}>
+                    {this.props.data.display.length === 0 &&
+                        <View style={{ paddingTop: 30 }}>
+                            <Text style={this.style(homeScreenStyles, 'message')}>
+                                Add a record to start using the app
+                            </Text>
                         </View>
-                    </View>
-                </Modal>
-                
+                    }
+                    <SectionList
+                        key={this.props.data}
+                        keyExtractor={(item, index) => item + index}
+                        renderItem={({ item }) =>
+                            <SectionItem
+                                compactMode={this.props.settings.compactView}
+                                itemkey={item}
+                                onDelete={key => this.openConfirmation(key)}
+                                onEdit={key => this.setState({ focus: key, rmOpen: true })}
+                            />
+                        }
+                        renderSectionHeader={({ section: { title } }) =>
+                            <SectionHeader title={title} />
+                        }
+                        sections={this.props.data.display}
+                        stickySectionHeadersEnabled={true}
+                        style={{ flex: 1, minWidth: maxWidth, paddingHorizontal: '2.5%' }}
+                    />
+                </SafeAreaView>
+
                 <RecordModal
                     close={() => this.setState({ rmOpen: false })}
-                    dispatch={record => {
+                    itemkey={this.state.focus}
+                    onConfirm={record => {
                         store.dispatch(editRecord(record));
                         this.setState({ rmOpen: false });
                     }}
-                    item={this.state.item}
                     open={this.state.rmOpen}
-
-                    category={this.state.item.category}
-                    date={this.state.item.date}
-                    icon={this.state.item.icon}
-                    id={this.state.item.key}
-                    title={this.state.item.title}
-                    type={this.state.item.type}
-                    value={this.state.item.value}
+                />
+                <GoalModal
+                    close={() => this.setState({ gmOpen: false })}
+                    open={this.state.gmOpen}
+                />
+                <ConfirmationModal
+                    close={() => this.setState({ confirmType: '' })}
+                    onConfirm={() => this.deleteRecord(this.state.focus)}
+                    open={this.state.confirmType !== ''}
+                    text={homePromptText[this.state.confirmType]}
                 />
             </View>
         );
@@ -224,9 +146,8 @@ class Screen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    goal: state.goal,
-    records: state.records,
+    data: state.data,
     settings: state.settings
-})
+});
 
 export default connect(mapStateToProps)(Screen);

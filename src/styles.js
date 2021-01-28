@@ -1,30 +1,10 @@
 import { Dimensions, StyleSheet } from 'react-native';
+import { black, bgColorD, bgColorL, shade1, shade2, shade3, shade4, white, } from './data/color';
 
 // dimensions
 
 export const maxHeight = Dimensions.get('screen').height;
 export const maxWidth = Dimensions.get('screen').width;
-
-// colors
-
-export const colors = ['#ff3064', '#F2D996', '#34e0a4', '#63cbf7', '#873beb'];
-export const goldenBrown = '#F2D996';
-
-const shade1 = '#E0E0E0';
-const shade2 = '#ACACAC';
-const shade3 = '#3C3C3C';
-const shade4 = '#2C2C2C';
-
-export const black = '#0C0C0C';
-export const white = '#FCFCFC';
-
-export const bgColorD = '#1C1C1C';
-export const bgColorL = white;
-
-export const iconColors = {
-    iconD: shade2,
-    iconL: shade3,
-}
 
 // general styles
 
@@ -39,39 +19,15 @@ export const styles = StyleSheet.create({
     },
     columns: {
         alignItems: 'center',
-        flex: 1,
         flexDirection: 'row',
-    },
-    modalViewContainer: {
-        alignItems: 'center',
-        flex: 1,
-        justifyContent: 'flex-end',
-    },
-    modalViewD: {
-        backgroundColor: shade3,
-        borderTopLeftRadius: 40,
-        borderTopRightRadius: 40,
-        opacity: 0.9,
-        paddingHorizontal: '5%',
-        width: maxWidth,
-    },
-    modalViewL: {
-        backgroundColor: shade2,
-        borderTopLeftRadius: 40,
-        borderTopRightRadius: 40,
-        opacity: 0.9,
-        paddingHorizontal: '5%',
-        width: maxWidth,
     },
     roundView: {
         borderRadius: 40,
         paddingHorizontal: 40,
         paddingVertical: 10,
-        margin: 10,
     },
     rows: {
         alignItems: 'center',
-        flex: 1,
         flexDirection: 'column',
     },
     screenD: {
@@ -94,6 +50,315 @@ export const styles = StyleSheet.create({
     },
 });
 
+// card styles
+
+export const generalCardStyles = StyleSheet.create({
+    amountTextD: {
+        color: white,
+        fontSize: 22,
+        textAlign: 'center',
+    },
+    amountTextL: {
+        color: black,
+        fontSize: 22,
+        textAlign: 'center',
+    },
+    centerLabel: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        width: '100%',
+    },
+    cardD: {
+        backgroundColor: shade4,
+        borderRadius: 10,
+        marginHorizontal: '2.5%',
+        marginVertical: 5,
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        width: '95%',
+    },
+    cardL: {
+        backgroundColor: shade1,
+        borderRadius: 10,
+        marginHorizontal: '2.5%',
+        marginVertical: 5,
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        width: '95%',
+    },
+    titleD: {
+        color: white,
+        fontSize: 17,
+        width: '70%',
+    },
+    titleL: {
+        color: black,
+        fontSize: 17,
+        width: '70%',
+    },
+});
+
+export const pieCardStyles = StyleSheet.create({
+    progressBox: {
+        alignItems: 'center',
+        paddingVertical: 10,
+        width: '100%'
+    },
+});
+
+export const watchlistCardStyles = StyleSheet.create({
+    categoriesBar: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        marginVertical: 10,
+    },
+    bubbleContainer: {
+        width: 62
+    }
+});
+
+// modal styles
+
+export const cardModalStyles = StyleSheet.create({
+    selectionTextD: {
+        color: white,
+        fontSize: 16,
+    },
+    selectionTextL: {
+        color: black,
+        fontSize: 16,
+    },
+    selectionRow: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: 240
+    },
+    titleD: {
+        color: white,
+        fontSize: 20,
+    },
+    titleL: {
+        color: black,
+        fontSize: 20,
+    },
+})
+
+export const categoryModalStyles = StyleSheet.create({
+    contentD: {
+        alignItems: 'center',
+        backgroundColor: bgColorD,
+        borderWidth: 1,
+        borderColor: shade3,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        minHeight: '8%',
+        paddingHorizontal: '5%',
+        width: '100%'
+    },
+    contentL: {
+        alignItems: 'center',
+        backgroundColor: bgColorL,
+        borderWidth: 1,
+        borderColor: shade2,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        minHeight: '8%',
+        paddingHorizontal: '5%',
+        width: '100%'
+    },
+    inputD: {
+        borderBottomWidth: 1,
+        borderColor: shade3,
+        color: white,
+        fontSize: 15,
+        paddingLeft: '5%',
+        width: '70%'
+    },
+    inputL: {
+        borderBottomWidth: 1,
+        borderColor: shade2,
+        color: black,
+        fontSize: 15,
+        paddingLeft: '5%',
+        width: '70%'
+    },
+});
+
+export const confirmationModalStyles = StyleSheet.create({
+    buttonText: {
+        color: white
+    },
+    contentD: {
+        alignItems: 'center',
+        backgroundColor: bgColorD,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 30,
+        paddingVertical: 15,
+        width: maxWidth,
+    },
+    contentL: {
+        alignItems: 'center',
+        backgroundColor: bgColorL,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 30,
+        paddingVertical: 15,
+        width: maxWidth,
+    },
+    detailD: {
+        color: white,
+        fontSize: 17,
+        textAlign: 'justify',
+    }, 
+    detailL: {
+        color: black,
+        fontSize: 17,
+        textAlign: 'justify',
+    }, 
+    dsaD: {
+        color: white,
+        fontSize: 15,
+    },
+    dsaL: {
+        color: black,
+        fontSize: 15,
+    },
+    title: {
+        fontSize: 23,
+    }
+});
+
+export const generalBottomModalStyles = StyleSheet.create({
+    headerD: {
+        alignItems: 'center',
+        backgroundColor: shade3,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        height: 20,
+        justifyContent: 'center',
+        width: '100%'
+    },
+    headerL: {
+        alignItems: 'center',
+        backgroundColor: shade2,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        height: 20,
+        justifyContent: 'center',
+        width: '100%'
+    },
+});
+
+export const goalModalStyles = StyleSheet.create({
+    selectionContainerD: {
+        alignItems: 'center',
+        backgroundColor: bgColorD,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        height: '8%',
+        width: maxWidth,
+    },
+    selectionContainerL: {
+        alignItems: 'center',
+        backgroundColor: bgColorL,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        height: '8%',
+        width: maxWidth,
+    },
+    selectionBox: {
+        alignItems: 'center',
+        height: '100%',
+        justifyContent: 'center',
+        minWidth: '33.3%'
+    }
+});
+
+export const pickerModalStyles = StyleSheet.create({
+    rootD: { 
+        alignItems: 'center',
+        backgroundColor: bgColorD,
+        borderRadius: 20,
+        elevation: 10,
+        justifyContent: "space-between",
+        padding: 10, 
+        width: 300,
+    },
+    rootL: { 
+        alignItems: 'center',
+        backgroundColor: bgColorL,
+        borderRadius: 20,
+        elevation: 10,
+        justifyContent: "space-between",
+        padding: 10, 
+        width: 300,
+    },
+});
+
+export const recordModalStyles = StyleSheet.create({
+    inputBoxD: {
+        alignItems: 'center',
+        backgroundColor: bgColorD,
+        borderWidth: 1,
+        borderColor: shade3,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        minHeight: '8%',
+        paddingHorizontal: '5%',
+        width: '100%'
+    },
+    inputBoxL: {
+        alignItems: 'center',
+        backgroundColor: bgColorL,
+        borderWidth: 1,
+        borderColor: shade2,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        minHeight: '8%',
+        paddingHorizontal: '5%',
+        width: '100%'
+    },
+    inputD: {
+        borderBottomWidth: 1,
+        borderColor: shade3,
+        color: white,
+        fontSize: 15,
+        marginLeft: '5%',
+        paddingLeft: '5%',
+        width: '70%'
+    },
+    inputL: {
+        borderBottomWidth: 1,
+        borderColor: shade2,
+        color: black,
+        fontSize: 15,
+        marginLeft: '5%',
+        paddingLeft: '5%',
+        width: '70%'
+    },
+});
+
+export const watchlistModalStyles = StyleSheet.create({
+    displayTextD: {
+        color: white,
+        width: 150,
+    },
+    displayTextL: {
+        color: black,
+        width: 150,
+    },
+    selectionBox: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        marginVertical: 5,
+        width: 300,
+    },
+});
 
 // component styles
 
@@ -143,6 +408,8 @@ export const calendarStyles = StyleSheet.create({
         width: 40
     },
     selectionContainer: {
+        borderWidth: 1,
+        borderRadius: 15,
         height: 40,
         paddingTop: 8,
         width: 40,
@@ -160,20 +427,6 @@ export const calendarStyles = StyleSheet.create({
 export const datePickerStyles = StyleSheet.create({
     calendar: {
         width: 350,
-    },
-    modalViewContainer: {
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 10
-    },
-    editBtn: {
-        borderRadius: 20,
-        elevation: 5,
-        height: 40,
-        padding: 10,
-        width: '47%',
     },
     modalViewD: {
         alignItems: 'center',
@@ -199,12 +452,11 @@ export const headerStyles = StyleSheet.create({
         backgroundColor: bgColorD,
         borderColor: shade1,
         borderBottomWidth: 2,
-        flex: 1,
         flexDirection: 'row',
         maxHeight: 60,
         minHeight: 60,
         justifyContent: 'space-between',
-        paddingLeft: 20,
+        paddingHorizontal: 20,
         width: maxWidth,
     },
     headerL: {
@@ -212,17 +464,15 @@ export const headerStyles = StyleSheet.create({
         backgroundColor: bgColorL,
         borderColor: shade4,
         borderBottomWidth: 2,
-        flex: 1,
         flexDirection: 'row',
         maxHeight: 60,
         minHeight: 60,
         justifyContent: 'space-between',
-        paddingLeft: 20,
+        paddingHorizontal: 20,
         width: maxWidth,
     },
     textContainer: {
-        marginLeft: 30,
-        width: '85%',
+        width: '60%',
     },
     textD: {
         color: white,
@@ -234,110 +484,125 @@ export const headerStyles = StyleSheet.create({
     },
 });
 
-export const scrollerStyles = StyleSheet.create({
-    containerD: {
-        borderBottomWidth: 1,
-        borderColor: white,
-        flex: 1,
-        maxHeight: 50,
-        marginHorizontal: 10,
-        minHeight: 50,
-    },
-    containerL: {
-        borderBottomWidth: 1,
-        borderColor: black,
-        flex: 1,
-        maxHeight: 50,
-        marginHorizontal: 10,
-        minHeight: 50,
-    },
-    list: {
-        height: 50,
-    },
-    item: {
-        justifyContent: 'center',
-        marginHorizontal: 16,
-        maxHeight: 50,
-        minHeight: 50
-    },
-    titleD: {
-        color: white,
-        fontSize: 16,
-        textAlign: 'center',
-    },
-    titleL: {
-        color: black,
-        fontSize: 16,
-        textAlign: 'center',
-    },
-});
-
-export const recordModalStyles = StyleSheet.create({
-    box: {
-        backgroundColor: white,
-        borderBottomWidth: 1,
-        borderBottomColor: shade2,
-        height: '8%',
-        width: '100%'
-    },
-});
-
 export const numpadStyles = StyleSheet.create({
-    button: {
-        backgroundColor: white,
+    buttonD: {
+        alignItems: 'center',
+        backgroundColor: bgColorD,
+        borderWidth: 1,
+        borderColor: shade3,
+        height: '100%',
+        justifyContent: 'center',
+        width: '25%',
+    },
+    buttonL: {
+        alignItems: 'center',
+        backgroundColor: bgColorL,
         borderWidth: 1,
         borderColor: shade2,
         height: '100%',
+        justifyContent: 'center',
         width: '25%',
     },
     numpadRoot: {
-        height: '32%',
-        width: '100%'
+        height: '40%',
+        width: maxWidth
     },
     numpadRow: {
-        display: 'flex',
         flexDirection: 'row',
-        height: '25%',
+        height: '20%',
         width: '100%'
     },
-    input: {
+    outputD: {
+        alignItems: 'center',
+        backgroundColor: bgColorD,
+        borderWidth: 1,
+        borderColor: shade3,
+        flexDirection: 'row',
+        height: '20%',
+        justifyContent: 'space-between',
+        paddingHorizontal: '5%',
+        width: '100%'
+    },
+    outputL: {
+        alignItems: 'center',
+        backgroundColor: bgColorL,
+        borderWidth: 1,
+        borderColor: shade2,
+        flexDirection: 'row',
+        height: '20%',
+        justifyContent: 'space-between',
+        paddingHorizontal: '5%',
+        width: '100%'
+    },
+    outputNumD: {
+        color: white,
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
+    outputNumL: {
         color: black,
-        textAlign: 'center',
-        width: '100%',
+        fontSize: 20,
+        fontWeight: 'bold'
     },
 });
 
+export const timePickerStyles = StyleSheet.create({
+    amTextD:{
+        color: white,
+        fontSize: 20, 
+        fontWeight: 'bold', 
+    },
+    amTextL:{
+        color: black,
+        fontSize: 20, 
+        fontWeight: 'bold', 
+    },
+});
 
 // screen styles
 
-export const categoryStyles = StyleSheet.create({
-    cancelBtnD: {
-        backgroundColor: white,
-        borderRadius: 40,
-        paddingHorizontal: 40,
+export const iconSelectionScreen = StyleSheet.create({
+    headerD: {
+        alignItems: 'center',
+        backgroundColor: shade4,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 30,
         paddingVertical: 10,
-        margin: 10,
-        width: '45%',
     },
-    cancelBtnL: {
+    headerL: {
+        alignItems: 'center',
         backgroundColor: shade1,
-        borderRadius: 40,
-        paddingHorizontal: 40,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 30,
         paddingVertical: 10,
-        margin: 10,
-        width: '45%',
     },
-    listD: {
-        borderColor: shade4,
-        borderTopWidth: 2,
-        borderBottomWidth: 2,
-        height: '70%',
+    headerTextD: {
+        color: white,
+        fontWeight: 'bold',
     },
-    listL: {
-        borderColor: shade1,
-        borderTopWidth: 2,
-        borderBottomWidth: 2,
-        height: '70%',
+    headerTextL: {
+        color: black,
+        fontWeight: 'bold',
+    },
+    stack: {
+        height: 35,
+        width: 35,
+    },
+    stackChild: {
+        left: 0,
+        position: 'absolute',
+        top: 0,
+    },
+    stackDelete: {
+        alignItems: 'center',
+        backgroundColor: '#e74c3c', 
+        borderRadius: 10, 
+        elevation: 10,
+        height: 20, 
+        justifyContent: 'center',
+        width: 20,
     },
 })
 
@@ -417,20 +682,14 @@ export const homeScreenStyles = StyleSheet.create({
     borderD: {
         borderColor: shade4,
         borderTopWidth: 2,
-        maxHeight: '70%',
+        height: '70%',
         minWidth: maxWidth,
     },
     borderL: {
         borderColor: shade1,
         borderTopWidth: 2,
-        maxHeight: '70%',
+        height: '70%',
         minWidth: maxWidth,
-    },
-    bubbleD: {
-        backgroundColor: shade4,
-    },
-    bubbleL: {
-        backgroundColor: shade2,
     },
     messageD: {
         color: shade2,
@@ -450,20 +709,12 @@ export const homeScreenStyles = StyleSheet.create({
         paddingBottom: '3%',
         paddingTop: '4%', 
     },
-    sectionItemD: { 
-        backgroundColor: shade3,
-        borderRadius: 40,
-        paddingHorizontal: 40,
+    sectionItem: { 
+        borderRadius: 15,
+        paddingHorizontal: 30,
         paddingVertical: 10,
         margin: 10,
-    }, 
-    sectionItemL: { 
-        backgroundColor: shade1,
-        borderRadius: 40,
-        paddingHorizontal: 40,
-        paddingVertical: 10,
-        margin: 10,
-    }, 
+    },
     textCatD: { 
         color: white,
         width: '50%' 
@@ -484,46 +735,26 @@ export const homeScreenStyles = StyleSheet.create({
     },
 });
 
-export const recordStyles = StyleSheet.create({
-    cancelBtnD: {
-        backgroundColor: white,
-        borderRadius: 40,
-        paddingHorizontal: 40,
-        paddingVertical: 10,
-        margin: 10,
-        width: '80%',
-    },
-    cancelBtnL: {
-        backgroundColor: shade1,
-        borderRadius: 40,
-        paddingHorizontal: 40,
-        paddingVertical: 10,
-        margin: 10,
-        width: '80%'
-    },
-});
-
 export const settingStyles = StyleSheet.create({
-    cancelBtnD: {
-        backgroundColor: white,
-        borderRadius: 40,
-        paddingHorizontal: 40,
-        paddingVertical: 10,
-        margin: 10,
-        width: '47.5%',
+    itemChildContainerD: {
+        alignItems: 'center',
+        backgroundColor: shade4,
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        paddingHorizontal: '5%',
+        paddingVertical: '2%',
     },
-    cancelBtnL: {
+    itemChildContainerL: {
+        alignItems: 'center',
         backgroundColor: shade1,
-        borderRadius: 40,
-        paddingHorizontal: 40,
-        paddingVertical: 10,
-        margin: 10,
-        width: '47.5%',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        paddingHorizontal: '5%',
+        paddingVertical: '2%',
     },
     itemContainerD: {
         alignItems: 'center',
         backgroundColor: shade4,
-        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: '5%',
@@ -532,50 +763,10 @@ export const settingStyles = StyleSheet.create({
     itemContainerL: {
         alignItems: 'center',
         backgroundColor: shade1,
-        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: '5%',
         paddingVertical: '2%',
-    },
-    modalTextD: {
-        color: white,
-        fontSize: 15,
-        textAlign: 'center',
-    },
-    modalTextL: {
-        color: black,
-        fontSize: 15,
-        textAlign: 'center',
-    },
-    modalViewContainer: {
-        alignItems: 'center',
-        flex: 1,
-        justifyContent: 'flex-end',
-    },
-    modalViewD: {
-        alignItems: 'center',
-        backgroundColor: shade4,
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-        height: maxHeight / 10,
-        justifyContent: 'center',
-        opacity: 0.9,
-        paddingTop: '1%',
-        paddingHorizontal: '5%',
-        width: maxWidth,
-    },
-    modalViewL: {
-        alignItems: 'center',
-        backgroundColor: shade1,
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-        height: maxHeight / 10,
-        justifyContent: 'center',
-        opacity: 0.9,
-        paddingTop: '1%',
-        paddingHorizontal: '5%',
-        width: maxWidth,
     },
     textD: {
         color: white,

@@ -2,156 +2,245 @@ import moment from 'moment';
 import { combineReducers } from 'redux';
 
 import {
-    ADD_RECORD,
+    ADD_CARD,
     ADD_EXPENSE_CATEGORY,
     ADD_INCOME_CATEGORY,
+    ADD_RECORD,
+    ADD_WATCHLIST,
+    DEFAULT_CARDS,
     DEFAULT_EXPENSE_CATEGORY,
-    DEFAULT_EXPENSE_SELECTION,
     DEFAULT_GOAL,
     DEFAULT_INCOME_CATEGORY,
-    DEFAULT_INCOME_SELECTION,
     DEFAULT_SETTINGS,
+    DEFAULT_WATCHLIST,
     DELETE_EXPENSE_CATEGORY,
     DELETE_INCOME_CATEGORY,
     DELETE_RECORD,
     DELETE_HISTORY,
+    EDIT_EXPENSE_CATEGORY,
+    EDIT_INCOME_CATEGORY,
     EDIT_RECORD,
-    RESET_KEY,
-    RESET_ALLKEYS,
-    UPDATE_EXPENSE_SELECTION,
+    HIDE_CARD,
+    MAKE_ALL_NULL,
+    MAKE_NULL_KEY,
+    REMOVE_WATCHLIST,
     UPDATE_GOAL,
-    UPDATE_INCOME_SELECTION,
     UPDATE_SETTINGS, 
     DEFAULT_LOGIN,
     UPDATE_LOGIN, 
+    UPDATE_SETTINGS,
 } from './action';
 import {
+    defaultCardConfig,
+    defaultData,
     defaultExpenseCategories,
-    defaultExpenseSelection,
-    defaultGoal,
     defaultIncomeCategories,
-    defaultIncomeSelection,
     defaultSettings,
-    defaultLogin 
-} from '../default';
+    defaultLogin,
+    defaultSettings,
+    defaultWatchlist,
+    NULL_KEY,
+} from '../data/default';
 
-const updateRecords = (records = [], action) => {
-    switch (action.type) {
-        case ADD_RECORD:
-            action.payload['key'] = moment().format();
-            return [...records, action.payload];
-        case DELETE_HISTORY:
-            return [];
-        case DELETE_RECORD:
-            
-            var found = false;
-            var pos = -1;
-            while (!found) {
-                if (temp[++pos].key === action.payload)
-                    found = true;
-            }
-            temp.splice(pos, 1);
-            return temp;
-        case EDIT_RECORD:
-            var temp = [...records];
-            var found = false;
-            var pos = -1;
-            while (!found) {
-                if (temp[++pos].key === action.payload.key)
-                    found = true;
-            }
-            temp.splice(pos, 1, action.payload);
-            return temp;
-        case RESET_KEY:
-            var temp = [...records];
-            for (const record of temp) {
-                if (record.category === action.payload) {
-                    record.category = 'Other';
-                    record.icon = 'information-variant';
-                }
-            }
-            return temp;
-        case RESET_ALLKEYS:
-            var temp = [...records];
-            for (const record of temp) {
-                if (!defaultExpenseCategories.includes(record.category) || !defaultIncomeCategories.includes(record.category)) {
-                    record.category = 'Other';
-                    record.icon = 'information-variant';
-                }
-            }
-    }
-    return records;
+const genKey = () => genRNKey() + genRNKey() + '-' + genRNKey();
+const genRNKey = () => Math.floor((1 + Math.random() * 0x10000)).toString(16);
+
+const addRecord = (base, datekey, rnkey, payload) => {
+    // create new date object
+    if (base.data[datekey] === undefined)
+        base.data[datekey] = {};
+
+    // add payload to data
+    base.data[datekey][rnkey] = payload;
+
+    // find index of section object
+    const index = base.display.findIndex(obj => obj.title === datekey);
+    if (index == -1)
+        base.display.push({ title: datekey, data: [datekey + ':' + rnkey] });
+    else
+        base.display[index].data.push(datekey + ':' + rnkey)
+
+    // sort display array by date
+    base.display.sort((a, b) => (a.title < b.title) * 1 + (a.title > b.title) * -1);
+
+    // update total
+    const total = (parseFloat(base.total) + (payload.type === 'Expense' ? -1 : 1) * payload.value);
+    base.total = (total + (total % 1 !== 0 ? '0' : '.00')).toString();
 }
 
-const updateExpenseCategory = (categories = [], action) => {
+const deleteRecord = (base, datekey, rnkey) => {
+    // update total
+    const record = base.data[datekey][rnkey];
+    const total = (parseFloat(base.total) + (record.type === 'Expense' ? 1 : -1) * record.value);
+    base.total = (total + (total % 1 !== 0 ? '0' : '.00')).toString();
+
+    // delete from data
+    delete base.data[datekey][rnkey];
+
+    // delete from display
+    const outerIndex = base.display.findIndex(obj => obj.title === datekey);
+    const innerIndex = base.display[outerIndex].data.indexOf(datekey + ':' + rnkey);
+    base.display[outerIndex].data.splice(innerIndex, 1);
+
+    // delete display label if empty
+    if (base.display[outerIndex].data.length === 0)
+        base.display.splice(outerIndex, 1);
+}
+
+const makeAllNull = (base) => {
+    const defaultList = [...Object.keys(defaultExpenseCategories), Object.keys(defaultIncomeCategories)];
+    Object.keys(base.data).forEach(datekey => Object.keys(base.data[datekey]).forEach(recordKey => {
+        var record = base.data[datekey][recordKey];
+        if (!defaultList.includes(record.catKey)) {
+            console.log('clear: ' + recordKey);
+            record.catKey = NULL_KEY;
+        }
+    }));
+}
+
+const makeNullKey = (base, key) => {
+    Object.keys(base.data).forEach(datekey => Object.keys(base.data[datekey]).forEach(recordKey => {
+        console.log('clear: ' + key);
+        var record = base.data[datekey][recordKey];
+        if (record.catKey === key)
+            record.catKey = NULL_KEY;
+    }));
+}
+
+const updateCards = (cards = defaultCardConfig, action) => {
+    var temp = { ...cards }
+    switch (action.type) {
+        case DEFAULT_CARDS:
+            return defaultCardConfig;
+
+        case ADD_CARD:
+            temp[action.payload] = true;
+            break;
+
+        case HIDE_CARD:
+            temp[action.payload] = false;
+            break;
+    }
+    return temp;
+}
+
+const updateData = (data = defaultData, action) => {
+    var temp = { ...data };
+    switch (action.type) {
+        case DELETE_HISTORY:
+            console.log('asdf');
+            return defaultData;
+
+        case ADD_RECORD:
+            var rnkey = genKey();
+            var datekey = action.payload.date;
+
+            addRecord(temp, datekey, rnkey, { ...action.payload, key: datekey + ':' + rnkey });
+            break;
+
+        case EDIT_RECORD:
+            var keyset = action.payload.key.split(':');
+            var datekey = action.payload.date;
+
+            deleteRecord(temp, keyset[0], keyset[1]);
+            addRecord(temp, datekey, keyset[1], { ...action.payload, key: datekey + ':' + keyset[1] });
+            break;
+
+        case DELETE_RECORD:
+            var keyset = action.payload.split(':');
+
+            deleteRecord(temp, keyset[0], keyset[1]);
+            break;
+
+        case UPDATE_GOAL:
+            temp.goalSettings = action.payload;
+            break;
+
+        case DEFAULT_GOAL:
+            temp.goalSettings = defaultData.goalSettings;
+            break;
+
+        case MAKE_ALL_NULL:
+            makeAllNull(temp);
+            break;
+
+        case MAKE_NULL_KEY:
+            makeNullKey(temp, action.payload);
+            break;
+
+        default:
+            return data;
+    }
+
+    updateGoal(temp);
+    return temp;
+}
+
+const updateGoal = base => {
+    switch (base.goalSettings.type) {
+        case 'none':
+            base.goal = defaultData.goal;
+            return;
+        case 'week':
+            var week = moment().week();
+            var dates = Object.keys(base.data).filter(date => moment(date, "YYYY-MM-DD").week() === week);
+            break;
+
+        case 'month':
+            var thisMonth = moment().format("YYYY-MM");
+            var dates = Object.keys(base.data).filter(date => date.startsWith(thisMonth));
+            break;
+    }
+
+    var totalExpense = 0;
+    dates.forEach(date => {
+        Object.keys(base.data[date]).forEach(key => {
+            const record = base.data[date][key];
+            totalExpense += (record.type === 'Expense') * record.value;
+        });
+    });
+
+    base.goal.remaining = base.goalSettings.amount - totalExpense;
+    base.goal.percentage = 1 - ((base.goalSettings.amount - totalExpense) / base.goalSettings.amount);
+}
+
+const updateExpenseCategories = (categories = defaultExpenseCategories, action) => {
     switch (action.type) {
         case DEFAULT_EXPENSE_CATEGORY:
             return defaultExpenseCategories;
         case ADD_EXPENSE_CATEGORY:
-            return [...categories, action.payload];
-        case DELETE_EXPENSE_CATEGORY:
-            var temp = [...categories];
-            var position
-            for (position = 0; position < temp.length; position++) {
-                if (temp[position].key === action.payload)
-                    break;
-            }
-            temp.splice(position, 1);
+            var temp = { ...categories };
+            temp[genKey()] = action.payload;
             return temp;
+        case DELETE_EXPENSE_CATEGORY:
+            var temp = { ...categories };
+            delete temp[action.payload];
+            return temp;
+        case EDIT_EXPENSE_CATEGORY:
+            return { ...categories, ...action.payload }
     }
     return categories;
 }
 
-const updateExpenseSelection = (selection = [], action) => {
-    switch (action.type) {
-        case DEFAULT_EXPENSE_SELECTION:
-            return defaultExpenseSelection;
-        case UPDATE_EXPENSE_SELECTION:
-            return action.payload;
-    }
-    return selection;
-}
-
-const updateGoal = (goal = {}, action) => {
-    switch (action.type) {
-        case DEFAULT_GOAL:
-            return defaultGoal;
-        case UPDATE_GOAL:
-            return action.payload;
-    }
-    return goal;
-}
-
-const updateIncomeCategory = (categories = [], action) => {
+const updateIncomeCategories = (categories = defaultIncomeCategories, action) => {
     switch (action.type) {
         case DEFAULT_INCOME_CATEGORY:
             return defaultIncomeCategories;
         case ADD_INCOME_CATEGORY:
-            return [...categories, action.payload];
-        case DELETE_INCOME_CATEGORY:
-            var temp = [...categories];
-            var position
-            for (position = 0; position < temp.length; position++) {
-                if (temp[position].key === action.payload)
-                    break;
-            }
-            temp.splice(position, 1);
+            var temp = { ...categories };
+            temp[genKey()] = action.payload;
             return temp;
+        case DELETE_INCOME_CATEGORY:
+            var temp = { ...categories };
+            delete temp[action.payload];
+            return temp;
+        case EDIT_INCOME_CATEGORY:
+            return { ...categories, ...action.payload }
     }
     return categories;
 }
 
-const updateIncomeSelection = (selection = [], action) => {
-    switch (action.type) {
-        case DEFAULT_INCOME_SELECTION:
-            return defaultIncomeSelection;
-        case UPDATE_INCOME_SELECTION:
-            return action.payload;
-    }
-    return selection;
-}
-
-const updateSettings = (settings = {}, action) => {
+const updateSettings = (settings = defaultSettings, action) => {
     switch (action.type) {
         case DEFAULT_SETTINGS:
             return defaultSettings;
@@ -162,6 +251,7 @@ const updateSettings = (settings = {}, action) => {
     }
     return settings;
 }
+
 const updateLogin = (isLogin = {}, action) => {
     switch (action.type) {
         case DEFAULT_LOGIN:
@@ -172,13 +262,27 @@ const updateLogin = (isLogin = {}, action) => {
     return isLogin;
 }
 
+const updateWatchlist = (watchlist = defaultWatchlist, action) => {
+    var temp = [...watchlist];
+    switch (action.type) {
+        case DEFAULT_WATCHLIST:
+            return defaultWatchlist;
+        case ADD_WATCHLIST:
+            temp.push(action.payload);
+            break;
+        case REMOVE_WATCHLIST:
+            temp.splice(temp.indexOf(action.payload), 1);
+            break;
+    }
+    return temp;
+}
+
 export default combineReducers({
-    expenseCategories: updateExpenseCategory,
-    expenseSelection: updateExpenseSelection,
-    goal: updateGoal,
-    incomeCategories: updateIncomeCategory,
-    incomeSelection: updateIncomeSelection,
-    records: updateRecords,
+    cards: updateCards,
+    data: updateData,
+    expenseCategories: updateExpenseCategories,
+    incomeCategories: updateIncomeCategories,
     settings: updateSettings,
-    isLogin:updateLogin
+    isLogin:updateLogin,
+    watchlist: updateWatchlist,
 });

@@ -3,24 +3,22 @@ import React from 'react';
 import { TouchableOpacity, Text, } from 'react-native';
 import { connect } from 'react-redux';
 
-import { calendarStyles, } from '../styles';
+import { calendarStyles } from '../../styles';
 
 class CalendarDateSelector extends React.Component {
 
     text = () => {
-        if (this.props.day === moment().format('YYYY-MM-DD'))
+        if (this.props.day === moment().format('YYYY-MM-DD') && !this.props.disabled)
             return { textAlign: 'center', color: this.props.settings.accent }
         return this.props.disabled ? this.style('disabled') : this.style('centerText');
     }
 
-    style = styleName => {
-        return calendarStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
-    }
+    style = styleName => calendarStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
     render() {
         return (
             <TouchableOpacity
-                style={calendarStyles.selectionContainer}
+                style={{...calendarStyles.selectionContainer, borderColor: this.props.selected && !this.props.disabled ? this.props.settings.accent : 'transparent'}}
                 onPress={() => {
                     if (!this.props.disabled)
                         this.props.onPress(this.props.day);

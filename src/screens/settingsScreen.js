@@ -1,45 +1,34 @@
 import moment from 'moment';
 import React from 'react';
-import { Modal, ScrollView, Text, TouchableOpacity, View, } from 'react-native';
+import { ScrollView, View, } from 'react-native';
+import NavigationBar from 'react-native-navbar-color'
 import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
-import ExpandButton from '../components/ExpandButton';
+import ColorPicker from '../components/ColorPicker';
+import ConfirmationModal from '../components/Modals/ConfirmationModal';
 import ScreenHeader from '../components/ScreenHeader';
 import SettingsHeader from '../components/SettingsHeader';
 import SettingsItem from '../components/SettingsItem';
-import Scroller from '../components/Scroller';
+import TimePicker from '../components/TimePicker';
 import NotifService from '../notifications/notifService';
-import { defaultExpenseCategory, defaultExpenseSelection, defaultIncomeCategory, defaultIncomeSelection, defaultSettings, deleteHistory, resetAllKeys, updateSettings, } from '../redux/action';
+import { defaultCards, defaultExpenseCategory, defaultIncomeCategory, defaultSettings, defaultWatchlist, deleteHistory, makeAllNull, updateSettings, } from '../redux/action';
 import { store } from '../redux/store';
-import { colors, settingStyles, styles, } from '../styles';
+
+import { currencies } from '../data/icons';
+import { bgColorD, shade2, } from '../data/color';
+import { settingsPromptText } from '../data/text';
+import { settingStyles, styles, } from '../styles';
 
 class Screen extends React.Component {
 
     constructor(props) {
         super(props);
-        var hrs = new Array(24);
-        var mins = new Array(12);
-        for (var i = 0; i < 24; i++)
-            hrs[i] = { key: i, label: i }
-        for (var i = 0; i < 12; i++)
-            mins[i] = { key: i, label: i * 5 }
-
-        const hr = parseInt(props.settings.notifSchedule.substring(0, 2));
-        const min = parseInt(props.settings.notifSchedule.substring(3, 5)) / 5;
-
         this.state = {
-            colorPicker: false,
-            currencyPicker: false,
-            resetAll: false,
-            resetCategory: false,
-            resetSettings: false,
-            timePicker: false,
-
-            hours: hrs,
-            minutes: mins,
-            setHr: hr,
-            setMin: min,
+            confirmType: 0,
+            cpOpen: false,
+            cupOpen: false,
+            tpOpen: false,
         }
 
         this.notif = new NotifService(
@@ -48,255 +37,137 @@ class Screen extends React.Component {
         );
     }
 
-    addZero = num => {
-        return num < 10 ? '0' + num : num;
+    addZero = num => num < 10 ? '0' + num : num;
+
+    cancelNotifs = () => {
+        this.notif.cancelAll();
+        if (!this.props.settings.notification) {
+            var set = moment().set({
+                'hour': parseInt(this.props.settings.notifSchedule.substring(0, 2)),
+                'minute': parseInt(this.props.settings.notifSchedule.substring(3, 5)),
+                'second': 0,
+            });
+            if (set.isBefore(moment()))
+                set.add(1, 'day');
+            this.notif.scheduleNotif(set, this.props.settings.accent);
+        }
+        store.dispatch(updateSettings({ key: 'notification', update: !this.props.settings.notification }));
     }
 
-    onRegister = token => {
-        this.setState({ registerToken: token.token, fcmRegistered: true });
+    clear = type => {
+        if (type === 3)
+            store.dispatch(deleteHistory());
+        if (type > 1) {
+            store.dispatch(makeAllNull());
+            store.dispatch(defaultExpenseCategory());
+            store.dispatch(defaultIncomeCategory());
+            store.dispatch(defaultWatchlist());
+        }
+        if (type === 1 || type === 3) {
+            store.dispatch(defaultSettings());
+            store.dispatch(defaultCards());
+        }
+        this.setState({ confirmType: 0 });
     }
 
-    onNotif = notif => {
+    onNotif = notif => { }
 
+    onRegister = token => this.setState({ registerToken: token.token, fcmRegistered: true });
+
+    openConfirmation = id => {
+        if (!this.props.settings.prompt[settingsPromptText[id.toString()].key])
+            this.setState({ confirmType: id });
+        else
+            this.clear(id);
     }
 
-    handlePerm = perms => {
-        Alert.alert('Permissions', JSON.stringify(perms));
+    handlePerm = perms => Alert.alert('Permissions', JSON.stringify(perms));
+
+    nav = (screen, params) => this.props.navigation.navigate(screen, params);
+
+    toggleDarkMode = () => {
+        NavigationBar.setColor(!this.props.settings.darkMode ? bgColorD : shade2);
+        store.dispatch(updateSettings({ key: 'darkMode', update: !this.props.settings.darkMode }));
     }
 
     render() {
         return (
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
-                <Modal animationType={'slide'} transparent={true} visible={this.state.colorPicker || this.state.currencyPicker || this.state.timePicker}>
-                    <View style={settingStyles.modalViewContainer}>
-                        <View style={this.props.settings.darkMode ? settingStyles.modalViewD : settingStyles.modalViewL}>
-                            <ExpandButton
-                                dark={this.props.settings.darkMode}
-                                onPress={() => {
-                                    if (this.state.timePicker) {
-                                        this.notif.cancelAll();
-                                        var set = moment().set({
-                                            'hour': parseInt(this.addZero(this.state.hours[this.state.setHr].label)),
-                                            'minute': parseInt(this.addZero(this.state.minutes[this.state.setMin].label)),
-                                            'second': 0,
-                                        });
-                                        if (set.isBefore(moment()))
-                                            set.add(1, 'day');
-                                        this.notif.scheduleNotif(set, this.props.settings.accent);
-
-                                        store.dispatch(updateSettings(
-                                            {
-                                                key: 'notifSchedule',
-                                                update:
-                                                    this.addZero(this.state.hours[this.state.setHr].label) + ":" +
-                                                    this.addZero(this.state.minutes[this.state.setMin].label)
-                                            }
-                                        ))
-                                        this.setState({ colorPicker: false, currencyPicker: false, timePicker: false });
-                                    }
-                                }} />
-                            {this.state.colorPicker &&
-                                <View style={styles.columns}>
-                                    <Bubble
-                                        color={colors[0]}
-                                        onPress={() => {
-                                            store.dispatch(updateSettings({ key: 'accent', update: colors[0] }));
-                                            this.setState({ colorPicker: false });
-                                        }}
-                                        selected={this.props.settings.accent === colors[0]}
-                                    />
-                                    <Bubble
-                                        color={colors[1]}
-                                        onPress={() => {
-                                            store.dispatch(updateSettings({ key: 'accent', update: colors[1] }));
-                                            this.setState({ colorPicker: false });
-                                        }}
-                                        selected={this.props.settings.accent === colors[1]}
-                                    />
-                                    <Bubble
-                                        color={colors[2]}
-                                        onPress={() => {
-                                            store.dispatch(updateSettings({ key: 'accent', update: colors[2] }));
-                                            this.setState({ colorPicker: false });
-                                        }}
-                                        selected={this.props.settings.accent === colors[2]}
-                                    />
-                                    <Bubble
-                                        color={colors[3]}
-                                        onPress={() => {
-                                            store.dispatch(updateSettings({ key: 'accent', update: colors[3] }));
-                                            this.setState({ colorPicker: false });
-                                        }}
-                                        selected={this.props.settings.accent === colors[3]}
-                                    />
-                                    <Bubble
-                                        color={colors[4]}
-                                        onPress={() => {
-                                            store.dispatch(updateSettings({ key: 'accent', update: colors[4] }));
-                                            this.setState({ colorPicker: false });
-                                        }}
-                                        selected={this.props.settings.accent === colors[4]}
-                                    />
-                                </View>
-                            }
-                            {this.state.currencyPicker &&
-                                <View style={styles.columns}>
-                                    <Bubble
-                                        color={this.props.settings.accent}
-                                        iconName={'currency-usd'}
-                                        iconSize={20}
-                                        onPress={() => {
-                                            store.dispatch(updateSettings({ key: 'currency', update: 'usd' }));
-                                            this.setState({ currencyPicker: false });
-                                        }}
-                                        selected={this.props.settings.currency === 'usd'}
-                                    />
-                                    <Bubble
-                                        color={this.props.settings.accent}
-                                        iconName={'currency-gbp'}
-                                        iconSize={20}
-                                        onPress={() => {
-                                            store.dispatch(updateSettings({ key: 'currency', update: 'gbp' }));
-                                            this.setState({ currencyPicker: false });
-                                        }}
-                                        selected={this.props.settings.currency === 'gbp'}
-                                    />
-                                    <Bubble
-                                        color={this.props.settings.accent}
-                                        iconName={'currency-jpy'}
-                                        iconSize={20}
-                                        onPress={() => {
-                                            store.dispatch(updateSettings({ key: 'currency', update: 'jpy' }));
-                                            this.setState({ currencyPicker: false });
-                                        }}
-                                        selected={this.props.settings.currency === 'jpy'}
-                                    />
-                                    <Bubble
-                                        color={this.props.settings.accent}
-                                        iconName={'currency-eur'}
-                                        iconSize={20}
-                                        onPress={() => {
-                                            store.dispatch(updateSettings({ key: 'currency', update: 'eur' }));
-                                            this.setState({ currencyPicker: false });
-                                        }}
-                                        selected={this.props.settings.currency === 'eur'}
-                                    />
-                                    <Bubble
-                                        color={this.props.settings.accent}
-                                        iconName={'currency-btc'}
-                                        iconSize={20}
-                                        onPress={() => {
-                                            store.dispatch(updateSettings({ key: 'currency', update: 'btc' }));
-                                            this.setState({ currencyPicker: false });
-                                        }}
-                                        selected={this.props.settings.currency === 'btc'}
-                                    />
-                                </View>
-                            }
-                            {this.state.timePicker &&
-                                <View style={styles.columns}>
-                                    <Scroller
-                                        dark={this.props.settings.darkMode}
-                                        data={this.state.hours}
-                                        initial={this.state.setHr}
-                                        onScroll={(index) => this.setState({ setHr: this.state.hours[index].key })}
-                                    />
-                                    <Scroller
-                                        dark={this.props.settings.darkMode}
-                                        data={this.state.minutes}
-                                        initial={this.state.setMin}
-                                        onScroll={(index) => this.setState({ setMin: this.state.minutes[index].key })}
-                                    />
-                                </View>
-                            }
-                        </View>
-                    </View>
-                </Modal>
-                <Modal animationType={'slide'} transparent={true} visible={this.state.resetAll || this.state.resetCategory || this.state.resetSettings}>
-                    <View style={settingStyles.modalViewContainer}>
-                        <View style={this.props.settings.darkMode ? settingStyles.modalViewD : settingStyles.modalViewL}>
-                            <Text style={this.props.settings.darkMode ? settingStyles.modalTextD : settingStyles.modalTextL}>{
-                                (this.state.resetAll ? 'Clear ALL data?' : '') +
-                                (this.state.resetCategory ? 'Revert to Default Categories?' : '') +
-                                (this.state.resetSettings ? 'Revert to Default Settings?' : '')
-                            }</Text>
-                            <View style={styles.columns}>
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        if (this.state.resetAll)
-                                            store.dispatch(deleteHistory());
-                                        if (this.state.resetCategory) {
-                                            store.dispatch(defaultExpenseCategory());
-                                            store.dispatch(defaultExpenseSelection());
-                                            store.dispatch(defaultIncomeCategory());
-                                            store.dispatch(defaultIncomeSelection());
-                                            store.dispatch(resetAllKeys());
-                                        }
-                                        if (this.state.resetSettings)
-                                            store.dispatch(defaultSettings());
-                                        this.setState({ resetAll: false, resetCategory: false, resetSettings: false });
-                                    }}
-                                    style={{ ...styles.roundView, backgroundColor: this.props.settings.accent, width: '47.5%' }}>
-                                    <Text style={styles.centerTextL}>Confirm</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.setState({ resetAll: false, resetCategory: false, resetSettings: false })} style={this.props.settings.darkMode ? settingStyles.cancelBtnD : settingStyles.cancelBtnL}>
-                                    <Text style={styles.centerTextL}>Cancel</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
-                </Modal>
-                <ScreenHeader action={() => this.props.navigation.navigate('Home')} name={'Settings'} />
+                <ScreenHeader back={() => this.nav('Home')} name={'Settings'} />
                 <ScrollView style={settingStyles.scrollView}>
                     <SettingsHeader title={'ACCOUNTS'} />
-                    <SettingsItem action={() => this.props.navigation.navigate('Account')} iconL={'login'} text={'Login'} />
-                    <SettingsItem action={() => this.props.navigation.navigate('Account')} iconL={'account'} text={'Account Settings'} />
+                    <SettingsItem action={() => this.nav('Account')} iconL={'login'} text={'Login'} />
+                    <SettingsItem action={() => this.nav('Account')} iconL={'account'} text={'Account Settings'} />
 
                     <SettingsHeader title={'GENERAL'} />
-                    <SettingsItem action={() => this.setState({ currencyPicker: true, modal: true })} iconL={'currency-usd'} iconR={'currency-' + this.props.settings.currency} text={'Currency'} />
+                    <SettingsItem action={() => this.setState({ cupOpen: !this.state.cupOpen })} iconL={'currency-usd'} iconR={'currency-' + this.props.settings.currency} text={'Currency'} open={this.state.cupOpen}>
+                        {currencies.map(item => {
+                            return (
+                                <Bubble
+                                    color={this.props.settings.accent}
+                                    key={item}
+                                    iconName={'currency-' + item}
+                                    iconSize={20}
+                                    onPress={() => {
+                                        store.dispatch(updateSettings({ key: 'currency', update: item }));
+                                        this.setState({ cupOpen: false });
+                                    }}
+                                    selected={this.props.settings.currency !== item}
+                                />
+                            );
+                        })}
+                    </SettingsItem>
 
                     <SettingsHeader title={'THEMES'} />
-                    <SettingsItem action={() => this.setState({ colorPicker: true, modal: true })} iconL={'palette'} iconR={'circle'} iconRColor={this.props.settings.accent} text={'Accent Color'} />
-                    <SettingsItem action={() => store.dispatch(updateSettings({ key: 'darkMode', update: !this.props.settings.darkMode }))} iconL={'moon-waning-crescent'} state={this.props.settings.darkMode} switch={true} text={'Dark Mode'} />
+                    <SettingsItem action={() => this.setState({ cpOpen: true })} iconL={'palette'} iconR={'circle'} iconRColor={this.props.settings.accent} text={'Accent Color'} />
+                    <SettingsItem action={this.toggleDarkMode} iconL={'moon-waning-crescent'} state={this.props.settings.darkMode} switch={true} text={'Dark Mode'} />
 
                     <SettingsHeader title={'CATEGORIES'} />
-                    <SettingsItem action={() => this.props.navigation.navigate('Category', { title: 'Expense' })} iconL={'shopping'} text={'Expense Categories'} />
-                    <SettingsItem action={() => this.props.navigation.navigate('Category', { title: 'Income' })} iconL={'cash'} text={'Income Categories'} />
-                    <SettingsItem action={() => this.setState({ resetCategory: true })} iconL={'backup-restore'} text={'Reset Default Categories'} />
+                    <SettingsItem action={() => this.nav('Icons', 'Expense')} iconL={'shopping'} text={'Expense Categories'} />
+                    <SettingsItem action={() => this.nav('Icons', 'Income')} iconL={'cash'} text={'Income Categories'} />
 
                     <SettingsHeader title={'ADVANCED'} />
                     <SettingsItem action={() => store.dispatch(updateSettings({ key: 'compactView', update: !this.props.settings.compactView }))} iconL={'card-text'} state={this.props.settings.compactView} switch={true} text={'Compact View'} />
-                    <SettingsItem
-                        action={() => {
-                            this.notif.cancelAll();
-                            if (!this.props.settings.notification) {
-                                var set = moment().set({
-                                    'hour': parseInt(this.props.settings.notifSchedule.substring(0, 2)),
-                                    'minute': parseInt(this.props.settings.notifSchedule.substring(3, 5)),
-                                    'second': 0,
-                                });
-                                if (set.isBefore(moment()))
-                                    set.add(1, 'day');
-                                this.notif.scheduleNotif(set, this.props.settings.accent);
-                            }
-                            store.dispatch(updateSettings({ key: 'notification', update: !this.props.settings.notification }))
-                        }}
-                        iconL={'bell'}
-                        state={this.props.settings.notification}
-                        switch={true}
-                        text={'Notifications'}
-                    />
-                    <SettingsItem action={() => this.setState({ timePicker: true, modal: true })} disabled={!this.props.settings.notification} iconL={'subdirectory-arrow-right'} text={this.props.settings.notifSchedule} />
-                    <SettingsItem action={() => this.setState({ resetSettings: true })} iconL={'backup-restore'} text={'Reset Default Settings'} />
-                    <SettingsItem action={() => this.setState({ resetAll: true })} iconL={'trash-can'} text={'Clear All Data'} />
+                    <SettingsItem action={this.cancelNotifs} iconL={'bell'} state={this.props.settings.notification} switch={true} text={'Notifications'} />
+                    <SettingsItem action={() => this.setState({ tpOpen: true })} disabled={!this.props.settings.notification} iconL={'subdirectory-arrow-right'} text={this.props.settings.notifSchedule} />
+
+                    <SettingsHeader title={'DANGER ZONE'} />
+                    <SettingsItem action={() => this.openConfirmation(2)} iconL={'backup-restore'} text={'Reset Default Categories'} />
+                    <SettingsItem action={() => this.openConfirmation(1)} iconL={'backup-restore'} text={'Reset Default Settings'} />
+                    <SettingsItem action={() => this.openConfirmation(3)} iconL={'trash-can'} text={'Clear All Data'} />
                 </ScrollView>
+
+                <ColorPicker
+                    color={this.props.settings.accent}
+                    close={() => this.setState({ cpOpen: false })}
+                    open={this.state.cpOpen}
+                    onPress={item => {
+                        store.dispatch(updateSettings({ key: 'accent', update: item }));
+                        this.setState({ cpOpen: false });
+                    }}
+                />
+                <TimePicker
+                    close={() => this.setState({ tpOpen: false })}
+                    open={this.state.tpOpen}
+                    time={this.props.settings.notifSchedule}
+                    onPress={item => {
+                        store.dispatch(updateSettings({ key: 'notifSchedule', update: item }));
+                        this.setState({ tpOpen: false });
+                    }}
+                />
+                <ConfirmationModal
+                    close={() => this.setState({ confirmType: 0 })}
+                    onConfirm={() => this.clear(this.state.confirmType)}
+                    open={this.state.confirmType !== 0}
+                    text={settingsPromptText[this.state.confirmType.toString()]}
+                />
             </View >
         );
     }
 }
 
 const mapStateToProps = state => ({
-    settings: state.settings
+    settings: state.settings,
 })
 
 export default connect(mapStateToProps)(Screen);

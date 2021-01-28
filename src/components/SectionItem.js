@@ -4,7 +4,9 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
-import { black, homeScreenStyles, white, styles, } from '../styles';
+
+import { black, shade1, shade2, shade3, shade4, white, } from '../data/color';
+import { homeScreenStyles, styles, } from '../styles';
 
 class SectionItem extends React.Component {
 
@@ -15,50 +17,63 @@ class SectionItem extends React.Component {
         }
     }
 
-    iconColor = () => {
-        return this.props.dark ? white : black;
+    bgColor = toggle => {
+        const type = this.item('type');
+        if (this.props.settings.darkMode)
+            return type === 'Expense' ^ toggle ? shade4 : shade3;
+        return type === 'Expense' ^ toggle ? shade1 : shade2;
     }
 
-    style = (stylesheet, styleName) => {
-        return stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
+    catValue = () => (this.item('type') === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories)[this.item('catKey')];
+
+    iconColor = () => this.props.settings.darkMode ? white : black;
+
+    item = value => {
+        const keyset = this.props.itemkey.split(':');
+        return this.props.data.data[keyset[0]][keyset[1]][value]
     }
+
+    style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
     render() {
         return (
-            <TouchableOpacity onPress={() => this.setState({ open: !this.state.open })} style={this.style(homeScreenStyles, 'sectionItem')}>
+            <TouchableOpacity onPress={() => this.setState({ open: !this.state.open })} style={{ ...homeScreenStyles.sectionItem, backgroundColor: this.bgColor(false) }}>
                 <View style={{ ...styles.columns, justifyContent: 'space-between' }}>
-                    <Icon name={this.props.item.icon} size={20} color={this.props.settings.accent} />
+                    <Icon name={this.catValue().iconName} size={20} color={this.catValue().color} />
                     <Text style={this.style(homeScreenStyles, 'textCat')}>
-                        {this.props.item.category}
+                        {this.catValue().name}
                     </Text>
                     <Text style={this.style(homeScreenStyles, 'textVal')}>
-                        {(this.props.item.type === 'Expense' ? '-' : '+') + this.props.item.value}
+                        <Icon name={'currency-' + this.props.settings.currency} size={13} color={this.iconColor()} />
+                        {this.item('value')}
                     </Text>
                 </View>
                 {(this.state.open || !this.props.compactMode) &&
                     <>
-                        <View style={{ ...styles.columns, justifyContent: 'space-between' }}>
-                            <Icon name={this.props.item.icon} size={20} color={'transparent'} />
-                            <Text style={this.style(homeScreenStyles, 'textCat')}>
-                                Title: {this.props.item.title}
-                            </Text>
-                            <Text style={{ ...this.style(homeScreenStyles, 'textVal'), color: 'transparent' }}>
-                                {(this.props.item.type === 'Expense' ? '-' : '+') + this.props.item.value}
-                            </Text>
-                        </View>
+                        {this.item('title') !== '' &&
+                            <View style={{ ...styles.columns, justifyContent: 'space-between' }}>
+                                <Icon name={this.catValue().iconName} size={20} color={'transparent'} />
+                                <Text style={this.style(homeScreenStyles, 'textCat')}>
+                                    Title: {this.item('title')}
+                                </Text>
+                                <Text style={{ ...this.style(homeScreenStyles, 'textVal'), color: 'transparent' }}>
+                                    {this.item('value')}
+                                </Text>
+                            </View>
+                        }
                         <View style={{ ...styles.columns, justifyContent: 'space-between' }}>
                             <View style={{ width: '70%' }} />
                             <Bubble
-                                color={this.style(homeScreenStyles, 'bubble').backgroundColor}
+                                color={this.bgColor(true)}
                                 iconName={'pencil-outline'}
                                 iconColor={this.props.settings.accent}
-                                onPress={() => this.props.onEdit(this.props.item)}
+                                onPress={() => this.props.onEdit(this.props.itemkey)}
                             />
                             <Bubble
-                                color={this.style(homeScreenStyles, 'bubble').backgroundColor}
+                                color={this.bgColor(true)}
                                 iconName={'trash-can'}
                                 iconColor={this.props.settings.accent}
-                                onPress={() => this.props.onDelete(this.props.item.key)}
+                                onPress={() => this.props.onDelete(this.props.itemkey)}
                             />
                         </View>
                     </>
@@ -70,6 +85,9 @@ class SectionItem extends React.Component {
 }
 
 const mapStateToProps = state => ({
+    data: state.data,
+    expenseCategories: state.expenseCategories,
+    incomeCategories: state.incomeCategories,
     settings: state.settings
 });
 

@@ -9,15 +9,12 @@ export default class NotifService {
         NotificationHandler.attachNotification(onNotification);
 
         // Clear badge number at start
-        PushNotification.getApplicationIconBadgeNumber(function (number) {
-            if (number > 0) {
+        PushNotification.getApplicationIconBadgeNumber(number => {
+            if (number > 0) 
                 PushNotification.setApplicationIconBadgeNumber(0);
-            }
         });
 
-        PushNotification.getChannels(function (channels) {
-            console.log(channels);
-        });
+        PushNotification.getChannels(channels => console.log(channels));
     }
 
     scheduleNotif = (time, color) => {
@@ -52,7 +49,5 @@ export default class NotifService {
         });
     }
 
-    cancelAll = () => {
-        PushNotification.cancelAllLocalNotifications();
-    }
+    cancelAll = () => PushNotification.cancelAllLocalNotifications();
 }

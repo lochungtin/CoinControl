@@ -1,5 +1,7 @@
 rootProject.name = 'CoinControl'
 include ':react-native-fbsdk'
 project(':react-native-fbsdk').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fbsdk/android')
+include ':react-native-navbar-color'
+project(':react-native-navbar-color').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-navbar-color/android')
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'

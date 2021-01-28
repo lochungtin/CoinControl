@@ -1,9 +1,10 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native'
+import { Text, TouchableOpacity, } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import { black, bubbleStyles, white, } from '../styles';
+import { black, shade2, shade3, white, } from '../data/color';
+import { bubbleStyles } from '../styles';
 
 class Bubble extends React.Component {
 
@@ -22,19 +23,31 @@ class Bubble extends React.Component {
         return this.props.settings.darkMode ? white : black;
     }
 
+    fontColor = () => {
+        if (this.props.color !== 'transparent')
+            return this.props.settings.darkMode ? black : white;
+        return this.props.settings.darkMode ? white : black;
+    }
+
     render() {
         return (
             <TouchableOpacity
                 style={{
                     ...bubbleStyles.bubble,
-                    backgroundColor: this.state.border ? this.props.selected ? white : this.props.color : this.props.color,
-                    borderWidth: !this.state.border ? this.props.selected ? 6 : 0 : 0,
+                    backgroundColor: this.state.border ? this.props.selected ? this.props.settings.darkMode ? shade3 : shade2 : this.props.color : this.props.color,
+                    borderWidth: !this.state.border ? this.props.selected ? 3 : 0 : 0,
+                    borderColor: this.props.settings.darkMode ? white : black,
                     height: this.props.size !== undefined ? this.props.size : 30,
                     margin: this.props.spacing !== undefined ? this.props.spacing : 7.5,
                     width: this.props.size !== undefined ? this.props.size : 30,
                 }}
                 onPress={this.props.onPress}
             >
+                {this.props.text &&
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: this.fontColor() }}>
+                        {this.props.text}
+                    </Text>
+                }
                 {this.state.icon &&
                     <Icon name={this.props.iconName} size={this.props.iconSize} color={this.iconColor()} />
                 }
