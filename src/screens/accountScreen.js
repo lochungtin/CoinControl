@@ -24,7 +24,7 @@ class Screen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoggedIn: props.login.isLogin,
+            isLoggedIn: props.login.login,
             givenName: null,
             lastName: null,
             idToken: null,
@@ -122,15 +122,14 @@ class Screen extends React.Component {
                     </View>
                     <View style={styles.screen}>
                         <Text>Account Screen</Text>
-                        {console.log(this.state.isLoggedIn, "JOJO")}
-
                         <GoogleSigninButton
-                            style={{ width: 192, height: 48 }}
-                            size={GoogleSigninButton.Size.Wide}
+                            style={{ width: 48, height: 48 }}
+                            size={GoogleSigninButton.Size.Icon}
                             color={GoogleSigninButton.Color.Dark}
                             onPress={this.signIn}
                         />
                         <LoginButton
+                            style={{ height: 48 }}
                             onLoginFinished={(error, result) => {
                                 if (this.state.isLoggedIn) {
                                     Alert.alert("Alert", "Please log out if you want to switch your account");
@@ -159,7 +158,7 @@ class Screen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    login: state.isLogin,
+    login: state.login,
     settings: state.settings,
 
 })
