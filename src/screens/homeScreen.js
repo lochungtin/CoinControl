@@ -86,7 +86,7 @@ class Screen extends React.Component {
                         <Progress.Bar color={this.props.settings.accent} progress={this.props.data.goal.percentage} width={maxWidth / 1.8} />
                     </View>
                     <View style={{ ...styles.columns, width: 250, justifyContent: 'space-evenly' }}>
-                        <HomeNavButton icon={'cloud-sync-outline'} onPress={() => this.props.navigation.navigate('Update', 'Income')} text={'Sync'} />
+                        <HomeNavButton icon={'cloud-sync-outline'} onPress={undefined} text={'Sync'} />
                         <HomeNavButton icon={'plus'} onPress={() => this.props.navigation.navigate('Update', 'Income')} text={'Income'} />
                         <HomeNavButton icon={'minus'} onPress={() => this.props.navigation.navigate('Update', 'Expense')} text={'Expense'} />
                         <HomeNavButton icon={'flag-outline'} onPress={() => this.setState({ gmOpen: true })} text={'Goals'} />
