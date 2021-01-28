@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StatusBar, SectionList, Text, View, } from 'react-native';
+import { SafeAreaView, SectionList, Text, View, } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';

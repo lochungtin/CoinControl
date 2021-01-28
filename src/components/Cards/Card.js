@@ -23,22 +23,19 @@ class Card extends React.Component {
         return this.props.settings.darkMode ? white : black;
     }
 
-    onPress = () => {
-        if (this.props.onPress)
-            this.props.onPress();
-    }
-
     style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
     render() {
         return (
             <View style={this.style(generalCardStyles, 'card')}>
                 <View style={{ ...styles.columns, justifyContent: 'space-between', width: '100%' }}>
-                    <Icon name={this.props.icon} color={this.iconColor()} size={20} />
+                    <TouchableOpacity onPress={this.props.iconPress}>
+                        <Icon name={this.props.icon} color={this.iconColor()} size={20} />
+                    </TouchableOpacity>
                     <Text style={this.style(generalCardStyles, 'title')}>
                         {this.props.title}
                     </Text>
-                    <TouchableOpacity onPress={this.onPress}>
+                    <TouchableOpacity onPress={this.props.onPress}>
                         <Icon name={'dots-horizontal'} color={this.toggleIconColor()} size={20} />
                     </TouchableOpacity>
                 </View>

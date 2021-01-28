@@ -9,6 +9,12 @@ export const shade4 = '#2C2C2C';
 export const bgColorD = '#1C1C1C';
 export const black = '#0C0C0C';
 
+// to rgb function
+
+const convert = str => str.slice(str.startsWith('#') * 1).match(/.{1,2}/g).map(str => parseInt(str, 16));
+
+export const rgba = (str, alpha) => 'rgba(' + convert(str).map(num => num.toString()).reduce((acc, val) => acc + ', ' + val ) + ', ' + alpha.toString() + ')';
+
 // default theme
 
 export const goldenBrown = '#f8c471';
