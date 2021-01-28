@@ -25,6 +25,9 @@ import {
     MAKE_NULL_KEY,
     REMOVE_WATCHLIST,
     UPDATE_GOAL,
+    UPDATE_SETTINGS, 
+    DEFAULT_LOGIN,
+    UPDATE_LOGIN, 
     UPDATE_SETTINGS,
 } from './action';
 import {
@@ -32,6 +35,8 @@ import {
     defaultData,
     defaultExpenseCategories,
     defaultIncomeCategories,
+    defaultSettings,
+    defaultLogin,
     defaultSettings,
     defaultWatchlist,
     NULL_KEY,
@@ -247,6 +252,16 @@ const updateSettings = (settings = defaultSettings, action) => {
     return settings;
 }
 
+const updateLogin = (isLogin = {}, action) => {
+    switch (action.type) {
+        case DEFAULT_LOGIN:
+            return defaultLogin;
+        case UPDATE_LOGIN:
+            return action.payload;
+    }
+    return isLogin;
+}
+
 const updateWatchlist = (watchlist = defaultWatchlist, action) => {
     var temp = [...watchlist];
     switch (action.type) {
@@ -268,5 +283,6 @@ export default combineReducers({
     expenseCategories: updateExpenseCategories,
     incomeCategories: updateIncomeCategories,
     settings: updateSettings,
+    isLogin:updateLogin,
     watchlist: updateWatchlist,
 });

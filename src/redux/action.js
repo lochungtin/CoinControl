@@ -121,7 +121,18 @@ export const defaultSettings = () => ({
 export const UPDATE_SETTINGS = 'UPDATE_SETTINGS';
 export const updateSettings = payload => ({
     type: UPDATE_SETTINGS,
-    payload,
+    payload: payload,
+});
+
+export const DEFAULT_LOGIN = 'DEFAULT_LOGIN';
+export const defaultLogin = () => ({
+    type: DEFAULT_LOGIN,
+});
+
+export const UPDATE_LOGIN = 'UPDATE_LOGIN';
+export const updateLogin = payload => ({
+    type: UPDATE_LOGIN,
+    payload
 });
 
 // Watch List Related

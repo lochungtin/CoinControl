@@ -19,11 +19,12 @@ import settingsScreen from '../screens/settingsScreen';
 
 import { black, bgColorD, bgColorL, rgba, shade2, white, } from '../data/color';
 
+const AuthStack = createStackNavigator();
 const Main = createStackNavigator();
+const Settings = createStackNavigator();
 const Report = createStackNavigator();
 const ReportSelection = createDrawerNavigator();
 const Root = createBottomTabNavigator();
-const Settings = createStackNavigator();
 
 class AppNav extends React.Component {
 
@@ -143,6 +144,7 @@ class AppNav extends React.Component {
                     <Root.Screen name='Home' component={this.main} />
                     <Root.Screen name='Settings' component={this.settings} />
                 </Root.Navigator>
+                
             </NavigationContainer>
         )
     }

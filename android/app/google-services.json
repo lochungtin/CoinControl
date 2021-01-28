@@ -1,42 +1,42 @@
 {
   "project_info": {
-    "project_number": "1067583921103",
-    "firebase_url": "https://coincontrol-8a35a.firebaseio.com",
-    "project_id": "coincontrol-8a35a",
-    "storage_bucket": "coincontrol-8a35a.appspot.com"
+    "project_number": "486441035059",
+    "firebase_url": "https://coincontrol-72bfc-default-rtdb.firebaseio.com",
+    "project_id": "coincontrol-72bfc",
+    "storage_bucket": "coincontrol-72bfc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1067583921103:android:16d066862b3b3cd9d990ba",
+        "mobilesdk_app_id": "1:486441035059:android:1f0f6fdff278e4d5268a46",
         "android_client_info": {
           "package_name": "com.coincontrol"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1067583921103-4vgmi2u9bmtrtio51m5rvn988kpvrqkv.apps.googleusercontent.com",
+          "client_id": "486441035059-2ot5d2g42e1t00pahqp4i65imebepgv8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.coincontrol",
-            "certificate_hash": "5774c316ade78afc1822dd6e3ebd89d715f914df"
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "1067583921103-qino30dodcqdakr4ujg9o7kjg13jg67l.apps.googleusercontent.com",
+          "client_id": "486441035059-8l61ntdopa47itlm7kknd6acpvmn04q4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBacua8RhgbtQt62mJTkjRAXvX4CGVvy6U"
+          "current_key": "AIzaSyB2P2d8EC13ZDeR_EXlT3ksXsIdJCmnBb4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1067583921103-qino30dodcqdakr4ujg9o7kjg13jg67l.apps.googleusercontent.com",
+              "client_id": "486441035059-8l61ntdopa47itlm7kknd6acpvmn04q4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
