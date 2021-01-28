@@ -4,13 +4,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { StatusBar } from 'react-native';
-import NavigationBar from 'react-native-navbar-color'
+import NavigationBar from 'react-native-navbar-color';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import accountScreen from '../screens/accountScreen';
 import chartScreen from '../screens/chartScreen';
 import updateRecordScreen from '../screens/categoryScreen';
+import detailScreen from '../screens/detailScreen';
 import customCategoryScreen from '../screens/iconSelectionScreen';
 import homeScreen from '../screens/homeScreen';
 import reportScreen from '../screens/reportScreen';
@@ -19,7 +20,8 @@ import settingsScreen from '../screens/settingsScreen';
 import { black, bgColorD, bgColorL, rgba, shade2, white, } from '../data/color';
 
 const Main = createStackNavigator();
-const Report = createDrawerNavigator();
+const Report = createStackNavigator();
+const ReportSelection = createDrawerNavigator();
 const Root = createBottomTabNavigator();
 const Settings = createStackNavigator();
 
@@ -82,7 +84,14 @@ class AppNav extends React.Component {
     );
 
     reports = () => (
-        <Report.Navigator
+        <Report.Navigator>
+            <Report.Screen name='Selection' component={this.reportSelection} options={{ headerShown: false }} />
+            <Report.Screen name='Detail' component={detailScreen} options={{ headerShown: false }} />
+        </Report.Navigator>
+    );
+
+    reportSelection = () => (
+        <ReportSelection.Navigator
             drawerStyle={{
                 backgroundColor: this.bgColor(),
             }}
@@ -92,11 +101,11 @@ class AppNav extends React.Component {
                 inactiveTintColor: this.props.settings.darkMode ? white : black,
             }}
         >
-            <Report.Screen name='All' component={reportScreen} options={this.iconDrawer} />
-            <Report.Screen name='Daily' component={reportScreen} options={this.iconDrawer} />
-            <Report.Screen name='Weekly' component={reportScreen} options={this.iconDrawer} />
-            <Report.Screen name='Monthly' component={reportScreen} options={this.iconDrawer} />
-        </Report.Navigator>
+            <ReportSelection.Screen name='All' component={reportScreen} options={this.iconDrawer} />
+            <ReportSelection.Screen name='Daily' component={reportScreen} options={this.iconDrawer} />
+            <ReportSelection.Screen name='Weekly' component={reportScreen} options={this.iconDrawer} />
+            <ReportSelection.Screen name='Monthly' component={reportScreen} options={this.iconDrawer} />
+        </ReportSelection.Navigator>
     );
 
     settings = () => (
