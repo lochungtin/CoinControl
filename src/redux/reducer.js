@@ -11,6 +11,7 @@ import {
     DEFAULT_EXPENSE_CATEGORY,
     DEFAULT_GOAL,
     DEFAULT_INCOME_CATEGORY,
+    DEFAULT_LOGIN,
     DEFAULT_SETTINGS,
     DEFAULT_WATCHLIST,
     DELETE_EXPENSE_CATEGORY,
@@ -25,8 +26,6 @@ import {
     MAKE_NULL_KEY,
     REMOVE_WATCHLIST,
     UPDATE_GOAL,
-    UPDATE_SETTINGS, 
-    DEFAULT_LOGIN,
     UPDATE_LOGIN, 
     UPDATE_SETTINGS,
 } from './action';
@@ -35,7 +34,6 @@ import {
     defaultData,
     defaultExpenseCategories,
     defaultIncomeCategories,
-    defaultSettings,
     defaultLogin,
     defaultSettings,
     defaultWatchlist,
@@ -252,14 +250,14 @@ const updateSettings = (settings = defaultSettings, action) => {
     return settings;
 }
 
-const updateLogin = (isLogin = {}, action) => {
+const updateLogin = (loginState = defaultLogin, action) => {
     switch (action.type) {
         case DEFAULT_LOGIN:
             return defaultLogin;
         case UPDATE_LOGIN:
             return action.payload;
     }
-    return isLogin;
+    return loginState;
 }
 
 const updateWatchlist = (watchlist = defaultWatchlist, action) => {
@@ -283,6 +281,6 @@ export default combineReducers({
     expenseCategories: updateExpenseCategories,
     incomeCategories: updateIncomeCategories,
     settings: updateSettings,
-    isLogin:updateLogin,
+    login: updateLogin,
     watchlist: updateWatchlist,
 });

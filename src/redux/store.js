@@ -3,7 +3,6 @@ import { createStore } from 'redux';
 import { persistReducer, persistStore, } from 'redux-persist';
 
 import Reactotron from '../debug/ReactotronConfig';
-
 import reducer from './reducer';
 
 const persistConfig = {

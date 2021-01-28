@@ -99,7 +99,7 @@ export const editIncomeCategory = payload => ({
     payload,
 });
 
-// General Categories
+// General Categories Related
 
 export const MAKE_ALL_NULL = 'MAKE_ALL_NULL';
 export const makeAllNull = () => ({
@@ -113,6 +113,7 @@ export const makeNullKey = payload => ({
 });
 
 // Settings Related
+
 export const DEFAULT_SETTINGS = 'DEFAULT_SETTINGS';
 export const defaultSettings = () => ({
     type: DEFAULT_SETTINGS,
@@ -136,6 +137,7 @@ export const updateLogin = payload => ({
 });
 
 // Watch List Related
+
 export const ADD_WATCHLIST = 'ADD_WATCHLIST';
 export const addWatchlist = payload => ({
     type: ADD_WATCHLIST,

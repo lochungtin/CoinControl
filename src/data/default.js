@@ -1,12 +1,14 @@
 import { goldenBrown, colorLabels, white } from './color';
 
+export const NULL_KEY = '00000000-0000';
+
 export const defaultCardConfig = {
     tc: true,
     pc: true,
     wc: true,
     gc: true,
     cc: true,
-}
+};
 
 export const defaultData = {
     display: [],
@@ -20,9 +22,7 @@ export const defaultData = {
         type: 'none',
     },
     total: "0.00",
-}
-
-export const NULL_KEY = '00000000-0000';
+};
 
 export const defaultExpenseCategories = {
     '00000000-0000': {
@@ -70,6 +70,14 @@ export const defaultIncomeCategories = {
     '20012021-4012': {
         color: colorLabels[3], name: 'Salary', iconName: 'cash'
     },
+};
+
+export const defaultLogin = {
+    login: false,
+    method: '',
+    user: {
+        username: '',
+    }
 };
 
 export const defaultSettings = {

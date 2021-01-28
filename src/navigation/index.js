@@ -19,7 +19,6 @@ import settingsScreen from '../screens/settingsScreen';
 
 import { black, bgColorD, bgColorL, rgba, shade2, white, } from '../data/color';
 
-const AuthStack = createStackNavigator();
 const Main = createStackNavigator();
 const Settings = createStackNavigator();
 const Report = createStackNavigator();
