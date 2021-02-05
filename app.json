@@ -1,0 +1,12 @@
+{
+  "name": "CoinControl",
+  "displayName": "CoinControl",
+  "expo": {
+    "name": "CoinControl",
+    "slug": "CoinControl",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
