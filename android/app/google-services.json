@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:486441035059:android:1f0f6fdff278e4d5268a46",
+        "mobilesdk_app_id": "1:486441035059:android:27d99994b0c68034268a46",
         "android_client_info": {
           "package_name": "com.coincontrol"
         }
       },
       "oauth_client": [
         {
-          "client_id": "486441035059-2ot5d2g42e1t00pahqp4i65imebepgv8.apps.googleusercontent.com",
+          "client_id": "486441035059-b0ejnaq5po2prpf2hta15rhhtsds9bob.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.coincontrol",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+            "certificate_hash": "5774c316ade78afc1822dd6e3ebd89d715f914df"
           }
         },
         {
