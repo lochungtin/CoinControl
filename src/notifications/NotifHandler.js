@@ -1,3 +1,4 @@
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import PushNotification from 'react-native-push-notification';
 
 class NotificationHandler {
@@ -6,6 +7,8 @@ class NotificationHandler {
 
         if (typeof this._onNotification === 'function')
             this._onNotification(notification);
+
+        notification.finish(PushNotificationIOS.FetchResult.NoData);
     }
 
     onRegister = token => {
