@@ -5,6 +5,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import CalendarDateSelector from './CalendarDateSelector';
+
+import { RNKey } from '../../functions/GenKey';
 import { calendarStyles, styles, } from '../../styles';
 
 class Calendar extends React.Component {
@@ -16,10 +18,11 @@ class Calendar extends React.Component {
         this.state = {
             grid: [],
             month: parseInt(pos.substring(5, 7)),
-            pos: pos,
+            pos,
             selectedRow: '',
             year: parseInt(pos.substring(0, 4)),
-        }
+        };
+
         this.days = [
             { key: 0, label: 'S' },
             { key: 1, label: 'M' },
@@ -29,7 +32,15 @@ class Calendar extends React.Component {
             { key: 5, label: 'F' },
             { key: 6, label: 'S' }
         ];
-        this.disabled = [n => n > 7, () => false, () => false, n => n < 7, n => n < 7, n => n < 7];
+
+        this.disabled = [
+            n => n > 7, 
+            () => false, 
+            () => false, 
+            n => n < 7, 
+            n => n < 7, 
+            n => n < 7
+        ];
     }
 
     componentDidMount() {
@@ -39,8 +50,8 @@ class Calendar extends React.Component {
     addZero = num => num < 10 ? '0' + num : num;
 
     create2DArray = (rows, columns) => {
-        var arr = new Array(rows);
-        for (var i = 0; i < rows; i++)
+        let arr = new Array(rows);
+        for (let i = 0; i < rows; ++i)
             arr[i] = new Array(columns);
 
         return arr;
@@ -63,9 +74,18 @@ class Calendar extends React.Component {
 
     makeDay = date => this.state.year + '-' + this.addZero(this.state.month) + '-' + this.addZero(date);
 
-    selectedDay = (row, date) => {
-        this.setState({ selectedDay: date, selectedRow: row });
-        this.props.onPress(date);
+    pressLeft = () => {
+        if (!(this.state.year === 1970 && this.state.month === 1)) {
+            const newMonth = (this.state.month + 11) % 12 === 0 ? 12 : (this.state.month + 11) % 12;
+            const newYear = newMonth === 12 ? this.state.year - 1 : this.state.year;
+            this.updateRows(newMonth, newYear);
+        }
+    }
+
+    pressRight = () => {
+        const newMonth = (this.state.month + 1) % 12 === 0 ? 12 : (this.state.month + 1) % 12;
+        const newYear = newMonth === 1 ? this.state.year + 1 : this.state.year;
+        this.updateRows(newMonth, newYear);
     }
 
     updateRows = (month, year) => {
@@ -74,9 +94,9 @@ class Calendar extends React.Component {
         const prevMonthDay = this.findMonthSize(prevMonth === 12 ? year - 1 : year, prevMonth);;
         const currMonthDay = this.findMonthSize(year, month);
 
-        var grid = this.create2DArray(6, 7);
+        let grid = this.create2DArray(6, 7);
 
-        var i, row, column, rowMax;
+        let i, row, column, rowMax;
 
         rowMax = Math.floor((preMonthDayLeft + currMonthDay + 6) / 7);
         for (i = 0; i < rowMax * 7; i++) {
@@ -96,35 +116,29 @@ class Calendar extends React.Component {
     render() {
         return (
             <View style={calendarStyles.container}>
-                <View style={{ ...styles.columns, height: 45, justifyContent: 'space-between' }}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            if (!(this.state.year === 1970 && this.state.month === 1)) {
-                                const newMonth = (this.state.month + 11) % 12 === 0 ? 12 : (this.state.month + 11) % 12;
-                                const newYear = newMonth === 12 ? this.state.year - 1 : this.state.year;
-                                this.updateRows(newMonth, newYear);
-                            }
-                        }}
-                    >
-                        <Icon name={'menu-left-outline'} size={25} color={this.props.settings.accent} />
+                <View style={{ ...styles.columns, height: 45, justifyContent: 'space-between', }}>
+                    <TouchableOpacity onPress={this.pressLeft}>
+                        <Icon 
+                            color={this.props.settings.accent} 
+                            name={'menu-left-outline'} 
+                            size={25}
+                        />
                     </TouchableOpacity>
                     <Text style={this.props.settings.darkMode ? calendarStyles.titleD : calendarStyles.titleL}>
                         {moment().month(this.state.month - 1).format('MMMM') + ' ' + this.state.year}
                     </Text>
-                    <TouchableOpacity
-                        onPress={() => {
-                            const newMonth = (this.state.month + 1) % 12 === 0 ? 12 : (this.state.month + 1) % 12;
-                            const newYear = newMonth === 1 ? this.state.year + 1 : this.state.year;
-                            this.updateRows(newMonth, newYear);
-                        }}
-                    >
-                        <Icon name={'menu-right-outline'} size={25} color={this.props.settings.accent} />
+                    <TouchableOpacity onPress={this.pressRight}>
+                        <Icon 
+                            color={this.props.settings.accent}
+                            name={'menu-right-outline'}
+                            size={25}
+                        />
                     </TouchableOpacity>
                 </View>
-                <View style={{ ...styles.columns, minHeight: 20, justifyContent: 'space-between' }} >
+                <View style={{ ...styles.columns, justifyContent: 'space-between', minHeight: 20, }} >
                     {this.days.map(item => {
                         return (
-                            <Text key={item.key} style={{ ...calendarStyles.label, color: this.props.settings.accent }}>
+                            <Text key={RNKey()} style={{ ...calendarStyles.label, color: this.props.settings.accent, }}>
                                 {item.label}
                             </Text>
                         );
@@ -132,15 +146,15 @@ class Calendar extends React.Component {
                 </View>
                 {this.state.grid.map(row => {
                     return (
-                        <View key={row} style={{ ...styles.columns, height: 45, justifyContent: 'space-between' }} >
+                        <View key={RNKey()} style={{ ...styles.columns, height: 45, justifyContent: 'space-between', }} >
                             {row.map(item => {
                                 return (
                                     <CalendarDateSelector
                                         day={this.makeDay(item)}
                                         disabled={this.disabled[this.state.grid.indexOf(row)](item)}
-                                        key={item}
-                                        selected={this.makeDay(item) === this.props.selected}
-                                        onPress={(date) => this.props.onPress(date)}
+                                        key={RNKey()}
+                                        onPress={this.props.onPress}
+                                        selected={this.makeDay(item) === this.props.selected}                                        
                                     />
                                 );
                             })}

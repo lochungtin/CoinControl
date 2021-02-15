@@ -18,7 +18,7 @@ class NumpadButton extends React.Component {
 
     onPress = () => {
         if (!this.props.disabled || this.props.special)
-            this.props.onPress()
+            this.props.onPress();
     }
 
     style = () => this.props.settings.darkMode ? numpadStyles.buttonD : numpadStyles.buttonL;
@@ -30,12 +30,14 @@ class NumpadButton extends React.Component {
                 style={this.style()}
             >
                 {this.props.children !== undefined ? this.props.children :
-                    <>
-                        <Icon name={this.props.icon} color={this.iconColor()} size={35} />
-                    </>
+                    <Icon
+                        color={this.iconColor()}
+                        name={this.props.icon}
+                        size={35}    
+                    />
                 }
             </TouchableOpacity>
-        )
+        );
     }
 }
 

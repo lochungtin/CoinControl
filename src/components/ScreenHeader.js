@@ -16,7 +16,11 @@ class ScreenHeader extends React.Component {
         return (
             <View style={this.style('header')}>
                 <TouchableOpacity onPress={this.props.back}>
-                    <Icon name={'arrow-left'} size={25} color={this.iconColor()} />
+                    <Icon
+                        color={this.iconColor()}
+                        name={'arrow-left'}
+                        size={25}
+                    />
                 </TouchableOpacity>
                 <View style={headerStyles.textContainer}>
                     <Text style={this.style('text')}>
@@ -24,10 +28,14 @@ class ScreenHeader extends React.Component {
                     </Text>
                 </View>
                 <TouchableOpacity onPress={this.props.action}>
-                    <Icon name={this.props.icon ? this.props.icon : 'plus'} size={25} color={this.props.action ? this.iconColor() : 'transparent'} />
+                    <Icon
+                        color={this.props.action ? this.iconColor() : 'transparent'}
+                        name={this.props.icon || 'plus'}
+                        size={25}
+                    />
                 </TouchableOpacity>
             </View>
-        )
+        );
     }
 }
 

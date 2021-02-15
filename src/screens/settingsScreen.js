@@ -15,9 +15,10 @@ import NotifService from '../notifications';
 import { defaultCards, defaultExpenseCategory, defaultIncomeCategory, defaultSettings, defaultWatchlist, deleteHistory, makeAllNull, updateSettings, } from '../redux/action';
 import { store } from '../redux/store';
 
-import { currencies } from '../data/icons';
 import { bgColorD, shade2, } from '../data/color';
+import { currencies } from '../data/icons';
 import { settingsPromptText } from '../data/text';
+import { RNKey } from '../functions/GenKey';
 import { settingStyles, styles, } from '../styles';
 
 class Screen extends React.Component {
@@ -29,7 +30,7 @@ class Screen extends React.Component {
             cpOpen: false,
             cupOpen: false,
             tpOpen: false,
-        }
+        };
 
         this.notif = new NotifService(
             this.onRegister.bind(this),
@@ -42,7 +43,7 @@ class Screen extends React.Component {
     cancelNotifs = () => {
         this.notif.cancelAll();
         if (!this.props.settings.notification) {
-            var set = moment().set({
+            let set = moment().set({
                 hour: parseInt(this.props.settings.notifSchedule.substring(0, 2)),
                 minute: parseInt(this.props.settings.notifSchedule.substring(3, 5)),
                 second: 0,
@@ -105,11 +106,11 @@ class Screen extends React.Component {
                             return (
                                 <Bubble
                                     color={this.props.settings.accent}
-                                    key={item}
+                                    key={RNKey()}
                                     iconName={'currency-' + item}
                                     iconSize={20}
                                     onPress={() => {
-                                        store.dispatch(updateSettings({ key: 'currency', update: item }));
+                                        store.dispatch(updateSettings({ key: 'currency', update: item, }));
                                         this.setState({ cupOpen: false });
                                     }}
                                     selected={this.props.settings.currency !== item}
@@ -155,7 +156,7 @@ class Screen extends React.Component {
                         this.setState({ tpOpen: false });
 
                         const splt = time.split(':');
-                        var set = moment().set({ hour: splt[0], minute: splt[1], second: 0 });
+                        let set = moment().set({ hour: splt[0], minute: splt[1], second: 0 });
                         if (set.isBefore(moment()))
                             set.add(1, 'day');
                         

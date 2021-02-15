@@ -4,7 +4,7 @@ import * as Progress from 'react-native-progress';
 import { connect } from 'react-redux';
 
 import { maxWidth, pieCardStyles, styles, } from '../../styles';
-import { black, white } from '../../data/color';
+import { black, white, } from '../../data/color';
 
 class PieCard extends React.Component {
 
@@ -20,7 +20,7 @@ class PieCard extends React.Component {
                     progress={this.props.percentage}
                     width={maxWidth / 1.5}
                 />
-                <View style={{ ...styles.columns, justifyContent: 'space-between', padding: 5, width: '80%' }}>
+                <View style={{ ...styles.columns, justifyContent: 'space-between', padding: 5, width: '80%', }}>
                     <Text style={this.style(styles, 'text')}>
                         {this.props.lValue}
                     </Text>

@@ -21,7 +21,7 @@ class Screen extends React.Component {
             focus: true,
             data: update(props.data.data),
             cmOpen: false,
-        }
+        };
     }
 
     componentDidMount() {
@@ -35,13 +35,15 @@ class Screen extends React.Component {
 
     style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
+    toggleCm = cmOpen => this.setState({ cmOpen });
+
     render() {
         return (
-            <View style={{ ...this.style(styles, 'screen'), }}>
+            <View style={this.style(styles, 'screen')}>
                 {this.state.focus && <>
                     <ScrollView style={{ width: '100%' }}>
                         <TitleCard
-                            onPress={() => this.setState({ cmOpen: true })}
+                            onPress={() => this.toggleCm(true)}
                             icon={'chart-bubble'}
                             title={'GENERAL ANALYTICS'}
                         />
@@ -52,7 +54,7 @@ class Screen extends React.Component {
                         {this.props.cards.cc && <CategoryCard data={this.state.data.categories} total={this.state.data.total} />}
                     </ScrollView>
                     <CardModal
-                        close={() => this.setState({ cmOpen: false })}
+                        close={() => this.toggleCm(false)}
                         open={this.state.cmOpen}
                     />
                 </>}

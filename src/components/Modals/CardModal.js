@@ -8,6 +8,7 @@ import ExpandButton from '../ExpandButton';
 import { addCard, hideCard, } from '../../redux/action';
 import { store } from '../../redux/store';
 
+import { RNKey } from '../../functions/GenKey';
 import { cardModalStyles, pickerModalStyles, styles, } from '../../styles';
 
 class CardModal extends React.Component {
@@ -15,24 +16,19 @@ class CardModal extends React.Component {
     constructor(props) {
         super(props);
         this.mapping = {
-            tc: 'CASHFLOW',
-            pc: 'PERCENTAGES',
-            wc: 'WATCHLIST',
-            gc: 'GOAL STATUS',
             cc: 'CATEGORIES',
-        }
+            gc: 'GOAL STATUS',
+            pc: 'PERCENTAGES',
+            tc: 'CASHFLOW',
+            wc: 'WATCHLIST',
+        };
     }
 
     icon = value => value ? 'check-circle-outline' : 'close-circle-outline';
 
-    toggle = key => {
-        if (this.props.cards[key])
-            store.dispatch(hideCard(key));
-        else
-            store.dispatch(addCard(key));
-    }
-
     style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
+
+    toggle = key => store.dispatch(this.props.cards[key] ? hideCard(key) : addCard(key));
 
     render() {
         return (
@@ -42,10 +38,10 @@ class CardModal extends React.Component {
                 onBackdropPress={this.props.close}
                 onBackButtonPress={this.props.close}
                 onSwipeComplete={this.props.close}
+                style={{ alignItems: 'center', padding: 0, margin: 0, }}
                 swipeDirection='down'
-                style={{ alignItems: 'center', padding: 0, margin: 0 }}
             >
-                <View style={{ ...this.style(pickerModalStyles, 'root'), height: 350 }}>
+                <View style={{ ...this.style(pickerModalStyles, 'root'), height: 350, }}>
                     <ExpandButton onPress={this.props.close} />
                     <Text style={this.style(cardModalStyles, 'title')}>
                         CARDS
@@ -53,15 +49,15 @@ class CardModal extends React.Component {
                     <View style={{ ...styles.rows, height: 240, justifyContent: 'space-evenly' }}>
                         {Object.keys(this.mapping).map(key => {
                             return (
-                                <View style={cardModalStyles.selectionRow} key={key}>
+                                <View style={cardModalStyles.selectionRow} key={RNKey()}>
                                     <Text style={this.style(cardModalStyles, 'selectionText')}>
                                         {this.mapping[key]}
                                     </Text>
                                     <Bubble
-                                        onPress={() => this.toggle(key)}
                                         iconColor={this.props.settings.accent}
                                         iconName={this.icon(this.props.cards[key])}
                                         iconSize={24}
+                                        onPress={() => this.toggle(key)}
                                         size={24}
                                     />
                                 </View>

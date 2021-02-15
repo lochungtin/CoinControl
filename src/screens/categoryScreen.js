@@ -10,22 +10,24 @@ import { store } from '../redux/store';
 import { addRecord } from '../redux/action';
 
 import { NULL_KEY } from '../data/default';
+import { RNKey } from '../functions/GenKey';
 import { styles } from '../styles';
 
 class Screen extends React.Component {
 
     constructor(props) {
         super(props);
-        var categories = props.route.params === 'Expense' ? props.expenseCategories : props.incomeCategories;
+        const categories = props.route.params === 'Expense' ? props.expenseCategories : props.incomeCategories;
+
         this.state = {
-            categories: categories,
+            categories,
             catKey: '',
             date: moment().format('YYYY-MM-DD'),
             grid: this.makeGrid(Object.keys(categories).filter(key => key !== NULL_KEY)),
             open: false,
             type: props.route.params,
             value: 0,
-        }
+        };
     }
 
     componentDidMount() {
@@ -36,12 +38,16 @@ class Screen extends React.Component {
         this._unsubscribe();
     }
 
+    action = () => this.props.navigation.navigate('Icons', this.props.route.params);
+
+    back = () => this.props.navigation.goBack();
+
     centerText = () => this.props.settings.darkMode ? styles.centerTextD : styles.centerTextL;
 
     makeGrid = arr => {
         arr.sort((a, b) => a > b);
 
-        var grid = [];
+        let grid = [];
         for (let i = 0; i < arr.length; i += 4)
             grid.push(arr.slice(i, i + 4));
 
@@ -52,13 +58,17 @@ class Screen extends React.Component {
         return grid;
     }
 
-    genRnKey = () => Math.floor((1 + Math.random() * 0x10000)).toString(16);
+    onConfirm = record => {
+        store.dispatch(addRecord(record));
+        this.setState({ catKey: '', open: false });
+        this.props.navigation.goBack();
+    }
 
     update = () => {
-        var categories = this.props.route.params === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories;
+        const categories = this.props.route.params === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories;
         this.setState({
             catKey: '',
-            categories: categories,
+            categories,
             grid: this.makeGrid(Object.keys(categories).filter(key => key !== NULL_KEY)),
             open: false,
         });
@@ -68,19 +78,19 @@ class Screen extends React.Component {
         return (
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
                 <ScreenHeader
-                    action={() => this.props.navigation.navigate('Icons', this.props.route.params)}
-                    back={() => this.props.navigation.goBack()}
+                    action={this.action}
+                    back={this.back}
                     icon={'plus'}
                     name={this.props.route.params}
                 />
                 <View style={styles.rows}>
                     {this.state.grid.map(row => {
                         return (
-                            <View style={{ ...styles.columns, height: 100 }} key={this.genRnKey()}>
+                            <View key={RNKey()} style={{ ...styles.columns, height: 100 }} >
                                 {row.map(key => (
-                                    <View style={{ ...styles.rows, justifyContent: 'space-between', width: "25%" }} key={this.genRnKey()}>
+                                    <View key={RNKey()} style={{ ...styles.rows, justifyContent: 'space-between', width: "25%", }} >
                                         {key !== '' ?
-                                            <View style={{ ...styles.rows, justifyContent: 'space-between' }}>
+                                            <View style={{ ...styles.rows, justifyContent: 'space-between', }}>
                                                 <Bubble
                                                     iconColor={this.state.categories[key].color}
                                                     iconName={this.state.categories[key].iconName}
@@ -89,9 +99,11 @@ class Screen extends React.Component {
                                                     selected={this.state.catKey === key}
                                                     size={35}
                                                 />
-                                                <Text style={this.centerText()}>{this.state.categories[key].name}</Text>
+                                                <Text style={this.centerText()}>
+                                                    {this.state.categories[key].name}
+                                                </Text>
                                             </View> :
-                                            <View style={{ ...styles.rows, justifyContent: 'space-between', width: "25%" }} />
+                                            <View style={{ ...styles.rows, justifyContent: 'space-between', width: "25%", }} />
                                         }
                                     </View>
                                 ))}
@@ -107,11 +119,7 @@ class Screen extends React.Component {
                         date: moment().format('YYYY-MM-DD'),
                         type: this.props.route.params,
                     }}
-                    onConfirm={record => {
-                        store.dispatch(addRecord(record));
-                        this.setState({ catKey: '', open: false });
-                        this.props.navigation.goBack();
-                    }}
+                    onConfirm={this.onConfirm}
                     open={this.state.open}
                 />
             </View>

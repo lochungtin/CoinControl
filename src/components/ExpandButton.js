@@ -8,18 +8,18 @@ import { black, white, } from '../data/color';
 
 class ExpandButton extends React.Component {
 
-    color = () => {
-        if (this.props.color !== undefined)
-            return this.props.color;
-        return this.props.settings.darkMode ? white : black;
-    }
+    iconColor = () => this.props.iconColor || this.props.settings.darkMode ? white : black;
 
     render() {
         return (
             <TouchableOpacity onPress={this.props.onPress}>
-                <Icon name={'dots-horizontal'} size={25} color={this.color()} />
+                <Icon 
+                    color={this.iconColor()}
+                    name={'dots-horizontal'}
+                    size={25}
+                />
             </TouchableOpacity>
-        )
+        );
     }
 }
 

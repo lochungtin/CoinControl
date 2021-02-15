@@ -31,7 +31,7 @@ class WatchlistModal extends React.Component {
                 isVisible={this.props.open}
                 onBackdropPress={this.props.close}
                 onBackButtonPress={this.props.close}
-                style={{ alignItems: 'center', padding: 0, margin: 0 }}
+                style={{ alignItems: 'center', padding: 0, margin: 0, }}
             >
                 <View style={{ ...this.style(pickerModalStyles, 'root'), height: 600, width: 350 }}>
                     <ExpandButton onPress={this.props.close} />
@@ -48,15 +48,19 @@ class WatchlistModal extends React.Component {
                             const item = this.props.expenseCategories[key];
                             return (
                                 <View style={watchlistModalStyles.selectionBox}>
-                                    <Icon name={item.iconName} color={item.color} size={24} />
+                                    <Icon 
+                                        color={item.color} 
+                                        name={item.iconName} 
+                                        size={24}
+                                    />
                                     <Text style={this.style(watchlistModalStyles, 'displayText')}>
                                         {item.name.toUpperCase()}
                                     </Text>
                                     <Bubble
-                                        onPress={() => this.toggle(key)}
                                         iconColor={this.props.settings.accent}
                                         iconName={this.icon(key)}
                                         iconSize={24}
+                                        onPress={() => this.toggle(key)}
                                         size={24}
                                     />
                                 </View>

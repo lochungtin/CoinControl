@@ -13,37 +13,41 @@ class TimePicker extends React.Component {
 
     constructor(props) {
         super(props);
-        var splt = props.time.split(':');
+        let splt = props.time.split(':');
+
         this.state = {
             clickCounter: 0,
             hourSelected: splt[0],
             minSelected: splt[1],
             pm: parseInt(splt[0]) > 12,
         };
+
         this.data = [
             ['12', '11', '1', '10', '2', '9', '3', '8', '4', '7', '5', '6'],
-            ['00', '55', '05', '50', '10', '45', '15', '40', '20', '35', '25', '30']
+            ['00', '55', '05', '50', '10', '45', '15', '40', '20', '35', '25', '30'],
         ];
     }
 
     close = () => {
         this.props.close();
-        var splt = this.props.time.split(':');
-        this.setState({ clickCounter: 0, hourSelected: splt[0], minSelected: splt[1], pm: parseInt(splt[0]) > 12 });
-    }
-
-    trackColor = () => this.props.settings.darkMode ? shade2 : shade3;
+        let splt = this.props.time.split(':');
+        this.setState({ clickCounter: 0, hourSelected: splt[0], minSelected: splt[1], pm: parseInt(splt[0]) > 12, });
+    }    
 
     onPress = num => {
         if (this.state.clickCounter === 0)
-            this.setState({ clickCounter: 1, hourSelected: num });
+            this.setState({ clickCounter: 1, hourSelected: num, });
         else {
             this.props.onPress(this.state.hourSelected + ':' + num);
-            this.setState({ clickCounter: 0, minSelected: num });
+            this.setState({ clickCounter: 0, minSelected: num, });
         }
     }
 
     style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
+
+    toggleAmPm = () => this.setState({ pm: !this.state.pm });
+
+    trackColor = () => this.props.settings.darkMode ? shade2 : shade3;
 
     render() {
         return (
@@ -53,10 +57,10 @@ class TimePicker extends React.Component {
                 onBackdropPress={this.close}
                 onBackButtonPress={this.close}
                 onSwipeComplete={this.close}
+                style={{ alignItems: 'center', padding: 0, margin: 0, }}
                 swipeDirection='down'
-                style={{ alignItems: 'center', padding: 0, margin: 0 }}
             >
-                <View style={{ ...this.style(pickerModalStyles, 'root'), height: 350 }}>
+                <View style={{ ...this.style(pickerModalStyles, 'root'), height: 350, }}>
                     <ExpandButton onPress={this.close} />
                     <Clock
                         data={this.data[this.state.clickCounter]}
@@ -67,19 +71,19 @@ class TimePicker extends React.Component {
                         pm={this.state.pm}
                         selected={this.state.clickCounter === 0 ? this.state.hourSelected : this.state.minSelected}
                     >
-                        <Text style={{ fontSize: 40, fontWeight: 'bold', color: this.props.settings.accent }}>
+                        <Text style={{ fontSize: 40, fontWeight: 'bold', color: this.props.settings.accent, }}>
                             {this.state.hourSelected + ' : ' + this.state.minSelected}
                         </Text>
                     </Clock>
-                    <View style={{ ...styles.columns, maxHeight: 30 }}>
+                    <View style={{ ...styles.columns, maxHeight: 30, }}>
                         <Text style={this.style(timePickerStyles, 'amText')}>
                             {'AM  '}
                         </Text>
                         <Switch
+                            onChange={this.toggleAmPm}
                             thumbColor={white}
-                            trackColor={{ false: this.trackColor(), true: this.props.settings.accent }}
+                            trackColor={{ false: this.trackColor(), true: this.props.settings.accent, }}
                             value={this.state.pm}
-                            onChange={() => this.setState({ pm: !this.state.pm })}
                         />
                         <Text style={this.style(timePickerStyles, 'amText')}>
                             {'  PM'}

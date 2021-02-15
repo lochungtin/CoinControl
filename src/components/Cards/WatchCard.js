@@ -10,6 +10,7 @@ import WatchlistModal from '../Modals/WatchlistModal';
 
 import { white } from '../../data/color';
 import { NULL_KEY } from '../../data/default';
+import { RNKey } from '../../functions/GenKey';
 import { styles, watchlistCardStyles, } from '../../styles';
 
 class WatchCard extends React.Component {
@@ -19,31 +20,44 @@ class WatchCard extends React.Component {
         this.state = {
             dmOpen: false,
             focus: props.watchlist[0] || '',
-        }
+        };
     }
 
-    catValue = (catkey, key) => {
-        const cat = this.props.expenseCategories[catkey] || this.props.expenseCategories[NULL_KEY];
-        return cat[key];
-    }
+    catSelect = focus => this.setState({ focus });
+
+    catValue = (catkey, key) => (this.props.expenseCategories[catkey] || this.props.expenseCategories[NULL_KEY])[key];
 
     color = () => this.props.settings.darkMode ? white : black;
 
     style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
+    toggleModal = dmOpen => {
+        this.setState({ dmOpen });
+        if (!dmOpen)
+            this.setState({ focus: this.props.watchlist[0] || '' });
+    }
+
     render() {
         return (
-            <Card icon={'eye-outline'} title={'WATCHLIST'} onPress={() => this.setState({ dmOpen: true })}>
+            <Card
+                icon={'eye-outline'}
+                onPress={() => this.toggleModal(true)}
+                title={'WATCHLIST'}
+            >
                 {this.props.watchlist.length > 0 &&
                     <View style={watchlistCardStyles.categoriesBar}>
-                        {this.props.watchlist.map(key => <View style={watchlistCardStyles.bubbleContainer} key={key}>
-                            <Bubble
-                                iconColor={this.state.focus === key ? this.catValue(key, 'color') : this.color()}
-                                iconName={this.catValue(key, 'iconName')}
-                                iconSize={30}
-                                onPress={() => this.setState({ focus: key })}
-                            />
-                        </View>)}
+                        {this.props.watchlist.map(key => {
+                            return (
+                                <View key={RNKey()} style={watchlistCardStyles.bubbleContainer}>
+                                    <Bubble
+                                        iconColor={this.state.focus === key ? this.catValue(key, 'color') : this.color()}
+                                        iconName={this.catValue(key, 'iconName')}
+                                        iconSize={30}
+                                        onPress={() => this.catSelect(key)}
+                                    />
+                                </View>
+                            );
+                        })}
                     </View>
                 }
                 {this.props.data.expense[this.state.focus] === undefined ?
@@ -56,12 +70,20 @@ class WatchCard extends React.Component {
                         <LabeledProcess
                             color={this.catValue(this.state.focus, 'color')}
                             lValue={<>
-                                <Icon name={'currency-' + this.props.settings.currency} color={this.color()} size={13} />
+                                <Icon
+                                    color={this.color()}
+                                    name={'currency-' + this.props.settings.currency}
+                                    size={13}
+                                />
                                 {this.props.data.expense[this.state.focus].accumulator}
                             </>}
                             percentage={this.props.data.expense[this.state.focus].accumulator / this.props.total.expense}
                             rValue={<>
-                                <Icon name={'currency-' + this.props.settings.currency} color={this.color()} size={13} />
+                                <Icon
+                                    color={this.color()}
+                                    name={'currency-' + this.props.settings.currency}
+                                    size={13}
+                                />
                                 {this.props.total.expense}
                             </>}
                         />
@@ -74,7 +96,7 @@ class WatchCard extends React.Component {
                     </>
                 }
                 <WatchlistModal
-                    close={() => this.setState({ dmOpen: false, focus: this.props.watchlist[0] || '' })}
+                    close={() => this.toggleModal(false)}
                     open={this.state.dmOpen}
                 />
             </Card>

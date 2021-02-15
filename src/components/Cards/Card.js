@@ -12,7 +12,7 @@ class Card extends React.Component {
         super(props);
         this.state = {
             open: true,
-        }
+        };
     }
 
     iconColor = () => this.props.color || this.props.settings.accent;
@@ -28,15 +28,23 @@ class Card extends React.Component {
     render() {
         return (
             <View style={this.style(generalCardStyles, 'card')}>
-                <View style={{ ...styles.columns, justifyContent: 'space-between', width: '100%' }}>
+                <View style={{ ...styles.columns, justifyContent: 'space-between', width: '100%', }}>
                     <TouchableOpacity onPress={this.props.iconPress}>
-                        <Icon name={this.props.icon} color={this.iconColor()} size={20} />
+                        <Icon 
+                            color={this.iconColor()} 
+                            name={this.props.icon} 
+                            size={20}
+                        />
                     </TouchableOpacity>
                     <Text style={this.style(generalCardStyles, 'title')}>
                         {this.props.title}
                     </Text>
                     <TouchableOpacity onPress={this.props.onPress}>
-                        <Icon name={'dots-horizontal'} color={this.toggleIconColor()} size={20} />
+                        <Icon 
+                            color={this.toggleIconColor()} 
+                            name={'dots-horizontal'} 
+                            size={20}
+                        />
                     </TouchableOpacity>
                 </View>
                 {this.props.children}

@@ -31,7 +31,7 @@ class GoalCard extends React.Component {
     render() {
         return (
             <Card icon={'flag-variant-outline'} title={'GOAL STATUS'}>
-                <View style={{ height: 175, marginTop: 20 }}>
+                <View style={{ height: 175, marginTop: 20, }}>
                     <ProgressCircle
                         backgroundColor={this.trackColor()}
                         progress={this.props.data.goal.percentage}
@@ -48,7 +48,11 @@ class GoalCard extends React.Component {
                                         {Math.round(this.props.data.goal.percentage * 100) + '%'}
                                     </Text>
                                     <Text style={this.style(styles, 'centerText')}>
-                                        <Icon name={'currency-' + this.props.settings.currency} color={this.color()} size={13} />
+                                        <Icon 
+                                            color={this.color()}
+                                            name={'currency-' + this.props.settings.currency}
+                                            size={13}
+                                        />
                                         {this.processValue(this.props.data.goalSettings.amount - this.props.data.goal.remaining) + ' spent'}
                                     </Text>
                                     <Text style={this.style(styles, 'centerText')}>

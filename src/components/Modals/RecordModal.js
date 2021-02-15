@@ -25,25 +25,30 @@ class RecordModal extends React.Component {
             editTitle: false,
             newDate: '',
             newTitle: '',
-        }
+        };
     }
 
-    catValue = () => (this.item('type') === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories)[this.item('catKey')];
+    catValue = key => (this.item('type') === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories)[this.item('catKey')][key];
 
     close = () => {
         this.setState({ editTitle: false, newDate: '' });
         this.props.close();
     }
 
-    cpConfirm = hex => {
+    cpToggle = cpOpen => this.setState({ cpOpen });
+
+    cpConfirm = color => {
         this.setState({ cpOpen: false });
-        var payload = {}
-        payload[this.item('catKey')] = { ...this.catValue(), color: hex };
-        if (this.item('type') === 'Expense')
-            store.dispatch(editExpenseCategory(payload));
-        else
-            store.dispatch(editIncomeCategory(payload));
+        let payload = {}
+        payload[this.item('catKey')] = { 
+            color,
+            iconName: this.catValue('iconName'),
+            name: this.catValue('name'),
+        };
+        store.dispatch(this.item('type') === 'Expense' ? editExpenseCategory(payload) : editIncomeCategory(payload));
     }
+
+    dpToggle = dpOpen => this.setState({ dpOpen });
 
     iconColor = () => this.props.settings.darkMode ? white : black;
 
@@ -58,7 +63,7 @@ class RecordModal extends React.Component {
     onChangeDate = newDate => this.setState({ newDate });
 
     onConfirm = num => {
-        var rec = {
+        let rec = {
             catKey: this.item('catKey'),
             date: this.item('date'),
             type: this.item('type'),
@@ -83,6 +88,8 @@ class RecordModal extends React.Component {
 
     swipeControl = () => this.state.cpOpen || this.state.dpOpen ? undefined : 'down';
 
+    textChange = newTitle => this.setState({ newTitle, editTitle: true });
+
     render() {
         return (
             <Modal
@@ -91,8 +98,8 @@ class RecordModal extends React.Component {
                 onBackdropPress={this.close}
                 onBackButtonPress={this.close}
                 onSwipeComplete={this.close}
+                style={{ alignItems: 'flex-end', flexDirection: 'row', padding: 0, margin: 0, }}
                 swipeDirection={this.swipeControl()}
-                style={{ flexDirection: 'row', alignItems: 'flex-end', padding: 0, margin: 0 }}
             >
                 {this.props.open && <>
                     <View style={styles.rows}>
@@ -100,19 +107,23 @@ class RecordModal extends React.Component {
                             <ExpandButton color={this.iconColor()} onPress={this.close} />
                         </View>
                         <View style={this.style(recordModalStyles, 'inputBox')}>
-                            <Icon name={this.catValue().iconName} color={this.catValue().color} size={30} />
+                            <Icon 
+                                color={this.catValue('color')} 
+                                name={this.catValue('iconName')} 
+                                size={30}
+                            />
                             <TextInput
-                                onChangeText={text => this.setState({ newTitle: text, editTitle: true })}
+                                onChangeText={this.textChange}
                                 placeholder={'Title (Optional)'}
                                 placeholderTextColor={this.placeholderColor()}
                                 style={this.style(recordModalStyles, 'input')}
                                 value={this.state.editTitle ? this.state.newTitle : this.item('title')}
                             />
-                            <Bubble onPress={() => this.setState({ cpOpen: true })} color={this.catValue().color} size={25} />
+                            <Bubble onPress={() => this.cpToggle(true)} color={this.catValue('color')} size={25} />
                         </View>
                         <Numpad
                             onConfirm={this.onConfirm}
-                            onSpecialPress={() => this.setState({ dpOpen: true })}
+                            onSpecialPress={() => this.dpToggle(true)}
                             num={this.item('value') === undefined ? '0' : this.item('value')}
                         >
                             <Text style={{ color: this.props.settings.accent }}>
@@ -124,13 +135,13 @@ class RecordModal extends React.Component {
                         </Numpad>
                     </View>
                     <ColorPicker
-                        close={() => this.setState({ cpOpen: false })}
+                        close={() => this.cpToggle(false)}
+                        onPress={this.cpConfirm}
                         open={this.state.cpOpen}
-                        onPress={hex => this.cpConfirm(hex)}
                     />
                     <DatePicker
                         action={this.onChangeDate}
-                        close={() => this.setState({ dpOpen: false })}
+                        close={() => this.dpToggle(false)}
                         date={(this.state.newDate === '' ? this.item('date') : this.state.newDate)}
                         open={this.state.dpOpen}
                         selected={(this.state.newDate === '' ? this.item('date') : this.state.newDate)}

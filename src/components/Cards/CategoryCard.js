@@ -7,42 +7,44 @@ import Card from './Card';
 import LabeledProcess from './LabeledProcess';
 import TypeSwitch from './TypeSwitch';
 
-import { styles } from '../../styles';
 import { NULL_KEY } from '../../data/default';
+import { RNKey } from '../../functions/GenKey';
+import { styles } from '../../styles';
 
 
 class CategoryCard extends React.Component {
 
     constructor(props) {
         super(props);
-        var type = 'expense';
-        if (Object.keys(props.data.expense).length === 0 && Object.keys(props.data.income).length > 0)
-            type = 'income';
-
-        this.state = { type };
+        this.state = {
+            type: Object.keys(props.data.expense).length === 0 && Object.keys(props.data.income).length > 0 ? 'income' : 'expense',
+        };
     }
 
-    catValue = (catkey, key) => {
-        const cat = (this.state.type === 'expense' ? this.props.expenseCategories : this.props.incomeCategories)[catkey] || this.props.expenseCategories[NULL_KEY];
-        return cat[key];
-    }
+    catValue = (catkey, key) => ((this.state.type === 'expense' ? this.props.expenseCategories : this.props.incomeCategories)[catkey] || this.props.expenseCategories[NULL_KEY])[key];
 
     percentage = key => this.props.data[this.state.type][key].counter / this.props.total[this.state.type + 'Total'];
 
     style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
+
+    typeSwitchToggle = type => this.setState({ type });
 
     render() {
         return (
             <Card icon={'label-multiple-outline'} title={'CATEGORIES'}>
                 {(Object.keys(this.props.data['expense']).length > 0 || Object.keys(this.props.data['income']).length > 0) ?
                     <>
-                        <TypeSwitch default={this.state.type} update={type => this.setState({ type })} />
+                        <TypeSwitch default={this.state.type} toggle={this.typeSwitchToggle} />
                         {Object.keys(this.props.data[this.state.type])
                             .sort((a, b) => this.percentage(b) - this.percentage(a))
                             .map(key => {
                                 return (
-                                    <View style={{ ...styles.columns, alignItems: 'flex-start' }} key={key}>
-                                        <Icon name={this.catValue(key, 'iconName')} color={this.catValue(key, 'color')} size={35} />
+                                    <View key={RNKey()} style={{ ...styles.columns, alignItems: 'flex-start', }}>
+                                        <Icon
+                                            color={this.catValue(key, 'color')}
+                                            name={this.catValue(key, 'iconName')}
+                                            size={35}
+                                        />
                                         <LabeledProcess
                                             color={this.catValue(key, 'color')}
                                             lValue={this.props.data[this.state.type][key].counter}

@@ -6,17 +6,66 @@ import { connect } from 'react-redux';
 import NumpadButton from './NumpadButton';
 
 import { numpadStyles } from '../../styles';
+import { RNKey } from '../../functions/GenKey';
 
 class Numpad extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            date: this.props.date,
+            date: props.date,
             dpOpen: false,
-            num: this.props.num.toString(),
+            num: props.num.toString(),
             ready: true,
-        }
+        };
+
+        this.grid = [
+            [
+                [1, 2, 3],
+                <NumpadButton onPress={this.props.onSpecialPress}>
+                    {this.props.children}
+                </NumpadButton>
+            ],
+            [
+                [4, 5, 6],
+                <NumpadButton
+                    disabled={this.props.disabled}
+                    icon={'plus'}
+                    onPress={() => this.appendOp(' + ')}
+                />
+            ],
+            [
+                [7, 8, 9],
+                <NumpadButton
+                    disabled={this.props.disabled}
+                    icon={'minus'}
+                    onPress={() => this.appendOp(' - ')}
+                />
+            ]
+        ];
+
+        this.lastRow = [
+            {
+                icon: 'circle-small',
+                onPress: () => this.appendNum('.'),
+                special: false,
+            },
+            {
+                icon: 'numeric-0',
+                onPress: () => this.appendNum(0),
+                special: false,
+            },
+            {
+                icon: 'backspace-outline',
+                onPress: () => this.backspace(),
+                special: false,
+            },
+            {
+                icon: this.state.ready ? 'check' : 'equal',
+                onPress: () => this.confirm(),
+                special: true,
+            }
+        ];
     }
 
     appendNum = num => {
@@ -34,7 +83,7 @@ class Numpad extends React.Component {
     }
 
     backspace = () => {
-        var num = this.state.num.slice(0, -1);
+        let num = this.state.num.slice(0, -1);
         if (num === '')
             this.setState({ num: '0' });
         else
@@ -45,9 +94,9 @@ class Numpad extends React.Component {
         if (this.state.ready)
             this.props.onConfirm(this.state.num);
         else {
-            var splt = this.state.num.split(" ");
-            var numStack = new Array();
-            var opStack = new Array();
+            let splt = this.state.num.split(" ");
+            let numStack = new Array();
+            let opStack = new Array();
             for (const t of splt) {
                 if (t === '+' || t === '-')
                     opStack.push(t);
@@ -62,8 +111,8 @@ class Numpad extends React.Component {
     evalRecur = (numStack, opStack) => {
         if (numStack.length === 1)
             return numStack.shift();
-        var a = parseFloat(numStack.shift());
-        var b = parseFloat(numStack.shift());
+        let a = parseFloat(numStack.shift());
+        let b = parseFloat(numStack.shift());
         if (opStack.shift() === '+')
             return this.evalRecur([a + b, ...numStack], opStack);
         else
@@ -76,45 +125,47 @@ class Numpad extends React.Component {
         return (
             <View style={numpadStyles.numpadRoot}>
                 <View style={this.style('output')}>
-                    <Icon name={'currency-' + this.props.settings.currency} size={25} color={this.style('outputNum').color} />
-                    <Text style={this.style('outputNum')}>{this.state.num}</Text>
+                    <Icon
+                        color={this.style('outputNum').color}
+                        name={'currency-' + this.props.settings.currency}
+                        size={25}
+                    />
+                    <Text style={this.style('outputNum')}>
+                        {this.state.num}
+                    </Text>
                 </View>
+                {this.grid.map(row => {
+                    return (
+                        <View key={RNKey()} style={numpadStyles.numpadRow}>
+                            {row[0].map(num => {
+                                return (
+                                    <NumpadButton
+                                        disabled={this.props.disabled}
+                                        icon={'numeric-' + num}
+                                        key={RNKey()}
+                                        onPress={() => this.appendNum(num)}
+                                    />
+                                );
+                            })}
+                            {row[1]}
+                        </View>
+                    );
+                })}
                 <View style={numpadStyles.numpadRow}>
-                    {[1, 2, 3].map(num => {
+                    {this.lastRow.map(cell => {
                         return (
-                            <NumpadButton disabled={this.props.disabled} icon={'numeric-' + num} key={num} onPress={() => this.appendNum(num)} />
-                        )
+                            <NumpadButton
+                                disabled={this.props.disabled}
+                                icon={cell.icon}
+                                key={RNKey()}
+                                onPress={cell.onPress}
+                                special={cell.special}
+                            />
+                        );
                     })}
-                    <NumpadButton
-                        onPress={this.props.onSpecialPress}
-                    >
-                        {this.props.children}
-                    </NumpadButton>
-                </View>
-                <View style={numpadStyles.numpadRow}>
-                    {[4, 5, 6].map(num => {
-                        return (
-                            <NumpadButton disabled={this.props.disabled} icon={'numeric-' + num} key={num} onPress={() => this.appendNum(num)} />
-                        )
-                    })}
-                    <NumpadButton disabled={this.props.disabled} icon={'plus'} onPress={() => this.appendOp(' + ')} />
-                </View>
-                <View style={numpadStyles.numpadRow}>
-                    {[7, 8, 9].map(num => {
-                        return (
-                            <NumpadButton disabled={this.props.disabled} icon={'numeric-' + num} key={num} onPress={() => this.appendNum(num)} />
-                        )
-                    })}
-                    <NumpadButton disabled={this.props.disabled} icon={'minus'} onPress={() => this.appendOp(' - ')} />
-                </View>
-                <View style={numpadStyles.numpadRow}>
-                    <NumpadButton disabled={this.props.disabled} icon={'circle-small'} onPress={() => this.appendNum('.')} />
-                    <NumpadButton disabled={this.props.disabled} icon={'numeric-0'} onPress={() => this.appendNum(0)} />
-                    <NumpadButton disabled={this.props.disabled} icon={'backspace-outline'} onPress={this.backspace} />
-                    <NumpadButton disabled={this.props.disabled} icon={this.state.ready ? 'check' : 'equal'} onPress={this.confirm} special={true} />
                 </View>
             </View>
-        )
+        );
     }
 }
 

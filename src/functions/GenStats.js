@@ -2,7 +2,7 @@ import moment from 'moment';
 import { NULL_KEY } from '../data/default';
 
 export const update = data => {
-    var output = {
+    let output = {
         categories: {
             expense: {},
             income: {},

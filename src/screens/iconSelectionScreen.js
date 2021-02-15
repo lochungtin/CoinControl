@@ -6,29 +6,31 @@ import { connect } from 'react-redux';
 import ConfirmationModal from '../components/Modals/ConfirmationModal';
 import CategoryModal from '../components/Modals/CategoryModal';
 import ScreenHeader from '../components/ScreenHeader';
-import { deleteExpenseCategory, deleteIncomeCategory, makeNullKey, removeWatchlist } from '../redux/action';
+import { deleteExpenseCategory, deleteIncomeCategory, makeNullKey, removeWatchlist, } from '../redux/action';
 import { store } from '../redux/store';
 
 import { white } from '../data/color';
 import { NULL_KEY } from '../data/default';
 import { icons } from '../data/icons';
 import { categoryPromptText } from '../data/text';
+import { RNKey } from '../functions/GenKey';
 import { iconSelectionScreen, styles, } from '../styles';
+
 
 class Screen extends React.Component {
 
     constructor(props) {
         super(props);
-        var opened = { inUse: false };
-        for (const type of Object.keys(icons)) {
+        let opened = { inUse: false };
+        for (const type of Object.keys(icons))
             opened[type] = true;
-        }
+
         this.state = {
             confirmType: '',
             deleteMode: false,
             focus: '',
             inputOpen: false,
-            opened: opened,
+            opened,
             selection: 'none',
             type: props.route.params,
             types: Object.keys(icons),
@@ -58,10 +60,10 @@ class Screen extends React.Component {
     }
 
     makeGrid = arr => {
-        var grid = [];
+        let grid = [];
         for (let i = 0; i < arr.length; i += 6) {
-            var row = arr.slice(i, i + 6);
-            var filler = [];
+            let row = arr.slice(i, i + 6);
+            let filler = [];
             for (let j = 0; j < 6 - row.length; j++) {
                 filler.push('numeric-' + j);
             }
@@ -71,8 +73,6 @@ class Screen extends React.Component {
     }
 
     iconColor = icon => icon.startsWith('numeric') ? 'transparent' : this.props.settings.accent;
-
-    genRnKey = () => Math.floor((1 + Math.random() * 0x10000)).toString(16);
 
     openIcon = open => open ? 'chevron-down' : 'chevron-right';
 
@@ -93,7 +93,7 @@ class Screen extends React.Component {
     }
 
     toggleOpen = type => {
-        var newState = { ...this.state.opened };
+        let newState = { ...this.state.opened };
         newState[type] = !newState[type];
         this.setState({ opened: newState });
     }
@@ -117,10 +117,10 @@ class Screen extends React.Component {
                     {(this.state.opened['inUse'] || this.state.deleteMode) && this.makeGrid(Object.keys(this.state.type === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories).filter(key => key !== NULL_KEY))
                         .map(row => {
                             return (
-                                <View key={row} style={{ ...styles.columns, height: 70, justifyContent: 'space-evenly' }}>
+                                <View key={RNKey()} style={{ ...styles.columns, height: 70, justifyContent: 'space-evenly' }}>
                                     {row.map(key => {
                                         return (
-                                            <TouchableOpacity key={this.genRnKey()} onPress={() => this.openConfirmation(key)} style={iconSelectionScreen.stack}>
+                                            <TouchableOpacity key={RNKey()} onPress={() => this.openConfirmation(key)} style={iconSelectionScreen.stack}>
                                                 <Icon name={this.catValue(key).iconName} size={35} color={this.catValue(key).color} style={iconSelectionScreen.stackChild} />
                                                 {this.catValue(key).color !== 'transparent' && this.state.deleteMode && <View style={{ ...iconSelectionScreen.stackChild, ...iconSelectionScreen.stackDelete }}>
                                                     <Icon name={'close'} size={20} color={white} />
@@ -135,17 +135,17 @@ class Screen extends React.Component {
                 <ScrollView style={{ width: '100%' }}>
                     {this.state.types.map(type => {
                         return (
-                            <View key={type}>
+                            <View key={RNKey()}>
                                 <TouchableOpacity onPress={() => this.toggleOpen(type)} style={this.style('header')}>
                                     <Text style={this.style('headerText')}>{type.toUpperCase()}</Text>
                                     <Icon name={this.openIcon(this.state.opened[type])} size={20} color={this.style('headerText').color} />
                                 </TouchableOpacity>
                                 {this.state.opened[type] && this.makeGrid(icons[type]).map(row => {
                                     return (
-                                        <View key={row} style={{ ...styles.columns, height: 70, justifyContent: 'space-evenly' }}>
+                                        <View key={RNKey()} style={{ ...styles.columns, height: 70, justifyContent: 'space-evenly' }}>
                                             {row.map(icon => {
                                                 return (
-                                                    <TouchableOpacity key={icon} onPress={() => this.setState({ inputOpen: true, selection: icon })}>
+                                                    <TouchableOpacity key={RNKey()} onPress={() => this.setState({ inputOpen: true, selection: icon, })}>
                                                         <Icon name={icon} size={35} color={this.iconColor(icon)} />
                                                     </TouchableOpacity>
                                                 );

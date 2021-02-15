@@ -7,41 +7,39 @@ import Bubble from '../Bubble';
 import ExpandButton from '../ExpandButton';
 
 import { blue, colorLabels, green, purple, red, teal, yellow, } from '../../data/color';
+import { RNKey } from '../../functions/GenKey';
 import { pickerModalStyles, styles, } from '../../styles';
 
 class ColorPicker extends React.Component {
 
     constructor(props) {
         super(props);
-        const colorArr = [yellow, green, teal, blue, purple, red];
+        const colors = [yellow, green, teal, blue, purple, red];
+
         this.state = {
-            category: this.find(colorArr, this.props.color),
-            colors: colorArr,
-            selection: this.props.color,
-        }
+            category: this.find(colors, props.color),
+            colors,
+            selection: props.color,
+        };
     }
+
+    catSelect = category => this.setState({ category });
 
     close = () => {
         this.props.close();
         this.setState({ category: this.find(this.state.colors, this.props.color) });
     }
 
-    formation = arr => {
-        return [
-            [0, ...arr.slice(0, 4)],
-            [1, ...arr.slice(4, 7)],
-            [2, ...arr.slice(7, 11)],
-            [3, ...arr.slice(11, 14)],
-        ]
-    }
-
-    find = (arr, hex) => {
-        for (let i = 0; i < 6; i++) {
-            if (arr[i].includes(hex))
+    find = (colors, color) => {
+        for (let i = 0; i < 6; ++i)
+            if (colors[i].includes(color))
                 return i;
-        }
         return 0;
     }
+
+    formation = arr => ([arr.slice(0, 4), arr.slice(4, 7), arr.slice(7, 11), arr.slice(11, 14)]);
+
+    onPress = hex => this.props.onPress(hex);
 
     style = styleName => pickerModalStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
@@ -54,21 +52,21 @@ class ColorPicker extends React.Component {
                 onBackButtonPress={this.close}
                 onSwipeComplete={this.close}
                 swipeDirection='down'
-                style={{ alignItems: 'center', padding: 0, margin: 0 }}
+                style={{ alignItems: 'center', padding: 0, margin: 0, }}
             >
-                <View style={{ ...this.style('root'), height: 350 }}>
+                <View style={{ ...this.style('root'), height: 350, }}>
                     <ExpandButton onPress={this.close} />
                     <View style={{ alignItems: 'center' }}>
                         {this.formation(this.state.colors[this.state.category]).map(row => {
                             return (
-                                <View style={{ ...styles.columns, maxHeight: 45 }} key={row[0]}>
-                                    {row.slice(1).map(hex => {
+                                <View style={{ ...styles.columns, maxHeight: 45, }} key={RNKey()}>
+                                    {row.map(hex => {
                                         return (
                                             <Bubble
                                                 color={hex}
-                                                key={hex}
+                                                key={RNKey()}
+                                                onPress={() => this.onPress(hex)}
                                                 selected={this.props.color === hex}
-                                                onPress={() => this.props.onPress(hex)}
                                             />
                                         );
                                     })}
@@ -76,13 +74,13 @@ class ColorPicker extends React.Component {
                             );
                         })}
                     </View>
-                    <View style={{ ...styles.columns, maxHeight: 45 }}>
+                    <View style={{ ...styles.columns, maxHeight: 45, }}>
                         {colorLabels.map(hex => {
                             return (
                                 <Bubble
                                     color={hex}
-                                    key={hex}
-                                    onPress={() => this.setState({ category: colorLabels.indexOf(hex) })}
+                                    key={RNKey()}
+                                    onPress={() => this.catSelect(colorLabels.indexOf(hex))}
                                     selected={this.state.category === colorLabels.indexOf(hex)}
                                 />
                             );

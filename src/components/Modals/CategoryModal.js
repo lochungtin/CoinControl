@@ -21,7 +21,7 @@ class CategoryModal extends React.Component {
             color: props.settings.accent,
             cpOpen: false,
             newTitle: '',
-        }
+        };
     }
 
     close = () => {
@@ -32,10 +32,12 @@ class CategoryModal extends React.Component {
 
     confirm = () => {
         if (this.state.newTitle !== '') {
-            if (this.props.type === 'Expense')
-                store.dispatch(addExpenseCategory({ color: this.state.color, iconName: this.props.icon, name: this.state.newTitle, }));
-            else
-                store.dispatch(addIncomeCategory({ color: this.state.color, iconName: this.props.icon, name: this.state.newTitle, }));
+            const cat = {
+                color: this.state.color,
+                iconName: this.props.icon,
+                name: this.state.newTitle,
+            }
+            store.dispatch(this.props.type === 'Expense' ? addExpenseCategory(cat) : addIncomeCategory(cat));
             this.props.close();
         }
     }
@@ -44,6 +46,10 @@ class CategoryModal extends React.Component {
         this.setState({ cpOpen: false });
         this.focus();
     }
+
+    cpOnPress = color => this.setState({ color, cpOpen: false });
+
+    cpOpen = () => this.setState({ cpOpen: true });
 
     focus = () => this.textInput.focus();
 
@@ -55,6 +61,8 @@ class CategoryModal extends React.Component {
 
     swipe = () => this.state.cpOpen ? 'none' : 'down';
 
+    textChange = newTitle => this.setState({ newTitle });
+
     render() {
         return (
             <Modal
@@ -64,8 +72,8 @@ class CategoryModal extends React.Component {
                 onBackButtonPress={this.close}
                 onModalShow={this.focus}
                 onSwipeComplete={this.close}
+                style={{ flexDirection: 'row', alignItems: 'flex-end', padding: 0, margin: 0, }}
                 swipeDirection={'down'}
-                style={{ flexDirection: 'row', alignItems: 'flex-end', padding: 0, margin: 0 }}
             >
                 <View style={{ width: '100%' }}>
                     <View style={this.style(generalBottomModalStyles, 'header')}>
@@ -73,26 +81,38 @@ class CategoryModal extends React.Component {
                     </View>
                     <View style={this.style(categoryModalStyles, 'content')}>
                         {this.props.icon !== 'none' &&
-                            <Icon name={this.props.icon} color={this.state.color} size={30} />
+                            <Icon 
+                                color={this.state.color} 
+                                name={this.props.icon} 
+                                size={30}
+                            />
                         }
                         <TextInput
-                            onChangeText={text => this.setState({ newTitle: text })}
+                            onChangeText={this.textChange}
                             placeholder={'Title (Optional)'}
                             placeholderTextColor={this.placeholderColor()}
-                            ref={ref => this.textInput = ref}
                             style={this.style(categoryModalStyles, 'input')}
                         />
-                        <Bubble onPress={() => this.setState({ cpOpen: true })} color={this.state.color} size={25} />
-                        <Bubble iconName={'check'} iconColor={this.props.settings.accent} onPress={() => this.confirm()} iconSize={25} />
+                        <Bubble 
+                            color={this.state.color} 
+                            onPress={this.cpOpen} 
+                            size={25}
+                        />
+                        <Bubble 
+                            iconColor={this.props.settings.accent}
+                            iconName={'check'}
+                            iconSize={25}
+                            onPress={this.confirm}
+                        />
                     </View>
                 </View>
                 <ColorPicker
                     close={this.cpClose}
+                    onPress={this.cpOnPress}
                     open={this.state.cpOpen}
-                    onPress={hex => this.setState({ color: hex, cpOpen: false })}
                 />
             </Modal>
-        )
+        );
     }
 }
 

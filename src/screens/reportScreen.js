@@ -16,7 +16,11 @@ class Screen extends React.Component {
     render() {
         return (
             <View style={this.style(styles, 'screen')}>
-                <TitleCard title={this.props.route.name + ' Reports'} icon={'menu'} iconPress={() => this.props.navigation.toggleDrawer()} />
+                <TitleCard
+                    icon={'menu'}
+                    iconPress={() => this.props.navigation.toggleDrawer()}
+                    title={this.props.route.name + ' Reports'}
+                />
             </View>
         );
     }

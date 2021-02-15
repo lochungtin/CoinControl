@@ -17,7 +17,13 @@ class GoalModal extends React.Component {
         super(props);
         this.state = {
             goalType: props.data.goalSettings.type,
-        }
+        };
+
+        this.goalType = {
+            week: 'WEEKLY',
+            month: 'MONTHLY',
+            none: 'NO GOALS',
+        };
     }
 
     close = () => this.props.close();
@@ -38,16 +44,14 @@ class GoalModal extends React.Component {
 
     placeholderColor = () => this.props.settings.darkMode ? shade2 : shade3;
 
-    selectionBoxStyle = type => {
-        return {
-            ...goalModalStyles.selectionBox,
-            backgroundColor: this.state.goalType === type ? this.props.settings.accent : 'transparent'
-        }
-    }
+    selectionBoxStyle = type => ({
+        ...goalModalStyles.selectionBox,
+        backgroundColor: this.state.goalType === type ? this.props.settings.accent : 'transparent'
+    });
+
+    setGoalType = goalType => this.setState({ goalType });
 
     style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
-
-    swipeControl = () => this.state.cpOpen || this.state.dpOpen ? undefined : 'down';
 
     update = () => this.setState({ goalType: this.props.data.goalSettings.type });
 
@@ -60,8 +64,8 @@ class GoalModal extends React.Component {
                 onBackButtonPress={this.close}
                 onModalShow={this.update}
                 onSwipeComplete={this.close}
-                swipeDirection={this.swipeControl()}
-                style={{ flexDirection: 'row', alignItems: 'flex-end', padding: 0, margin: 0 }}
+                style={{ alignItems: 'flex-end', flexDirection: 'row', padding: 0, margin: 0, }}
+                swipeDirection={'down'}                
             >
                 {this.props.open && <>
                     <View style={styles.rows}>
@@ -69,15 +73,15 @@ class GoalModal extends React.Component {
                             <ExpandButton color={this.iconColor(false)} onPress={this.close} />
                         </View>
                         <View style={this.style(goalModalStyles, 'selectionContainer')}>
-                            <TouchableOpacity onPress={() => this.setState({ goalType: 'week' })} style={this.selectionBoxStyle('week')}>
-                                <Text style={{ color: this.iconColor(this.state.goalType === 'week') }}>WEEKLY</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => this.setState({ goalType: 'month' })} style={this.selectionBoxStyle('month')}>
-                                <Text style={{ color: this.iconColor(this.state.goalType === 'month') }}>MONTHLY</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => this.setState({ goalType: 'none' })} style={this.selectionBoxStyle('none')}>
-                                <Text style={{ color: this.iconColor(this.state.goalType === 'none') }}>NO GOALS</Text>
-                            </TouchableOpacity>
+                            {Object.keys(this.goalType).map(type => {
+                                return (
+                                    <TouchableOpacity onPress={() => this.setGoalType(type)} style={this.selectionBoxStyle(type)}>
+                                        <Text style={{ color: this.iconColor(this.state.goalType === type) }}>
+                                            {this.goalType[type]}
+                                        </Text>
+                                    </TouchableOpacity>
+                                );
+                            })}
                         </View>
                         <Numpad
                             disabled={this.state.goalType === 'none'}

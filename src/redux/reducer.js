@@ -88,7 +88,7 @@ const deleteRecord = (base, datekey, rnkey) => {
 const makeAllNull = (base) => {
     const defaultList = [...Object.keys(defaultExpenseCategories), Object.keys(defaultIncomeCategories)];
     Object.keys(base.data).forEach(datekey => Object.keys(base.data[datekey]).forEach(recordKey => {
-        var record = base.data[datekey][recordKey];
+        let record = base.data[datekey][recordKey];
         if (!defaultList.includes(record.catKey)) {
             console.log('clear: ' + recordKey);
             record.catKey = NULL_KEY;
@@ -99,14 +99,14 @@ const makeAllNull = (base) => {
 const makeNullKey = (base, key) => {
     Object.keys(base.data).forEach(datekey => Object.keys(base.data[datekey]).forEach(recordKey => {
         console.log('clear: ' + key);
-        var record = base.data[datekey][recordKey];
+        let record = base.data[datekey][recordKey];
         if (record.catKey === key)
             record.catKey = NULL_KEY;
     }));
 }
 
 const updateCards = (cards = defaultCardConfig, action) => {
-    var temp = { ...cards }
+    let temp = { ...cards }
     switch (action.type) {
         case DEFAULT_CARDS:
             return defaultCardConfig;
@@ -123,14 +123,14 @@ const updateCards = (cards = defaultCardConfig, action) => {
 }
 
 const updateData = (data = defaultData, action) => {
-    var temp = { ...data };
+    let temp = { ...data };
     switch (action.type) {
         case DELETE_HISTORY:
             console.log('asdf');
             return defaultData;
 
         case ADD_RECORD:
-            var rnkey = genKey();
+            let rnkey = genKey();
             var datekey = action.payload.date;
 
             addRecord(temp, datekey, rnkey, { ...action.payload, key: datekey + ':' + rnkey });
@@ -190,7 +190,7 @@ const updateGoal = base => {
             break;
     }
 
-    var totalExpense = 0;
+    let totalExpense = 0;
     dates.forEach(date => {
         Object.keys(base.data[date]).forEach(key => {
             const record = base.data[date][key];
@@ -203,17 +203,19 @@ const updateGoal = base => {
 }
 
 const updateExpenseCategories = (categories = defaultExpenseCategories, action) => {
+    let temp = { ...categories };
     switch (action.type) {
         case DEFAULT_EXPENSE_CATEGORY:
             return defaultExpenseCategories;
+
         case ADD_EXPENSE_CATEGORY:
-            var temp = { ...categories };
             temp[genKey()] = action.payload;
             return temp;
+
         case DELETE_EXPENSE_CATEGORY:
-            var temp = { ...categories };
             delete temp[action.payload];
             return temp;
+
         case EDIT_EXPENSE_CATEGORY:
             return { ...categories, ...action.payload }
     }
@@ -221,17 +223,19 @@ const updateExpenseCategories = (categories = defaultExpenseCategories, action) 
 }
 
 const updateIncomeCategories = (categories = defaultIncomeCategories, action) => {
+    let temp = { ...categories };
     switch (action.type) {
         case DEFAULT_INCOME_CATEGORY:
             return defaultIncomeCategories;
+
         case ADD_INCOME_CATEGORY:
-            var temp = { ...categories };
             temp[genKey()] = action.payload;
             return temp;
+
         case DELETE_INCOME_CATEGORY:
-            var temp = { ...categories };
             delete temp[action.payload];
             return temp;
+
         case EDIT_INCOME_CATEGORY:
             return { ...categories, ...action.payload }
     }
@@ -243,7 +247,7 @@ const updateSettings = (settings = defaultSettings, action) => {
         case DEFAULT_SETTINGS:
             return defaultSettings;
         case UPDATE_SETTINGS:
-            var newSettings = { ...settings };
+            let newSettings = { ...settings };
             newSettings[action.payload.key] = action.payload.update;
             return newSettings;
     }
@@ -261,13 +265,15 @@ const updateLogin = (loginState = defaultLogin, action) => {
 }
 
 const updateWatchlist = (watchlist = defaultWatchlist, action) => {
-    var temp = [...watchlist];
+    let temp = [...watchlist];
     switch (action.type) {
         case DEFAULT_WATCHLIST:
             return defaultWatchlist;
+            
         case ADD_WATCHLIST:
             temp.push(action.payload);
             break;
+            
         case REMOVE_WATCHLIST:
             temp.splice(temp.indexOf(action.payload), 1);
             break;

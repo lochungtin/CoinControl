@@ -16,43 +16,53 @@ class SettingsItem extends React.Component {
         return this.props.settings.darkMode ? shade2 : shade3;
     }
 
-    iconRColor = () => {
-        if (this.props.iconRColor !== undefined)
-            return this.props.iconRColor;
-        return this.iconColor();
-    }
+    iconRColor = () => this.props.iconRColor || this.iconColor();
 
-    iconRight = () => this.props.iconR === undefined ? 'arrow-right' : this.props.iconR;
+    iconRight = () => this.props.iconR || 'arrow-right';
 
-    text = () => this.props.disabled ? this.style('textDisabled') : this.style('text');
+    onChange = () => this.props.action(!this.props.state);
 
     style = styleName => settingStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
+
+    text = () => this.props.disabled ? this.style('textDisabled') : this.style('text');
 
     render() {
         return (<>
             {this.props.switch ?
                 <View style={this.style('itemContainer')}>
-                    <Icon name={this.props.iconL} size={20} color={this.iconColor()} />
+                    <Icon
+                        color={this.iconColor()}
+                        name={this.props.iconL}
+                        size={20}
+                    />
                     <Text style={this.text()}>
                         {this.props.text}
                     </Text>
                     <View style={settingStyles.settingRight}>
                         <Switch
-                            onChange={() => this.props.action(!this.props.state)}
+                            onChange={this.onChange}
                             thumbColor={white}
-                            trackColor={{ false: this.iconColor(), true: this.props.settings.accent }}
+                            trackColor={{ false: this.iconColor(), true: this.props.settings.accent, }}
                             value={this.props.state}
                         />
                     </View>
                 </View> :
                 <TouchableOpacity onPress={this.props.action}>
                     <View style={this.style('itemContainer')}>
-                        <Icon name={this.props.iconL} size={20} color={this.iconColor()} />
+                        <Icon
+                            color={this.iconColor()}
+                            name={this.props.iconL}
+                            size={20}
+                        />
                         <Text style={this.text()}>
                             {this.props.text}
                         </Text>
                         <View style={settingStyles.settingRight}>
-                            <Icon name={this.iconRight()} size={20} color={this.iconRColor()} />
+                            <Icon
+                                color={this.iconRColor()}
+                                name={this.iconRight()}
+                                size={20}
+                            />
                         </View>
                     </View>
                     {this.props.children && this.props.open &&

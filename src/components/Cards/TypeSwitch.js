@@ -11,7 +11,7 @@ class TrendCard extends React.Component {
         super(props);
         this.state = {
             type: props.default
-        }
+        };
     }
 
     color = type => {
@@ -25,20 +25,24 @@ class TrendCard extends React.Component {
     toggle = val => {
         const type = val ? 'income' : 'expense';
         this.setState({ type });
-        this.props.update(type);
+        this.props.toggle(type);
     }
 
     render() {
         return (
             <View style={{ ...styles.columns, justifyContent: 'space-evenly', width: '100%', paddingVertical: 10, }}>
-                <Text style={{ color: this.color('expense') }}>EXPENSE</Text>
+                <Text style={{ color: this.color('expense') }}>
+                    EXPENSE
+                </Text>
                 <Switch
                     onValueChange={this.toggle}
                     thumbColor={white}
                     trackColor={{ false: this.props.settings.accent, true: this.props.settings.accent }}
                     value={this.state.type === 'income'}
                 />
-                <Text style={{ color: this.color('income') }}>INCOME</Text>
+                <Text style={{ color: this.color('income') }}>
+                    INCOME
+                </Text>
             </View>
         );
     }

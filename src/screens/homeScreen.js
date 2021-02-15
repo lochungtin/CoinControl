@@ -15,6 +15,7 @@ import { store } from '../redux/store';
 
 import { shade2, shade3, } from '../data/color';
 import { homePromptText, goalText } from '../data/text';
+import { RNKey } from '../functions/GenKey';
 import { homeScreenStyles, maxWidth, styles, } from '../styles';
 
 class Screen extends React.Component {
@@ -26,7 +27,30 @@ class Screen extends React.Component {
             focus: '',
             gmOpen: false,
             rmOpen: false,
-        }
+        };
+
+        this.navBtns = [
+            {
+                icon: 'cloud-sync-outline',
+                onPress: undefined,
+                text: 'Sync',
+            },
+            {
+                icon: 'plus',
+                onPress: () => this.props.navigation.navigate('Update', 'Income'),
+                text: 'Income',
+            },
+            {
+                icon: 'minus',
+                onPress: () => this.props.navigation.navigate('Update', 'Expense'),
+                text: 'Expense',
+            },
+            {
+                icon: 'flag-outline',
+                onPress: () => this.setState({ gmOpen: true }),
+                text: 'Goals'
+            }
+        ];
     }
 
     deleteRecord = key => {
@@ -64,9 +88,13 @@ class Screen extends React.Component {
     render() {
         return (
             <View style={this.style(styles, 'screen')}>
-                <View style={{ ...styles.rows, height: '30%', justifyContent: 'space-evenly' }}>
+                <View style={{ ...styles.rows, height: '30%', justifyContent: 'space-evenly', }}>
                     <View style={styles.columns}>
-                        <Icon name={'currency-' + this.props.settings.currency} color={this.style(styles, 'text').color} size={30} />
+                        <Icon
+                            color={this.style(styles, 'text').color}
+                            name={'currency-' + this.props.settings.currency}
+                            size={30}
+                        />
                         <Text style={this.style(homeScreenStyles, 'balance')}>
                             {this.props.data.total.split('.')[0]}
                         </Text>
@@ -76,20 +104,34 @@ class Screen extends React.Component {
                     </View>
                     <View style={styles.columns}>
                         {this.props.data.goalSettings.type !== 'none' && this.props.data.goal.percentage <= 1 &&
-                            <Icon name={'currency-' + this.props.settings.currency} color={this.goalMessageColor()} size={15} />
+                            <Icon
+                                color={this.goalMessageColor()}
+                                name={'currency-' + this.props.settings.currency}
+                                size={15}
+                            />
                         }
                         <Text style={{ color: this.goalMessageColor() }}>
                             {this.goalMessage()}
                         </Text>
                     </View>
                     <View style={styles.columns}>
-                        <Progress.Bar color={this.props.settings.accent} progress={this.props.data.goal.percentage} width={maxWidth / 1.8} />
+                        <Progress.Bar
+                            color={this.props.settings.accent}
+                            progress={this.props.data.goal.percentage}
+                            width={maxWidth / 1.8}
+                        />
                     </View>
-                    <View style={{ ...styles.columns, width: 250, justifyContent: 'space-evenly' }}>
-                        <HomeNavButton icon={'cloud-sync-outline'} onPress={undefined} text={'Sync'} />
-                        <HomeNavButton icon={'plus'} onPress={() => this.props.navigation.navigate('Update', 'Income')} text={'Income'} />
-                        <HomeNavButton icon={'minus'} onPress={() => this.props.navigation.navigate('Update', 'Expense')} text={'Expense'} />
-                        <HomeNavButton icon={'flag-outline'} onPress={() => this.setState({ gmOpen: true })} text={'Goals'} />
+                    <View style={{ ...styles.columns, justifyContent: 'space-evenly', width: 250, }}>
+                        {this.navBtns.map(btn => {
+                            return (
+                                <HomeNavButton
+                                    icon={btn.icon}
+                                    key={RNKey()}
+                                    onPress={btn.onPress}
+                                    text={btn.text}
+                                />
+                            );
+                        })}
                     </View>
                 </View>
 
@@ -112,9 +154,7 @@ class Screen extends React.Component {
                                 onEdit={key => this.setState({ focus: key, rmOpen: true })}
                             />
                         }
-                        renderSectionHeader={({ section: { title } }) =>
-                            <SectionHeader title={title} />
-                        }
+                        renderSectionHeader={({ section: { title } }) => <SectionHeader title={title} />}
                         sections={this.props.data.display}
                         stickySectionHeadersEnabled={true}
                         style={{ flex: 1, minWidth: maxWidth, paddingHorizontal: '2.5%' }}

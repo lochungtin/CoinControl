@@ -12,6 +12,11 @@ class DatePicker extends React.Component {
 
     modalStyle = () => this.props.settings.darkMode ? datePickerStyles.modalViewD : datePickerStyles.modalViewL;
 
+    onPress = date => {
+        this.props.action(date);
+        this.props.close();
+    }
+
     render() {
         return (
             <Modal
@@ -26,10 +31,7 @@ class DatePicker extends React.Component {
                     <ExpandButton onPress={this.props.close} />
                     <Calendar
                         date={this.props.date}
-                        onPress={(date) => {
-                            this.props.action(date);
-                            this.props.close();
-                        }}
+                        onPress={this.onPress}
                         selected={this.props.selected}
                     />
                 </View>

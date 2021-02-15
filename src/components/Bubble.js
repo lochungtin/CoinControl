@@ -11,48 +11,45 @@ class Bubble extends React.Component {
     constructor(props) {
         super(props);
         const icon = props.iconName !== undefined;
+
         this.state = {
             border: icon || props.text !== undefined,
             icon: icon,
         }
     }
 
-    iconColor = () => {
-        if (this.props.iconColor !== undefined)
-            return this.props.iconColor;
-        return this.props.settings.darkMode ? white : black;
-    }
+    iconColor = () => this.props.iconColor || (this.props.settings.darkMode ? white : black);
 
-    fontColor = () => {
-        if (this.props.color !== 'transparent')
-            return this.props.settings.darkMode ? black : white;
-        return this.props.settings.darkMode ? white : black;
-    }
+    fontColor = () => this.props.settings.darkMode ^ (this.props.color !== 'transparent') ? white : black;
 
     render() {
         return (
             <TouchableOpacity
+                onPress={this.props.onPress}
                 style={{
                     ...bubbleStyles.bubble,
-                    backgroundColor: this.state.border ? this.props.selected ? this.props.settings.darkMode ? shade3 : shade2 : this.props.color : this.props.color,
-                    borderWidth: !this.state.border ? this.props.selected ? 3 : 0 : 0,
+                    backgroundColor: (this.state.border && this.props.selected) ? (this.props.settings.darkMode ? shade3 : shade2) : this.props.color,
                     borderColor: this.props.settings.darkMode ? white : black,
-                    height: this.props.size !== undefined ? this.props.size : 30,
-                    margin: this.props.spacing !== undefined ? this.props.spacing : 7.5,
-                    width: this.props.size !== undefined ? this.props.size : 30,
+                    borderWidth: !this.state.border ? (this.props.selected ? 3 : 0) : 0,
+                    height: this.props.size || 30,
+                    margin: this.props.spacing || 7.5,
+                    width: this.props.size || 30,
                 }}
-                onPress={this.props.onPress}
             >
                 {this.props.text &&
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: this.fontColor() }}>
+                    <Text style={{ color: this.fontColor(), fontSize: 20, fontWeight: 'bold', }}>
                         {this.props.text}
                     </Text>
                 }
                 {this.state.icon &&
-                    <Icon name={this.props.iconName} size={this.props.iconSize} color={this.iconColor()} />
+                    <Icon
+                        color={this.iconColor()}
+                        name={this.props.iconName}
+                        size={this.props.iconSize}
+                    />
                 }
             </TouchableOpacity >
-        )
+        );
     }
 }
 

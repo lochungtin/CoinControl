@@ -6,7 +6,12 @@ import Card from './Card';
 class TitleCard extends React.Component {
     render() {
         return (
-            <Card icon={this.props.icon} title={this.props.title} onPress={this.props.onPress} iconPress={this.props.iconPress}/>
+            <Card
+                icon={this.props.icon}
+                iconPress={this.props.iconPress}
+                onPress={this.props.onPress}
+                title={this.props.title}
+            />
         );
     }
 }
