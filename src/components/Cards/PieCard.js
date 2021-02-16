@@ -1,11 +1,11 @@
 import React from 'react';
 import { Text, View, } from 'react-native';
-import { PieChart } from 'react-native-svg-charts';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import Card from './Card';
 import LabeledProcess from './LabeledProcess';
+import PieChart from '../PieChart';
 import TypeSwitch from './TypeSwitch';
 
 import { black, white, } from '../../data/color';
