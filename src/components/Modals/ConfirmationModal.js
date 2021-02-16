@@ -62,18 +62,12 @@ class ConfirmationModal extends React.Component {
                             />
                         </View>
                         <View style={this.style(confirmationModalStyles, 'content')}>
-                            <TouchableOpacity
-                                onPress={this.props.close}
-                                style={{ ...styles.roundView, backgroundColor: shade2, }}
-                            >
+                            <TouchableOpacity onPress={this.props.close} style={{ ...styles.roundView, backgroundColor: shade2, }}>
                                 <Text>
                                     Cancel
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={this.props.onConfirm}
-                                style={{ ...styles.roundView, backgroundColor: this.props.settings.accent, width: '55%', }}
-                            >
+                            <TouchableOpacity onPress={this.props.onConfirm} style={{ ...styles.roundView, backgroundColor: this.props.settings.accent, width: '55%', }}>
                                 <Text style={styles.centerTextL}>
                                     Confirm
                                 </Text>
