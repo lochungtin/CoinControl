@@ -77,15 +77,15 @@ export const defaultLogin = {
     method: '',
     user: {
         username: '',
-    }
+    },
 };
 
 export const defaultSettings = {
     accent: goldenBrown,
     compactView: true,
-    currency: 'usd',
+    currency: 'gbp',
     darkMode: true,
-    notification: true,
+    notification: false,
     notifSchedule: '23:00',
     prompt: {
         rdc: false,
@@ -93,7 +93,7 @@ export const defaultSettings = {
         cad: false,
         dc: false,
         dr: false,
-    }
+    },
 };
 
 export const defaultWatchlist = [];

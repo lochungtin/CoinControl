@@ -14,7 +14,7 @@ import { deleteRecord, editRecord, } from '../redux/action';
 import { store } from '../redux/store';
 
 import { shade2, shade3, } from '../data/color';
-import { homePromptText, goalText } from '../data/text';
+import { homePromptText, goalText, } from '../data/text';
 import { RNKey } from '../functions/GenKey';
 import { homeScreenStyles, maxWidth, styles, } from '../styles';
 
@@ -122,16 +122,7 @@ class Screen extends React.Component {
                         />
                     </View>
                     <View style={{ ...styles.columns, justifyContent: 'space-evenly', width: 250, }}>
-                        {this.navBtns.map(btn => {
-                            return (
-                                <HomeNavButton
-                                    icon={btn.icon}
-                                    key={RNKey()}
-                                    onPress={btn.onPress}
-                                    text={btn.text}
-                                />
-                            );
-                        })}
+                        {this.navBtns.map(btn => <HomeNavButton {...btn} key={RNKey()} />)}
                     </View>
                 </View>
 
