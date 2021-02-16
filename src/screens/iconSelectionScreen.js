@@ -37,12 +37,7 @@ class Screen extends React.Component {
         };
     }
 
-    catValue = key => {
-        const cat = (this.state.type === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories)[key];
-        if (cat === undefined)
-            return { color: 'transparent', iconName: 'crop-free', };
-        return cat;
-    }
+    catValue = key => (this.state.type === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories)[key] || { color: 'transparent', iconName: 'crop-free', };
 
     deleteCat = key => {
         if (this.state.deleteMode) {

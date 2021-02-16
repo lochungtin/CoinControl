@@ -31,7 +31,7 @@ class ConfirmationModal extends React.Component {
                 onBackdropPress={this.props.close}
                 onBackButtonPress={this.props.close}
                 onSwipeComplete={this.props.close}
-                style={{ flexDirection: 'row', alignItems: 'flex-end', padding: 0, margin: 0, }}
+                style={generalBottomModalStyles.bottomModalContainer}
                 swipeDirection='down'
             >
                 {this.props.open &&

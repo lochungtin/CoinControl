@@ -72,7 +72,7 @@ class CategoryModal extends React.Component {
                 onBackButtonPress={this.close}
                 onModalShow={this.focus}
                 onSwipeComplete={this.close}
-                style={{ flexDirection: 'row', alignItems: 'flex-end', padding: 0, margin: 0, }}
+                style={generalBottomModalStyles.bottomModalContainer}
                 swipeDirection={'down'}
             >
                 <View style={{ width: '100%' }}>

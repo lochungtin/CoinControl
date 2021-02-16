@@ -9,7 +9,7 @@ import { addCard, hideCard, } from '../../redux/action';
 import { store } from '../../redux/store';
 
 import { RNKey } from '../../functions/GenKey';
-import { cardModalStyles, pickerModalStyles, styles, } from '../../styles';
+import { cardModalStyles, generalBottomModalStyles, pickerModalStyles, styles, } from '../../styles';
 
 class CardModal extends React.Component {
 
@@ -38,7 +38,7 @@ class CardModal extends React.Component {
                 onBackdropPress={this.props.close}
                 onBackButtonPress={this.props.close}
                 onSwipeComplete={this.props.close}
-                style={{ alignItems: 'center', padding: 0, margin: 0, }}
+                style={generalBottomModalStyles.centerModalContainer}
                 swipeDirection='down'
             >
                 <View style={{ ...this.style(pickerModalStyles, 'root'), height: 350, }}>

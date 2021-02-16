@@ -98,7 +98,7 @@ class RecordModal extends React.Component {
                 onBackdropPress={this.close}
                 onBackButtonPress={this.close}
                 onSwipeComplete={this.close}
-                style={{ alignItems: 'flex-end', flexDirection: 'row', padding: 0, margin: 0, }}
+                style={generalBottomModalStyles.bottomModalContainer}
                 swipeDirection={this.swipeControl()}
             >
                 {this.props.open && <>

@@ -9,7 +9,7 @@ import ExpandButton from '../ExpandButton';
 import { addWatchlist, removeWatchlist, } from '../../redux/action';
 import { store } from '../../redux/store';
 
-import { pickerModalStyles, styles, watchlistModalStyles, } from '../../styles';
+import { generalBottomModalStyles, pickerModalStyles, styles, watchlistModalStyles, } from '../../styles';
 
 class WatchlistModal extends React.Component {
 
@@ -31,7 +31,7 @@ class WatchlistModal extends React.Component {
                 isVisible={this.props.open}
                 onBackdropPress={this.props.close}
                 onBackButtonPress={this.props.close}
-                style={{ alignItems: 'center', padding: 0, margin: 0, }}
+                style={generalBottomModalStyles.centerModalContainer}
             >
                 <View style={{ ...this.style(pickerModalStyles, 'root'), height: 600, width: 350 }}>
                     <ExpandButton onPress={this.props.close} />

@@ -213,12 +213,12 @@ export const confirmationModalStyles = StyleSheet.create({
         color: white,
         fontSize: 17,
         textAlign: 'justify',
-    }, 
+    },
     detailL: {
         color: black,
         fontSize: 17,
         textAlign: 'justify',
-    }, 
+    },
     dsaD: {
         color: white,
         fontSize: 15,
@@ -233,6 +233,17 @@ export const confirmationModalStyles = StyleSheet.create({
 });
 
 export const generalBottomModalStyles = StyleSheet.create({
+    bottomModalContainer: {
+        alignItems: 'flex-end',
+        flexDirection: 'row',
+        margin: 0,
+        padding: 0,
+    },
+    centerModalContainer: {
+        alignItems: 'center', 
+        margin: 0,
+        padding: 0,
+    },
     headerD: {
         alignItems: 'center',
         backgroundColor: shade3,
@@ -240,7 +251,7 @@ export const generalBottomModalStyles = StyleSheet.create({
         borderTopRightRadius: 20,
         height: 20,
         justifyContent: 'center',
-        width: '100%'
+        width: '100%',
     },
     headerL: {
         alignItems: 'center',
@@ -249,7 +260,7 @@ export const generalBottomModalStyles = StyleSheet.create({
         borderTopRightRadius: 20,
         height: 20,
         justifyContent: 'center',
-        width: '100%'
+        width: '100%',
     },
 });
 
@@ -279,22 +290,22 @@ export const goalModalStyles = StyleSheet.create({
 });
 
 export const pickerModalStyles = StyleSheet.create({
-    rootD: { 
+    rootD: {
         alignItems: 'center',
         backgroundColor: bgColorD,
         borderRadius: 20,
         elevation: 10,
         justifyContent: "space-between",
-        padding: 10, 
+        padding: 10,
         width: 300,
     },
-    rootL: { 
+    rootL: {
         alignItems: 'center',
         backgroundColor: bgColorL,
         borderRadius: 20,
         elevation: 10,
         justifyContent: "space-between",
-        padding: 10, 
+        padding: 10,
         width: 300,
     },
 });
@@ -392,18 +403,18 @@ export const calendarStyles = StyleSheet.create({
     disabledD: {
         color: shade3,
         textAlign: 'center',
-    },  
+    },
     disabledL: {
         color: shade2,
         textAlign: 'center',
-    },  
+    },
     dot: {
         borderRadius: 5,
         height: 5,
         margin: 1,
         width: 5,
     },
-    label: { 
+    label: {
         textAlign: 'center',
         width: 40
     },
@@ -547,15 +558,15 @@ export const numpadStyles = StyleSheet.create({
 });
 
 export const timePickerStyles = StyleSheet.create({
-    amTextD:{
+    amTextD: {
         color: white,
-        fontSize: 20, 
-        fontWeight: 'bold', 
+        fontSize: 20,
+        fontWeight: 'bold',
     },
-    amTextL:{
+    amTextL: {
         color: black,
-        fontSize: 20, 
-        fontWeight: 'bold', 
+        fontSize: 20,
+        fontWeight: 'bold',
     },
 });
 
@@ -597,10 +608,10 @@ export const iconSelectionScreen = StyleSheet.create({
     },
     stackDelete: {
         alignItems: 'center',
-        backgroundColor: '#e74c3c', 
-        borderRadius: 10, 
+        backgroundColor: '#e74c3c',
+        borderRadius: 10,
         elevation: 10,
-        height: 20, 
+        height: 20,
         justifyContent: 'center',
         width: 20,
     },
@@ -702,36 +713,36 @@ export const homeScreenStyles = StyleSheet.create({
     sectionHeadD: {
         backgroundColor: bgColorD,
         paddingBottom: '3%',
-        paddingTop: '4%', 
+        paddingTop: '4%',
     },
     sectionHeadL: {
         backgroundColor: bgColorL,
         paddingBottom: '3%',
-        paddingTop: '4%', 
+        paddingTop: '4%',
     },
-    sectionItem: { 
+    sectionItem: {
         borderRadius: 15,
         paddingHorizontal: 30,
         paddingVertical: 10,
         margin: 10,
     },
-    textCatD: { 
+    textCatD: {
         color: white,
-        width: '50%' 
+        width: '50%'
     },
-    textCatL: { 
+    textCatL: {
         color: black,
-        width: '50%' 
+        width: '50%'
     },
-    textValD: { 
+    textValD: {
         color: white,
-        textAlign: 'center', 
-        width: '20%' 
+        textAlign: 'center',
+        width: '20%'
     },
-    textValL: { 
+    textValL: {
         color: black,
-        textAlign: 'center', 
-        width: '20%' 
+        textAlign: 'center',
+        width: '20%'
     },
 });
 

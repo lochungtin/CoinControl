@@ -64,7 +64,7 @@ class GoalModal extends React.Component {
                 onBackButtonPress={this.close}
                 onModalShow={this.update}
                 onSwipeComplete={this.close}
-                style={{ alignItems: 'flex-end', flexDirection: 'row', padding: 0, margin: 0, }}
+                style={generalBottomModalStyles.bottomModalContainer}
                 swipeDirection={'down'}                
             >
                 {this.props.open && <>
