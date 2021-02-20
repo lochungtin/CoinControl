@@ -107,7 +107,11 @@ class Screen extends React.Component {
                 <View style={{ width: '100%' }}>
                     <TouchableOpacity onPress={() => this.toggleOpen('inUse')} style={this.style('header')}>
                         <Text style={this.style('headerText')}>IN USE</Text>
-                        <Icon name={this.openIcon(this.state.opened['inUse'] || this.state.deleteMode)} size={20} color={this.style('headerText').color} />
+                        <Icon
+                            color={this.style('headerText').color}
+                            name={this.openIcon(this.state.opened['inUse'] || this.state.deleteMode)}
+                            size={20}
+                        />
                     </TouchableOpacity>
                     {(this.state.opened['inUse'] || this.state.deleteMode) && this.makeGrid(Object.keys(this.state.type === 'Expense' ? this.props.expenseCategories : this.props.incomeCategories).filter(key => key !== NULL_KEY))
                         .map(row => {

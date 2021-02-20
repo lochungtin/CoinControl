@@ -25,10 +25,7 @@ class NumpadButton extends React.Component {
 
     render() {
         return (
-            <TouchableOpacity
-                onPress={this.onPress}
-                style={this.style()}
-            >
+            <TouchableOpacity onPress={this.onPress} style={this.style()}>
                 {this.props.children !== undefined ? this.props.children :
                     <Icon
                         color={this.iconColor()}

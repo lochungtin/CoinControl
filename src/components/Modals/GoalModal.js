@@ -9,6 +9,7 @@ import { defaultGoal, updateGoal, } from '../../redux/action';
 import { store } from '../../redux/store';
 
 import { black, shade2, shade3, white, } from '../../data/color';
+import { RNKey } from '../../functions/GenKey';
 import { generalBottomModalStyles, goalModalStyles, styles, } from '../../styles';
 
 class GoalModal extends React.Component {
@@ -75,7 +76,11 @@ class GoalModal extends React.Component {
                         <View style={this.style(goalModalStyles, 'selectionContainer')}>
                             {Object.keys(this.goalType).map(type => {
                                 return (
-                                    <TouchableOpacity onPress={() => this.setGoalType(type)} style={this.selectionBoxStyle(type)}>
+                                    <TouchableOpacity  
+                                        key={RNKey()}
+                                        onPress={() => this.setGoalType(type)} 
+                                        style={this.selectionBoxStyle(type)}
+                                    >
                                         <Text style={{ color: this.iconColor(this.state.goalType === type) }}>
                                             {this.goalType[type]}
                                         </Text>

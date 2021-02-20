@@ -178,6 +178,6 @@ class Screen extends React.Component {
 
 const mapStateToProps = state => ({
     settings: state.settings,
-})
+});
 
 export default connect(mapStateToProps)(Screen);

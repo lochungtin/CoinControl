@@ -122,7 +122,7 @@ class Numpad extends React.Component {
     style = styleName => numpadStyles[styleName + (this.props.settings.darkMode ? 'D' : 'L')];
 
     render() {
-        return (
+        return ( 
             <View style={numpadStyles.numpadRoot}>
                 <View style={this.style('output')}>
                     <Icon
@@ -134,7 +134,7 @@ class Numpad extends React.Component {
                         {this.state.num}
                     </Text>
                 </View>
-                {this.grid.map(row => {
+                {this.grid.map(row => {z
                     return (
                         <View key={RNKey()} style={numpadStyles.numpadRow}>
                             {row[0].map(num => {

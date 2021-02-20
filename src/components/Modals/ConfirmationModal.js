@@ -43,7 +43,11 @@ class ConfirmationModal extends React.Component {
                             <Text style={{ ...confirmationModalStyles.title, color: this.props.settings.accent, }}>
                                 {this.props.text.title}
                             </Text>
-                            <Icon color={this.iconColor()} name='alert-circle-outline' size={35} />
+                            <Icon 
+                                color={this.iconColor()}
+                                name='alert-circle-outline'
+                                size={35}
+                            />
                         </View>
                         <View style={this.style(confirmationModalStyles, 'content')}>
                             <Text style={this.style(confirmationModalStyles, 'detail')}>
