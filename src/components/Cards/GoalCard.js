@@ -29,40 +29,47 @@ class GoalCard extends React.Component {
     trackColor = () => this.props.settings.darkMode ? shade3 : shade2;
 
     render() {
+        console.log(this.props.data.goal)
         return (
             <Card icon={'flag-variant-outline'} title={'GOAL STATUS'}>
-                {false && <View style={{ height: 175, marginTop: 20, }}>
+                <View style={{ ...styles.columns, justifyContent: 'space-around', marginBottom: 10, marginTop: 20, }}>
                     <ProgressCircle
-                        dim={175}
-                        progress={0.3}
+                        dim={100}
+                        progress={this.props.data.goal.percentage}
                         progressColor={this.props.settings.accent}
                         trackColor={this.trackColor()}
                         strokeWidth={5}
                     />
-                    <View style={generalCardStyles.centerLabel}>
+                    <View style={{ width: 190 }}>
                         {this.props.data.goalSettings.type === 'none' ?
                             <Text style={this.style(styles, 'text')}>
-                                Add goal to start using this card.
-                                </Text> :
-                            <View>
+                                Add a goal to start using this card
+                            </Text> :
+                            <View style={{ ...styles.rows, alignItems: 'flex-start' }}>
                                 <Text style={this.style(generalCardStyles, 'amountText')}>
-                                    {Math.round(this.props.data.goal.percentage * 100) + '%'}
+                                    {Math.round(this.props.data.goal.percentage * 100) + '% Used'}
                                 </Text>
-                                <Text style={this.style(styles, 'centerText')}>
+                                <View style={{ height: 10 }} />
+                                <Text style={this.style(styles, 'text')}>
                                     <Icon
                                         color={this.color()}
                                         name={'currency-' + this.props.settings.currency}
                                         size={13}
                                     />
-                                    {this.processValue(this.props.data.goalSettings.amount - this.props.data.goal.remaining) + ' spent'}
+                                    {this.processValue(this.props.data.goalSettings.amount - this.props.data.goal.remaining) + ' spent this ' + this.props.data.goalSettings.type}
                                 </Text>
-                                <Text style={this.style(styles, 'centerText')}>
-                                    {'this ' + this.props.data.goalSettings.type}
+                                <Text style={this.style(styles, 'text')}>
+                                    <Icon
+                                        color={this.color()}
+                                        name={'currency-' + this.props.settings.currency}
+                                        size={13}
+                                    />
+                                    {this.processValue(this.props.data.goal.remaining) + ' remaining'}
                                 </Text>
                             </View>
                         }
                     </View>
-                </View>}
+                </View>
             </Card>
         );
     }

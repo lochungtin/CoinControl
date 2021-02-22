@@ -68,8 +68,8 @@ class PieCard extends React.Component {
                                 {this.props.total[this.state.type]}
                             </Text>
                             <View style={{ height: 50 }} />
-                            <Text style={this.style(styles, 'text')}>
-                                {Object.keys(this.props.data[this.state.type]).length === 0 ? 'add a record to start using the analytics' : 'click on sections to view details'}
+                            <Text style={{ ...this.style(styles, 'text'), height: 40 }}>
+                                {Object.keys(this.props.data[this.state.type]).length === 0 ? 'No Records Found' : 'click on sections to view details'}
                             </Text>
                         </View>
                     </View>
