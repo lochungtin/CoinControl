@@ -8,7 +8,7 @@ import Card from './Card';
 import LabeledProcess from './LabeledProcess';
 import WatchlistModal from '../Modals/WatchlistModal';
 
-import { white } from '../../data/color';
+import { black, white } from '../../data/color';
 import { NULL_KEY } from '../../data/default';
 import { RNKey } from '../../functions/GenKey';
 import { styles, watchlistCardStyles, } from '../../styles';

@@ -29,7 +29,6 @@ class GoalCard extends React.Component {
     trackColor = () => this.props.settings.darkMode ? shade3 : shade2;
 
     render() {
-        console.log(this.props.data.goal)
         return (
             <Card icon={'flag-variant-outline'} title={'GOAL STATUS'}>
                 <View style={{ ...styles.columns, justifyContent: 'space-around', marginBottom: 10, marginTop: 20, }}>
