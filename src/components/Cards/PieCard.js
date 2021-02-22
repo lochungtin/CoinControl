@@ -4,11 +4,11 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import Card from './Card';
+import PieChart from '../Charts/PieChart';
 import LabeledProcess from './LabeledProcess';
-import PieChart from '../PieChart';
 import TypeSwitch from './TypeSwitch';
 
-import { black, white, } from '../../data/color';
+import { black, shade2, shade3, white, } from '../../data/color';
 import { NULL_KEY } from '../../data/default';
 import { generalCardStyles, styles, } from '../../styles';
 
@@ -26,21 +26,20 @@ class PieCard extends React.Component {
 
     catValue = (catkey, key) => ((this.state.type === 'expense' ? this.props.expenseCategories : this.props.incomeCategories)[catkey] || this.props.expenseCategories[NULL_KEY])[key];
 
-    mapData = () => Object.keys(this.props.data[this.state.type]).map(key => {
+    mapData = data => Object.keys(data).map(key => {
         const value = this.props.data[this.state.type][key] || { accumulator: 0 };
         return ({
-            value: value.accumulator,
+            onPress: () => this.setState({ focus: this.state.focus === key ? '' : key }),
             svg: {
                 fill: this.catValue(key, 'color'),
-                onPress: () => this.onSlicePress(key)
             },
-            key,
+            value: value.accumulator,
         });
     });
 
-    onSlicePress = key => this.setState({ focus: this.state.focus === key ? '' : key });
-
     style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
+
+    trackColor = () => this.props.settings.darkMode ? shade3 : shade2;
 
     typeSwitchToggle = type => this.setState({ type, focus: '' });
 
@@ -48,44 +47,45 @@ class PieCard extends React.Component {
         return (
             <>
                 <Card icon={'chart-donut'} title={'PERCENTAGES'}>
-                    {(Object.keys(this.props.data['expense']).length > 0 || Object.keys(this.props.data['income']).length > 0) ?
-                        <>
-                            <TypeSwitch default={this.state.type} toggle={this.typeSwitchToggle} />
-                            <PieChart data={this.mapData()} innerRadius={'60%'} style={{ height: 175, margin: 10, }}>
-                                <View style={generalCardStyles.centerLabel}>
-                                    <Text style={this.style(generalCardStyles, 'amountText')}>
-                                        <Icon 
-                                            color={this.color()} 
-                                            name={'currency-' + this.props.settings.currency} 
-                                            size={20}
-                                        />
-                                        {this.props.total[this.state.type]}
-                                    </Text>
-                                </View>
-                            </PieChart>
-                            <Text style={this.style(styles, 'text')}>
-                                click on sections to view details
+                    <TypeSwitch default={this.state.type} toggle={this.typeSwitchToggle} />
+                    <View style={{ ...styles.columns, justifyContent: 'space-around', marginVertical: 20 }}>
+                        <PieChart
+                            data={this.mapData(this.props.data[this.state.type])}
+                            dim={165}
+                            trackColor={this.trackColor()}
+                            width={0.1}
+                        />
+                        <View style={{ ...styles.rows, alignItems: 'flex-start', justifyContent: 'space-around', width: 150 }}>
+                            <Text style={this.style(generalCardStyles, 'amountText')}>
+                                Total {this.state.type.toUpperCase()[0] + this.state.type.substring(1)}
                             </Text>
-                        </> :
-                        <View style={{ paddingTop: 15 }}>
-                            <Text style={this.style(styles, 'centerText')}>
-                                No Records Found
+                            <Text style={this.style(generalCardStyles, 'amountText')}>
+                                <Icon
+                                    color={this.color()}
+                                    name={'currency-' + this.props.settings.currency}
+                                    size={20}
+                                />
+                                {this.props.total[this.state.type]}
+                            </Text>
+                            <View style={{ height: 50 }} />
+                            <Text style={this.style(styles, 'text')}>
+                                {Object.keys(this.props.data[this.state.type]).length === 0 ? 'add a record to start using the analytics' : 'click on sections to view details'}
                             </Text>
                         </View>
-                    }
+                    </View>
                 </Card>
 
                 {this.state.focus !== '' && Object.keys(this.props.data[this.state.type]).length > 0 && this.props.data[this.state.type][this.state.focus] &&
-                    <Card 
-                        color={this.catValue(this.state.focus, 'color')} 
-                        icon={this.catValue(this.state.focus, 'iconName')} 
+                    <Card
+                        color={this.catValue(this.state.focus, 'color')}
+                        icon={this.catValue(this.state.focus, 'iconName')}
                         noExpansion
-                        title={this.catValue(this.state.focus, 'name').toUpperCase()} 
+                        title={this.catValue(this.state.focus, 'name').toUpperCase()}
                     >
                         <LabeledProcess
                             color={this.catValue(this.state.focus, 'color')}
                             lValue={<>
-                                <Icon 
+                                <Icon
                                     color={this.color()}
                                     name={'currency-' + this.props.settings.currency}
                                     size={13}
@@ -94,8 +94,8 @@ class PieCard extends React.Component {
                             </>}
                             percentage={this.props.data[this.state.type][this.state.focus].accumulator / this.props.total[this.state.type]}
                             rValue={<>
-                                <Icon 
-                                    color={this.color()} 
+                                <Icon
+                                    color={this.color()}
                                     name={'currency-' + this.props.settings.currency}
                                     size={13}
                                 />

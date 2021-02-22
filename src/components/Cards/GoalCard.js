@@ -1,13 +1,13 @@
 import React from 'react';
 import { Text, View, } from 'react-native';
-import { ProgressCircle } from 'react-native-svg-charts';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import Card from './Card';
+import ProgressCircle from '../Charts/ProgressCircle';
 
-import { generalCardStyles, styles, } from '../../styles';
 import { black, shade2, shade3, white, } from '../../data/color';
+import { generalCardStyles, styles, } from '../../styles';
 
 class GoalCard extends React.Component {
 
@@ -31,38 +31,38 @@ class GoalCard extends React.Component {
     render() {
         return (
             <Card icon={'flag-variant-outline'} title={'GOAL STATUS'}>
-                <View style={{ height: 175, marginTop: 20, }}>
+                {false && <View style={{ height: 175, marginTop: 20, }}>
                     <ProgressCircle
-                        backgroundColor={this.trackColor()}
-                        progress={this.props.data.goal.percentage}
+                        dim={175}
+                        progress={0.3}
                         progressColor={this.props.settings.accent}
-                        style={{ height: 175 }}
-                    >
-                        <View style={generalCardStyles.centerLabel}>
-                            {this.props.data.goalSettings.type === 'none' ?
-                                <Text style={this.style(styles, 'text')}>
-                                    Add goal to start using this card.
+                        trackColor={this.trackColor()}
+                        strokeWidth={5}
+                    />
+                    <View style={generalCardStyles.centerLabel}>
+                        {this.props.data.goalSettings.type === 'none' ?
+                            <Text style={this.style(styles, 'text')}>
+                                Add goal to start using this card.
                                 </Text> :
-                                <View>
-                                    <Text style={this.style(generalCardStyles, 'amountText')}>
-                                        {Math.round(this.props.data.goal.percentage * 100) + '%'}
-                                    </Text>
-                                    <Text style={this.style(styles, 'centerText')}>
-                                        <Icon 
-                                            color={this.color()}
-                                            name={'currency-' + this.props.settings.currency}
-                                            size={13}
-                                        />
-                                        {this.processValue(this.props.data.goalSettings.amount - this.props.data.goal.remaining) + ' spent'}
-                                    </Text>
-                                    <Text style={this.style(styles, 'centerText')}>
-                                        {'this ' + this.props.data.goalSettings.type}
-                                    </Text>
-                                </View>
-                            }
-                        </View>
-                    </ProgressCircle>
-                </View>
+                            <View>
+                                <Text style={this.style(generalCardStyles, 'amountText')}>
+                                    {Math.round(this.props.data.goal.percentage * 100) + '%'}
+                                </Text>
+                                <Text style={this.style(styles, 'centerText')}>
+                                    <Icon
+                                        color={this.color()}
+                                        name={'currency-' + this.props.settings.currency}
+                                        size={13}
+                                    />
+                                    {this.processValue(this.props.data.goalSettings.amount - this.props.data.goal.remaining) + ' spent'}
+                                </Text>
+                                <Text style={this.style(styles, 'centerText')}>
+                                    {'this ' + this.props.data.goalSettings.type}
+                                </Text>
+                            </View>
+                        }
+                    </View>
+                </View>}
             </Card>
         );
     }

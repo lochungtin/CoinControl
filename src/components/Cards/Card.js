@@ -27,7 +27,7 @@ class Card extends React.Component {
 
     render() {
         return (
-            <TouchableOpacity style={this.style(generalCardStyles, 'card')}>
+            <View style={this.style(generalCardStyles, 'card')}>
                 <View style={{ ...styles.columns, justifyContent: 'space-between', width: '100%', }}>
                     <TouchableOpacity onPress={this.props.iconPress}>
                         <Icon 
@@ -48,7 +48,7 @@ class Card extends React.Component {
                     </TouchableOpacity>
                 </View>
                 {this.props.children}
-            </TouchableOpacity>
+            </View>
         );
     }
 }
