@@ -155,11 +155,9 @@ class Numpad extends React.Component {
                     {this.lastRow.map(cell => {
                         return (
                             <NumpadButton
+                                {...cell}
                                 disabled={this.props.disabled}
-                                icon={cell.icon}
                                 key={RNKey()}
-                                onPress={cell.onPress}
-                                special={cell.special}
                             />
                         );
                     })}
