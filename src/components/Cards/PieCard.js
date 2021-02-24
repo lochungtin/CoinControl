@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, View, } from 'react-native';
+import { Text, View, } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
@@ -11,6 +11,7 @@ import TypeSwitch from './TypeSwitch';
 
 import { black, shade2, shade3, white, } from '../../data/color';
 import { NULL_KEY } from '../../data/default';
+import { RNKey } from '../../functions/GenKey';
 import { generalCardStyles, styles, } from '../../styles';
 
 class PieCard extends React.Component {
@@ -36,7 +37,7 @@ class PieCard extends React.Component {
     iconColor = () => this.props.settings.darkMode ? shade2 : shade3;
 
     increment = () => {
-        if (Object.keys(this.props.data[this.state.type]).length / 5 - 1> this.state.index)
+        if (Object.keys(this.props.data[this.state.type]).length / 5 - 1 > this.state.index)
             this.setState({ index: this.state.index + 1 });
     }
 
@@ -67,11 +68,11 @@ class PieCard extends React.Component {
                     <View style={{ ...styles.columns, justifyContent: 'space-around', marginVertical: 20 }}>
                         <PieChart
                             data={this.mapData(this.props.data[this.state.type])}
-                            dim={165}
+                            dim={160}
                             trackColor={this.trackColor()}
                             width={0.1}
                         />
-                        <View style={{ ...styles.rows, alignItems: 'flex-start', justifyContent: 'space-around', width: 150 }}>
+                        <View style={{ ...styles.rows, alignItems: 'flex-start', justifyContent: 'space-around', width: 160 }}>
                             <Text style={this.style(generalCardStyles, 'amountText')}>
                                 Total {this.state.type.toUpperCase()[0] + this.state.type.substring(1)}
                             </Text>
@@ -104,6 +105,7 @@ class PieCard extends React.Component {
                                             iconColor={this.catValue(key, 'color')}
                                             iconName={this.catValue(key, 'iconName')}
                                             iconSize={25}
+                                            key={RNKey()}
                                             onPress={() => this.toggleDetail(key)}
                                             size={35}
                                             selected={this.state.focus === key}
