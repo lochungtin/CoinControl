@@ -42,11 +42,8 @@ class Screen extends React.Component {
     deleteCat = key => {
         if (this.state.deleteMode) {
             store.dispatch(makeNullKey(key));
-            if (this.state.type === 'Expense') {
-                if (this.props.watchlist.includes(key))
-                    store.dispatch(removeWatchlist(key));
+            if (this.state.type === 'Expense')
                 store.dispatch(deleteExpenseCategory(key));
-            }
             else
                 store.dispatch(deleteIncomeCategory(key));
 

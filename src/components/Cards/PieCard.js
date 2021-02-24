@@ -1,8 +1,9 @@
 import React from 'react';
-import { Text, View, } from 'react-native';
+import { Text, TouchableOpacity, View, } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
+import Bubble from '../Bubble';
 import Card from './Card';
 import PieChart from '../Charts/PieChart';
 import LabeledProcess from './LabeledProcess';
@@ -18,6 +19,7 @@ class PieCard extends React.Component {
         super(props);
         this.state = {
             focus: '',
+            index: 0,
             type: Object.keys(props.data.expense).length === 0 && Object.keys(props.data.income).length > 0 ? 'income' : 'expense',
         };
     }
@@ -26,10 +28,21 @@ class PieCard extends React.Component {
 
     catValue = (catkey, key) => ((this.state.type === 'expense' ? this.props.expenseCategories : this.props.incomeCategories)[catkey] || this.props.expenseCategories[NULL_KEY])[key];
 
+    decrement = () => {
+        if (this.state.index > 0)
+            this.setState({ index: this.state.index - 1 });
+    }
+
+    iconColor = () => this.props.settings.darkMode ? shade2 : shade3;
+
+    increment = () => {
+        if (Object.keys(this.props.data[this.state.type]).length / 5 - 1> this.state.index)
+            this.setState({ index: this.state.index + 1 });
+    }
+
     mapData = data => Object.keys(data).map(key => {
         const value = this.props.data[this.state.type][key] || { accumulator: 0 };
         return ({
-            onPress: () => this.setState({ focus: this.state.focus === key ? '' : key }),
             svg: {
                 fill: this.catValue(key, 'color'),
             },
@@ -39,11 +52,14 @@ class PieCard extends React.Component {
 
     style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
+    toggleDetail = key => this.setState({ focus: this.state.focus === key ? '' : key });
+
     trackColor = () => this.props.settings.darkMode ? shade3 : shade2;
 
     typeSwitchToggle = type => this.setState({ type, focus: '' });
 
     render() {
+        const data = Object.keys(this.props.data[this.state.type]);
         return (
             <>
                 <Card icon={'chart-donut'} title={'PERCENTAGES'}>
@@ -69,16 +85,43 @@ class PieCard extends React.Component {
                             </Text>
                             <View style={{ height: 50 }} />
                             <Text style={{ ...this.style(styles, 'text'), height: 40 }}>
-                                {Object.keys(this.props.data[this.state.type]).length === 0 ? 'No Records Found' : 'click on sections to view details'}
+                                {data.length === 0 ? 'No Records Found' : 'click on sections to view details'}
                             </Text>
                         </View>
-                        <View style={{ ...styles.columns }}>
-                            
-                        </View>
                     </View>
+                    {data.length > 0 &&
+                        <View style={{ ...styles.columns, justifyContent: 'space-around', }}>
+                            <Bubble
+                                iconColor={this.color()}
+                                iconName={'chevron-left'}
+                                iconSize={20}
+                                onPress={this.decrement}
+                            />
+                            <View style={{ ...styles.columns, justifyContent: 'space-around', width: 300 }}>
+                                {data.slice(this.state.index * 5, (this.state.index + 1) * 5).map(key => {
+                                    return (
+                                        <Bubble
+                                            iconColor={this.catValue(key, 'color')}
+                                            iconName={this.catValue(key, 'iconName')}
+                                            iconSize={25}
+                                            onPress={() => this.toggleDetail(key)}
+                                            size={35}
+                                            selected={this.state.focus === key}
+                                        />
+                                    );
+                                })}
+                            </View>
+                            <Bubble
+                                iconColor={this.color()}
+                                iconName={'chevron-right'}
+                                iconSize={20}
+                                onPress={this.increment}
+                            />
+                        </View>
+                    }
                 </Card>
 
-                {this.state.focus !== '' && Object.keys(this.props.data[this.state.type]).length > 0 && this.props.data[this.state.type][this.state.focus] &&
+                {this.state.focus !== '' && data.length > 0 && this.props.data[this.state.type][this.state.focus] &&
                     <Card
                         color={this.catValue(this.state.focus, 'color')}
                         icon={this.catValue(this.state.focus, 'iconName')}
