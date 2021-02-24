@@ -50,11 +50,8 @@ export const update = data => {
 
             output.categories[cat][record.catKey].accumulator += record.value;
             output.categories[cat][record.catKey].counter++;
-
-
         });
     });
 
-    // Object.keys(output).forEach(key => console.log(output[key]));
     return output;
 }

@@ -5,7 +5,6 @@ export const NULL_KEY = '00000000-0000';
 export const defaultCardConfig = {
     tc: true,
     pc: true,
-    wc: true,
     gc: true,
     cc: true,
 };
@@ -95,5 +94,3 @@ export const defaultSettings = {
         dr: false,
     },
 };
-
-export const defaultWatchlist = [];

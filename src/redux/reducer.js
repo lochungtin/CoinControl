@@ -6,14 +6,12 @@ import {
     ADD_EXPENSE_CATEGORY,
     ADD_INCOME_CATEGORY,
     ADD_RECORD,
-    ADD_WATCHLIST,
     DEFAULT_CARDS,
     DEFAULT_EXPENSE_CATEGORY,
     DEFAULT_GOAL,
     DEFAULT_INCOME_CATEGORY,
     DEFAULT_LOGIN,
     DEFAULT_SETTINGS,
-    DEFAULT_WATCHLIST,
     DELETE_EXPENSE_CATEGORY,
     DELETE_INCOME_CATEGORY,
     DELETE_RECORD,
@@ -24,7 +22,6 @@ import {
     HIDE_CARD,
     MAKE_ALL_NULL,
     MAKE_NULL_KEY,
-    REMOVE_WATCHLIST,
     UPDATE_GOAL,
     UPDATE_LOGIN, 
     UPDATE_SETTINGS,
@@ -36,12 +33,9 @@ import {
     defaultIncomeCategories,
     defaultLogin,
     defaultSettings,
-    defaultWatchlist,
     NULL_KEY,
 } from '../data/default';
-
-const genKey = () => genRNKey() + genRNKey() + '-' + genRNKey();
-const genRNKey = () => Math.floor((1 + Math.random() * 0x10000)).toString(16);
+import { RNKey } from '../functions/GenKey';
 
 const addRecord = (base, datekey, rnkey, payload) => {
     // create new date object
@@ -130,7 +124,7 @@ const updateData = (data = defaultData, action) => {
             return defaultData;
 
         case ADD_RECORD:
-            let rnkey = genKey();
+            let rnkey = RNKey();
             var datekey = action.payload.date;
 
             addRecord(temp, datekey, rnkey, { ...action.payload, key: datekey + ':' + rnkey });
@@ -209,7 +203,7 @@ const updateExpenseCategories = (categories = defaultExpenseCategories, action) 
             return defaultExpenseCategories;
 
         case ADD_EXPENSE_CATEGORY:
-            temp[genKey()] = action.payload;
+            temp[RNKey()] = action.payload;
             return temp;
 
         case DELETE_EXPENSE_CATEGORY:
@@ -229,7 +223,7 @@ const updateIncomeCategories = (categories = defaultIncomeCategories, action) =>
             return defaultIncomeCategories;
 
         case ADD_INCOME_CATEGORY:
-            temp[genKey()] = action.payload;
+            temp[RNKey()] = action.payload;
             return temp;
 
         case DELETE_INCOME_CATEGORY:
@@ -264,23 +258,6 @@ const updateLogin = (loginState = defaultLogin, action) => {
     return loginState;
 }
 
-const updateWatchlist = (watchlist = defaultWatchlist, action) => {
-    let temp = [...watchlist];
-    switch (action.type) {
-        case DEFAULT_WATCHLIST:
-            return defaultWatchlist;
-            
-        case ADD_WATCHLIST:
-            temp.push(action.payload);
-            break;
-            
-        case REMOVE_WATCHLIST:
-            temp.splice(temp.indexOf(action.payload), 1);
-            break;
-    }
-    return temp;
-}
-
 export default combineReducers({
     cards: updateCards,
     data: updateData,
@@ -288,5 +265,4 @@ export default combineReducers({
     incomeCategories: updateIncomeCategories,
     settings: updateSettings,
     login: updateLogin,
-    watchlist: updateWatchlist,
 });

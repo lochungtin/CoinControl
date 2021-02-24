@@ -135,22 +135,3 @@ export const updateLogin = payload => ({
     type: UPDATE_LOGIN,
     payload
 });
-
-// Watch List Related
-
-export const ADD_WATCHLIST = 'ADD_WATCHLIST';
-export const addWatchlist = payload => ({
-    type: ADD_WATCHLIST,
-    payload,
-});
-
-export const DEFAULT_WATCHLIST = 'DEFAULT_WATCHLIST';
-export const defaultWatchlist = () => ({
-    type: DEFAULT_WATCHLIST,
-});
-
-export const REMOVE_WATCHLIST = 'REMOVE_WATCHLIST';
-export const removeWatchlist = payload => ({
-    type: REMOVE_WATCHLIST,
-    payload,
-});

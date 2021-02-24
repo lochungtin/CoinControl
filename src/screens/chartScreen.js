@@ -65,7 +65,6 @@ const mapStateToProps = state => ({
     cards: state.cards,
     data: state.data,
     settings: state.settings,
-    watchlist: state.watchlist,
 });
 
 export default connect(mapStateToProps)(Screen);

@@ -72,6 +72,9 @@ class PieCard extends React.Component {
                                 {Object.keys(this.props.data[this.state.type]).length === 0 ? 'No Records Found' : 'click on sections to view details'}
                             </Text>
                         </View>
+                        <View style={{ ...styles.columns }}>
+                            
+                        </View>
                     </View>
                 </Card>
 

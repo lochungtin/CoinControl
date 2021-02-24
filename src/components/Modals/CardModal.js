@@ -20,7 +20,6 @@ class CardModal extends React.Component {
             gc: 'GOAL STATUS',
             pc: 'PERCENTAGES',
             tc: 'CASHFLOW',
-            wc: 'WATCHLIST',
         };
     }
 
@@ -41,12 +40,12 @@ class CardModal extends React.Component {
                 style={generalBottomModalStyles.centerModalContainer}
                 swipeDirection='down'
             >
-                <View style={{ ...this.style(pickerModalStyles, 'root'), height: 350, }}>
+                <View style={{ ...this.style(pickerModalStyles, 'root'), height: 300, }}>
                     <ExpandButton onPress={this.props.close} />
                     <Text style={this.style(cardModalStyles, 'title')}>
                         CARDS
                     </Text>
-                    <View style={{ ...styles.rows, height: 240, justifyContent: 'space-evenly' }}>
+                    <View style={{ ...styles.rows, height: 200, justifyContent: 'space-evenly' }}>
                         {Object.keys(this.mapping).map(key => {
                             return (
                                 <View style={cardModalStyles.selectionRow} key={RNKey()}>
