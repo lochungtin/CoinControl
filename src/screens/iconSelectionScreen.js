@@ -42,10 +42,7 @@ class Screen extends React.Component {
     deleteCat = key => {
         if (this.state.deleteMode) {
             store.dispatch(makeNullKey(key));
-            if (this.state.type === 'Expense')
-                store.dispatch(deleteExpenseCategory(key));
-            else
-                store.dispatch(deleteIncomeCategory(key));
+            store.dispatch(this.state.type === 'Expense' ? deleteExpenseCategory(key) : deleteIncomeCategory(key));
 
             this.setState({ confirmType: '', focus: '' });
         }
@@ -56,9 +53,9 @@ class Screen extends React.Component {
         for (let i = 0; i < arr.length; i += 6) {
             let row = arr.slice(i, i + 6);
             let filler = [];
-            for (let j = 0; j < 6 - row.length; j++) {
+            for (let j = 0; j < 6 - row.length; j++)
                 filler.push('numeric-' + j);
-            }
+            
             grid.push([...row, ...filler]);
         }
         return grid;
