@@ -120,7 +120,6 @@ const updateData = (data = defaultData, action) => {
     let temp = { ...data };
     switch (action.type) {
         case DELETE_HISTORY:
-            console.log('asdf');
             return defaultData;
 
         case ADD_RECORD:
