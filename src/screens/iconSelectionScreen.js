@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import ConfirmationModal from '../components/Modals/ConfirmationModal';
 import CategoryModal from '../components/Modals/CategoryModal';
 import ScreenHeader from '../components/ScreenHeader';
-import { deleteExpenseCategory, deleteIncomeCategory, makeNullKey, removeWatchlist, } from '../redux/action';
+import { deleteExpenseCategory, deleteIncomeCategory, makeNullKey, } from '../redux/action';
 import { store } from '../redux/store';
 
 import { white } from '../data/color';
