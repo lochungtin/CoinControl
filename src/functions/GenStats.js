@@ -1,5 +1,6 @@
 import moment from 'moment';
-import { NULL_KEY } from '../data/default';
+
+import { display } from './number';
 
 export const update = data => {
     let output = {
@@ -50,6 +51,10 @@ export const update = data => {
 
             output.categories[cat][record.catKey].accumulator += record.value;
             output.categories[cat][record.catKey].counter++;
+
+            // round to two decimal places
+            output.total.expense = display(output.total.expense)
+            output.total.income = display(output.total.income)
         });
     });
 

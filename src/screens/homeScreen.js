@@ -16,6 +16,7 @@ import { store } from '../redux/store';
 import { shade2, shade3, } from '../data/color';
 import { homePromptText, goalText, } from '../data/text';
 import { RNKey } from '../functions/GenKey';
+import { display } from '../functions/number';
 import { homeScreenStyles, maxWidth, styles, } from '../styles';
 
 class Screen extends React.Component {
@@ -58,10 +59,15 @@ class Screen extends React.Component {
         this.setState({ confirmType: '' });
     }
 
+    editRecord = record => {
+        store.dispatch(editRecord(record));
+        this.setState({ rmOpen: false });
+    }
+
     goalMessage = () => {
         if (this.props.data.goal.percentage > 1)
             return goalText.exceed;
-        return (this.props.data.goalSettings.type !== 'none' ? this.processValue(this.props.data.goal.remaining) : '') + " " + goalText[this.props.data.goalSettings.type];
+        return (this.props.data.goalSettings.type !== 'none' ? display(this.props.data.goal.remaining) : '') + " " + goalText[this.props.data.goalSettings.type];
     }
 
     goalMessageColor = () => this.props.settings.darkMode ? shade2 : shade3;
@@ -71,16 +77,6 @@ class Screen extends React.Component {
             this.setState({ confirmType: 'dr', focus: key });
         else
             this.deleteRecord(key);
-    }
-
-    processValue = val => {
-        const splt = val.toString().split('.');
-        if (splt.length === 1)
-            return val + '.00';
-        if (splt[1].length === 1)
-            return val + '0';
-        else
-            return splt[0] + '.' + splt[1].substring(0, 2);
     }
 
     style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
@@ -155,10 +151,7 @@ class Screen extends React.Component {
                 <RecordModal
                     close={() => this.setState({ rmOpen: false })}
                     itemkey={this.state.focus}
-                    onConfirm={record => {
-                        store.dispatch(editRecord(record));
-                        this.setState({ rmOpen: false });
-                    }}
+                    onConfirm={this.editRecord}
                     open={this.state.rmOpen}
                 />
                 <GoalModal

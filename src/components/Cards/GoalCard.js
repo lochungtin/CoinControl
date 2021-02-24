@@ -7,22 +7,12 @@ import Card from './Card';
 import ProgressCircle from '../Charts/ProgressCircle';
 
 import { black, shade2, shade3, white, } from '../../data/color';
+import { display } from '../../functions/number';
 import { generalCardStyles, styles, } from '../../styles';
 
 class GoalCard extends React.Component {
 
     color = () => this.props.settings.darkMode ? white : black;
-
-    processValue = val => {
-        const splt = val.toString().split('.');
-        if (splt.length === 1)
-            return val + '.00';
-        if (splt[1].length === 1)
-            return val + '0';
-        else
-            return splt[0] + '.' + splt[1].substring(0, 2);
-    }
-
 
     style = (stylesheet, styleName) => stylesheet[styleName + (this.props.settings.darkMode ? "D" : "L")];
 
@@ -55,7 +45,7 @@ class GoalCard extends React.Component {
                                         name={'currency-' + this.props.settings.currency}
                                         size={13}
                                     />
-                                    {this.processValue(this.props.data.goalSettings.amount - this.props.data.goal.remaining) + ' spent this ' + this.props.data.goalSettings.type}
+                                    {display(this.props.data.goalSettings.amount - this.props.data.goal.remaining) + ' spent this ' + this.props.data.goalSettings.type}
                                 </Text>
                                 <Text style={this.style(styles, 'text')}>
                                     <Icon
@@ -63,7 +53,7 @@ class GoalCard extends React.Component {
                                         name={'currency-' + this.props.settings.currency}
                                         size={13}
                                     />
-                                    {this.processValue(this.props.data.goal.remaining) + ' remaining'}
+                                    {display(this.props.data.goal.remaining) + ' remaining'}
                                 </Text>
                             </View>
                         }
