@@ -126,3 +126,14 @@ export const updateLogin = payload => ({
     type: UPDATE_LOGIN,
     payload:payload
 });
+
+export const DEFAULT_ACCOUNT_SETTINGS = 'DEFAULT_ACCOUNT_SETTINGS';
+export const defaultAccountSettings = () => ({
+    type: DEFAULT_ACCOUNT_SETTINGS,
+});
+
+export const UPDATE_ACCOUNT_SETTINGS = 'UPDATE_ACCOUNT_SETTINGS';
+export const updateAccountSettings = payload => ({
+    type: UPDATE_ACCOUNT_SETTINGS,
+    payload:payload
+});

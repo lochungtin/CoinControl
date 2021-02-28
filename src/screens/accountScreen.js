@@ -1,23 +1,25 @@
 import React, {useState, useEffect} from 'react';
 import { Text, View, Button,Alert} from 'react-native';
 import { connect } from 'react-redux';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { updateLogin, updateAccountSettings } from '../redux/action';
+import { store } from '../redux/store';
+
+
 import { black, bgColorD, bgColorL, chartScreenStyles, iconColors, maxWidth, styles, white, } from '../styles';
 import {
     GoogleSignin,
     GoogleSigninButton,
     statusCodes,
   } from '@react-native-community/google-signin';
-  import {
-    LoginButton,
-    LoginManager,
-    AccessToken,
-    GraphRequest,
-    GraphRequestManager,
-  } from 'react-native-fbsdk';
+import {
+  LoginButton,
+  LoginManager,
+  AccessToken,
+  GraphRequest,
+  GraphRequestManager,
+} from 'react-native-fbsdk';
 
-  import { updateLogin } from '../redux/action';
-  import { store } from '../redux/store';
+
 
 
 
@@ -33,22 +35,83 @@ class Screen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          isLoggedIn :this.props.isLogin.isLogin,
-          givenName: null,
-          lastName:null,
-          idToken:null,
+          isLoggedIn :this.props.isLogin,
+          givenName: this.props.accountSettings.givenName,
+          familyName: this.props.accountSettings.familyName,
+          idToken: this.props.accountSettings.idToken,
           LoggedInMethod:null
-
         }
+        console.log("this.state.accountSettings");
+        console.log(this.props.accountSettings);
+    }
+    signInUpdate = async (familyName, givenName, id,loginType) =>{
+      store.dispatch(updateLogin({isLogin: true}));
+      store.dispatch(updateAccountSettings({familyName: familyName,givenName:givenName,idToken:id,type:loginType }));
+      this.setState({isLoggedIn:true,familyName:familyName,givenName:givenName,idToken:id})
+      /**check 
+      console.log("this.state.isLoggedIn,this.state.familyName,this.state.givenName")
+      console.log(this.state.isLoggedIn,this.state.familyName,this.state.givenName)
+      console.log("this.props.accountSettings");
+      console.log(this.props.accountSettings);*/
+      this.props.navigation.navigate('Settings');
     }
 
+    signOutUpdate= async () =>{
+      store.dispatch(updateLogin({isLogin: false}));
+      this.setState({isLoggedIn:false,familyName:null,givenName:null,idToken:null})
+      store.dispatch(updateAccountSettings({}));
+      this.props.navigation.navigate('Settings');
+    }
+
+    googleSignIn = async () => {
+      try {
+        if(this.state.isLoggedIn){
+          Alert.alert("Alert", "Please log out if you want to switch your account");
+          return;
+        }
+        await GoogleSignin.hasPlayServices(); 
+        const userInfo = await GoogleSignin.signIn();
+        console.log(userInfo);
+        this.signInUpdate(userInfo["user"]["familyName"],userInfo["user"]["givenName"],userInfo["user"]["id"],"Google");
+      } catch (error) {
+        if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+          // user cancelled the login flow
+          console.log("SIGN_IN_CANCELLED")
+        } else if (error.code === statusCodes.IN_PROGRESS) {
+          console.log("IN_PROGRESS")
+          // operation (e.g. sign in) is in progress already
+        } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+          console.log("PLAY_SERVICES_NOT_AVAILABLE")
+          // play services not available or outdated
+        } else {
+          console.log(error)
+          // some other error happened
+        }
+      }
+    };
+  
+    googleSignOut = async () => {
+      try {
+        await GoogleSignin.revokeAccess();
+        await GoogleSignin.signOut();
+        this.signOutUpdate();
+      } catch (error) {
+        if (error.code === statusCodes.SIGN_IN_REQUIRED) {
+          Alert.alert("Alert", "You have not logged in");
+        }else{
+        console.error(error);
+        }
+      }
+    };
+
+    //for facebook
     getInfoFromToken = token => {
       const PROFILE_REQUEST_PARAMS = {
         fields: {
           string: 'id, name,  first_name, last_name',
         },
       };
-    const profileRequest = new GraphRequest(
+      const profileRequest = new GraphRequest(
         '/me',
         {token, parameters: PROFILE_REQUEST_PARAMS},
         (error, result) => {
@@ -57,79 +120,12 @@ class Screen extends React.Component {
           } else {
             //this.setState({userInfo: result});
             //console.log('result:', result["first_name"]);
-            store.dispatch(updateLogin({isLogin: true}));
-          this.setState({isLoggedIn:this.props.isLogin.isLogin})
-            this.setState({lastName: result["last_name"]});
-            this.setState({givenName: result["first_name"]});
-            this.setState({id: result["id"]});
+            this.signInUpdate(result["last_name"],result["first_name"],result["id"],"Facebook");
           }
         },
       );
       new GraphRequestManager().addRequest(profileRequest).start();
     };
-  
-    
-      signIn = async () => {
-        try {
-          if(this.state.isLoggedIn){
-            Alert.alert("Alert", "Please log out if you want to switch your account");
-            return;
-          }
-          await GoogleSignin.hasPlayServices(); 
-          const userInfo = await GoogleSignin.signIn();
-          console.log(userInfo);
-          //const isSignedIn = await GoogleSignin.isSignedIn();
-          //console.log("hehe",isSignedIn);
-          store.dispatch(updateLogin({isLogin: true}));
-          this.setState({isLoggedIn:true})
-          //console.log(userInfo["user"]["familyName"],"HIHI");
-          //console.log(userInfo["user"]["givenName"],"HIHI");
-          //console.log(userInfo["user"]["id"],"HIHI");
-          this.setState({familyName:userInfo["user"]["familyName"]});
-          this.setState({givenName:userInfo["user"]["givenName"]});
-          this.setState({idToken:userInfo["user"]["id"]});
-          this.props.navigation.navigate('Settings');
-        } catch (error) {
-          if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-            // user cancelled the login flow
-            console.log("SIGN_IN_CANCELLED")
-          } else if (error.code === statusCodes.IN_PROGRESS) {
-            console.log("IN_PROGRESS")
-            // operation (e.g. sign in) is in progress already
-          } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-            console.log("PLAY_SERVICES_NOT_AVAILABLE")
-            // play services not available or outdated
-          } else {
-            console.log(error)
-            // some other error happened
-          }
-        }
-      };
-    
-      signOut = async () => {
-        try {
-          await GoogleSignin.revokeAccess();
-          await GoogleSignin.signOut();
-          this.setState({ user: null });
-          store.dispatch(updateLogin({isLogin: false}));
-          this.setState({isLoggedIn:false})
-          //this.setState({isLoggedIn:true});
-          this.props.navigation.navigate('Settings'); 
-        } catch (error) {
-          if (error.code === statusCodes.SIGN_IN_REQUIRED) {
-            Alert.alert("Alert", "You have not logged in");
-          }else{
-          console.error(error);
-          }
-        }
-      };
-      facebookLogOut(){
-            store.dispatch(updateLogin({isLogin: false}));
-            this.setState({isLoggedIn:false})
-            this.setState({givenName: null});
-            this.setState({lastName: null});
-            this.setState({id: null})
-      }
    
     render() {
         return (
@@ -140,13 +136,16 @@ class Screen extends React.Component {
           </View>
           <View style={styles.screen}>
           <Text>Account Screen</Text>
-          {console.log(this.state.isLoggedIn,"JOJO")}
+          {
+          //check
+          console.log(this.state.isLoggedIn,this.state.familyName,this.state.givenName,this.state.idToken)
+          }
           
           <GoogleSigninButton
               style={{ width: 192, height: 48 }}
               size={GoogleSigninButton.Size.Wide}
               color={GoogleSigninButton.Color.Dark}
-              onPress={this.signIn} />
+              onPress={this.googleSignIn} />
 
           <LoginButton onLoginFinished={(error, result) => {
             if(this.state.isLoggedIn){
@@ -164,21 +163,11 @@ class Screen extends React.Component {
               });
             }
           }}
-          onLogoutFinished={() => this.facebookLogOut()
-          /*
-            {
-            
-            store.dispatch(updateLogin({isLogin: false}));
-            console.log(this.props.isLogin.isLogin,"PPP")
-            this.setState({isLoggedIn:this.props.isLogin.isLogin})
-            this.setState({givenName: null});
-            this.setState({lastName: null});
-            this.setState({id: null})
-            }*/
+          onLogoutFinished={() => this.signOutUpdate()
           }
             />
 
-          <Button onPress={this.signOut } title="Google LogOut">
+          <Button onPress={this.googleSignOut } title="Google LogOut">
           </Button>
           </View>
           </View>
@@ -190,6 +179,7 @@ class Screen extends React.Component {
 const mapStateToProps = state => ({
   isLogin: state.isLogin,
   settings: state.settings,
+  accountSettings: state.accountSettings
 
 })
 

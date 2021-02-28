@@ -24,6 +24,8 @@ import {
     UPDATE_SETTINGS, 
     DEFAULT_LOGIN,
     UPDATE_LOGIN, 
+    DEFAULT_ACCOUNT_SETTINGS,
+    UPDATE_ACCOUNT_SETTINGS,
 } from './action';
 import {
     defaultExpenseCategories,
@@ -32,7 +34,8 @@ import {
     defaultIncomeCategories,
     defaultIncomeSelection,
     defaultSettings,
-    defaultLogin 
+    defaultLogin,
+    defaultAccountSettings,
 } from '../default';
 
 const updateRecords = (records = [], action) => {
@@ -163,13 +166,26 @@ const updateSettings = (settings = {}, action) => {
     return settings;
 }
 const updateLogin = (isLogin = {}, action) => {
+    
     switch (action.type) {
         case DEFAULT_LOGIN:
             return defaultLogin;
         case UPDATE_LOGIN:
-            return action.payload;
+            return action.payload.isLogin;
     }
     return isLogin;
+}
+
+const updateAccountSettings = (settings = {}, action) => {
+    switch (action.type) {
+        case DEFAULT_ACCOUNT_SETTINGS:
+            return defaultAccountSettings;
+        case UPDATE_ACCOUNT_SETTINGS:
+            var newSettings = { ...settings };
+            newSettings = action.payload;
+            return newSettings;
+    }
+    return settings;
 }
 
 export default combineReducers({
@@ -180,5 +196,6 @@ export default combineReducers({
     incomeSelection: updateIncomeSelection,
     records: updateRecords,
     settings: updateSettings,
-    isLogin:updateLogin
+    isLogin:updateLogin,
+    accountSettings: updateAccountSettings,
 });
