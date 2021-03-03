@@ -249,11 +249,11 @@ const updateSettings = (settings = defaultSettings, action) => {
     return settings;
 }
 
-const updateLogin = (isLogin = {}, action) => {
+const updateLogin = (isLogin = defaultLogin, action) => {
     
     switch (action.type) {
         case DEFAULT_LOGIN:
-            return defaultLogin;
+            return false;
         case UPDATE_LOGIN:
             return action.payload.isLogin;
     }
@@ -278,6 +278,6 @@ export default combineReducers({
     expenseCategories: updateExpenseCategories,
     incomeCategories: updateIncomeCategories,
     settings: updateSettings,
-    login: updateLogin,
+    isLogin: updateLogin,
     accountSettings: updateAccountSettings,
 });

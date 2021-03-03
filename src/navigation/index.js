@@ -8,7 +8,7 @@ import NavigationBar from 'react-native-navbar-color';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import accountScreen from '../screens/accountScreen';
+import loginScreen from '../screens/loginScreen';
 import chartScreen from '../screens/chartScreen';
 import updateRecordScreen from '../screens/categoryScreen';
 import detailScreen from '../screens/detailScreen';
@@ -17,6 +17,7 @@ import homeScreen from '../screens/homeScreen';
 import reportScreen from '../screens/reportScreen';
 import settingsScreen from '../screens/settingsScreen';
 import signupScreen from '../screens/signupScreen';
+import resetPasswordScreen from '../screens/resetPasswordScreen';
 
 import { black, bgColorD, bgColorL, rgba, shade2, white, } from '../data/color';
 
@@ -112,8 +113,9 @@ class AppNav extends React.Component {
     settings = () => (
         <Settings.Navigator>
             <Settings.Screen name='Settings' component={settingsScreen} options={{ headerShown: false }} />
-            <Settings.Screen name='Account' component={accountScreen} options={{ headerShown: false }} />
+            <Settings.Screen name='Account' component={loginScreen} options={{ headerShown: false }} />
             <Settings.Screen name='SignUp' component={signupScreen} options={{ headerShown: false }} />
+            <Settings.Screen name='ResetPassword' component={resetPasswordScreen} options={{ headerShown: false }} />
             <Settings.Screen name='Icons' component={customCategoryScreen} options={{ headerShown: false }} />
         </Settings.Navigator>
     );

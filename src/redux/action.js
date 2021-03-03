@@ -133,7 +133,7 @@ export const defaultLogin = () => ({
 export const UPDATE_LOGIN = 'UPDATE_LOGIN';
 export const updateLogin = payload => ({
     type: UPDATE_LOGIN,
-    payload
+    payload:payload
 });
 
 

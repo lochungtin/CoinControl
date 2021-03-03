@@ -35,25 +35,23 @@ class Screen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          isLoggedIn :this.props.isLogin,
+          isLogin :this.props.isLogin,
           givenName: this.props.accountSettings.givenName,
           familyName: this.props.accountSettings.familyName,
           idToken: this.props.accountSettings.idToken,
-          LoggedInMethod:null,email: '', 
+          email: '', 
           password: '',
+          loginType: this.props.accountSettings.loginType,
         }
         console.log("this.state.accountSettings");
+        console.log(this.state.isLogin);
         console.log(this.props.accountSettings);
     }
+    
     signInUpdate = async (familyName, givenName, id,loginType) =>{
       store.dispatch(updateLogin({isLogin: true}));
-      store.dispatch(updateAccountSettings({familyName: familyName,givenName:givenName,idToken:id,type:loginType }));
-      this.setState({isLoggedIn:true,familyName:familyName,givenName:givenName,idToken:id})
-      /**check 
-      console.log("this.state.isLoggedIn,this.state.familyName,this.state.givenName")
-      console.log(this.state.isLoggedIn,this.state.familyName,this.state.givenName)
-      console.log("this.props.accountSettings");
-      console.log(this.props.accountSettings);*/
+      store.dispatch(updateAccountSettings({familyName: familyName,givenName:givenName,idToken:id,loginType:loginType }));
+      this.setState({isLoggedIn:true,familyName:familyName,givenName:givenName,idToken:id,loginType:loginType })
       this.props.navigation.navigate('Settings');
     }
 
@@ -65,11 +63,13 @@ class Screen extends React.Component {
     }
 
     googleSignIn = async () => {
+      console.log(this.state.isLogin, this.state.loginType)
+      if(this.state.isLogin && this.state.loginType=="Facebook"){
+        console.log("Halloworld")
+        Alert.alert("Alert", "Please log out if you want to switch your account");
+        return;
+      }
       try {
-        if(this.state.isLoggedIn){
-          Alert.alert("Alert", "Please log out if you want to switch your account");
-          return;
-        }
         await GoogleSignin.hasPlayServices(); 
         const userInfo = await GoogleSignin.signIn();
         console.log(userInfo);
@@ -129,23 +129,27 @@ class Screen extends React.Component {
     };
 
     emailLogin = () => {
+      console.log(this.state.isLogin, this.state.loginType)
+      if(this.state.isLogin && this.state.loginType=="Facebook"){
+        Alert.alert("Alert", "Please log out if you want to switch your account");
+        return;
+      }
       if(this.state.email === '' && this.state.password === '') {
         Alert.alert('Enter details to signin!')
       } else {
-        this.setState({
-          isLoading: true,
-        })
         firebase
         .auth()
         .signInWithEmailAndPassword(this.state.email, this.state.password)
         .then((res) => {
           console.log(res)
-          console.log('User logged-in successfully!')
+          //console.log('User logged-in successfully!')
           this.setState({
-            isLoading: false,
             email: '', 
             password: ''
           })
+          console.log(res.user.displayName,res.user.uid);
+          console.log("email");
+          this.signInUpdate("",res.user.displayName,res.user.uid,"Email")
           console.log(email);
           this.props.navigation.navigate('Settings')
         })
@@ -185,49 +189,48 @@ class Screen extends React.Component {
             />   
             <Button
               color="#3740FE"
-              title="Signin"
+              title="Login"
               onPress={() => this.emailLogin()}
-            />   
+            />  
 
-            <Text 
-              style={signupStyles.loginText}
-              onPress={() => this.props.navigation.navigate('SignUp')}>
-              Don't have account? Click here to signup
-            </Text>                          
-          </View>
-          {
-          //check
-          //console.log(this.state.isLoggedIn,this.state.familyName,this.state.givenName,this.state.idToken)
-          }
-          
-          <GoogleSigninButton
+            <GoogleSigninButton
               style={{ width: 192, height: 48 }}
               size={GoogleSigninButton.Size.Wide}
               color={GoogleSigninButton.Color.Dark}
               onPress={this.googleSignIn} />
 
-          <LoginButton onLoginFinished={(error, result) => {
-            if(this.state.isLoggedIn){
-              Alert.alert("Alert", "Please log out if you want to switch your account");
-              return;
-            }
-            if (error) {
-              console.log('login has error: ' + result.error);
-            } else if (result.isCancelled) {
-              console.log('login is cancelled.');
-            } else {
-              AccessToken.getCurrentAccessToken().then(data => {
-                const accessToken = data.accessToken.toString();
-                this.getInfoFromToken(accessToken);
-              });
-            }
-          }}
-          onLogoutFinished={() => this.signOutUpdate()
-          }
-            />
+            <LoginButton onLoginFinished={(error, result) => {
+              if(this.state.isLoggedIn && this.state.loginType =="Google"){
+                this.googleSignOut();
+              }
+              if (error) {
+                console.log('login has error: ' + result.error);
+              } else if (result.isCancelled) {
+                console.log('login is cancelled.');
+              } else {
+                AccessToken.getCurrentAccessToken().then(data => {
+                  const accessToken = data.accessToken.toString();
+                  this.getInfoFromToken(accessToken);
+                });
+              }
+            }}
+            onLogoutFinished={() => this.signOutUpdate()
+            }/>
 
-          <Button onPress={this.googleSignOut } title="Google LogOut">
-          </Button>
+            
+
+            <Text 
+              style={signupStyles.loginText}
+              onPress={() => this.props.navigation.navigate('SignUp')}>
+              Don't have account? Click here to signup
+            </Text>  
+            <Text 
+              style={signupStyles.loginText}
+              onPress={() => this.props.navigation.navigate('ResetPassword')}>
+              Forgot Password? Click here to reset
+            </Text>                          
+          </View>
+          
           </View>
           </View>
       </View>

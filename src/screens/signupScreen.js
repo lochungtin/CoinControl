@@ -44,8 +44,7 @@ class Screen extends React.Component {
         .createUserWithEmailAndPassword(this.state.email, this.state.password)
         .then((res) => {
           res.user.updateProfile({
-            firstName: this.state.displayName,
-            lastName: "To"
+            displayName: this.state.displayName,
           })
           console.log('User registered successfully!')
           this.setState({
@@ -54,7 +53,7 @@ class Screen extends React.Component {
             email: '', 
             password: ''
           })
-          this.props.navigation.navigate('Login')
+          this.props.navigation.navigate('Account')
         })
         .catch(error => {console.log(error.message);this.setState({ errorMessage: error.message })})      
       }
@@ -69,49 +68,43 @@ class Screen extends React.Component {
           </View>
           <View style={styles.screen}>
           <Text>Signup Screen</Text>
+            <View style={signupStyles.container}>  
+              <TextInput
+              style={signupStyles.inputStyle}
+              placeholder="Name"
+              value={this.state.displayName}
+              onChangeText={(val) => this.updateInputVal(val, 'displayName')}
+            />      
+            <TextInput
+              style={signupStyles.inputStyle}
+              placeholder="Email"
+              value={this.state.email}
+              onChangeText={(val) => this.updateInputVal(val, 'email')}
+            />
+            <TextInput
+              style={signupStyles.inputStyle}
+              placeholder="Password"
+              value={this.state.password}
+              onChangeText={(val) => this.updateInputVal(val, 'password')}
+              maxLength={15}
+              secureTextEntry={true}
+            />   
+            <Button
+              color="#3740FE"
+              title="Signup"
+              onPress={() => this.registerUser()}
+            />
 
+            <Text 
+              style={signupStyles.loginText}
+              onPress={() => this.props.navigation.navigate('Account')}>
+              Already Registered? Click here to login
+            </Text>
 
-
-          <View style={signupStyles.container}>  
-        <TextInput
-          style={signupStyles.inputStyle}
-          placeholder="Name"
-          value={this.state.displayName}
-          onChangeText={(val) => this.updateInputVal(val, 'displayName')}
-        />      
-        <TextInput
-          style={signupStyles.inputStyle}
-          placeholder="Email"
-          value={this.state.email}
-          onChangeText={(val) => this.updateInputVal(val, 'email')}
-        />
-        <TextInput
-          style={signupStyles.inputStyle}
-          placeholder="Password"
-          value={this.state.password}
-          onChangeText={(val) => this.updateInputVal(val, 'password')}
-          maxLength={15}
-          secureTextEntry={true}
-        />   
-        <Button
-          color="#3740FE"
-          title="Signup"
-          onPress={() => this.registerUser()}
-        />
-
-        <Text 
-          style={signupStyles.loginText}
-          onPress={() => this.props.navigation.navigate('Settings')}>
-          Already Registered? Click here to login
-        </Text>                          
+                                   
+        </View>
       </View>
-
-
-
-
-          
-          </View>
-          </View>
+      </View>
       </View>
         );
     }
