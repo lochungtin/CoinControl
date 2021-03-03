@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import { Text, View, Button,Alert} from 'react-native';
+import { Text, View, TextInput, Button,Alert} from 'react-native';
 import { connect } from 'react-redux';
 import { updateLogin, updateAccountSettings } from '../redux/action';
 import { store } from '../redux/store';
+import firebase from "../firebase/config"
 
-
-import { black, bgColorD, bgColorL, chartScreenStyles, iconColors, maxWidth, styles, white, } from '../styles';
+import { signupStyles, styles, white, } from '../styles';
 import {
     GoogleSignin,
     GoogleSigninButton,
@@ -39,7 +39,8 @@ class Screen extends React.Component {
           givenName: this.props.accountSettings.givenName,
           familyName: this.props.accountSettings.familyName,
           idToken: this.props.accountSettings.idToken,
-          LoggedInMethod:null
+          LoggedInMethod:null,email: '', 
+          password: '',
         }
         console.log("this.state.accountSettings");
         console.log(this.props.accountSettings);
@@ -126,6 +127,37 @@ class Screen extends React.Component {
       );
       new GraphRequestManager().addRequest(profileRequest).start();
     };
+
+    emailLogin = () => {
+      if(this.state.email === '' && this.state.password === '') {
+        Alert.alert('Enter details to signin!')
+      } else {
+        this.setState({
+          isLoading: true,
+        })
+        firebase
+        .auth()
+        .signInWithEmailAndPassword(this.state.email, this.state.password)
+        .then((res) => {
+          console.log(res)
+          console.log('User logged-in successfully!')
+          this.setState({
+            isLoading: false,
+            email: '', 
+            password: ''
+          })
+          console.log(email);
+          this.props.navigation.navigate('Settings')
+        })
+        .catch(error => this.setState({ errorMessage: error.message }))
+      }
+    }
+
+    updateInputVal = (val, prop) => {
+      const state = this.state;
+      state[prop] = val;
+      this.setState(state);
+    }
    
     render() {
         return (
@@ -136,9 +168,36 @@ class Screen extends React.Component {
           </View>
           <View style={styles.screen}>
           <Text>Account Screen</Text>
+          <View style={signupStyles.container}>  
+            <TextInput
+              style={signupStyles.inputStyle}
+              placeholder="Email"
+              value={this.state.email}
+              onChangeText={(val) => this.updateInputVal(val, 'email')}
+            />
+            <TextInput
+              style={signupStyles.inputStyle}
+              placeholder="Password"
+              value={this.state.password}
+              onChangeText={(val) => this.updateInputVal(val, 'password')}
+              maxLength={15}
+              secureTextEntry={true}
+            />   
+            <Button
+              color="#3740FE"
+              title="Signin"
+              onPress={() => this.emailLogin()}
+            />   
+
+            <Text 
+              style={signupStyles.loginText}
+              onPress={() => this.props.navigation.navigate('SignUp')}>
+              Don't have account? Click here to signup
+            </Text>                          
+          </View>
           {
           //check
-          console.log(this.state.isLoggedIn,this.state.familyName,this.state.givenName,this.state.idToken)
+          //console.log(this.state.isLoggedIn,this.state.familyName,this.state.givenName,this.state.idToken)
           }
           
           <GoogleSigninButton

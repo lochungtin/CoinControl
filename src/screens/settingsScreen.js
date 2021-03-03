@@ -96,7 +96,7 @@ class Screen extends React.Component {
                 <ScreenHeader back={() => this.nav('Home')} name={'Settings'} />
                 <ScrollView style={settingStyles.scrollView}>
                     <SettingsHeader title={'ACCOUNTS'} />
-                    <SettingsItem action={() => this.nav('Account')} iconL={'login'} text={'Login'} />
+                    <SettingsItem action={() => this.nav('SignUp')} iconL={'login'} text={'Login'} />
                     <SettingsItem action={() => this.nav('Account')} iconL={'account'} text={'Account Settings'} />
 
                     <SettingsHeader title={'GENERAL'} />

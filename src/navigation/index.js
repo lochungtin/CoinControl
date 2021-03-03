@@ -16,6 +16,7 @@ import customCategoryScreen from '../screens/iconSelectionScreen';
 import homeScreen from '../screens/homeScreen';
 import reportScreen from '../screens/reportScreen';
 import settingsScreen from '../screens/settingsScreen';
+import signupScreen from '../screens/signupScreen';
 
 import { black, bgColorD, bgColorL, rgba, shade2, white, } from '../data/color';
 
@@ -112,6 +113,7 @@ class AppNav extends React.Component {
         <Settings.Navigator>
             <Settings.Screen name='Settings' component={settingsScreen} options={{ headerShown: false }} />
             <Settings.Screen name='Account' component={accountScreen} options={{ headerShown: false }} />
+            <Settings.Screen name='SignUp' component={signupScreen} options={{ headerShown: false }} />
             <Settings.Screen name='Icons' component={customCategoryScreen} options={{ headerShown: false }} />
         </Settings.Navigator>
     );
