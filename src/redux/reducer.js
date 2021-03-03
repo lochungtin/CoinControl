@@ -25,6 +25,8 @@ import {
     UPDATE_GOAL,
     UPDATE_LOGIN, 
     UPDATE_SETTINGS,
+    DEFAULT_ACCOUNT_SETTINGS,
+    UPDATE_ACCOUNT_SETTINGS,
 } from './action';
 import {
     defaultCardConfig,
@@ -247,14 +249,27 @@ const updateSettings = (settings = defaultSettings, action) => {
     return settings;
 }
 
-const updateLogin = (loginState = defaultLogin, action) => {
+const updateLogin = (isLogin = {}, action) => {
+    
     switch (action.type) {
         case DEFAULT_LOGIN:
             return defaultLogin;
         case UPDATE_LOGIN:
-            return action.payload;
+            return action.payload.isLogin;
     }
-    return loginState;
+    return isLogin;
+}
+
+const updateAccountSettings = (settings = {}, action) => {
+    switch (action.type) {
+        case DEFAULT_ACCOUNT_SETTINGS:
+            return defaultAccountSettings;
+        case UPDATE_ACCOUNT_SETTINGS:
+            var newSettings = { ...settings };
+            newSettings = action.payload;
+            return newSettings;
+    }
+    return settings;
 }
 
 export default combineReducers({
@@ -264,4 +279,5 @@ export default combineReducers({
     incomeCategories: updateIncomeCategories,
     settings: updateSettings,
     login: updateLogin,
+    accountSettings: updateAccountSettings,
 });
