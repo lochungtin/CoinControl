@@ -5,6 +5,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import AppNav from './src/navigation'
 import { store, persistor } from './src/redux/store';
 
+
 export default class App extends React.Component {
     render() {
         return (
