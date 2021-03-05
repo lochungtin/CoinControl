@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { updateLogin, updateAccountSettings } from '../redux/action';
 import { store } from '../redux/store';
 import firebase from "../firebase/config"
-import {loginAccount} from "../firebase/action"
+import {fireabseLoginAccount} from "../firebase/action"
 
 import { signupStyles, styles, white, } from '../styles';
 import {
@@ -43,6 +43,16 @@ class Screen extends React.Component {
           email: '', 
           password: '',
           loginType: this.props.accountSettings.loginType,
+
+          details : {
+            "cards": this.props.cards,
+            "data": this.props.data,
+            "expenseCategories": this.props.expenseCategories,
+            "incomeCategories": this.props.incomeCategories,
+            "settings": this.props.settings,
+  
+          }
+          //accountSettings: this.props.accountSettings,
         }
         console.log("this.state.accountSettings");
         console.log(this.state.isLogin);
@@ -53,7 +63,7 @@ class Screen extends React.Component {
       store.dispatch(updateLogin({isLogin: true}));
       store.dispatch(updateAccountSettings({familyName: familyName,givenName:givenName,idToken:id,loginType:loginType }));
       this.setState({isLoggedIn:true,familyName:familyName,givenName:givenName,idToken:id,loginType:loginType })
-      loginAccount(familyName, givenName, id,loginType)
+      loginAccount(familyName, givenName, id,loginType,this.state.details)
       this.props.navigation.navigate('Settings');
     }
 
@@ -241,9 +251,13 @@ class Screen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  isLogin: state.isLogin,
+  cards: state.cards,
+  data: state.data,
+  expenseCategories: state.expenseCategories,
+  incomeCategories: state.incomeCategories,
   settings: state.settings,
-  accountSettings: state.accountSettings
+  isLogin: state.isLogin,
+  accountSettings: state.accountSettings,
 
 })
 
