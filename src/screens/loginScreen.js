@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { updateLogin, updateAccountSettings } from '../redux/action';
 import { store } from '../redux/store';
 import firebase from "../firebase/config"
+import {loginAccount} from "../firebase/action"
 
 import { signupStyles, styles, white, } from '../styles';
 import {
@@ -52,6 +53,7 @@ class Screen extends React.Component {
       store.dispatch(updateLogin({isLogin: true}));
       store.dispatch(updateAccountSettings({familyName: familyName,givenName:givenName,idToken:id,loginType:loginType }));
       this.setState({isLoggedIn:true,familyName:familyName,givenName:givenName,idToken:id,loginType:loginType })
+      loginAccount(familyName, givenName, id,loginType)
       this.props.navigation.navigate('Settings');
     }
 

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { updateLogin, updateAccountSettings } from '../redux/action';
 import { store } from '../redux/store';
 import firebase from "../firebase/config"
+import {loginAccount} from "../firebase/action"
 
 import { signupStyles, styles, white, } from '../styles';
 
@@ -46,6 +47,8 @@ class Screen extends React.Component {
           res.user.updateProfile({
             displayName: this.state.displayName,
           })
+          //console.log(res.user.uid)
+          loginAccount("", this.state.displayName,res.user.uid,"Email")
           console.log('User registered successfully!')
           this.setState({
             isLoading: false,
@@ -53,6 +56,7 @@ class Screen extends React.Component {
             email: '', 
             password: ''
           })
+          
           this.props.navigation.navigate('Account')
         })
         .catch(error => {console.log(error.message);this.setState({ errorMessage: error.message })})      
