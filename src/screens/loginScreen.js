@@ -1,7 +1,7 @@
 import { GoogleSignin, GoogleSigninButton, statusCodes, } from '@react-native-community/google-signin';
 import React from 'react';
 import { Text, View, TextInput, Button, Alert } from 'react-native';
-import { AccessToken, GraphRequest, GraphRequestManager, LoginButton, LoginManager, } from 'react-native-fbsdk';
+import { AccessToken, GraphRequest, GraphRequestManager, LoginManager, } from 'react-native-fbsdk';
 import { connect } from 'react-redux';
 
 import { fireabseLoginAccount } from "../firebase/action";
@@ -46,19 +46,68 @@ class Screen extends React.Component {
         console.log(this.props.accountSettings);
     }
 
-    signInUpdate = async (familyName, givenName, id, loginType) => {
-        store.dispatch(updateLogin({ isLogin: true }));
-        store.dispatch(updateAccountSettings({ familyName, givenName, idToken: id, loginType }));
-        this.setState({ isLoggedIn: true, familyName, givenName, idToken: id, loginType })
-        fireabseLoginAccount(familyName, givenName, id, loginType, this.state.details)
-        this.props.navigation.navigate('Settings');
+    emailSignIn= () => {
+        console.log(this.state.isLogin, this.state.loginType)
+        if (this.state.isLogin && this.state.loginType == "Facebook") {
+            Alert.alert("Alert", "Please log out if you want to switch your account");
+            return;
+        }
+        if (this.state.email === '' && this.state.password === '') {
+            Alert.alert('Enter details to signin!')
+        } 
+        else {
+            firebase
+                .auth()
+                .signInWithEmailAndPassword(this.state.email, this.state.password)
+                .then((res) => {
+                    console.log(res)
+                    //console.log('User logged-in successfully!')
+                    this.setState({
+                        email: '',
+                        password: ''
+                    })
+                    console.log(res.user.displayName, res.user.uid);
+                    console.log("email");
+                    console.log(email);
+                    this.signInUpdate("", res.user.displayName, res.user.uid, "Email")
+                    this.props.navigation.navigate('Settings')
+                })
+                .catch(error => this.setState({ errorMessage: error.message }))
+        }
     }
 
-    signOutUpdate = async () => {
-        store.dispatch(updateLogin({ isLogin: false }));
-        store.dispatch(updateAccountSettings({}));
-        this.setState({ isLoggedIn: false, familyName: null, givenName: null, idToken: null });
-        this.props.navigation.navigate('Settings');
+    facebookSignIn = () => {
+        LoginManager.logInWithPermissions(['public_profile']).then(
+            result => {
+                console.log(result);
+
+                if (result.isCancelled)
+                    console.log('login is cancelled.');
+                else {
+                    AccessToken.getCurrentAccessToken().then(data => {
+                        const profileRequest = new GraphRequest(
+                            '/me',
+                            {
+                                token: data.accessToken.toString(),
+                                parameters: {
+                                    fields: {
+                                        string: 'id, name, first_name, last_name',
+                                    },
+                                },
+                            },
+                            (error, result) => {
+                                if (error)
+                                    console.log('login info has error: ' + error);
+                                else
+                                    this.signInUpdate(result["last_name"], result["first_name"], result["id"], "Facebook");
+                            },
+                        );
+                        new GraphRequestManager().addRequest(profileRequest).start();
+                    });
+                }
+            },
+            error => console.log('an error has occurred')
+        );
     }
 
     googleSignIn = async () => {
@@ -74,24 +123,25 @@ class Screen extends React.Component {
             console.log(userInfo);
             this.signInUpdate(userInfo["user"]["familyName"], userInfo["user"]["givenName"], userInfo["user"]["id"], "Google");
         } catch (error) {
-            if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-                // user cancelled the login flow
-                console.log("SIGN_IN_CANCELLED")
-            }
-            else if (error.code === statusCodes.IN_PROGRESS) {
-                console.log("IN_PROGRESS")
-                // operation (e.g. sign in) is in progress already
-            }
-            else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-                console.log("PLAY_SERVICES_NOT_AVAILABLE")
-                // play services not available or outdated
-            }
-            else {
-                console.log(error)
-                // some other error happened
+            switch (error.code) {
+                case statusCodes.SIGN_IN_CANCELLED:
+                    console.log('Sign In Cancelled');
+                    break;
+
+                case statusCodes.IN_PROGRESS:
+                    console.log('Sign In In Progress');
+                    break;
+
+                case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
+                    console.log('Play Services not available');
+                    break;
+
+                default:
+                    console.log(error);
+                    break;
             }
         }
-    };
+    }
 
     googleSignOut = async () => {
         try {
@@ -99,84 +149,26 @@ class Screen extends React.Component {
             await GoogleSignin.signOut();
             this.signOutUpdate();
         } catch (error) {
-            if (error.code === statusCodes.SIGN_IN_REQUIRED) {
-                Alert.alert("Alert", "You have not logged in");
-            }
-            else {
+            if (error.code === statusCodes.SIGN_IN_REQUIRED)
+                console.log('Not Logged In');
+            else
                 console.error(error);
-            }
-        }
-    };
-
-    //for facebook
-    getInfoFromToken = token => {
-        const PROFILE_REQUEST_PARAMS = {
-            fields: {
-                string: 'id, name,  first_name, last_name',
-            },
-        };
-        const profileRequest = new GraphRequest(
-            '/me',
-            { token, parameters: PROFILE_REQUEST_PARAMS },
-            (error, result) => {
-                if (error) {
-                    console.log('login info has error: ' + error);
-                }
-                else {
-                    //this.setState({userInfo: result});
-                    //console.log('result:', result["first_name"]);
-                    this.signInUpdate(result["last_name"], result["first_name"], result["id"], "Facebook");
-                }
-            },
-        );
-        new GraphRequestManager().addRequest(profileRequest).start();
-    }
-
-    onLoginFinished = (error, result) => {
-        if (this.state.isLoggedIn && this.state.loginType == "Google")
-            this.googleSignOut();
-
-        if (error) {
-            console.log('login has error: ' + result.error);
-        }
-        else if (result.isCancelled) {
-            console.log('login is cancelled.');
-        }
-        else {
-            AccessToken.getCurrentAccessToken().then(data => {
-                const accessToken = data.accessToken.toString();
-                this.getInfoFromToken(accessToken);
-            });
         }
     }
 
-    emailLogin = () => {
-        console.log(this.state.isLogin, this.state.loginType)
-        if (this.state.isLogin && this.state.loginType == "Facebook") {
-            Alert.alert("Alert", "Please log out if you want to switch your account");
-            return;
-        }
-        if (this.state.email === '' && this.state.password === '') {
-            Alert.alert('Enter details to signin!')
-        } else {
-            firebase
-                .auth()
-                .signInWithEmailAndPassword(this.state.email, this.state.password)
-                .then((res) => {
-                    console.log(res)
-                    //console.log('User logged-in successfully!')
-                    this.setState({
-                        email: '',
-                        password: ''
-                    })
-                    console.log(res.user.displayName, res.user.uid);
-                    console.log("email");
-                    this.signInUpdate("", res.user.displayName, res.user.uid, "Email")
-                    console.log(email);
-                    this.props.navigation.navigate('Settings')
-                })
-                .catch(error => this.setState({ errorMessage: error.message }))
-        }
+    signInUpdate = async (familyName, givenName, id, loginType) => {
+        store.dispatch(updateLogin({ isLogin: true }));
+        store.dispatch(updateAccountSettings({ familyName, givenName, idToken: id, loginType }));
+        this.setState({ isLoggedIn: true, familyName, givenName, idToken: id, loginType })
+        fireabseLoginAccount(familyName, givenName, id, loginType, this.state.details)
+        this.props.navigation.navigate('Settings');
+    }
+
+    signOutUpdate = async () => {
+        store.dispatch(updateLogin({ isLogin: false }));
+        store.dispatch(updateAccountSettings({}));
+        this.setState({ isLoggedIn: false, familyName: null, givenName: null, idToken: null });
+        this.props.navigation.navigate('Settings');
     }
 
     updateInputVal = (val, prop) => {
@@ -212,18 +204,20 @@ class Screen extends React.Component {
                             <Button
                                 color="#3740FE"
                                 title="Login"
-                                onPress={this.emailLogin}
+                                onPress={this.emailSignIn}
                             />
 
                             <GoogleSigninButton
                                 style={{ width: 192, height: 48 }}
                                 size={GoogleSigninButton.Size.Wide}
                                 color={GoogleSigninButton.Color.Dark}
-                                onPress={this.googleSignIn} />
+                                onPress={this.googleSignIn}
+                            />
 
-                            <LoginButton
-                                onLoginFinished={this.onLoginFinished}
-                                onLogoutFinished={this.signOutUpdate}
+                            <Button
+                                color="#3740FE"
+                                title="Facebook Login"
+                                onPress={this.facebookSignIn}
                             />
 
                             <Text
@@ -239,7 +233,6 @@ class Screen extends React.Component {
                                 Forgot Password? Click here to reset
                             </Text>
                         </View>
-
                     </View>
                 </View>
             </View>
