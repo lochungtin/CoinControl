@@ -63,7 +63,7 @@ class Screen extends React.Component {
       store.dispatch(updateLogin({isLogin: true}));
       store.dispatch(updateAccountSettings({familyName: familyName,givenName:givenName,idToken:id,loginType:loginType }));
       this.setState({isLoggedIn:true,familyName:familyName,givenName:givenName,idToken:id,loginType:loginType })
-      loginAccount(familyName, givenName, id,loginType,this.state.details)
+      fireabseLoginAccount(familyName, givenName, id,loginType,this.state.details)
       this.props.navigation.navigate('Settings');
     }
 

@@ -44,7 +44,7 @@ export const fireabseLoginAccount=(familyName,givenName,id,type, details)=>{
             //needa return data here
         }
         else{
-            createAccount(familyName,givenName,id,type, details);
+            fireabseCreateAccount(familyName,givenName,id,type, details);
         }
     });
 }
