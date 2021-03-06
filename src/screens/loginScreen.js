@@ -1,28 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import { GoogleSignin, GoogleSigninButton, statusCodes, } from '@react-native-community/google-signin';
+import React from 'react';
 import { Text, View, TextInput, Button, Alert } from 'react-native';
+import { AccessToken, GraphRequest, GraphRequestManager, LoginButton, LoginManager, } from 'react-native-fbsdk';
 import { connect } from 'react-redux';
+
+import { fireabseLoginAccount } from "../firebase/action";
+import firebase from "../firebase/config";
+
 import { updateLogin, updateAccountSettings } from '../redux/action';
 import { store } from '../redux/store';
-import firebase from "../firebase/config"
-import { fireabseLoginAccount } from "../firebase/action"
 
 import { signupStyles, styles, white, } from '../styles';
-import {
-    GoogleSignin,
-    GoogleSigninButton,
-    statusCodes,
-} from '@react-native-community/google-signin';
-import {
-    LoginButton,
-    LoginManager,
-    AccessToken,
-    GraphRequest,
-    GraphRequestManager,
-} from 'react-native-fbsdk';
-
-
-
-
 
 //Lets agree here first. What data do we need from the user
 // Given Name; Last Name; IDtoken
@@ -50,7 +38,6 @@ class Screen extends React.Component {
                 "expenseCategories": this.props.expenseCategories,
                 "incomeCategories": this.props.incomeCategories,
                 "settings": this.props.settings,
-
             }
             //accountSettings: this.props.accountSettings,
         }
@@ -58,19 +45,19 @@ class Screen extends React.Component {
         console.log(this.state.isLogin);
         console.log(this.props.accountSettings);
     }
-    
-    signInUpdate = async (familyName, givenName, id,loginType) =>{
-      store.dispatch(updateLogin({isLogin: true}));
-      store.dispatch(updateAccountSettings({familyName: familyName,givenName:givenName,idToken:id,loginType:loginType }));
-      this.setState({isLoggedIn:true,familyName:familyName,givenName:givenName,idToken:id,loginType:loginType })
-      fireabseLoginAccount(familyName, givenName, id,loginType,this.state.details)
-      this.props.navigation.navigate('Settings');
+
+    signInUpdate = async (familyName, givenName, id, loginType) => {
+        store.dispatch(updateLogin({ isLogin: true }));
+        store.dispatch(updateAccountSettings({ familyName, givenName, idToken: id, loginType }));
+        this.setState({ isLoggedIn: true, familyName, givenName, idToken: id, loginType })
+        fireabseLoginAccount(familyName, givenName, id, loginType, this.state.details)
+        this.props.navigation.navigate('Settings');
     }
 
     signOutUpdate = async () => {
         store.dispatch(updateLogin({ isLogin: false }));
-        this.setState({ isLoggedIn: false, familyName: null, givenName: null, idToken: null })
         store.dispatch(updateAccountSettings({}));
+        this.setState({ isLoggedIn: false, familyName: null, givenName: null, idToken: null });
         this.props.navigation.navigate('Settings');
     }
 
@@ -90,13 +77,16 @@ class Screen extends React.Component {
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {
                 // user cancelled the login flow
                 console.log("SIGN_IN_CANCELLED")
-            } else if (error.code === statusCodes.IN_PROGRESS) {
+            }
+            else if (error.code === statusCodes.IN_PROGRESS) {
                 console.log("IN_PROGRESS")
                 // operation (e.g. sign in) is in progress already
-            } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+            }
+            else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
                 console.log("PLAY_SERVICES_NOT_AVAILABLE")
                 // play services not available or outdated
-            } else {
+            }
+            else {
                 console.log(error)
                 // some other error happened
             }
@@ -111,7 +101,8 @@ class Screen extends React.Component {
         } catch (error) {
             if (error.code === statusCodes.SIGN_IN_REQUIRED) {
                 Alert.alert("Alert", "You have not logged in");
-            } else {
+            }
+            else {
                 console.error(error);
             }
         }
@@ -130,7 +121,8 @@ class Screen extends React.Component {
             (error, result) => {
                 if (error) {
                     console.log('login info has error: ' + error);
-                } else {
+                }
+                else {
                     //this.setState({userInfo: result});
                     //console.log('result:', result["first_name"]);
                     this.signInUpdate(result["last_name"], result["first_name"], result["id"], "Facebook");
@@ -138,7 +130,25 @@ class Screen extends React.Component {
             },
         );
         new GraphRequestManager().addRequest(profileRequest).start();
-    };
+    }
+
+    onLoginFinished = (error, result) => {
+        if (this.state.isLoggedIn && this.state.loginType == "Google")
+            this.googleSignOut();
+
+        if (error) {
+            console.log('login has error: ' + result.error);
+        }
+        else if (result.isCancelled) {
+            console.log('login is cancelled.');
+        }
+        else {
+            AccessToken.getCurrentAccessToken().then(data => {
+                const accessToken = data.accessToken.toString();
+                this.getInfoFromToken(accessToken);
+            });
+        }
+    }
 
     emailLogin = () => {
         console.log(this.state.isLogin, this.state.loginType)
@@ -202,7 +212,7 @@ class Screen extends React.Component {
                             <Button
                                 color="#3740FE"
                                 title="Login"
-                                onPress={() => this.emailLogin()}
+                                onPress={this.emailLogin}
                             />
 
                             <GoogleSigninButton
@@ -211,34 +221,21 @@ class Screen extends React.Component {
                                 color={GoogleSigninButton.Color.Dark}
                                 onPress={this.googleSignIn} />
 
-                            <LoginButton onLoginFinished={(error, result) => {
-                                if (this.state.isLoggedIn && this.state.loginType == "Google") {
-                                    this.googleSignOut();
-                                }
-                                if (error) {
-                                    console.log('login has error: ' + result.error);
-                                } else if (result.isCancelled) {
-                                    console.log('login is cancelled.');
-                                } else {
-                                    AccessToken.getCurrentAccessToken().then(data => {
-                                        const accessToken = data.accessToken.toString();
-                                        this.getInfoFromToken(accessToken);
-                                    });
-                                }
-                            }}
-                                onLogoutFinished={() => this.signOutUpdate()
-                                } />
-
-
+                            <LoginButton
+                                onLoginFinished={this.onLoginFinished}
+                                onLogoutFinished={this.signOutUpdate}
+                            />
 
                             <Text
                                 style={signupStyles.loginText}
-                                onPress={() => this.props.navigation.navigate('SignUp')}>
+                                onPress={() => this.props.navigation.navigate('SignUp')}
+                            >
                                 Don't have account? Click here to signup
                             </Text>
                             <Text
                                 style={signupStyles.loginText}
-                                onPress={() => this.props.navigation.navigate('ResetPassword')}>
+                                onPress={() => this.props.navigation.navigate('ResetPassword')}
+                            >
                                 Forgot Password? Click here to reset
                             </Text>
                         </View>

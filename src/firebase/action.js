@@ -1,9 +1,7 @@
 import Firebase from "./config"
 
 //fetch data
-
 const db = Firebase.database();
-
 
 //Delete data
 export const fireabseDeleteData = (id, path, type) => {
@@ -43,8 +41,7 @@ export const fireabseLoginAccount = (familyName, givenName, id, type, details) =
             console.log("exists!", userData);
             //needa return data here
         }
-        else{
+        else
             fireabseCreateAccount(familyName,givenName,id,type, details);
-        }
     });
 }
