@@ -43,13 +43,8 @@ export const fireabseLoginAccount = (familyName, givenName, id, type, details) =
             console.log("exists!", userData);
             //needa return data here
         }
-<<<<<<< HEAD
         else{
             fireabseCreateAccount(familyName,givenName,id,type, details);
-=======
-        else {
-            createAccount(familyName, givenName, id, type, details);
->>>>>>> ca7bdbbb9639dba91ec6f1c2063fa87681691be9
         }
     });
 }
