@@ -1,15 +1,12 @@
 import React from 'react';
-import { Text, TouchableOpacity, View, TextInput, Button, Alert } from 'react-native';
+import { Text, TouchableOpacity, View, } from 'react-native';
 import { connect } from 'react-redux';
 
-import { loginAccount } from "../firebase/action";
 import firebase from "../firebase/config";
 
 import Logo from '../components/Logo';
 import ScreenHeader from '../components/ScreenHeader';
 import SignUpInput from '../components/SignUpInput';
-import { updateLogin, updateAccountSettings } from '../redux/action';
-import { store } from '../redux/store';
 
 import { black, shade2, shade3 } from '../data/color';
 import { accountScreenStyles, maxHeight, styles, } from '../styles';
@@ -24,6 +21,7 @@ class Screen extends React.Component {
             hidden: true,
             reHidden: true,
             password: '',
+            prompt: '',
             rePassword: '',
         }
     }
@@ -31,32 +29,21 @@ class Screen extends React.Component {
     color = () => this.props.settings.darkMode ? shade2 : shade3;
 
     registerUser = () => {
-        if (this.state.email === '' && this.state.password === '') {
-            Alert.alert('Enter details to signup!')
-        } else {
-            this.setState({
-                isLoading: true,
-            })
+        if (this.state.email === '')
+            this.setState({ prompt: 'Email Required' });
+        if (this.state.password !== this.state.rePassword)
+            this.setState({ promopt: 'Passwords Don\'t Match' });
+        else {
             firebase
                 .auth()
                 .createUserWithEmailAndPassword(this.state.email, this.state.password)
-                .then((res) => {
-                    res.user.updateProfile({
+                .then(result => {
+                    result.user.updateProfile({
                         displayName: this.state.displayName,
-                    })
-                    //console.log(res.user.uid)
-                    loginAccount("", this.state.displayName, res.user.uid, "Email")
-                    console.log('User registered successfully!')
-                    this.setState({
-                        isLoading: false,
-                        displayName: '',
-                        email: '',
-                        password: ''
-                    })
-
-                    this.props.navigation.navigate('Account')
+                    });
+                    this.props.navigation.navigate('SignIn', { info: { email: this.state.email, password: this.state.password } })
                 })
-                .catch(error => { console.log(error.message); this.setState({ errorMessage: error.message }) })
+                .catch(error => this.setState({ prompt: error.message }));
         }
     }
 
@@ -108,6 +95,9 @@ class Screen extends React.Component {
                             type={'hidden'}
                             value={this.state.rePassword}
                         />
+                        <Text style={{ color: this.color(), marginTop: 10 }}>
+                            {this.state.prompt}
+                        </Text>
                     </View>
                     <View style={{ ...styles.rows, justifyContent: 'center' }}>
                         <TouchableOpacity onPress={this.registerUser} style={{ ...styles.columns, ...accountScreenStyles.submitBtn, backgroundColor: this.props.settings.accent }}>
