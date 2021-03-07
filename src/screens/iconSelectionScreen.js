@@ -16,7 +16,6 @@ import { categoryPromptText } from '../data/text';
 import { RNKey } from '../functions/GenKey';
 import { iconSelectionScreen, styles, } from '../styles';
 
-
 class Screen extends React.Component {
 
     constructor(props) {

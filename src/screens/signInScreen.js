@@ -1,21 +1,18 @@
 import { GoogleSignin, GoogleSigninButton, statusCodes, } from '@react-native-community/google-signin';
 import React from 'react';
-import { Image, Text, View, TextInput, Alert, TouchableOpacity } from 'react-native';
-import { AccessToken, GraphRequest, GraphRequestManager, LoginButton, LoginManager, } from 'react-native-fbsdk';
+import { Text, View, Alert, TouchableOpacity } from 'react-native';
+import { AccessToken, GraphRequest, GraphRequestManager, LoginManager, } from 'react-native-fbsdk';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
-import Bubble from '../components/Bubble';
-import Logo from '../components/Logo';
+
 import ScreenHeader from '../components/ScreenHeader';
 import SignUpInput from '../components/SignUpInput';
-import { black, shade2, shade3 } from '../data/color';
-
 import { firebaseLoginAccount } from "../firebase/action";
 import firebase from "../firebase/config";
-
 import { signIn, signOut } from '../redux/action';
 import { store } from '../redux/store';
 
+import { black, shade2, shade3 } from '../data/color';
 import { accountScreenStyles, maxHeight, styles, } from '../styles';
 
 //Lets agree here first. What data do we need from the user
@@ -151,7 +148,7 @@ class Screen extends React.Component {
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
                 <View style={{ ...styles.rows, justifyContent: 'space-between', height: maxHeight - 170 }}>
                     <View style={{ ...styles.rows, justifyContent: 'center' }}>
-                        <ScreenHeader back={() => this.props.navigation.goBack()} name={'Sign In'} />
+                        <ScreenHeader back={this.props.navigation.goBack} name={'Sign In'} />
                         <View style={{ height: 50 }} />
                         <SignUpInput
                             onChangeText={this.updateEmail}

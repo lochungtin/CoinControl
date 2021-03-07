@@ -96,8 +96,8 @@ class Screen extends React.Component {
                 <ScreenHeader back={() => this.nav('Home')} name={'Settings'} />
                 <ScrollView style={settingStyles.scrollView}>
                     <SettingsHeader title={'ACCOUNTS'} />
-                    <SettingsItem action={() => this.nav('Account')} iconL={'login'} text={'Login'} />
-                    <SettingsItem action={() => this.nav('SignUp')} iconL={'account'} text={'Signup'} />
+                    <SettingsItem action={() => this.nav('SignIn')} iconL={'login'} text={'Sign In'} />
+                    <SettingsItem action={() => this.nav('SignUp')} iconL={'account'} text={'Account'} />
 
                     <SettingsHeader title={'GENERAL'} />
                     <SettingsItem action={() => this.setState({ cupOpen: !this.state.cupOpen })} iconL={'currency-usd'} iconR={'currency-' + this.props.settings.currency} text={'Currency'} open={this.state.cupOpen}>

@@ -7,8 +7,6 @@ import firebase from "../firebase/config"
 
 import { signupStyles, styles, white, } from '../styles';
 
-
-
 class Screen extends React.Component {
 
     constructor(props) {

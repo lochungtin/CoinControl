@@ -1,38 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, TextInput, Button, Alert } from 'react-native';
+import React from 'react';
+import { Text, TouchableOpacity, View, TextInput, Button, Alert } from 'react-native';
 import { connect } from 'react-redux';
+
+import { loginAccount } from "../firebase/action";
+import firebase from "../firebase/config";
+
+import Logo from '../components/Logo';
+import ScreenHeader from '../components/ScreenHeader';
+import SignUpInput from '../components/SignUpInput';
 import { updateLogin, updateAccountSettings } from '../redux/action';
 import { store } from '../redux/store';
-import firebase from "../firebase/config"
-import { loginAccount } from "../firebase/action"
 
-import { signupStyles, styles, white, } from '../styles';
-
-
+import { black, shade2, shade3 } from '../data/color';
+import { accountScreenStyles, maxHeight, styles, } from '../styles';
 
 class Screen extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            isLoggedIn: this.props.isLogin,
-            givenName: this.props.accountSettings.givenName,
-            familyName: this.props.accountSettings.familyName,
-            idToken: this.props.accountSettings.idToken,
-            LoggedInMethod: null,
             displayName: '',
             email: '',
+            hidden: true,
+            reHidden: true,
             password: '',
-            isLoading: false
+            rePassword: '',
         }
-        console.log("this.state.accountSettings");
-        console.log(this.props.accountSettings);
     }
-    updateInputVal = (val, prop) => {
-        const state = this.state;
-        state[prop] = val;
-        this.setState(state);
-    }
+
+    color = () => this.props.settings.darkMode ? shade2 : shade3;
+
     registerUser = () => {
         if (this.state.email === '' && this.state.password === '') {
             Alert.alert('Enter details to signup!')
@@ -63,47 +60,70 @@ class Screen extends React.Component {
         }
     }
 
+    toggleHidden = () => this.setState({ hidden: !this.state.hidden });
+
+    toggleReHidden = () => this.setState({ reHidden: !this.state.reHidden });
+
+    updateDisplayName = displayName => this.setState({ displayName });
+
+    updateEmail = email => this.setState({ email });
+
+    updatePassword = password => this.setState({ password });
+
+    updateRePassword = rePassword => this.setState({ rePassword });
+
     render() {
         return (
-
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
-                <View style={{ ...styles.rows, justifyContent: 'space-between', paddingTop: 50 }}>
-                    <View style={{ ...styles.columns, justifyContent: 'center', maxHeight: 35, }}>
+                <View style={{ ...styles.rows, justifyContent: 'space-between', height: maxHeight - 170 }}>
+                    <View style={{ ...styles.rows, justifyContent: 'center' }}>
+                        <ScreenHeader back={this.props.navigation.goBack} name={'Sign Up'} />
+                        <Logo dim={150} style={{ marginTop: 20, }} />
+                        <SignUpInput
+                            confirm={this.state.displayName !== '' && !this.state.displayName.includes(' ')}
+                            onChangeText={this.updateDisplayName}
+                            placeholder={'Display Name'}
+                            type={'confirmation'}
+                            value={this.state.displayName}
+                        />
+                        <SignUpInput
+                            onChangeText={this.updateEmail}
+                            placeholder={'Email'}
+                            type={'confirmation'}
+                            value={this.state.email}
+                        />
+                        <SignUpInput
+                            iconOnPress={this.toggleHidden}
+                            hidden={this.state.hidden}
+                            onChangeText={this.updatePassword}
+                            placeholder={'Password'}
+                            type={'hidden'}
+                            value={this.state.password}
+                        />
+                        <SignUpInput
+                            iconOnPress={this.toggleReHidden}
+                            hidden={this.state.reHidden}
+                            onChangeText={this.updateRePassword}
+                            placeholder={'Re-enter Password'}
+                            type={'hidden'}
+                            value={this.state.rePassword}
+                        />
                     </View>
-                    <View style={styles.screen}>
-                        <Text>Signup Screen</Text>
-                        <View style={signupStyles.container}>
-                            <TextInput
-                                style={signupStyles.inputStyle}
-                                placeholder="Name"
-                                value={this.state.displayName}
-                                onChangeText={(val) => this.updateInputVal(val, 'displayName')}
-                            />
-                            <TextInput
-                                style={signupStyles.inputStyle}
-                                placeholder="Email"
-                                value={this.state.email}
-                                onChangeText={(val) => this.updateInputVal(val, 'email')}
-                            />
-                            <TextInput
-                                style={signupStyles.inputStyle}
-                                placeholder="Password"
-                                value={this.state.password}
-                                onChangeText={(val) => this.updateInputVal(val, 'password')}
-                                maxLength={15}
-                                secureTextEntry={true}
-                            />
-                            <Button
-                                color="#3740FE"
-                                title="Signup"
-                                onPress={() => this.registerUser()}
-                            />
-
-                            <Text
-                                style={signupStyles.loginText}
-                                onPress={() => this.props.navigation.navigate('Account')}>
-                                Already Registered? Click here to login
+                    <View style={{ ...styles.rows, justifyContent: 'center' }}>
+                        <TouchableOpacity onPress={this.registerUser} style={{ ...styles.columns, ...accountScreenStyles.submitBtn, backgroundColor: this.props.settings.accent }}>
+                            <Text style={{ color: black }}>
+                                Sign Up
                             </Text>
+                        </TouchableOpacity>
+                        <View style={{ ...styles.columns, ...accountScreenStyles.signUpContainer }}>
+                            <Text style={{ color: this.color() }}>
+                                Already have an account?
+                            </Text>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')}>
+                                <Text style={{ color: this.props.settings.accent }}>
+                                    Sign In
+                                </Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </View>
@@ -113,10 +133,7 @@ class Screen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    isLogin: state.isLogin,
     settings: state.settings,
-    accountSettings: state.accountSettings
-
 })
 
 export default connect(mapStateToProps)(Screen);
