@@ -562,23 +562,14 @@ export const signUpInputStyles = StyleSheet.create({
         borderBottomColor: shade2,
         borderBottomWidth: 1,
         justifyContent: 'space-between',
-        marginVertical: 7,
+        marginBottom: 10,
         width: 300,
     },
     containerL: {
         borderBottomColor: shade3,
         borderBottomWidth: 1,
         justifyContent: 'space-between',
-        marginVertical: 7,
-        width: 300,
-    },
-    forgotPasswordContainer: {
-        alignItems: 'center',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        height: 40,
-        marginTop: 10,
+        marginBottom: 10,
         width: 300,
     },
     inputBoxD: {
@@ -607,6 +598,62 @@ export const timePickerStyles = StyleSheet.create({
 });
 
 // screen styles
+
+export const accountScreenStyles = StyleSheet.create({
+    facebookSignInBtn: {
+        backgroundColor: "#fff",
+        borderRadius: 3,
+        elevation: 10,
+        justifyContent: 'space-between',
+        height: 44,
+        paddingLeft: 16.5,
+        width: 300,
+    },
+    facebookSignInText: {
+        fontWeight: 'bold',
+        width: 213,
+    },
+    forgotPasswordContainer: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        height: 40,
+        marginBottom: 20,
+        width: 300,
+    },
+    oauthContainer: {
+        height: 180,
+        justifyContent: 'space-between',
+        marginTop: 25,
+    },
+    orBarContainer: {
+        justifyContent: 'space-between',
+        width: 375,
+    },
+    orBarD: {
+        backgroundColor: shade3,
+        height: 1,
+        width: 120,
+    },
+    orBarL: {
+        backgroundColor: shade2,
+        height: 1,
+        width: 120,
+    },
+    signUpContainer: {
+        justifyContent: 'space-between',
+        width: 230, 
+    },
+    submitBtn: {
+        borderRadius: 20,
+        height: 40,
+        elevation: 10,
+        justifyContent: 'center',
+        marginBottom: 40,
+        width: 300,
+    }
+});
 
 export const iconSelectionScreen = StyleSheet.create({
     headerD: {

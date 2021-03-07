@@ -1,11 +1,14 @@
 import { GoogleSignin, GoogleSigninButton, statusCodes, } from '@react-native-community/google-signin';
 import React from 'react';
 import { Image, Text, View, TextInput, Alert, TouchableOpacity } from 'react-native';
-import { AccessToken, GraphRequest, GraphRequestManager, LoginManager, } from 'react-native-fbsdk';
+import { AccessToken, GraphRequest, GraphRequestManager, LoginButton, LoginManager, } from 'react-native-fbsdk';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
+import Bubble from '../components/Bubble';
 import Logo from '../components/Logo';
 import ScreenHeader from '../components/ScreenHeader';
 import SignUpInput from '../components/SignUpInput';
+import { black, shade2, shade3 } from '../data/color';
 
 import { firebaseLoginAccount } from "../firebase/action";
 import firebase from "../firebase/config";
@@ -13,7 +16,7 @@ import firebase from "../firebase/config";
 import { signIn, signOut } from '../redux/action';
 import { store } from '../redux/store';
 
-import { signUpInputStyles, styles, } from '../styles';
+import { accountScreenStyles, maxHeight, styles, } from '../styles';
 
 //Lets agree here first. What data do we need from the user
 // Given Name; Last Name; IDtoken
@@ -32,6 +35,8 @@ class Screen extends React.Component {
             password: '',
         };
     }
+
+    color = () => this.props.settings.darkMode ? shade2 : shade3;
 
     emailSignIn = () => {
         if (this.props.type !== '')
@@ -86,7 +91,7 @@ class Screen extends React.Component {
     }
 
     googleSignIn = async () => {
-        if (this.props.type !== '')
+        if (this.props.account.type !== '')
             Alert.alert("Alert", "Please log out if you want to switch your account");
         else {
             try {
@@ -151,6 +156,8 @@ class Screen extends React.Component {
         this.props.navigation.navigate('Settings');
     }
 
+    style = styleName => accountScreenStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
+
     toggleHidden = () => this.setState({ hidden: !this.state.hidden });
 
     updateEmail = email => this.setState({ email });
@@ -160,39 +167,92 @@ class Screen extends React.Component {
     render() {
         return (
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
-                <ScreenHeader back={() => this.props.navigation.goBack()} name={'Sign In'} />
-                <Logo dim={100} style={{ marginTop: 40 }} />
-                <SignUpInput
-                    onChangeText={this.updateEmail}
-                    placeholder={'Email'}
-                    type={'confirmation'}
-                    value={this.state.email}
-                />
-                <SignUpInput
-                    iconOnPress={this.toggleHidden}
-                    hidden={this.state.hidden}
-                    onChangeText={this.updatePassword}
-                    placeholder={'Password'}
-                    type={'hidden'}
-                    value={this.state.password}
-                />
-                <View style={signUpInputStyles.forgotPasswordContainer}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('ResetPassword')}>
-                        <Text style={{ color: this.props.settings.accent }}>
-                            Forgot Password?
+                <View style={{ ...styles.rows, justifyContent: 'space-between', height: maxHeight - 170 }}>
+                    <View style={{ ...styles.rows, justifyContent: 'center' }}>
+                        <ScreenHeader back={() => this.props.navigation.goBack()} name={'Sign In'} />
+                        <View style={{ height: 50 }} />
+                        <SignUpInput
+                            onChangeText={this.updateEmail}
+                            placeholder={'Email'}
+                            type={'confirmation'}
+                            value={this.state.email}
+                        />
+                        <SignUpInput
+                            iconOnPress={this.toggleHidden}
+                            hidden={this.state.hidden}
+                            onChangeText={this.updatePassword}
+                            placeholder={'Password'}
+                            type={'hidden'}
+                            value={this.state.password}
+                        />
+                        <View style={accountScreenStyles.forgotPasswordContainer}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('ResetPassword')}>
+                                <Text style={{ color: this.color() }}>
+                                    Forgot Password?
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <TouchableOpacity style={{ ...styles.columns, ...accountScreenStyles.submitBtn, backgroundColor: this.props.settings.accent }}>
+                            <Text style={{ color: black }}>
+                                Sign In
+                    </Text>
+                        </TouchableOpacity>
+                        <View style={{ ...styles.columns, ...accountScreenStyles.orBarContainer }}>
+                            <View style={this.style('orBar')} />
+                            <Text style={{ color: this.color() }}>
+                                or sign in with
+                            </Text>
+                            <View style={this.style('orBar')} />
+                        </View>
+                        <View style={{ ...styles.rows, ...accountScreenStyles.oauthContainer }}>
+                            <GoogleSigninButton
+                                style={{ height: 52, width: 309, }}
+                                size={GoogleSigninButton.Size.Wide}
+                                color={GoogleSigninButton.Color.Light}
+                                onPress={this.googleSignIn}
+                            />
+                            <View style={{ height: 49 }}>
+                                <TouchableOpacity onPress={this.facebookSignIn} style={{ ...styles.columns, ...accountScreenStyles.facebookSignInBtn }}>
+                                    <Icon
+                                        color={'#3b5998'}
+                                        name={'facebook'}
+                                        size={23}
+                                    />
+                                    <Text style={accountScreenStyles.facebookSignInText}>
+                                        Continue with Faceboook
+                                </Text>
+                                </TouchableOpacity>
+                            </View>
+                            <TouchableOpacity style={{ ...styles.columns, ...accountScreenStyles.facebookSignInBtn }}>
+                                <Icon
+                                    color={black}
+                                    name={'apple'}
+                                    size={23}
+                                />
+                                <Text style={accountScreenStyles.facebookSignInText}>
+                                    Placeholder for iOS
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <View style={{ ...styles.columns, ...accountScreenStyles.signUpContainer }}>
+                        <Text style={{ color: this.color() }}>
+                            Don't have an account?
                         </Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Text style={{ color: this.props.settings.accent }}>
+                                Sign Up
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-                <TouchableOpacity>
-
-                </TouchableOpacity>
             </View>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    accountSettings: state.accountSettings,
+    account: state.account,
     cards: state.cards,
     data: state.data,
     expenseCategories: state.expenseCategories,
