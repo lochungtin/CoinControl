@@ -60,7 +60,6 @@ class Screen extends React.Component {
     facebookSignIn = () => {
         LoginManager.logInWithPermissions(['public_profile']).then(
             result => {
-                console.log(result);
                 if (result.isCancelled)
                     console.log('login is cancelled.');
                 else {
@@ -90,34 +89,17 @@ class Screen extends React.Component {
         );
     }
 
-    googleSignIn = async () => {
-        if (this.props.account.type !== '')
-            Alert.alert("Alert", "Please log out if you want to switch your account");
-        else {
-            try {
-                await GoogleSignin.hasPlayServices();
-                const user = await GoogleSignin.signIn().user;
-                this.signInUpdate(user.givenName, user.familyName, user.id, "Google");
-            } catch (error) {
-                switch (error.code) {
-                    case statusCodes.SIGN_IN_CANCELLED:
-                        console.log('Sign In Cancelled');
-                        break;
-
-                    case statusCodes.IN_PROGRESS:
-                        console.log('Sign In In Progress');
-                        break;
-
-                    case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
-                        console.log('Play Services not available');
-                        break;
-
-                    default:
-                        console.log(error);
-                        break;
-                }
+    googleSignIn = () => {
+        GoogleSignin.hasPlayServices().then(has => {
+            if (has) {
+                GoogleSignin.signIn()
+                    .then(result => {
+                        const user = result.user;
+                        this.signInUpdate(user.givenName, user.familyName, user.id, "Google");
+                    })
+                    .catch(error => console.log(error));
             }
-        }
+        }).catch(error => console.log(error));
     }
 
     googleSignOut = async () => {
@@ -195,7 +177,7 @@ class Screen extends React.Component {
                         <TouchableOpacity style={{ ...styles.columns, ...accountScreenStyles.submitBtn, backgroundColor: this.props.settings.accent }}>
                             <Text style={{ color: black }}>
                                 Sign In
-                    </Text>
+                            </Text>
                         </TouchableOpacity>
                         <View style={{ ...styles.columns, ...accountScreenStyles.orBarContainer }}>
                             <View style={this.style('orBar')} />
@@ -239,7 +221,7 @@ class Screen extends React.Component {
                         <Text style={{ color: this.color() }}>
                             Don't have an account?
                         </Text>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')}>
                             <Text style={{ color: this.props.settings.accent }}>
                                 Sign Up
                             </Text>
