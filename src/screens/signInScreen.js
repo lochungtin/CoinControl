@@ -7,8 +7,8 @@ import { connect } from 'react-redux';
 
 import ScreenHeader from '../components/ScreenHeader';
 import SignUpInput from '../components/SignUpInput';
-import { firebaseLoginAccount } from "../firebase/action";
-import firebase from "../firebase/config";
+import { firebaseLoginAccount } from '../firebase/action';
+import firebase from '../firebase/config';
 import { signIn, signOut } from '../redux/action';
 import { store } from '../redux/store';
 
@@ -36,22 +36,15 @@ class Screen extends React.Component {
     color = () => this.props.settings.darkMode ? shade2 : shade3;
 
     emailSignIn = () => {
-        if (this.props.type !== '')
-            Alert.alert("Alert", "Please log out if you want to switch your account");
-        else {
-            if (this.state.email !== '' && this.state.password !== '')
-                firebase
-                    .auth()
-                    .signInWithEmailAndPassword(this.state.email, this.state.password)
-                    .then(result => {
-                        console.log(result)
-                        //console.log('User logged-in successfully!')
-                        this.setState({ email: '', password: '' });
-                        this.signInUpdate("", result.user.displayName, result.user.uid, "Email")
-                        this.props.navigation.navigate('Settings');
-                    })
-                    .catch(error => console.log(error.message));
-        }
+        if (this.state.email !== '' && this.state.password !== '')
+            firebase
+                .auth()
+                .signInWithEmailAndPassword(this.state.email, this.state.password)
+                .then(result => {
+                    this.signInUpdate("", result.user.displayName, result.user.uid, "Email");
+                    this.props.navigation.goBack();
+                })
+                .catch(error => console.log(error.message));
     }
 
     facebookSignIn = () => {
@@ -171,7 +164,7 @@ class Screen extends React.Component {
                                 </Text>
                             </TouchableOpacity>
                         </View>
-                        <TouchableOpacity style={{ ...styles.columns, ...accountScreenStyles.submitBtn, backgroundColor: this.props.settings.accent }}>
+                        <TouchableOpacity onPress={this.emailSignIn} style={{ ...styles.columns, ...accountScreenStyles.submitBtn, backgroundColor: this.props.settings.accent }}>
                             <Text style={{ color: black }}>
                                 Sign In
                             </Text>

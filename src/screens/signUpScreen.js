@@ -2,11 +2,10 @@ import React from 'react';
 import { Text, TouchableOpacity, View, } from 'react-native';
 import { connect } from 'react-redux';
 
-import firebase from "../firebase/config";
-
 import Logo from '../components/Logo';
 import ScreenHeader from '../components/ScreenHeader';
 import SignUpInput from '../components/SignUpInput';
+import firebase from '../firebase/config';
 
 import { black, shade2, shade3 } from '../data/color';
 import { accountScreenStyles, maxHeight, styles, } from '../styles';
@@ -109,7 +108,7 @@ class Screen extends React.Component {
                             <Text style={{ color: this.color() }}>
                                 Already have an account?
                             </Text>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('SignIn')}>
                                 <Text style={{ color: this.props.settings.accent }}>
                                     Sign In
                                 </Text>
