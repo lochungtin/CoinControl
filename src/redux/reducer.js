@@ -10,7 +10,6 @@ import {
     DEFAULT_EXPENSE_CATEGORY,
     DEFAULT_GOAL,
     DEFAULT_INCOME_CATEGORY,
-    DEFAULT_LOGIN,
     DEFAULT_SETTINGS,
     DELETE_EXPENSE_CATEGORY,
     DELETE_INCOME_CATEGORY,
@@ -23,17 +22,16 @@ import {
     MAKE_ALL_NULL,
     MAKE_NULL_KEY,
     UPDATE_GOAL,
-    UPDATE_LOGIN, 
     UPDATE_SETTINGS,
-    DEFAULT_ACCOUNT_SETTINGS,
-    UPDATE_ACCOUNT_SETTINGS,
+    SIGN_IN,
+    SIGN_OUT,
 } from './action';
 import {
+    defaultAccount,
     defaultCardConfig,
     defaultData,
     defaultExpenseCategories,
     defaultIncomeCategories,
-    defaultLogin,
     defaultSettings,
     NULL_KEY,
 } from '../data/default';
@@ -99,6 +97,17 @@ const makeNullKey = (base, key) => {
         if (record.catKey === key)
             record.catKey = NULL_KEY;
     }));
+}
+
+const updateAccount = (account = defaultAccount, action) => {
+    switch (action.type) {
+        case SIGN_IN:
+            return action.payload;
+        
+        case SIGN_OUT:
+            return defaultAccount;
+    }
+    return account;
 }
 
 const updateCards = (cards = defaultCardConfig, action) => {
@@ -249,35 +258,11 @@ const updateSettings = (settings = defaultSettings, action) => {
     return settings;
 }
 
-const updateLogin = (isLogin = defaultLogin, action) => {
-    
-    switch (action.type) {
-        case DEFAULT_LOGIN:
-            return false;
-        case UPDATE_LOGIN:
-            return action.payload.isLogin;
-    }
-    return isLogin;
-}
-
-const updateAccountSettings = (settings = {}, action) => {
-    switch (action.type) {
-        case DEFAULT_ACCOUNT_SETTINGS:
-            return defaultAccountSettings;
-        case UPDATE_ACCOUNT_SETTINGS:
-            var newSettings = { ...settings };
-            newSettings = action.payload;
-            return newSettings;
-    }
-    return settings;
-}
-
 export default combineReducers({
+    account: updateAccount,
     cards: updateCards,
     data: updateData,
     expenseCategories: updateExpenseCategories,
     incomeCategories: updateIncomeCategories,
     settings: updateSettings,
-    isLogin: updateLogin,
-    accountSettings: updateAccountSettings,
 });
