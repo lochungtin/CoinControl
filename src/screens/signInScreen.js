@@ -1,6 +1,6 @@
 import { GoogleSignin, GoogleSigninButton, statusCodes, } from '@react-native-community/google-signin';
 import React from 'react';
-import { Text, View, Alert, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View, } from 'react-native';
 import { AccessToken, GraphRequest, GraphRequestManager, LoginManager, } from 'react-native-fbsdk';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';

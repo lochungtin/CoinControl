@@ -175,6 +175,7 @@ class Screen extends React.Component {
 }
 
 const mapStateToProps = state => ({
+    account: state.account,
     settings: state.settings,
 })
 
