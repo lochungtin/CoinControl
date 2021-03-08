@@ -1,4 +1,4 @@
-import { GoogleSignin, GoogleSigninButton, statusCodes, } from '@react-native-community/google-signin';
+import { GoogleSignin, GoogleSigninButton, } from '@react-native-community/google-signin';
 import React from 'react';
 import { Text, TouchableOpacity, View, } from 'react-native';
 import { AccessToken, GraphRequest, GraphRequestManager, LoginManager, } from 'react-native-fbsdk';
@@ -52,7 +52,7 @@ class Screen extends React.Component {
             firebase
                 .auth()
                 .signInWithEmailAndPassword(this.state.email, this.state.password)
-                .then(result => this.signInUpdate("", result.user.displayName, result.user.uid, "Email").then(this.props.navigation.goBack))
+                .then(result => this.signIn("", result.user.displayName, result.user.uid, "Email").then(this.props.navigation.goBack))
                 .catch(error => console.log(error.message));
         }
     }
@@ -78,7 +78,7 @@ class Screen extends React.Component {
                                 if (error)
                                     console.log('login info has error: ' + error);
                                 else
-                                    this.signInUpdate(result["last_name"], result["first_name"], result["id"], "Facebook");
+                                    this.signIn(result["last_name"], result["first_name"], result["id"], "Facebook");
                             },
                         );
                         new GraphRequestManager().addRequest(profileRequest).start();
@@ -96,7 +96,7 @@ class Screen extends React.Component {
                     GoogleSignin.signIn()
                         .then(result => {
                             const user = result.user;
-                            this.signInUpdate(user.givenName, user.familyName, user.id, "Google");
+                            this.signIn(user.givenName, user.familyName, user.id, "Google");
                         })
                         .catch(error => console.log(error));
                 }
@@ -104,20 +104,7 @@ class Screen extends React.Component {
             .catch(error => console.log(error));
     }
 
-    googleSignOut = async () => {
-        try {
-            await GoogleSignin.revokeAccess();
-            await GoogleSignin.signOut();
-            this.signOutUpdate();
-        } catch (error) {
-            if (error.code === statusCodes.SIGN_IN_REQUIRED)
-                console.log('Not Logged In');
-            else
-                console.error(error);
-        }
-    }
-
-    signInUpdate = async (displayName, familyName, type, uid) => {
+    signIn = async (displayName, familyName, uid, type) => {
         store.dispatch(signIn({ displayName, familyName, type, uid }));
         firebaseLoginAccount(
             displayName,
@@ -132,11 +119,6 @@ class Screen extends React.Component {
                 "settings": this.props.settings,
             }
         );
-        this.props.navigation.navigate('Settings');
-    }
-
-    signOutUpdate = async () => {
-        store.dispatch(signOut());
         this.props.navigation.navigate('Settings');
     }
 
