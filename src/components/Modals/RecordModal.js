@@ -125,13 +125,13 @@ class RecordModal extends React.Component {
                             key={this.state.newDate}
                             onConfirm={this.onConfirm}
                             onSpecialPress={() => this.dpToggle(true)}
-                            num={this.item('value') === undefined ? '0' : this.item('value')}
+                            num={this.item('value') || 0}
                         >
                             <Text style={{ color: this.props.settings.accent }}>
                                 Date
                             </Text>
                             <Text style={{ color: this.props.settings.accent }}>
-                                {(this.state.newDate ? this.state.newDate : this.item('date')).substring(5).replace(/-/, '/')}
+                                {(this.state.newDate || this.item('date')).substring(5).replace(/-/, '/')}
                             </Text>
                         </Numpad>
                     </View>
@@ -143,9 +143,9 @@ class RecordModal extends React.Component {
                     <DatePicker
                         action={this.onChangeDate}
                         close={() => this.dpToggle(false)}
-                        date={(this.state.newDate === '' ? this.item('date') : this.state.newDate)}
+                        date={this.state.newDate || this.item('date')}
                         open={this.state.dpOpen}
-                        selected={(this.state.newDate === '' ? this.item('date') : this.state.newDate)}
+                        selected={this.state.newDate || this.item('date')}
                     />
                 </>}
             </Modal>

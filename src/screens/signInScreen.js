@@ -27,24 +27,34 @@ class Screen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            edit: '',
             email: '',
             hidden: true,
             password: '',
         };
     }
 
+    componentDidMount() {
+        this._unsubscribe = this.props.navigation.addListener('focus', () => {
+            if (this.props.route.params)
+                this.setState({ email: this.props.route.params.email });
+        });
+    }
+
+    componentWillUnmount() {
+        this._unsubscribe();
+    }
+
     color = () => this.props.settings.darkMode ? shade2 : shade3;
 
     emailSignIn = () => {
-        if (this.state.email !== '' && this.state.password !== '')
+        if (this.state.email !== '' && this.state.password !== '') {
             firebase
                 .auth()
                 .signInWithEmailAndPassword(this.state.email, this.state.password)
-                .then(result => {
-                    this.signInUpdate("", result.user.displayName, result.user.uid, "Email");
-                    this.props.navigation.goBack();
-                })
+                .then(result => this.signInUpdate("", result.user.displayName, result.user.uid, "Email").then(this.props.navigation.goBack))
                 .catch(error => console.log(error.message));
+        }
     }
 
     facebookSignIn = () => {
@@ -134,7 +144,7 @@ class Screen extends React.Component {
 
     toggleHidden = () => this.setState({ hidden: !this.state.hidden });
 
-    updateEmail = email => this.setState({ email });
+    updateEmail = email => this.setState({ edit: true, email });
 
     updatePassword = password => this.setState({ password });
 
@@ -149,7 +159,7 @@ class Screen extends React.Component {
                             onChangeText={this.updateEmail}
                             placeholder={'Email'}
                             type={'confirmation'}
-                            value={this.state.email}
+                            value={this.state.edit ? this.state.email : (this.props.route.params ? this.props.route.params.email : this.state.email)}
                         />
                         <SignUpInput
                             iconOnPress={this.toggleHidden}

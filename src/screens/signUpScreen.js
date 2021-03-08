@@ -40,7 +40,7 @@ class Screen extends React.Component {
                     result.user.updateProfile({
                         displayName: this.state.displayName,
                     });
-                    this.props.navigation.navigate('SignIn', { info: { email: this.state.email, password: this.state.password } })
+                    this.props.navigation.navigate('SignIn', { email: this.state.email });
                 })
                 .catch(error => this.setState({ prompt: error.message }));
         }

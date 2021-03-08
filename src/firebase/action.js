@@ -34,7 +34,7 @@ export const firebaseCreateAccount = (familyName, givenName, id, type, details) 
 }
 
 //login account
-export const fireaseLoginAccount = (familyName, givenName, id, type, details) => {
+export const firebaseLoginAccount = (familyName, givenName, id, type, details) => {
     db.ref('/UserData').orderByChild("id").equalTo(id).once("value", snapshot => {
         if (snapshot.exists()) {
             const userData = snapshot.val();
