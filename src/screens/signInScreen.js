@@ -80,16 +80,18 @@ class Screen extends React.Component {
     }
 
     googleSignIn = () => {
-        GoogleSignin.hasPlayServices().then(has => {
-            if (has) {
-                GoogleSignin.signIn()
-                    .then(result => {
-                        const user = result.user;
-                        this.signInUpdate(user.givenName, user.familyName, user.id, "Google");
-                    })
-                    .catch(error => console.log(error));
-            }
-        }).catch(error => console.log(error));
+        GoogleSignin.hasPlayServices()
+            .then(has => {
+                if (has) {
+                    GoogleSignin.signIn()
+                        .then(result => {
+                            const user = result.user;
+                            this.signInUpdate(user.givenName, user.familyName, user.id, "Google");
+                        })
+                        .catch(error => console.log(error));
+                }
+            })
+            .catch(error => console.log(error));
     }
 
     googleSignOut = async () => {
