@@ -52,7 +52,7 @@ class Screen extends React.Component {
             firebase
                 .auth()
                 .signInWithEmailAndPassword(this.state.email, this.state.password)
-                .then(result => this.signIn("", result.user.displayName, result.user.uid, "Email").then(this.props.navigation.goBack))
+                .then(result => this.signIn(result.user.displayName, "", result.user.uid, "Email").then(this.props.navigation.goBack))
                 .catch(error => console.log(error.message));
         }
     }
