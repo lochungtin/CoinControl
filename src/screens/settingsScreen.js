@@ -1,4 +1,4 @@
-import { GoogleSignin, GoogleSigninButton, } from '@react-native-community/google-signin';
+import { GoogleSignin } from '@react-native-community/google-signin';
 import moment from 'moment';
 import React from 'react';
 import { ScrollView, View, } from 'react-native';
@@ -13,7 +13,7 @@ import SettingsHeader from '../components/SettingsHeader';
 import SettingsItem from '../components/SettingsItem';
 import TimePicker from '../components/TimePicker';
 import NotifService from '../notifications';
-import { defaultCards, defaultExpenseCategory, defaultIncomeCategory, defaultSettings, deleteHistory, makeAllNull, updateSettings, signOut } from '../redux/action';
+import { defaultCards, defaultExpenseCategory, defaultIncomeCategory, defaultSettings, deleteHistory, makeAllNull, updateSettings, signOut, } from '../redux/action';
 import { store } from '../redux/store';
 
 import { bgColorD, shade2, } from '../data/color';

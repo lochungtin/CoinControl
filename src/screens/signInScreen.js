@@ -9,7 +9,7 @@ import ScreenHeader from '../components/ScreenHeader';
 import SignUpInput from '../components/SignUpInput';
 import { firebaseLoginAccount } from '../firebase/action';
 import firebase from '../firebase/config';
-import { signIn, signOut } from '../redux/action';
+import { signIn } from '../redux/action';
 import { store } from '../redux/store';
 
 import { black, shade2, shade3 } from '../data/color';
