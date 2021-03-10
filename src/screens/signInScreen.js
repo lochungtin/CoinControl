@@ -109,8 +109,8 @@ class Screen extends React.Component {
         firebaseLoginAccount(
             displayName,
             familyName,
-            type,
             uid,
+            type,
             {
                 "cards": this.props.cards,
                 "data": this.props.data,
