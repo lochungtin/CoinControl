@@ -8,7 +8,7 @@ import RecordModal from '../components/Modals/RecordModal';
 import ScreenHeader from '../components/ScreenHeader';
 import { store } from '../redux/store';
 import { addRecord } from '../redux/action';
-import {firebaseAddData} from "../firebase/action"
+import { firebaseAddData } from "../firebase/action"
 
 import { NULL_KEY } from '../data/default';
 import { RNKey } from '../functions/GenKey';
@@ -60,9 +60,7 @@ class Screen extends React.Component {
     }
 
     onConfirm = record => {
-        store.dispatch(addRecord(record));
-        //Firebase Add Record
-        //if(isLogin) firebaseAddData()
+        store.dispatch(addRecord({ ...record, key: record.datekey + ':' + RNKey() }));
         this.setState({ catKey: '', open: false });
         this.props.navigation.goBack();
     }
