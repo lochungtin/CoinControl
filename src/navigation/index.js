@@ -4,7 +4,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { StatusBar } from 'react-native';
-import NavigationBar from 'react-native-navbar-color';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
@@ -28,10 +27,6 @@ const ReportSelection = createDrawerNavigator();
 const Root = createBottomTabNavigator();
 
 class AppNav extends React.Component {
-
-    componentDidMount() {
-        NavigationBar.setColor(this.props.settings.darkMode ? bgColorD : shade2);
-    }
 
     bgColor = () => this.props.settings.darkMode ? bgColorD : bgColorL;
 

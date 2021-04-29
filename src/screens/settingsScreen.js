@@ -2,7 +2,6 @@ import { GoogleSignin } from '@react-native-community/google-signin';
 import moment from 'moment';
 import React from 'react';
 import { ScrollView, View, } from 'react-native';
-import NavigationBar from 'react-native-navbar-color'
 import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
@@ -103,10 +102,7 @@ class Screen extends React.Component {
 
     nav = (screen, params) => this.props.navigation.navigate(screen, params);
 
-    toggleDarkMode = () => {
-        NavigationBar.setColor(!this.props.settings.darkMode ? bgColorD : shade2);
-        store.dispatch(updateSettings({ key: 'darkMode', update: !this.props.settings.darkMode }));
-    }
+    toggleDarkMode = () => store.dispatch(updateSettings({ key: 'darkMode', update: !this.props.settings.darkMode }));
 
     render() {
         console.log(this.props);
