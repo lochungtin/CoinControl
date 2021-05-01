@@ -105,7 +105,6 @@ class Screen extends React.Component {
     toggleDarkMode = () => store.dispatch(updateSettings({ key: 'darkMode', update: !this.props.settings.darkMode }));
 
     render() {
-        console.log(this.props);
         return (
             <View style={this.props.settings.darkMode ? styles.screenD : styles.screenL}>
                 <ScreenHeader back={() => this.nav('Home')} name={'Settings'} />

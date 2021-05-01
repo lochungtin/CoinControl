@@ -95,6 +95,7 @@ class CategoryModal extends React.Component {
                             onChangeText={this.textChange}
                             placeholder={'Title (Optional)'}
                             placeholderTextColor={this.placeholderColor()}
+                            ref={input => this.textInput = input}
                             style={this.style(categoryModalStyles, 'input')}
                         />
                         <Bubble 

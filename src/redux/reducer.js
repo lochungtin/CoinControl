@@ -35,7 +35,6 @@ import {
     defaultSettings,
     NULL_KEY,
 } from '../data/default';
-import { RNKey } from '../functions/GenKey';
 
 const addRecord = (base, datekey, rnkey, payload) => {
     // create new date object
@@ -134,7 +133,8 @@ const updateData = (data = defaultData, action) => {
             return defaultData;
 
         case ADD_RECORD:
-            addRecord(temp, datekey, rnkey, action.payload);
+            var keyset = action.payload.key.split(':');
+            addRecord(temp, keyset[0], keyset[1], action.payload.data);
             break;
 
         case EDIT_RECORD:

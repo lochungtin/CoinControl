@@ -60,7 +60,7 @@ class Screen extends React.Component {
     }
 
     onConfirm = record => {
-        store.dispatch(addRecord({ ...record, key: record.datekey + ':' + RNKey() }));
+        store.dispatch(addRecord({ data: record, key: record.date + ':' + RNKey() }));
         this.setState({ catKey: '', open: false });
         this.props.navigation.goBack();
     }
@@ -133,6 +133,6 @@ const mapStateToProps = state => ({
     incomeCategories: state.incomeCategories,
     settings: state.settings,
     isLogin: state.isLogin,
-})
+});
 
 export default connect(mapStateToProps)(Screen);
