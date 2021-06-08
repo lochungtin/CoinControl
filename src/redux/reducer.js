@@ -35,6 +35,8 @@ import {
     defaultSettings,
     NULL_KEY,
 } from '../data/default';
+
+import{firebaseAddData} from "../firebase/action"
 import { RNKey } from '../functions/GenKey';
 
 const addRecord = (base, datekey, rnkey, payload) => {

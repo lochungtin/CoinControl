@@ -61,8 +61,6 @@ class Screen extends React.Component {
 
     onConfirm = record => {
         store.dispatch(addRecord(record));
-        //Firebase Add Record
-        //if(isLogin) firebaseAddData()
         this.setState({ catKey: '', open: false });
         this.props.navigation.goBack();
     }

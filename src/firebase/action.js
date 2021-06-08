@@ -16,9 +16,9 @@ export const firebaseAddData = (id, path, type, data) => {
 }
 
 //Update data
-export const firebaseUpdateData = (id, path, type, data) => {
-    db.ref('/UserData/' + id + "/" + path).set({
-        type: data
+export const firebaseUpdateData = (firebaseId,details) => {
+    db.ref('/UserData/' + firebaseId).set({
+        details: details
     });
 }
 
@@ -34,14 +34,45 @@ export const firebaseCreateAccount = (familyName, givenName, id, type, details) 
 }
 
 //login account
-export const firebaseLoginAccount = (familyName, givenName, id, type, details) => {
-    db.ref('/UserData').orderByChild("id").equalTo(id).once("value", snapshot => {
+export const firebaseLoginAccount = async (familyName, givenName, id, type, details,dataMethod) => {
+    var isUserExists = false;
+    var returnSnapshot = 0;
+    var x  =  await db.ref('/UserData').orderByChild("id").equalTo(id).once("value", snapshot => {
         if (snapshot.exists()) {
-            const userData = snapshot.val();
-            console.log("exists!", userData);
-            //needa return data here
+            isUserExists = true
+            returnSnapshot = snapshot.val();
         }
-        else
-            firebaseCreateAccount(familyName,givenName,id,type, details);
     });
+    if(!isUserExists){
+        firebaseCreateAccount(familyName,givenName,id,type, details);
+        return null;
+    }
+
+    const userData = returnSnapshot;
+    console.log("exists!", userData);
+    //check type and return data
+    switch(dataMethod){
+        case "localOnDatabase":
+            firebaseUpdateData(Object.keys(userData)[0],details);
+            return null
+        case "databaseOnLocal":
+            //working on this
+            let firstKey=Object.keys(userData)[0];
+            let firstValue= userData[firstKey].details;
+            console.log("First Value")
+            console.log(firstValue)
+            return firstValue
+        case "merge":
+            //have not worked on this 
+            return userData
+    }
+    console.log("ANSWERANSWER")
+    console.log(answer)
+    return answer
 }
+
+// login to put local data on database
+
+// login to put database on local
+
+// login to merge to combine both database and local
