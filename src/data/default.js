@@ -2,6 +2,13 @@ import { goldenBrown, colorLabels, white } from './color';
 
 export const NULL_KEY = '00000000-0000';
 
+export const defaultAccount = {
+    displayName: '',
+    familyName: '',
+    type: '',
+    uid: '',
+};
+
 export const defaultCardConfig = {
     tc: true,
     pc: true,
@@ -68,14 +75,6 @@ export const defaultIncomeCategories = {
     },
     '20012021-4012': {
         color: colorLabels[3], name: 'Salary', iconName: 'cash'
-    },
-};
-
-export const defaultLogin = {
-    login: false,
-    method: '',
-    user: {
-        username: '',
     },
 };
 

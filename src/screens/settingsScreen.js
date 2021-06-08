@@ -1,7 +1,7 @@
+import { GoogleSignin } from '@react-native-community/google-signin';
 import moment from 'moment';
 import React from 'react';
 import { ScrollView, View, } from 'react-native';
-import NavigationBar from 'react-native-navbar-color'
 import { connect } from 'react-redux';
 
 import Bubble from '../components/Bubble';
@@ -12,7 +12,7 @@ import SettingsHeader from '../components/SettingsHeader';
 import SettingsItem from '../components/SettingsItem';
 import TimePicker from '../components/TimePicker';
 import NotifService from '../notifications';
-import { defaultCards, defaultExpenseCategory, defaultIncomeCategory, defaultSettings, deleteHistory, makeAllNull, updateSettings, } from '../redux/action';
+import { defaultCards, defaultExpenseCategory, defaultIncomeCategory, defaultSettings, deleteHistory, makeAllNull, updateSettings, signOut, } from '../redux/action';
 import { store } from '../redux/store';
 
 import { bgColorD, shade2, } from '../data/color';
@@ -36,6 +36,23 @@ class Screen extends React.Component {
             this.onRegister.bind(this),
             this.onNotif.bind(this),
         );
+    }
+
+    accountAction = () => {
+        if (this.props.account.uid) {
+            if (this.props.account.type === 'Google')
+                GoogleSignin.revokeAccess()
+                    .then(() =>
+                        GoogleSignin.signOut()
+                            .then(() => store.dispatch(signOut()))
+                            .catch(error => console.log(error))
+                    )
+                    .catch(error => console.log(error));
+            else
+                store.dispatch(signOut());
+        }
+        else
+            this.props.navigation.navigate('SignIn')
     }
 
     addZero = num => num < 10 ? '0' + num : num;
@@ -85,10 +102,7 @@ class Screen extends React.Component {
 
     nav = (screen, params) => this.props.navigation.navigate(screen, params);
 
-    toggleDarkMode = () => {
-        NavigationBar.setColor(!this.props.settings.darkMode ? bgColorD : shade2);
-        store.dispatch(updateSettings({ key: 'darkMode', update: !this.props.settings.darkMode }));
-    }
+    toggleDarkMode = () => store.dispatch(updateSettings({ key: 'darkMode', update: !this.props.settings.darkMode }));
 
     render() {
         return (
@@ -96,8 +110,7 @@ class Screen extends React.Component {
                 <ScreenHeader back={() => this.nav('Home')} name={'Settings'} />
                 <ScrollView style={settingStyles.scrollView}>
                     <SettingsHeader title={'ACCOUNTS'} />
-                    <SettingsItem action={() => this.nav('Account')} iconL={'login'} text={'Login'} />
-                    <SettingsItem action={() => this.nav('Account')} iconL={'account'} text={'Account Settings'} />
+                    <SettingsItem action={this.accountAction} iconL={'login'} text={'Sign ' + (this.props.account.uid ? 'Out' : 'In')} />
 
                     <SettingsHeader title={'GENERAL'} />
                     <SettingsItem action={() => this.setState({ cupOpen: !this.state.cupOpen })} iconL={'currency-usd'} iconR={'currency-' + this.props.settings.currency} text={'Currency'} open={this.state.cupOpen}>
@@ -158,7 +171,7 @@ class Screen extends React.Component {
                         let set = moment().set({ hour: splt[0], minute: splt[1], second: 0 });
                         if (set.isBefore(moment()))
                             set.add(1, 'day');
-                        
+
                         this.notif.cancelAll();
                         this.notif.scheduleNotif(set, this.props.settings.accent);
                     }}
@@ -176,6 +189,7 @@ class Screen extends React.Component {
 }
 
 const mapStateToProps = state => ({
+    account: state.account,
     settings: state.settings,
 })
 

@@ -10,7 +10,6 @@ import {
     DEFAULT_EXPENSE_CATEGORY,
     DEFAULT_GOAL,
     DEFAULT_INCOME_CATEGORY,
-    DEFAULT_LOGIN,
     DEFAULT_SETTINGS,
     DELETE_EXPENSE_CATEGORY,
     DELETE_INCOME_CATEGORY,
@@ -23,19 +22,19 @@ import {
     MAKE_ALL_NULL,
     MAKE_NULL_KEY,
     UPDATE_GOAL,
-    UPDATE_LOGIN, 
     UPDATE_SETTINGS,
+    SIGN_IN,
+    SIGN_OUT,
 } from './action';
 import {
+    defaultAccount,
     defaultCardConfig,
     defaultData,
     defaultExpenseCategories,
     defaultIncomeCategories,
-    defaultLogin,
     defaultSettings,
     NULL_KEY,
 } from '../data/default';
-import { RNKey } from '../functions/GenKey';
 
 const addRecord = (base, datekey, rnkey, payload) => {
     // create new date object
@@ -99,6 +98,17 @@ const makeNullKey = (base, key) => {
     }));
 }
 
+const updateAccount = (account = defaultAccount, action) => {
+    switch (action.type) {
+        case SIGN_IN:
+            return action.payload;
+        
+        case SIGN_OUT:
+            return defaultAccount;
+    }
+    return account;
+}
+
 const updateCards = (cards = defaultCardConfig, action) => {
     let temp = { ...cards }
     switch (action.type) {
@@ -123,10 +133,8 @@ const updateData = (data = defaultData, action) => {
             return defaultData;
 
         case ADD_RECORD:
-            let rnkey = RNKey();
-            var datekey = action.payload.date;
-
-            addRecord(temp, datekey, rnkey, { ...action.payload, key: datekey + ':' + rnkey });
+            var keyset = action.payload.key.split(':');
+            addRecord(temp, keyset[0], keyset[1], action.payload.data);
             break;
 
         case EDIT_RECORD:
@@ -202,7 +210,7 @@ const updateExpenseCategories = (categories = defaultExpenseCategories, action) 
             return defaultExpenseCategories;
 
         case ADD_EXPENSE_CATEGORY:
-            temp[RNKey()] = action.payload;
+            temp[action.payload.key] = action.payload.data;
             return temp;
 
         case DELETE_EXPENSE_CATEGORY:
@@ -222,7 +230,7 @@ const updateIncomeCategories = (categories = defaultIncomeCategories, action) =>
             return defaultIncomeCategories;
 
         case ADD_INCOME_CATEGORY:
-            temp[RNKey()] = action.payload;
+            temp[action.payload.key] = action.payload.data;
             return temp;
 
         case DELETE_INCOME_CATEGORY:
@@ -247,21 +255,11 @@ const updateSettings = (settings = defaultSettings, action) => {
     return settings;
 }
 
-const updateLogin = (loginState = defaultLogin, action) => {
-    switch (action.type) {
-        case DEFAULT_LOGIN:
-            return defaultLogin;
-        case UPDATE_LOGIN:
-            return action.payload;
-    }
-    return loginState;
-}
-
 export default combineReducers({
+    account: updateAccount,
     cards: updateCards,
     data: updateData,
     expenseCategories: updateExpenseCategories,
     incomeCategories: updateIncomeCategories,
     settings: updateSettings,
-    login: updateLogin,
 });

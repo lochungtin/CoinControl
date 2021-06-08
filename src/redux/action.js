@@ -125,13 +125,16 @@ export const updateSettings = payload => ({
     payload: payload,
 });
 
-export const DEFAULT_LOGIN = 'DEFAULT_LOGIN';
-export const defaultLogin = () => ({
-    type: DEFAULT_LOGIN,
-});
+// ACCOUNT RELATED
 
-export const UPDATE_LOGIN = 'UPDATE_LOGIN';
-export const updateLogin = payload => ({
-    type: UPDATE_LOGIN,
+export const SIGN_IN = 'SIGN_IN';
+export const signIn = payload => ({
+    type: SIGN_IN,
     payload
 });
+
+export const SIGN_OUT = 'SIGN_OUT';
+export const signOut = () => ({
+    type: SIGN_OUT,
+});
+

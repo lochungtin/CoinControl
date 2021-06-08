@@ -40,7 +40,7 @@ class RecordModal extends React.Component {
     cpConfirm = color => {
         this.setState({ cpOpen: false });
         let payload = {}
-        payload[this.item('catKey')] = { 
+        payload[this.item('catKey')] = {
             color,
             iconName: this.catValue('iconName'),
             name: this.catValue('name'),
@@ -107,9 +107,9 @@ class RecordModal extends React.Component {
                             <ExpandButton color={this.iconColor()} onPress={this.close} />
                         </View>
                         <View style={this.style(recordModalStyles, 'inputBox')}>
-                            <Icon 
-                                color={this.catValue('color')} 
-                                name={this.catValue('iconName')} 
+                            <Icon
+                                color={this.catValue('color')}
+                                name={this.catValue('iconName')}
                                 size={30}
                             />
                             <TextInput
@@ -122,15 +122,16 @@ class RecordModal extends React.Component {
                             <Bubble onPress={() => this.cpToggle(true)} color={this.catValue('color')} size={25} />
                         </View>
                         <Numpad
+                            key={this.state.newDate}
                             onConfirm={this.onConfirm}
                             onSpecialPress={() => this.dpToggle(true)}
-                            num={this.item('value') === undefined ? '0' : this.item('value')}
+                            num={this.item('value') || 0}
                         >
                             <Text style={{ color: this.props.settings.accent }}>
                                 Date
                             </Text>
                             <Text style={{ color: this.props.settings.accent }}>
-                                {(this.state.newDate === '' ? this.item('date') : this.state.newDate).substring(5).replace(/-/, '/')}
+                                {(this.state.newDate || this.item('date')).substring(5).replace(/-/, '/')}
                             </Text>
                         </Numpad>
                     </View>
@@ -142,9 +143,9 @@ class RecordModal extends React.Component {
                     <DatePicker
                         action={this.onChangeDate}
                         close={() => this.dpToggle(false)}
-                        date={(this.state.newDate === '' ? this.item('date') : this.state.newDate)}
+                        date={this.state.newDate || this.item('date')}
                         open={this.state.dpOpen}
-                        selected={(this.state.newDate === '' ? this.item('date') : this.state.newDate)}
+                        selected={this.state.newDate || this.item('date')}
                     />
                 </>}
             </Modal>

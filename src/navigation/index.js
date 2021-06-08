@@ -4,11 +4,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { StatusBar } from 'react-native';
-import NavigationBar from 'react-native-navbar-color';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import accountScreen from '../screens/accountScreen';
 import chartScreen from '../screens/chartScreen';
 import updateRecordScreen from '../screens/categoryScreen';
 import detailScreen from '../screens/detailScreen';
@@ -16,6 +14,10 @@ import customCategoryScreen from '../screens/iconSelectionScreen';
 import homeScreen from '../screens/homeScreen';
 import reportScreen from '../screens/reportScreen';
 import settingsScreen from '../screens/settingsScreen';
+import signInScreen from '../screens/signInScreen';
+import signUpScreen from '../screens/signUpScreen';
+import signInConfirmScreen from '../screens/signInConfirmScreen';
+import resetPasswordScreen from '../screens/resetPasswordScreen';
 
 import { black, bgColorD, bgColorL, rgba, shade2, white, } from '../data/color';
 
@@ -26,10 +28,6 @@ const ReportSelection = createDrawerNavigator();
 const Root = createBottomTabNavigator();
 
 class AppNav extends React.Component {
-
-    componentDidMount() {
-        NavigationBar.setColor(this.props.settings.darkMode ? bgColorD : shade2);
-    }
 
     bgColor = () => this.props.settings.darkMode ? bgColorD : bgColorL;
 
@@ -111,7 +109,10 @@ class AppNav extends React.Component {
     settings = () => (
         <Settings.Navigator>
             <Settings.Screen name='Settings' component={settingsScreen} options={{ headerShown: false }} />
-            <Settings.Screen name='Account' component={accountScreen} options={{ headerShown: false }} />
+            <Settings.Screen name='SignIn' component={signInScreen} options={{ headerShown: false }} />
+            <Settings.Screen name='SignInConfirm' component={signInConfirmScreen} options={{ headerShown: false }} />
+            <Settings.Screen name='SignUp' component={signUpScreen} options={{ headerShown: false }} />
+            <Settings.Screen name='ResetPassword' component={resetPasswordScreen} options={{ headerShown: false }} />
             <Settings.Screen name='Icons' component={customCategoryScreen} options={{ headerShown: false }} />
         </Settings.Navigator>
     );
