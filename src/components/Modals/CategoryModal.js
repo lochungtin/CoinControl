@@ -12,6 +12,7 @@ import { store } from '../../redux/store';
 
 import { black, shade2, shade3, white, } from '../../data/color';
 import { categoryModalStyles, generalBottomModalStyles, } from '../../styles';
+import { RNKey } from '../../functions/GenKey';
 
 class CategoryModal extends React.Component {
 
@@ -32,12 +33,15 @@ class CategoryModal extends React.Component {
 
     confirm = () => {
         if (this.state.newTitle !== '') {
-            const cat = {
-                color: this.state.color,
-                iconName: this.props.icon,
-                name: this.state.newTitle,
-            }
-            store.dispatch(this.props.type === 'Expense' ? addExpenseCategory(cat) : addIncomeCategory(cat));
+            const payload = {
+                key: RNKey(),
+                data: {
+                    color: this.state.color,
+                    iconName: this.props.icon,
+                    name: this.state.newTitle,
+                }
+            };
+            store.dispatch(this.props.type === 'Expense' ? addExpenseCategory(payload) : addIncomeCategory(payload));
             this.props.close();
         }
     }
@@ -91,6 +95,7 @@ class CategoryModal extends React.Component {
                             onChangeText={this.textChange}
                             placeholder={'Title (Optional)'}
                             placeholderTextColor={this.placeholderColor()}
+                            ref={input => this.textInput = input}
                             style={this.style(categoryModalStyles, 'input')}
                         />
                         <Bubble 

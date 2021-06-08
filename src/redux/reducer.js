@@ -36,9 +36,6 @@ import {
     NULL_KEY,
 } from '../data/default';
 
-import{firebaseAddData} from "../firebase/action"
-import { RNKey } from '../functions/GenKey';
-
 const addRecord = (base, datekey, rnkey, payload) => {
     // create new date object
     if (base.data[datekey] === undefined)
@@ -136,10 +133,8 @@ const updateData = (data = defaultData, action) => {
             return defaultData;
 
         case ADD_RECORD:
-            let rnkey = RNKey();
-            var datekey = action.payload.date;
-
-            addRecord(temp, datekey, rnkey, { ...action.payload, key: datekey + ':' + rnkey });
+            var keyset = action.payload.key.split(':');
+            addRecord(temp, keyset[0], keyset[1], action.payload.data);
             break;
 
         case EDIT_RECORD:
@@ -215,7 +210,7 @@ const updateExpenseCategories = (categories = defaultExpenseCategories, action) 
             return defaultExpenseCategories;
 
         case ADD_EXPENSE_CATEGORY:
-            temp[RNKey()] = action.payload;
+            temp[action.payload.key] = action.payload.data;
             return temp;
 
         case DELETE_EXPENSE_CATEGORY:
@@ -235,7 +230,7 @@ const updateIncomeCategories = (categories = defaultIncomeCategories, action) =>
             return defaultIncomeCategories;
 
         case ADD_INCOME_CATEGORY:
-            temp[RNKey()] = action.payload;
+            temp[action.payload.key] = action.payload.data;
             return temp;
 
         case DELETE_INCOME_CATEGORY:

@@ -8,7 +8,7 @@ import RecordModal from '../components/Modals/RecordModal';
 import ScreenHeader from '../components/ScreenHeader';
 import { store } from '../redux/store';
 import { addRecord } from '../redux/action';
-import {firebaseAddData} from "../firebase/action"
+import { firebaseAddData } from "../firebase/action"
 
 import { NULL_KEY } from '../data/default';
 import { RNKey } from '../functions/GenKey';
@@ -60,7 +60,7 @@ class Screen extends React.Component {
     }
 
     onConfirm = record => {
-        store.dispatch(addRecord(record));
+        store.dispatch(addRecord({ data: record, key: record.date + ':' + RNKey() }));
         this.setState({ catKey: '', open: false });
         this.props.navigation.goBack();
     }
@@ -133,6 +133,6 @@ const mapStateToProps = state => ({
     incomeCategories: state.incomeCategories,
     settings: state.settings,
     isLogin: state.isLogin,
-})
+});
 
 export default connect(mapStateToProps)(Screen);
