@@ -58,10 +58,8 @@ export const firebaseLoginAccount = async (familyName, givenName, id, type, deta
         case "databaseOnLocal":
             //working on this
             let firstKey=Object.keys(userData)[0];
-            let firstValue= userData[firstKey].details;
-            console.log("First Value")
-            console.log(firstValue)
-            return firstValue
+            let details= userData[firstKey].details;
+            return details
         case "merge":
             //have not worked on this 
             return userData
