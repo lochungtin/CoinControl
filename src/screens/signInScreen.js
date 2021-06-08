@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 
 import ScreenHeader from '../components/ScreenHeader';
 import SignUpInput from '../components/SignUpInput';
-import { firebaseLoginAccount } from '../firebase/action';
 import firebase from '../firebase/config';
 import { signIn } from '../redux/action';
 import { store } from '../redux/store';
@@ -105,7 +104,21 @@ class Screen extends React.Component {
     }
 
     signIn = (displayName, familyName, uid, type) => {
+        
+        //Choose whether to use database account data or to upload the existing data to that account
+        alert();
+        this.props.navigation.navigate(
+            'SignInConfirm',
+            {
+                displayName:displayName,
+                familyName:familyName, 
+                uid: uid,
+                type: type
+            }
+        );
+        /*
         store.dispatch(signIn({ displayName, familyName, type, uid }));
+        //1. Login to put local on database
         firebaseLoginAccount(
             displayName,
             familyName,
@@ -119,7 +132,12 @@ class Screen extends React.Component {
                 "settings": this.props.settings,
             }
         );
-        this.props.navigation.navigate('Settings');
+        //2. Login to put database on local
+
+        //3. Merge to update both database and local
+
+        */
+        
     }
 
     style = styleName => accountScreenStyles[styleName + (this.props.settings.darkMode ? "D" : "L")];
@@ -223,8 +241,9 @@ const mapStateToProps = state => ({
     data: state.data,
     expenseCategories: state.expenseCategories,
     incomeCategories: state.incomeCategories,
-    settings: state.settings,
     isLogin: state.isLogin,
+    settings: state.settings,
+    
 });
 
 export default connect(mapStateToProps)(Screen);
