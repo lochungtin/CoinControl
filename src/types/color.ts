@@ -1,6 +1,3 @@
-
-// ===== color ===== //
-
 // color picker //
 export interface ColorPickerDataType {
     blues: ColorPickerSectorDataType,

@@ -1,4 +1,4 @@
-import { ColorPickerDataType } from '../types';
+import { ColorPickerDataType } from '../types/color';
 
 // colors
 export const ACCENT = '#00FFB2';

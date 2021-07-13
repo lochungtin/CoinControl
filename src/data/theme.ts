@@ -1,4 +1,4 @@
-import { StaticThemeType, ThemeType } from '../types';
+import { StaticThemeType, ThemeType } from '../types/color';
 import { ACCENT, BLACK, SECONDARY_ACCENT, TINTED_GREY, WHITE } from './color';
 
 const staticTheme: StaticThemeType = {
