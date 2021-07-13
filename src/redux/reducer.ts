@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
 
-import { defaultSettings } from '../data/default';
-import { darkTheme, lightTheme } from '../data/theme';
-import { ReduxActionType, SettingsType } from '../types/redux';
 import { Actions } from './action';
 
+import { defaultSettings } from '../data/default';
+import { darkTheme, lightTheme } from '../data/theme';
+
+import { ReduxActionType, SettingsType } from '../types/redux';
+
 const updateSettings = (settings: SettingsType = defaultSettings, action: ReduxActionType) => {
-    let update = { ...settings };
+    let update: SettingsType = { ...settings };
     switch (action.type) {
         // set dark theme
         case Actions.SETTINGS_SET_DARKMODE:
