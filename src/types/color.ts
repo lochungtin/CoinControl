@@ -1,19 +1,10 @@
 // color picker //
 export interface ColorPickerDataType {
-    blues: ColorPickerSectorDataType,
-    greens: ColorPickerSectorDataType,
-    oranges: ColorPickerSectorDataType,
-    reds: ColorPickerSectorDataType,
-    violets: ColorPickerSectorDataType,
-    yellows: ColorPickerSectorDataType,
+    [index: string]: ColorPickerSectorDataType,
 };
 
 export interface ColorPickerSectorDataType {
-    a: ColorPickerCellDataType,
-    b: ColorPickerCellDataType,
-    c: ColorPickerCellDataType,
-    d: ColorPickerCellDataType,
-    e: ColorPickerCellDataType,
+    [index: string]: ColorPickerCellDataType,
 };
 
 export interface ColorPickerCellDataType {

@@ -9,7 +9,7 @@ class AppNav extends React.Component<ReduxPropType> {
     render() {
         return (
             <View>
-                <ColorPicker />
+                <ColorPicker selected={this.props.settings.theme.static.accentC} />
             </View>
         );
     }
