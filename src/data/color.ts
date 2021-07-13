@@ -1,9 +1,13 @@
-import { ColorPickerDataType } from "../types";
+import { ColorPickerDataType } from '../types';
 
+// colors
 export const ACCENT = '#00FFB2';
 export const BLACK = '#000000';
+export const SECONDARY_ACCENT = '#B8EADB';
+export const TINTED_GREY = '#4D5553';
 export const WHITE = '#FFFFFF';
 
+// color picker data
 export const colorPickerData: ColorPickerDataType = {
     blues: {
         a: {
