@@ -2,9 +2,9 @@ import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 
-import { ReduxPropType } from '../../types/redux';
+import { ReduxPropType } from '../../../types/redux';
 
-class Picker extends React.Component<ReduxPropType> {
+class Cell extends React.Component<ReduxPropType> {
     render() {
         return (
             <View>
@@ -18,4 +18,4 @@ const mapStateToProps = (state: ReduxPropType) => ({
     settings: state.settings,
 });
 
-export default connect(mapStateToProps)(Picker);
+export default connect(mapStateToProps)(Cell);
