@@ -17,7 +17,7 @@ export const GeneralModalStyles = StyleSheet.create({
         borderTopStartRadius: 30,
         display: 'flex',
         height: 30,
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
         width: screenWidth,
     },
     closeBtn: {
@@ -32,6 +32,7 @@ export const PromptModalStyles = StyleSheet.create({
         alignItems: 'center',
         display: 'flex',
         flexDirection: 'column',
+        paddingTop: 10,
         height: 350,
         justifyContent: 'flex-start',
         width: screenWidth,
@@ -41,7 +42,6 @@ export const PromptModalStyles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingTop: 20,
         width: screenWidth * 0.8,
     },
     textbox: {
