@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { ReduxPropType } from '../types/redux';
 
 import PromptModal from '../components/modals/prompt';
+import { Prompt } from '../data/prompts';
 
 class AppNav extends React.Component<ReduxPropType> {
 
@@ -14,6 +15,7 @@ class AppNav extends React.Component<ReduxPropType> {
                     onClose={() => {}}
                     onConfirm={() => {}}
                     open={true}
+                    prompt={Prompt.CLEAR_DATA}
                 />
             </View>
         );

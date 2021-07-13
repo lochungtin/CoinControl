@@ -8,12 +8,14 @@ import ModalBase from './base';
 
 import { PromptModalStyles } from './styles';
 
+import { Prompt, prompts } from '../../data/prompts';
 import { ReduxPropType } from '../../types/redux';
 
 interface DataProps {
     onClose: () => void,
-    onConfirm: () => void,
+    onConfirm: (dnsa: boolean) => void,
     open: boolean,
+    prompt: Prompt,
 }
 
 class Modal extends React.Component<ReduxPropType & DataProps> {
@@ -40,7 +42,7 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
                             </View>
                             <View style={PromptModalStyles.promptTextBox}>
                                 <Text style={{ ...PromptModalStyles.promptText, color: this.props.settings.theme.dynamic.text.mainC }}>
-                                    You are about to commit a warn crime, are you sure you want to proceed?
+                                    {`You are about to ${prompts[this.props.prompt]}, are you sure you want to proceed?`}
                                 </Text>
                             </View>
                             <View style={PromptModalStyles.dnsaTextBox}>
@@ -59,13 +61,13 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
                     </View>
                     <View style={PromptModalStyles.bullets}>
                         <Bullet 
-                            onPress={() => {}}
+                            onPress={() => this.props.onConfirm(this.state.checked)}
                             text='confirm'
                             width={0.375}
                         />
                         <Bullet 
                             inactive
-                            onPress={() => {}}
+                            onPress={this.props.onClose}
                             text='cancel'
                             width={0.375}
                         />
