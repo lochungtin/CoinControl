@@ -6,6 +6,11 @@ export interface ReduxActionType {
     payload?: number,
 };
 
+// component props //
+export interface ReduxPropType {
+    settings: SettingsType,
+}
+
 // default values //
 export interface SettingsType {
     theme: ThemeType,
