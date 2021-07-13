@@ -1,11 +1,11 @@
 import React from 'react';
+import { View } from 'react-native';
 import Modal from 'react-native-modal';
 import { connect } from 'react-redux';
 
 import { GeneralPickerStyles } from './styles';
 
 import { ReduxPropType } from '../../types/redux';
-import { View } from 'react-native';
 
 interface DataProps {
     children: any,
@@ -17,6 +17,8 @@ class PickerBase extends React.Component<ReduxPropType & DataProps> {
     render() {
         return (
             <Modal
+                animationIn='slideInUp'
+                animationInTiming={500}
                 backdropOpacity={this.props.settings.theme.dynamic.modal.shadow.alpha}
                 backdropColor={this.props.settings.theme.dynamic.modal.shadow.color}
                 isVisible={this.props.open}

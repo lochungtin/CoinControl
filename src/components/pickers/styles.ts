@@ -32,3 +32,26 @@ export const ColorPickerStyles = StyleSheet.create({
         zIndex: 2,
     },
 });
+
+export const DatePickerStyles = StyleSheet.create({
+    root: {
+        borderRadius: 20,
+        height: 380,
+        width: 380,
+    },
+    row: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        height: 40,
+        justifyContent: 'space-evenly',
+        width: 380,
+    },
+    cell: {
+        alignItems: 'center',
+        display: 'flex',
+        height: 40,
+        justifyContent: 'center',
+        width: 40,
+    }
+});

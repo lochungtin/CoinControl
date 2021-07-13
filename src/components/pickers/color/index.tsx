@@ -22,10 +22,7 @@ interface DataProps {
 class Picker extends React.Component<ReduxPropType & DataProps> {
     render() {
         return (
-            <BaseModal
-                onClose={this.props.onClose}
-                open={true}
-            >
+            <BaseModal onClose={this.props.onClose} open={this.props.open}>
                 <View style={ColorPickerStyles.stack}>
                     <View style={{
                         ...ColorPickerStyles.bgSquares,
