@@ -27,28 +27,27 @@ const staticTheme: StaticThemeType = {
 export const lightTheme: ThemeType = {
     dynamic: {
         icon: {
-            actionC: '',
-            drawerC: '',
-            homeC: '',
-            mainC: '',
+            actionC: TINTED_GREY,
+            drawerC: '#DEE9E6',
+            homeC: '#DEE9E6',
+            mainC: '#C4C4C4',
         },
         modal: {
-            closeBarC: '',
+            closeBarC: '#CACAC7',
             shadow: {
                 alpha: 0.2,
                 color: BLACK,
             },
         },
-        percentageTrackC: '',
+        percentageTrackC: '#F1F1F1',
         screen: {
             bgC: WHITE,
-            secondaryBgC: '',
+            secondaryBgC: '#F1F1F1',
         },
         text: {
-            disabled: '',
-            label: '',
-            main: BLACK,
-            placeholder: '',
+            labelC: '#717171',
+            mainC: BLACK,
+            secondaryC: '#7A7A7A',
         },
     },
     static: staticTheme,
@@ -57,28 +56,27 @@ export const lightTheme: ThemeType = {
 export const darkTheme: ThemeType = {
     dynamic: {
         icon: {
-            actionC: '',
-            drawerC: '',
-            homeC: '',
-            mainC: '',
+            actionC: TINTED_GREY,
+            drawerC: TINTED_GREY,
+            homeC: TINTED_GREY,
+            mainC: '#C4C4C4',
         },
         modal: {
-            closeBarC: '',
+            closeBarC: '#C4C4C4',
             shadow: {
                 alpha: 0.2,
                 color: WHITE,
             },
         },
-        percentageTrackC: '',
+        percentageTrackC: '#212121',
         screen: {
             bgC: BLACK,
-            secondaryBgC: '',
+            secondaryBgC: '#212121',
         },
         text: {
-            disabled: '',
-            label: '',
-            main: WHITE,
-            placeholder: '',
+            labelC: '#CBCBCB',
+            mainC: WHITE,
+            secondaryC: '#7A7A7A',
         },
     },
     static: staticTheme,

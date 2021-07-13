@@ -91,8 +91,7 @@ export interface ScreenThemeType {
 };
 
 export interface TextThemeType {
-    disabled: string,
-    label: string,
-    main: string,
-    placeholder: string,
+    labelC: string,
+    mainC: string,
+    secondaryC: string,
 };
