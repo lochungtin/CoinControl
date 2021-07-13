@@ -1,24 +1,19 @@
 import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
-import DatePicker from '../components/pickers/date';
-
 import { ReduxPropType } from '../types/redux';
 
-class AppNav extends React.Component<ReduxPropType> {
+import PromptModal from '../components/modals/prompt';
 
-    state = {
-        selected: '24-07-2021',
-    }
+class AppNav extends React.Component<ReduxPropType> {
 
     render() {
         return (
             <View style={{backgroundColor: this.props.settings.theme.dynamic.screen.bgC, flex: 1,}}>
-                <DatePicker
+                <PromptModal
                     onClose={() => {}}
-                    onSelect={(selected: string) => this.setState({ selected })}
+                    onConfirm={() => {}}
                     open={true}
-                    selected={this.state.selected}
                 />
             </View>
         );

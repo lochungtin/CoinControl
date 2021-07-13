@@ -18,8 +18,8 @@ export interface ColorPickerCellDataType {
 // theme //
 export interface StaticThemeType {
     accentC: string,
-    bullet: BulletThemeType,
-    cSwitch: CustomSwitchThemeType,
+    bullet: ButtonPairType,
+    cSwitch: ButtonPairType,
     progressBar: ProgressBarThemeType,
 };
 
@@ -35,12 +35,7 @@ export interface ThemeType {
 };
 
 // static
-export interface BulletThemeType {
-    bgC: string,
-    textC: string,
-};
-
-export interface CustomSwitchThemeType {
+export interface ButtonPairType {
     active: {
         bgC: string,
         textC: string,

@@ -4,8 +4,14 @@ import { ACCENT, BLACK, SECONDARY_ACCENT, TINTED_GREY, WHITE } from './color';
 const staticTheme: StaticThemeType = {
     accentC: ACCENT,
     bullet: {
-        bgC: ACCENT,
-        textC: BLACK,
+        active: {
+            bgC: ACCENT,
+            textC: BLACK,
+        },
+        inactive: {
+            bgC: TINTED_GREY,
+            textC: WHITE,
+        },
     },
     cSwitch: {
         active: {
