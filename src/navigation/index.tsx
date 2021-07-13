@@ -6,10 +6,20 @@ import ColorPicker from '../components/pickers/color';
 import { ReduxPropType } from '../types/redux';
 
 class AppNav extends React.Component<ReduxPropType> {
+
+    state = {
+        selected: this.props.settings.theme.static.accentC,
+    }
+
     render() {
         return (
             <View>
-                <ColorPicker selected={this.props.settings.theme.static.accentC} />
+                <ColorPicker
+                    onClose={() => {}}
+                    onSelect={(selected: string) => this.setState({ selected })}
+                    open={true}
+                    selected={this.state.selected}
+                />
             </View>
         );
     }
