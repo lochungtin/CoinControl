@@ -104,5 +104,8 @@ export const TimePickerStyles = StyleSheet.create({
     },
     slider: {
         width: screenWidth * 0.7,
-    }
+    },
+    bullet: {
+        marginTop: 10,
+    },
 });

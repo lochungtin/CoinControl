@@ -72,7 +72,13 @@ class Picker extends React.Component<ReduxPropType & DataProps> {
                         text={'minute'.toUpperCase()}
                         value={parseInt(this.state.minute)}
                     />
-                    <Bullet onPress={() => this.props.onSelect(`${this.props.hour}:${this.props.minute} ${this.props.am ? 'AM' : 'PM'}`)} text='confirm' width={0.7} />
+                    <View style={TimePickerStyles.bullet}>
+                        <Bullet
+                            onPress={() => this.props.onSelect(`${this.props.hour}:${this.props.minute} ${this.props.am ? 'AM' : 'PM'}`)}
+                            text='confirm'
+                            width={0.7}
+                        />
+                    </View>
                 </View>
             </BaseModal>
         );
