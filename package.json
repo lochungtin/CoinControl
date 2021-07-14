@@ -7,7 +7,7 @@
     "start": "react-native start"
   },
   "dependencies": {
-    "@enigmaoffline/calendarjs": "^1.0.1",
+    "@enigmaoffline/calendarjs": "^1.0.4",
     "@react-native-async-storage/async-storage": "^1.15.5",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/bottom-tabs": "^5.11.11",

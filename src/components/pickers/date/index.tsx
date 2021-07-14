@@ -21,16 +21,15 @@ interface DataProps {
 
 class Picker extends React.Component<ReduxPropType & DataProps> {
 
-    cl: Calendar = new Calendar(2021, 7);
+    cl = new Calendar(2021, 7);
 
     render() {
-        console.log(this.cl);
         return (
             <BaseModal open={this.props.open} onClose={this.props.onClose}>
                 <View style={{ ...DatePickerStyles.root, backgroundColor: this.props.settings.theme.dynamic.screen.bgC }}>
                     {this.cl.getGrid().map((row: Array<string>) => {
                         return (
-                            <View style={DatePickerStyles.row}>
+                            <View key={smallKeygen()} style={DatePickerStyles.row}>
                                 {row.map((date: string) => {
                                     return (
                                         <Cell
