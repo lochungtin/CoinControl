@@ -51,7 +51,20 @@ class Picker extends React.Component<ReduxPropType & DataProps> {
                             />
                         </TouchableOpacity>
                         <Text style={{ ...DatePickerStyles.label, color: this.props.settings.theme.dynamic.text.mainC }}>
-                            {`${['JAN', 'FEB', 'MER', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'][this.calendar.month - 1]} ${this.calendar.year}`}
+                            {`${[
+                                'JANUARY',
+                                'FEBRUARY',
+                                'MARCH',
+                                'APRIL',
+                                'MAY',
+                                'JUNE',
+                                'JULY',
+                                'AUGUST',
+                                'SEPTEMBER',
+                                'OCTOBER',
+                                'NOVEMBER',
+                                'DECEMBER'
+                            ][this.calendar.month - 1]} ${this.calendar.year}`}
                         </Text>
                         <TouchableOpacity onPress={this.next}>
                             <Icon

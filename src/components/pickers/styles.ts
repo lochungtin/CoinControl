@@ -55,6 +55,7 @@ export const DatePickerStyles = StyleSheet.create({
     },
     label: {
         fontSize: 18,
+        width: 200,
     },
     dateRow: {
         alignItems: 'center',
