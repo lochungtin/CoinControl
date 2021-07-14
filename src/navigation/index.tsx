@@ -8,7 +8,15 @@ import moment from 'moment';
 import { colorPickerData } from '../data/color';
 import { keygen } from '../utils/keygen';
 
+import { store } from '../redux/store';
+import { setDarkMode } from '../redux/action';
+
 class AppNav extends React.Component<ReduxPropType> {
+
+    constructor(props: ReduxPropType) {
+        super(props);
+        store.dispatch(setDarkMode());
+    }
 
     render() {
         return (
