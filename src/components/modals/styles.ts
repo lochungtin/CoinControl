@@ -27,6 +27,53 @@ export const GeneralModalStyles = StyleSheet.create({
     },
 });
 
+export const CategoryModalStyles = StyleSheet.create({
+    root: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        paddingTop: 20,
+        height: 240,
+        justifyContent: 'flex-start',
+        width: screenWidth,
+    },
+    rowContainer: {
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        width: screenWidth,
+    },
+    row: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        height: 80,
+        width: screenWidth * 0.85,
+    },
+    icon: {
+        alignItems: 'center',
+        borderRadius: 10,
+        display: 'flex',
+        justifyContent: 'center',
+        height: 50,
+        width: 50,
+    },
+    textInput: {
+        fontSize: 24,
+        width: screenWidth *  0.5,
+    },
+    label: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    colorBullet: {
+        borderRadius: 15,
+        height: 30,
+        width: screenWidth * 0.6
+    },
+});
+
 export const PromptModalStyles = StyleSheet.create({
     root: {
         alignItems: 'center',
