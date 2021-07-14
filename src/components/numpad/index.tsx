@@ -1,3 +1,4 @@
+import Solver from '@enigmaoffline/node-exp-solver';
 import React from 'react';
 import { Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -10,16 +11,24 @@ import { NumpadStyles } from './styles';
 import { makeGrid } from '../../data/numpad';
 import { NumpadBtnProps } from '../../types/data';
 import { ReduxPropType } from '../../types/redux';
+import { smallKeygen } from '../../utils/keygen';
 
 interface DataProps {
-    disableOps: boolean,
+    disableOps?: boolean,
     onConfirm: (num: number) => void,
 }
 
 class Numpad extends React.Component<ReduxPropType & DataProps> {
 
     state = {
-        display: '-420'
+        display: ''
+    }
+
+    onPressEql = () => {
+        if (/^[-]?[0-9]*\.?[0-9]+$/.test(this.state.display))
+            this.props.onConfirm(parseFloat(this.state.display));
+        else
+            this.setState({ display: Solver.solve(Solver.tokenize(this.state.display)).toString() });
     }
 
     render() {
@@ -45,15 +54,19 @@ class Numpad extends React.Component<ReduxPropType & DataProps> {
                     () => { },
                     () => { },
                     () => { },
-                    () => { },
-                    () => { },
-                    () => { },
+                    () => this.setState({ display: this.state.display.substring(0, this.state.display.length - 1) }),
+                    this.onPressEql,
+                    (chr: string) => this.setState({ display: this.state.display + chr }),
                 ).map((row: Array<NumpadBtnProps>) => {
                     return (
-                        <View style={NumpadStyles.row}>
+                        <View key={smallKeygen()} style={NumpadStyles.row}>
                             {row.map((btnProps: NumpadBtnProps) => {
                                 return (
-                                    <Btn {...btnProps} disabled={btnProps.isOp && this.props.disableOps} />
+                                    <Btn
+                                        {...btnProps}
+                                        disabled={btnProps.isOp && this.props.disableOps}
+                                        key={smallKeygen()}
+                                    />
                                 );
                             })}
                         </View>

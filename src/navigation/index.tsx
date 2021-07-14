@@ -14,7 +14,7 @@ class AppNav extends React.Component<ReduxPropType> {
         return (
             <View style={{ backgroundColor: this.props.settings.theme.dynamic.screen.bgC, flex: 1, }}>
                 <Component 
-                    disableOps
+
                 />
             </View>
         );

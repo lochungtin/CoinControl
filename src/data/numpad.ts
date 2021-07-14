@@ -6,7 +6,7 @@ export const makeGrid = (
     onPressClr: () => void,
     onPressBkS: () => void,
     onPressEql: () => void,
-    onPressChr: (opr: string) => void,
+    onPressChr: (chr: string) => void,
 
 ): Array<Array<NumpadBtnProps>> => ([
     [
