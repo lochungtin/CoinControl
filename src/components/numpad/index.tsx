@@ -34,6 +34,13 @@ class Numpad extends React.Component<ReduxPropType & DataProps> {
     render() {
         let valid: boolean = /^[-]?[0-9]*\.?[0-9]+$/.test(this.state.display);
 
+        let color: string = this.props.settings.theme.dynamic.text.mainC;
+        if (valid)
+            color = this.props.settings.theme.static.accentC;
+        
+        if (!this.state.display)
+            color = this.props.settings.theme.dynamic.text.secondaryC;
+
         return (
             <View style={{ ...NumpadStyles.root, backgroundColor: this.props.settings.theme.dynamic.screen.secondaryBgC }}>
                 <View style={NumpadStyles.display}>
@@ -44,10 +51,10 @@ class Numpad extends React.Component<ReduxPropType & DataProps> {
                     />
                     <Text style={{
                         ...NumpadStyles.text,
-                        color: valid ? this.props.settings.theme.static.accentC : this.props.settings.theme.dynamic.text.mainC,
+                        color,
                         fontSize: valid ? 30 : 24,
                     }}>
-                        {this.state.display.replace(/\*/g, 'x')}
+                        {this.state.display.replace(/\*/g, 'x') || 'Start typing ...'}
                     </Text>
                 </View>
                 {makeGrid(
@@ -64,7 +71,7 @@ class Numpad extends React.Component<ReduxPropType & DataProps> {
                                 return (
                                     <Btn
                                         {...btnProps}
-                                        disabled={btnProps.isOp && this.props.disableOps}
+                                        disabled={btnProps.isOp && (this.props.disableOps || false)}
                                         key={smallKeygen()}
                                     />
                                 );
