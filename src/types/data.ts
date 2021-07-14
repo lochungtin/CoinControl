@@ -8,3 +8,9 @@ export interface CategoryType {
     key: string,
     name: string,
 }
+
+export interface NumpadBtnProps {
+    icon: string,
+    isOp: boolean,
+    onPress: () => void,
+}
