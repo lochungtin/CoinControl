@@ -64,8 +64,9 @@ export const TimePickerStyles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         height: 360,
-        justifyContent: 'center',
-        width: 380,
+        justifyContent: 'space-between',
+        paddingVertical: 30,
+        width: 360,
     },
     displayRow: {
         alignItems: 'center',
@@ -90,4 +91,18 @@ export const TimePickerStyles = StyleSheet.create({
         fontSize: 48, 
         fontWeight: 'bold',
     },
+    sliderRoot: {
+        alignItems: 'flex-start',
+        display: 'flex',
+        flexDirection: 'column',
+        height: 60,
+        justifyContent: 'space-between',
+    },
+    sliderLabel: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    slider: {
+        width: screenWidth * 0.7,
+    }
 });

@@ -2,8 +2,9 @@ import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
-import { ReduxPropType } from '../../../types/redux';
 import { TimePickerStyles } from '../styles';
+
+import { ReduxPropType } from '../../../types/redux';
 
 interface DataProps {
     highlight?: boolean,
@@ -19,7 +20,7 @@ class Display extends React.Component<ReduxPropType & DataProps> {
                 style={{
                     ...TimePickerStyles.displayRoot,
                     ...(this.props.highlight ? {
-                        borderWidth: 5,
+                        borderWidth: 2,
                         borderColor: this.props.settings.theme.static.accentC,
                     } : {}),
                     backgroundColor: this.props.settings.theme.dynamic.screen.secondaryBgC,

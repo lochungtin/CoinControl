@@ -2,8 +2,10 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
+import Bullet from '../../bullet';
 import BaseModal from '../base';
 import Display from './display';
+import Slider from './slider';
 
 import { TimePickerStyles } from '../styles';
 
@@ -12,7 +14,7 @@ import { ReduxPropType } from '../../../types/redux';
 interface DataProps {
     am: boolean,
     hour: number,
-    minute: number,
+    minute: string,
     onClose: () => void,
     onSelect: (time: string) => void,
     open: boolean,
@@ -54,6 +56,23 @@ class Picker extends React.Component<ReduxPropType & DataProps> {
                             text={this.state.am ? 'AM' : 'PM'}
                         />
                     </View>
+                    <Slider
+                        max={12}
+                        min={1}
+                        onValueChange={(hour: number) => this.setState({ hour })}
+                        step={1}
+                        text={'hour'.toUpperCase()}
+                        value={this.state.hour}
+                    />
+                    <Slider
+                        max={55}
+                        min={0}
+                        onValueChange={(minute: number) => this.setState({ minute: `0${minute}`.slice(-2) })}
+                        step={5}
+                        text={'minute'.toUpperCase()}
+                        value={parseInt(this.state.minute)}
+                    />
+                    <Bullet onPress={() => this.props.onSelect(`${this.props.hour}:${this.props.minute} ${this.props.am ? 'AM' : 'PM'}`)} text='confirm' width={0.7} />
                 </View>
             </BaseModal>
         );
