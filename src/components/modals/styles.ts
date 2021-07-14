@@ -88,5 +88,5 @@ export const PromptModalStyles = StyleSheet.create({
         justifyContent: 'space-between',
         marginTop: 20,
         width: screenWidth * 0.8,
-    }
+    },
 });

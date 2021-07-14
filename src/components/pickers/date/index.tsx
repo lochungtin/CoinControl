@@ -7,9 +7,10 @@ import { connect } from 'react-redux';
 import BaseModal from '../base';
 import Cell from './cell';
 
+import { DatePickerStyles } from '../styles';
+
 import { ReduxPropType } from '../../../types/redux';
 import { smallKeygen } from '../../../utils/keygen';
-import { DatePickerStyles } from '../styles';
 
 interface DataProps {
     onClose: () => void,
@@ -18,7 +19,7 @@ interface DataProps {
     selected: string,
 }
 
-class Picker extends React.Component<ReduxPropType & DataProps > {
+class Picker extends React.Component<ReduxPropType & DataProps> {
 
     cl: Calendar = new Calendar(2021, 7);
 

@@ -1,4 +1,5 @@
 import { Dimensions, StyleSheet } from 'react-native';
+import { screenWidth } from '../bullet/styles';
 
 const screenHeight: number = Dimensions.get('screen').height;
 
@@ -54,4 +55,39 @@ export const DatePickerStyles = StyleSheet.create({
         justifyContent: 'center',
         width: 40,
     }
+});
+
+export const TimePickerStyles = StyleSheet.create({
+    root: {
+        alignItems: 'center',
+        borderRadius: 20,
+        display: 'flex',
+        flexDirection: 'column',
+        height: 360,
+        justifyContent: 'center',
+        width: 380,
+    },
+    displayRow: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        height: 90,
+        justifyContent: 'space-between',
+        width: screenWidth * 0.7,
+    },
+    displayRoot: {
+        alignItems: 'center',
+        display: 'flex',
+        borderRadius: 20,
+        justifyContent: 'center',
+        height: 80,
+        width: 80,
+    },
+    displayText: {
+        fontWeight: 'bold',
+    },
+    colon: {
+        fontSize: 48, 
+        fontWeight: 'bold',
+    },
 });
