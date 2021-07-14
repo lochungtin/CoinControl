@@ -20,8 +20,8 @@ class Display extends React.Component<ReduxPropType & DataProps> {
                 style={{
                     ...TimePickerStyles.displayRoot,
                     ...(this.props.highlight ? {
-                        borderWidth: 2,
                         borderColor: this.props.settings.theme.static.accentC,
+                        borderWidth: 2,
                     } : {}),
                     backgroundColor: this.props.settings.theme.dynamic.screen.secondaryBgC,
                 }}

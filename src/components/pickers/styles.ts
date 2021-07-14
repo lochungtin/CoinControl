@@ -36,24 +36,57 @@ export const ColorPickerStyles = StyleSheet.create({
 
 export const DatePickerStyles = StyleSheet.create({
     root: {
+        alignItems: 'center',
         borderRadius: 20,
-        height: 380,
+        display: 'flex',
+        flexDirection: 'column',
+        height: 400,
+        justifyContent: 'center',
         width: 380,
     },
-    row: {
+    controllerRow: {
         alignItems: 'center',
         display: 'flex',
         flexDirection: 'row',
         height: 40,
         justifyContent: 'space-evenly',
+        marginBottom: 10,
         width: 380,
+    },
+    label: {
+        fontSize: 18,
+    },
+    dateRow: {
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        width: 380,
+    },
+    grid: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        height: 240,
+        justifyContent: 'flex-start',
+    },
+    row: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        height: 45,
+        justifyContent: 'space-evenly',
+        width: 350,
     },
     cell: {
         alignItems: 'center',
+        borderRadius: 10,
         display: 'flex',
         height: 40,
         justifyContent: 'center',
         width: 40,
+    },
+    text: {
+        fontSize: 16,
     }
 });
 

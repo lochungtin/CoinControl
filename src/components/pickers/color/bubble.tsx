@@ -22,8 +22,8 @@ class Bubble extends React.Component<ReduxPropType & DataProps> {
                 style={{
                     ...ColorPickerStyles.bubble,
                     ...(this.props.highlight ? {
-                        borderWidth: 5,
                         borderColor: this.props.settings.theme.dynamic.text.mainC,
+                        borderWidth: 5,
                     } : {}),
                     backgroundColor: this.props.data.hex,
                     left: this.props.data.pos.x,

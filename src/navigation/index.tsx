@@ -14,8 +14,8 @@ class AppNav extends React.Component<ReduxPropType> {
                 <DatePicker
                     open
                     onClose={() => { }}
-                    onSelect={() => { }}
-                    selected={moment().format('DD-MM-YYYY')}
+                    onSelect={console.log}
+                    selected={'22-07-2021'}
                 />
             </View>
         );
