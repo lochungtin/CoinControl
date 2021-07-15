@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet } from "react-native";
 
-const screenHeight: number = Dimensions.get('window').height;
+const screenHeight: number = Dimensions.get('screen').height;
 const screenWidth: number = Dimensions.get('screen').width;
 
 export const GeneralModalStyles = StyleSheet.create({

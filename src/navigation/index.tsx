@@ -1,8 +1,27 @@
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { View } from 'react-native';
 import { connect } from 'react-redux';
 
+import analytics from '../screens/analytics';
+import category from '../screens/category';
+import home from '../screens/home';
+import newCategory from '../screens/newCategory';
+import record from '../screens/record';
+import resetPswd from '../screens/resetPswd';
+import settings from '../screens/settings';
+import signin from '../screens/signin';
+import signup from '../screens/signup';
+
 import { ReduxPropType } from '../types/redux';
+
+const Nav = createDrawerNavigator();
+
+const Category = createStackNavigator();
+
+const Settings = createStackNavigator();
 
 class AppNav extends React.Component<ReduxPropType> {
 
@@ -11,11 +30,32 @@ class AppNav extends React.Component<ReduxPropType> {
         // store.dispatch(setDarkMode());
     }
 
+    category = () =>
+        <Category.Navigator>
+            <Category.Screen name='categoryHome' component={category} />
+            <Category.Screen name='newCategory' component={newCategory} />
+        </Category.Navigator>
+
+    settings = () =>
+        <Settings.Navigator>
+            <Nav.Screen name='settingsHome' component={settings} />
+            <Nav.Screen name='signin' component={signin} />
+            <Nav.Screen name='signup' component={signup} />
+            <Nav.Screen name='resetPswd' component={resetPswd} />
+        </Settings.Navigator>
+
     render() {
         return (
-            <View style={{ backgroundColor: this.props.theme.dynamic.screen.bgC, flex: 1, }}>
-
-            </View>
+            <NavigationContainer>
+                <StatusBar backgroundColor={this.props.theme.dynamic.screen.bgC} />
+                <Nav.Navigator initialRouteName='home'>
+                    <Nav.Screen name='home' component={home} />
+                    <Nav.Screen name='record' component={record} />
+                    <Nav.Screen name='analytics' component={analytics} />
+                    <Nav.Screen name='category' component={this.category} />
+                    <Nav.Screen name='settings' component={this.settings} />
+                </Nav.Navigator>
+            </NavigationContainer>
         );
     }
 }
