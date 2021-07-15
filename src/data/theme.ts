@@ -28,7 +28,7 @@ const staticTheme: StaticThemeType = {
         textC: BLACK,
         trackC: WHITE,
     },
-};
+}
 
 export const lightTheme: ThemeType = {
     dynamic: {
@@ -57,7 +57,7 @@ export const lightTheme: ThemeType = {
         },
     },
     static: staticTheme,
-};
+}
 
 export const darkTheme: ThemeType = {
     dynamic: {
@@ -86,4 +86,4 @@ export const darkTheme: ThemeType = {
         },
     },
     static: staticTheme,
-};
+}
