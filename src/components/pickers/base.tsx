@@ -19,8 +19,8 @@ class PickerBase extends React.Component<ReduxPropType & DataProps> {
             <Modal
                 animationIn='slideInUp'
                 animationInTiming={500}
-                backdropOpacity={this.props.settings.theme.dynamic.modal.shadow.alpha}
-                backdropColor={this.props.settings.theme.dynamic.modal.shadow.color}
+                backdropOpacity={this.props.theme.dynamic.modal.shadow.alpha}
+                backdropColor={this.props.theme.dynamic.modal.shadow.color}
                 isVisible={this.props.open}
                 onBackdropPress={this.props.onClose}
                 onBackButtonPress={this.props.onClose}
@@ -36,7 +36,7 @@ class PickerBase extends React.Component<ReduxPropType & DataProps> {
 }
 
 const mapStateToProps = (state: ReduxPropType) => ({
-    settings: state.settings,
+    theme: state.theme,
 });
 
 export default connect(mapStateToProps)(PickerBase);

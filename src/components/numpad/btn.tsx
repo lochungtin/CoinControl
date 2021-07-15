@@ -21,12 +21,12 @@ class Btn extends React.Component<ReduxPropType & NumpadBtnProps & NumpadControl
     }
 
     render() {
-        let color: string = this.props.settings.theme.dynamic.text.mainC;
+        let color: string = this.props.theme.dynamic.text.mainC;
         if (this.props.disabled)
-            color = this.props.settings.theme.dynamic.text.secondaryC;
+            color = this.props.theme.dynamic.text.secondaryC;
 
         if (this.props.highlight)
-            color = this.props.settings.theme.static.accentC;
+            color = this.props.theme.static.accentC;
 
         return (
             <TouchableOpacity onPress={this.onPress} style={NumpadStyles.btn}>
@@ -41,7 +41,7 @@ class Btn extends React.Component<ReduxPropType & NumpadBtnProps & NumpadControl
 }
 
 const mapStateToProps = (state: ReduxPropType) => ({
-    settings: state.settings,
+    theme: state.theme,
 });
 
 export default connect(mapStateToProps)(Btn);

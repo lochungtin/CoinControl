@@ -40,10 +40,10 @@ class Picker extends React.Component<ReduxPropType & DataProps> {
     render() {
         return (
             <BaseModal open={this.props.open} onClose={this.onClose}>
-                <View style={{ ...TimePickerStyles.root, backgroundColor: this.props.settings.theme.dynamic.screen.bgC }}>
+                <View style={{ ...TimePickerStyles.root, backgroundColor: this.props.theme.dynamic.screen.bgC }}>
                     <View style={TimePickerStyles.displayRow}>
                         <Display text={this.state.hour.toString()} />
-                        <Text style={{ ...TimePickerStyles.colon, color: this.props.settings.theme.dynamic.text.mainC }}>
+                        <Text style={{ ...TimePickerStyles.colon, color: this.props.theme.dynamic.text.mainC }}>
                             :
                         </Text>
                         <Display text={this.state.minute.toString()} />
@@ -86,7 +86,7 @@ class Picker extends React.Component<ReduxPropType & DataProps> {
 }
 
 const mapStateToProps = (state: ReduxPropType) => ({
-    settings: state.settings,
+    theme: state.theme,
 });
 
 export default connect(mapStateToProps)(Picker);

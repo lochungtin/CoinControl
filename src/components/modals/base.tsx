@@ -19,8 +19,8 @@ class ModalBase extends React.Component<ReduxPropType & DataProps> {
             <Modal
                 animationIn='slideInUp'
                 animationInTiming={500}
-                backdropOpacity={this.props.settings.theme.dynamic.modal.shadow.alpha}
-                backdropColor={this.props.settings.theme.dynamic.modal.shadow.color}
+                backdropOpacity={this.props.theme.dynamic.modal.shadow.alpha}
+                backdropColor={this.props.theme.dynamic.modal.shadow.color}
                 isVisible={this.props.open}
                 onBackdropPress={this.props.onClose}
                 onBackButtonPress={this.props.onClose}
@@ -28,10 +28,10 @@ class ModalBase extends React.Component<ReduxPropType & DataProps> {
                 swipeDirection='down'
             >
                 <View style={GeneralModalStyles.basePositioning}>
-                    <View style={{ ...GeneralModalStyles.topbar, backgroundColor: this.props.settings.theme.dynamic.screen.bgC }}>
-                        <TouchableOpacity onPress={this.props.onClose} style={{ ...GeneralModalStyles.closeBtn, backgroundColor: this.props.settings.theme.dynamic.modal.closeBarC }} />
+                    <View style={{ ...GeneralModalStyles.topbar, backgroundColor: this.props.theme.dynamic.screen.bgC }}>
+                        <TouchableOpacity onPress={this.props.onClose} style={{ ...GeneralModalStyles.closeBtn, backgroundColor: this.props.theme.dynamic.modal.closeBarC }} />
                     </View>
-                    <View style={{ ...GeneralModalStyles.root, backgroundColor: this.props.settings.theme.dynamic.screen.bgC }}>
+                    <View style={{ ...GeneralModalStyles.root, backgroundColor: this.props.theme.dynamic.screen.bgC }}>
                         {this.props.children}
                     </View>
                 </View>
@@ -41,7 +41,7 @@ class ModalBase extends React.Component<ReduxPropType & DataProps> {
 }
 
 const mapStateToProps = (state: ReduxPropType) => ({
-    settings: state.settings,
+    theme: state.theme,
 });
 
 export default connect(mapStateToProps)(ModalBase);

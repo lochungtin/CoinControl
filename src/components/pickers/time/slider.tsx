@@ -20,18 +20,18 @@ class CSlider extends React.Component<ReduxPropType & DataProps> {
     render() {
         return (
             <View style={TimePickerStyles.sliderRoot}>
-                <Text style={{ ...TimePickerStyles.sliderLabel, color: this.props.settings.theme.dynamic.text.mainC }}>
+                <Text style={{ ...TimePickerStyles.sliderLabel, color: this.props.theme.dynamic.text.mainC }}>
                     {this.props.text}
                 </Text>
                 <Slider
-                    maximumTrackTintColor={this.props.settings.theme.dynamic.percentageTrackC}
+                    maximumTrackTintColor={this.props.theme.dynamic.percentageTrackC}
                     maximumValue={this.props.max}
-                    minimumTrackTintColor={this.props.settings.theme.static.accentC}
+                    minimumTrackTintColor={this.props.theme.static.accentC}
                     minimumValue={this.props.min}
                     onValueChange={this.props.onValueChange}
                     step={this.props.step}
                     style={TimePickerStyles.slider}
-                    thumbTintColor={this.props.settings.theme.static.accentC}
+                    thumbTintColor={this.props.theme.static.accentC}
                     value={this.props.value}
                 />
             </View>
@@ -40,7 +40,7 @@ class CSlider extends React.Component<ReduxPropType & DataProps> {
 }
 
 const mapStateToProps = (state: ReduxPropType) => ({
-    settings: state.settings,
+    theme: state.theme,
 });
 
 export default connect(mapStateToProps)(CSlider);

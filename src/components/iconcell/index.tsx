@@ -15,7 +15,7 @@ class Cell extends React.Component<ReduxPropType> {
 }
 
 const mapStateToProps = (state: ReduxPropType) => ({
-    settings: state.settings,
+    theme: state.theme,
 });
 
 export default connect(mapStateToProps)(Cell);

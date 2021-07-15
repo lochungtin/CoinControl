@@ -20,15 +20,15 @@ class Display extends React.Component<ReduxPropType & DataProps> {
                 style={{
                     ...TimePickerStyles.displayRoot,
                     ...(this.props.highlight ? {
-                        borderColor: this.props.settings.theme.static.accentC,
+                        borderColor: this.props.theme.static.accentC,
                         borderWidth: 2,
                     } : {}),
-                    backgroundColor: this.props.settings.theme.dynamic.screen.secondaryBgC,
+                    backgroundColor: this.props.theme.dynamic.screen.secondaryBgC,
                 }}
             >
                 <Text style={{
                     ...TimePickerStyles.displayText,
-                    color: this.props.settings.theme.dynamic.text.mainC,
+                    color: this.props.theme.dynamic.text.mainC,
                     fontSize: this.props.highlight ? 24 : 36,
                 }}>
                     {this.props.text}
@@ -39,7 +39,7 @@ class Display extends React.Component<ReduxPropType & DataProps> {
 }
 
 const mapStateToProps = (state: ReduxPropType) => ({
-    settings: state.settings,
+    theme: state.theme,
 });
 
 export default connect(mapStateToProps)(Display);

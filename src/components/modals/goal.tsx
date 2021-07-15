@@ -49,11 +49,11 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
                         return (
                             <View style={GoalModalStyles.selectionRoot}>
                                 <Icon
-                                    color={this.props.settings.theme.static.accentC}
+                                    color={this.props.theme.static.accentC}
                                     name={`shield-${goal.key === 'goalN' ? 'off-' : ''}outline`}
                                     size={25}
                                 />
-                                <Text style={{ ...GoalModalStyles.selectionText, color: this.props.settings.theme.dynamic.text.mainC }}>
+                                <Text style={{ ...GoalModalStyles.selectionText, color: this.props.theme.dynamic.text.mainC }}>
                                     {goal.name}
                                 </Text>
                             </View>
@@ -67,7 +67,7 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
 }
 
 const mapStateToProps = (state: ReduxPropType) => ({
-    settings: state.settings,
+    theme: state.theme,
 });
 
 export default connect(mapStateToProps)(Modal);

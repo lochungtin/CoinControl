@@ -8,10 +8,11 @@ export interface ReduxActionType {
 
 // component props //
 export interface ReduxPropType {
-    settings: SettingsType,
+    settings?: SettingsType,
+    theme: ThemeType,
 }
 
 // default values //
 export interface SettingsType {
-    theme: ThemeType,
+    
 };

@@ -50,11 +50,11 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
                         keyboardVerticalOffset={-200}
                         style={GeneralModalStyles.root}
                     >
-                        <View style={{ ...CategoryModalStyles.rowContainer, backgroundColor: this.props.settings.theme.dynamic.screen.secondaryBgC }}>
+                        <View style={{ ...CategoryModalStyles.rowContainer, backgroundColor: this.props.theme.dynamic.screen.secondaryBgC }}>
                             <View style={CategoryModalStyles.row}>
                                 <View style={{ ...CategoryModalStyles.icon, backgroundColor: this.state.color }}>
                                     <Icon
-                                        color={this.props.settings.theme.dynamic.text.mainC}
+                                        color={this.props.theme.dynamic.text.mainC}
                                         name={this.props.category.icon}
                                         size={35}
                                     />
@@ -62,13 +62,13 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
                                 <TextInput
                                     onChangeText={(name: string) => this.setState({ name })}
                                     placeholder='Category Name'
-                                    placeholderTextColor={this.props.settings.theme.dynamic.text.secondaryC}
-                                    style={{ ...CategoryModalStyles.textInput, color: this.props.settings.theme.dynamic.text.mainC }}
+                                    placeholderTextColor={this.props.theme.dynamic.text.secondaryC}
+                                    style={{ ...CategoryModalStyles.textInput, color: this.props.theme.dynamic.text.mainC }}
                                     value={this.state.name}
                                 />
                                 <TouchableOpacity onPress={this.onConfirm}>
                                     <Icon
-                                        color={this.props.settings.theme.dynamic.icon.mainC}
+                                        color={this.props.theme.dynamic.icon.mainC}
                                         name='checkbox-marked-circle-outline'
                                         size={35}
                                     />
@@ -76,7 +76,7 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
                             </View>
                         </View>
                         <View style={CategoryModalStyles.row}>
-                            <Text style={{ ...CategoryModalStyles.label, color: this.props.settings.theme.dynamic.text.labelC }}>
+                            <Text style={{ ...CategoryModalStyles.label, color: this.props.theme.dynamic.text.labelC }}>
                                 COLOR:
                             </Text>
                             <TouchableOpacity onPress={() => this.setState({ cpOpen: true })} style={{ ...CategoryModalStyles.colorBullet, backgroundColor: this.state.color }} />
@@ -95,7 +95,7 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
 }
 
 const mapStateToProps = (state: ReduxPropType) => ({
-    settings: state.settings,
+    theme: state.theme,
 });
 
 export default connect(mapStateToProps)(Modal);

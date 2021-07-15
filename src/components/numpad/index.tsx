@@ -37,18 +37,18 @@ class Numpad extends React.Component<ReduxPropType & DataProps> {
     render() {
         let valid: boolean = /^[-]?[0-9]*\.?[0-9]+$/.test(this.state.display);
 
-        let color: string = this.props.settings.theme.dynamic.text.mainC;
+        let color: string = this.props.theme.dynamic.text.mainC;
         if (valid)
-            color = this.props.settings.theme.static.accentC;
+            color = this.props.theme.static.accentC;
         
         if (!this.state.display)
-            color = this.props.settings.theme.dynamic.text.secondaryC;
+            color = this.props.theme.dynamic.text.secondaryC;
 
         return (
-            <View style={{ ...NumpadStyles.root, backgroundColor: this.props.settings.theme.dynamic.screen.secondaryBgC }}>
+            <View style={{ ...NumpadStyles.root, backgroundColor: this.props.theme.dynamic.screen.secondaryBgC }}>
                 <View style={NumpadStyles.display}>
                     <Icon
-                        color={this.props.settings.theme.static.accentC}
+                        color={this.props.theme.static.accentC}
                         name={'currency-gbp'}
                         size={40}
                     />
@@ -89,7 +89,7 @@ class Numpad extends React.Component<ReduxPropType & DataProps> {
 }
 
 const mapStateToProps = (state: ReduxPropType) => ({
-    settings: state.settings,
+    theme: state.theme,
 });
 
 export default connect(mapStateToProps)(Numpad);

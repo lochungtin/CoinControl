@@ -22,7 +22,7 @@ class Bubble extends React.Component<ReduxPropType & DataProps> {
                 style={{
                     ...ColorPickerStyles.bubble,
                     ...(this.props.highlight ? {
-                        borderColor: this.props.settings.theme.dynamic.text.mainC,
+                        borderColor: this.props.theme.dynamic.text.mainC,
                         borderWidth: 5,
                     } : {}),
                     backgroundColor: this.props.data.hex,
@@ -35,7 +35,7 @@ class Bubble extends React.Component<ReduxPropType & DataProps> {
 }
 
 const mapStateToProps = (state: ReduxPropType) => ({
-    settings: state.settings,
+    theme: state.theme,
 });
 
 export default connect(mapStateToProps)(Bubble);

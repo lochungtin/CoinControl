@@ -23,16 +23,16 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
             <View style={GeneralModalStyles.selectorRow}>
                 <View style={GeneralModalStyles.selectorLeft}>
                     <Icon
-                        color={this.props.settings.theme.static.accentC}
+                        color={this.props.theme.static.accentC}
                         name={this.props.icon}
                         size={30}
                     />
-                    <Text style={{ ...GeneralModalStyles.selectorLabel, color: this.props.settings.theme.dynamic.text.labelC }}>
+                    <Text style={{ ...GeneralModalStyles.selectorLabel, color: this.props.theme.dynamic.text.labelC }}>
                         {this.props.label}
                     </Text>
                 </View>
-                <TouchableOpacity onPress={this.props.onPress} style={{ ...GeneralModalStyles.selectorBtn, borderColor: this.props.settings.theme.static.accentC }}>
-                    <Text style={{ ...GeneralModalStyles.selectorText, color: this.props.settings.theme.dynamic.text.mainC }}>
+                <TouchableOpacity onPress={this.props.onPress} style={{ ...GeneralModalStyles.selectorBtn, borderColor: this.props.theme.static.accentC }}>
+                    <Text style={{ ...GeneralModalStyles.selectorText, color: this.props.theme.dynamic.text.mainC }}>
                         {this.props.text}
                     </Text>
                 </TouchableOpacity>
@@ -42,7 +42,7 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
 }
 
 const mapStateToProps = (state: ReduxPropType) => ({
-    settings: state.settings,
+    theme: state.theme,
 });
 
 export default connect(mapStateToProps)(Modal);

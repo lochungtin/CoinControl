@@ -20,12 +20,12 @@ class Cell extends React.Component<ReduxPropType & DataProps> {
         let parsed: number = parseInt(this.props.data.substring(0, 2));
         let text: string = isNaN(parsed) ? this.props.data : parsed.toString();
 
-        let color: string = this.props.settings.theme.dynamic.text.mainC;
+        let color: string = this.props.theme.dynamic.text.mainC;
         if (this.props.special)
-            color = this.props.settings.theme.static.accentC;
+            color = this.props.theme.static.accentC;
 
         if (this.props.disabled)
-            color = this.props.settings.theme.dynamic.text.secondaryC;
+            color = this.props.theme.dynamic.text.secondaryC;
 
         return (
             <TouchableOpacity
@@ -33,7 +33,7 @@ class Cell extends React.Component<ReduxPropType & DataProps> {
                 style={{
                     ...DatePickerStyles.cell,
                     ...(this.props.highlight ? {
-                        borderColor: this.props.settings.theme.static.accentC,
+                        borderColor: this.props.theme.static.accentC,
                         borderWidth: 1,
                     } : {}),
                 }}
@@ -47,7 +47,7 @@ class Cell extends React.Component<ReduxPropType & DataProps> {
 }
 
 const mapStateToProps = (state: ReduxPropType) => ({
-    settings: state.settings,
+    theme: state.theme,
 });
 
 export default connect(mapStateToProps)(Cell);

@@ -45,12 +45,12 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
         return (
             <>
                 <ModalBase onClose={this.props.onClose} open={this.props.open}>
-                    <View style={{ ...InputModalStyles.inputBox, backgroundColor: this.props.settings.theme.dynamic.screen.secondaryBgC }}>
+                    <View style={{ ...InputModalStyles.inputBox, backgroundColor: this.props.theme.dynamic.screen.secondaryBgC }}>
                         <TextInput
                             onChangeText={(title: string) => this.setState({ title })}
                             placeholder='Title (Optional) ...'
-                            placeholderTextColor={this.props.settings.theme.dynamic.text.secondaryC}
-                            style={{ ...InputModalStyles.textInput, color: this.props.settings.theme.dynamic.text.mainC }}
+                            placeholderTextColor={this.props.theme.dynamic.text.secondaryC}
+                            style={{ ...InputModalStyles.textInput, color: this.props.theme.dynamic.text.mainC }}
                             value={this.state.title}
                         />
                     </View>
@@ -94,7 +94,7 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
 }
 
 const mapStateToProps = (state: ReduxPropType) => ({
-    settings: state.settings,
+    theme: state.theme,
 });
 
 export default connect(mapStateToProps)(Modal);

@@ -26,14 +26,14 @@ class Picker extends React.Component<ReduxPropType & DataProps> {
                 <View style={ColorPickerStyles.stack}>
                     <View style={{
                         ...ColorPickerStyles.bgSquares,
-                        backgroundColor: this.props.settings.theme.dynamic.screen.bgC,
+                        backgroundColor: this.props.theme.dynamic.screen.bgC,
                         transform: [
                             { translateY: 70 },
                         ]
                     }} />
                     <View style={{
                         ...ColorPickerStyles.bgSquares,
-                        backgroundColor: this.props.settings.theme.dynamic.screen.bgC,
+                        backgroundColor: this.props.theme.dynamic.screen.bgC,
                         transform: [
                             { translateY: 70 },
                             { rotate: '-60deg' },
@@ -41,7 +41,7 @@ class Picker extends React.Component<ReduxPropType & DataProps> {
                     }} />
                     <View style={{
                         ...ColorPickerStyles.bgSquares,
-                        backgroundColor: this.props.settings.theme.dynamic.screen.bgC,
+                        backgroundColor: this.props.theme.dynamic.screen.bgC,
                         transform: [
                             { translateY: 70 },
                             { rotate: '60deg' },
@@ -68,7 +68,7 @@ class Picker extends React.Component<ReduxPropType & DataProps> {
 }
 
 const mapStateToProps = (state: ReduxPropType) => ({
-    settings: state.settings,
+    theme: state.theme,
 });
 
 export default connect(mapStateToProps)(Picker);

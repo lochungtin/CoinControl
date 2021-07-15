@@ -16,8 +16,8 @@ interface DataProps {
 class Bullet extends React.Component<ReduxPropType & DataProps> {
     render() {
         let colors: { bgC: string, textC: string } = this.props.inactive ?
-            this.props.settings.theme.static.bullet.inactive :
-            this.props.settings.theme.static.bullet.active;
+            this.props.theme.static.bullet.inactive :
+            this.props.theme.static.bullet.active;
 
         return (
             <TouchableOpacity
@@ -37,7 +37,7 @@ class Bullet extends React.Component<ReduxPropType & DataProps> {
 }
 
 const mapStateToProps = (state: ReduxPropType) => ({
-    settings: state.settings,
+    theme: state.theme,
 });
 
 export default connect(mapStateToProps)(Bullet);

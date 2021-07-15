@@ -23,8 +23,8 @@ class Picker extends React.Component<ReduxPropType & DataProps> {
     render() {
         return (
             <BaseModal open={this.props.open} onClose={this.props.onClose}>
-                <View style={{ ...MultiPickerStyles.root, backgroundColor: this.props.settings.theme.dynamic.screen.bgC }}>
-                    <TouchableOpacity onPress={this.props.onClose} style={{ ...GeneralModalStyles.closeBtn, backgroundColor: this.props.settings.theme.dynamic.modal.closeBarC }} />
+                <View style={{ ...MultiPickerStyles.root, backgroundColor: this.props.theme.dynamic.screen.bgC }}>
+                    <TouchableOpacity onPress={this.props.onClose} style={{ ...GeneralModalStyles.closeBtn, backgroundColor: this.props.theme.dynamic.modal.closeBarC }} />
                     <ScrollView style={MultiPickerStyles.scrollview}>
                         {this.props.items.map((obj: any, index: number) => {
                             return (
@@ -34,7 +34,7 @@ class Picker extends React.Component<ReduxPropType & DataProps> {
                                     style={{
                                         ...MultiPickerStyles.itemContainer,
                                         ...(this.props.selectedIndex === index ? {
-                                            borderColor: this.props.settings.theme.static.accentC,
+                                            borderColor: this.props.theme.static.accentC,
                                             borderWidth: 2,
                                         } : {}),
                                     }}
@@ -51,7 +51,7 @@ class Picker extends React.Component<ReduxPropType & DataProps> {
 }
 
 const mapStateToProps = (state: ReduxPropType) => ({
-    settings: state.settings,
+    theme: state.theme,
 });
 
 export default connect(mapStateToProps)(Picker);

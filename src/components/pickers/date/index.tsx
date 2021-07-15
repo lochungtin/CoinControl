@@ -41,16 +41,16 @@ class Picker extends React.Component<ReduxPropType & DataProps> {
     render() {
         return (
             <BaseModal open={this.props.open} onClose={this.props.onClose}>
-                <View style={{ ...DatePickerStyles.root, backgroundColor: this.props.settings.theme.dynamic.screen.bgC }}>
+                <View style={{ ...DatePickerStyles.root, backgroundColor: this.props.theme.dynamic.screen.bgC }}>
                     <View style={DatePickerStyles.controllerRow}>
                         <TouchableOpacity onPress={this.prev}>
                             <Icon
-                                color={this.props.settings.theme.dynamic.icon.mainC}
+                                color={this.props.theme.dynamic.icon.mainC}
                                 name='chevron-left'
                                 size={30}
                             />
                         </TouchableOpacity>
-                        <Text style={{ ...DatePickerStyles.label, color: this.props.settings.theme.dynamic.text.mainC }}>
+                        <Text style={{ ...DatePickerStyles.label, color: this.props.theme.dynamic.text.mainC }}>
                             {`${[
                                 'JANUARY',
                                 'FEBRUARY',
@@ -68,13 +68,13 @@ class Picker extends React.Component<ReduxPropType & DataProps> {
                         </Text>
                         <TouchableOpacity onPress={this.next}>
                             <Icon
-                                color={this.props.settings.theme.dynamic.icon.mainC}
+                                color={this.props.theme.dynamic.icon.mainC}
                                 name='chevron-right'
                                 size={30}
                             />
                         </TouchableOpacity>
                     </View>
-                    <View style={{ ...DatePickerStyles.dateRow, backgroundColor: this.props.settings.theme.dynamic.screen.secondaryBgC }}>
+                    <View style={{ ...DatePickerStyles.dateRow, backgroundColor: this.props.theme.dynamic.screen.secondaryBgC }}>
                         <View key={smallKeygen()} style={DatePickerStyles.row}>
                             {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((date: string) => {
                                 return (
@@ -114,7 +114,7 @@ class Picker extends React.Component<ReduxPropType & DataProps> {
 }
 
 const mapStateToProps = (state: ReduxPropType) => ({
-    settings: state.settings,
+    theme: state.theme,
 });
 
 export default connect(mapStateToProps)(Picker);
