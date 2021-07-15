@@ -1,6 +1,5 @@
-import moment from 'moment';
 import React from 'react';
-import { Text, TextInput, View } from 'react-native';
+import { TextInput, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import Numpad from '../numpad';
@@ -58,7 +57,7 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
                     <Selector
                         icon={this.props.category.icon}
                         label='Category'
-                        onPress={() => this.setState({ dpOpen: true })}
+                        onPress={() => this.setState({ msOpen: true })}
                         text={this.props.category.name}
                     />
                     <Selector
@@ -74,6 +73,20 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
                     onSelect={(date: string) => this.setState({ date, dpOpen: false })}
                     open={this.state.dpOpen}
                     selected={this.state.date}
+                />
+                <MultiPicker
+                    items={[]}
+                    onClose={() => this.setState({ msOpen: false })}
+                    onSelect={(category: CategoryType) => this.setState({ category, msOpen: false })}
+                    open={this.state.msOpen}
+                    render={(category: CategoryType) => {
+                        return (
+                            <View>
+
+                            </View>
+                        );
+                    }}
+                    selectedIndex={[{}].indexOf(this.state.category)}
                 />
             </>
         );
