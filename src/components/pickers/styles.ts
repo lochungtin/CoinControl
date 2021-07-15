@@ -91,6 +91,30 @@ export const DatePickerStyles = StyleSheet.create({
     }
 });
 
+export const MultiPickerStyles = StyleSheet.create({
+    root: {
+        alignItems: 'center',
+        borderRadius: 20,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        minHeight: 200,
+        maxHeight: 700,
+        paddingTop: 20,
+        width: 380,
+    },
+    scrollview: {
+        marginVertical: 20,
+    },
+    itemContainer: {
+        alignItems: 'center',
+        borderRadius: 10,
+        display: 'flex',
+        justifyContent: 'center',
+        width: 340,
+    },
+});
+
 export const TimePickerStyles = StyleSheet.create({
     root: {
         alignItems: 'center',
@@ -122,7 +146,7 @@ export const TimePickerStyles = StyleSheet.create({
         fontWeight: 'bold',
     },
     colon: {
-        fontSize: 48, 
+        fontSize: 48,
         fontWeight: 'bold',
     },
     sliderRoot: {
