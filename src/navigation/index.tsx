@@ -24,6 +24,7 @@ class AppNav extends React.Component<ReduxPropType> {
             <View style={{ backgroundColor: this.props.settings.theme.dynamic.screen.bgC, flex: 1, }}>
                 <Component
                     open
+                    goal={{ key: 'goalD', name: 'Daily' }}
                 />
             </View>
         );

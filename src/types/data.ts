@@ -1,5 +1,6 @@
-export interface PromptTextMap {
-    [index: number]: string,
+// categories
+export interface CategoryMap {
+    [key: string]: CategoryType,
 }
 
 export interface CategoryType {
@@ -9,8 +10,18 @@ export interface CategoryType {
     name: string,
 }
 
-export interface NumpadBtnProps {
-    icon: string,
-    isOp: boolean,
-    onPress: () => void,
+// goals
+export interface GoalMap {
+    [key: string]: GoalType,
 }
+
+export interface GoalType {
+    key: string,
+    name: string,
+}
+
+// prompts
+export interface PromptTextMap {
+    [index: number]: string,
+}
+

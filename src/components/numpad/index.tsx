@@ -9,10 +9,9 @@ import Btn from './btn';
 import { NumpadStyles } from './styles';
 
 import { makeGrid } from '../../data/numpad';
-import { NumpadBtnProps } from '../../types/data';
 import { ReduxPropType } from '../../types/redux';
+import { NumpadBtnProps } from '../../types/uiprops';
 import { smallKeygen } from '../../utils/keygen';
-import display from '../pickers/time/display';
 
 interface DataProps {
     disableOps?: boolean,

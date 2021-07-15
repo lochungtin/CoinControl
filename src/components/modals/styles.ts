@@ -106,6 +106,20 @@ export const CategoryModalStyles = StyleSheet.create({
     },
 });
 
+export const GoalModalStyles = StyleSheet.create({
+    selectionRoot: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        height: 40,
+        justifyContent: 'space-between',
+        width: screenWidth * 0.6
+    },
+    selectionText: {
+        fontSize: 18,
+    },
+});
+
 export const InputModalStyles = StyleSheet.create({
     inputBox: {
         alignItems: 'center',
