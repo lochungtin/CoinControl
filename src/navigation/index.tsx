@@ -16,19 +16,13 @@ import signin from '../screens/signin';
 import signup from '../screens/signup';
 
 import { ReduxPropType } from '../types/redux';
+import { makeDrawer } from './drawer';
 
 const Nav = createDrawerNavigator();
-
 const Category = createStackNavigator();
-
 const Settings = createStackNavigator();
 
 class AppNav extends React.Component<ReduxPropType> {
-
-    constructor(props: ReduxPropType) {
-        super(props);
-        // store.dispatch(setDarkMode());
-    }
 
     category = () =>
         <Category.Navigator>
@@ -48,7 +42,10 @@ class AppNav extends React.Component<ReduxPropType> {
         return (
             <NavigationContainer>
                 <StatusBar backgroundColor={this.props.theme.dynamic.screen.bgC} />
-                <Nav.Navigator initialRouteName='home'>
+                <Nav.Navigator
+                    drawerContent={(props: any) => makeDrawer(props, this.props.theme)}
+                    initialRouteName='home'
+                >
                     <Nav.Screen name='home' component={home} />
                     <Nav.Screen name='record' component={record} />
                     <Nav.Screen name='analytics' component={analytics} />
