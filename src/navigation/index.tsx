@@ -31,7 +31,7 @@ class AppNav extends React.Component<ReduxPropType> {
 
     settings = () =>
         <Settings.Navigator screenOptions={{ headerShown: false }}>
-            {/*<Nav.Screen name='settingsHome' component={settings} />*/}
+            <Nav.Screen name='settingsHome' component={settings} />            
             <Nav.Screen name='signin' component={signin} />
             <Nav.Screen name='signup' component={signup} />
             <Nav.Screen name='resetPswd' component={resetPswd} />

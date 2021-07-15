@@ -24,13 +24,17 @@ class Header extends React.Component<ReduxPropType & ScreenProps> {
                             scale={scale}
                         />
                     </Svg>
-                    <TouchableOpacity onPress={this.props.navigation.toggleDrawer} style={AuthHeaderStyles.navBtn}>
-                        <Icon
-                            color={this.props.theme.dynamic.icon.drawerC}
-                            name='menu-open'
-                            size={40}
-                        />
-                    </TouchableOpacity>
+                    <View style={AuthHeaderStyles.navBtnStack}>
+                        <View style={AuthHeaderStyles.navBtnPositioner}>
+                            <TouchableOpacity onPress={this.props.navigation.toggleDrawer}>
+                                <Icon
+                                    color={this.props.theme.dynamic.icon.drawerC}
+                                    name='menu-open'
+                                    size={40}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 </View>
             </View>
         );
