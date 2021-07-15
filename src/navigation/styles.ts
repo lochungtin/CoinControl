@@ -7,16 +7,24 @@ export const DrawerStyles = StyleSheet.create({
     root: {
         alignItems: 'center',
         display: 'flex',
+        flexDirection: 'column',
         height: screenHeight,
         justifyContent: 'space-between',
         paddingVertical: 20,
-        width: screenWidth * 0.7,
+    },
+    itemContainer: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingRight: 20,
+        width: screenWidth * 0.65,
     },
     item: {
-        width: screenWidth * 0.6,
+        width: screenWidth * 0.50,
     },
     labelStyle: {
-        fontSize: 18,
+        fontSize: 14,
         fontWeight: 'bold',
     },
 });
