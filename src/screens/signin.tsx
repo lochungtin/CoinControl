@@ -23,7 +23,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
             <View style={{ ...ScreenStyles.root, backgroundColor: this.props.theme.dynamic.screen.bgC }}>
                 <Header navigation={this.props.navigation} />
                 <ScrollView>
-                    <View style={{ ...AuthScreenStyles.root }}>
+                    <View style={AuthScreenStyles.root}>
                         <Text style={{ ...AuthScreenStyles.title, color: this.props.theme.dynamic.text.mainC }}>
                             Login
                         </Text>
@@ -37,6 +37,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                             placeholder='Enter your email'
                         />
                         <Input
+                            hidden
                             icon='lock-outline'
                             label='password'
                             onChangeText={(pswd: string) => this.setState({ pswd })}
@@ -56,13 +57,13 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                                 width={0.8}
                             />
                         </View>
+                        <BTMBar
+                            onPress={() => this.props.navigation.navigate('signup')}
+                            pressable='Sign Up'
+                            text={`Don't have an account?  `}
+                        />
                     </View>
                 </ScrollView>
-                <BTMBar
-                    onPress={() => this.props.navigation.navigate('signup')}
-                    pressable='Sign Up'
-                    text={`Don't have an account?  `}
-                />
             </View>
         );
     }

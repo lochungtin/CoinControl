@@ -20,7 +20,13 @@ export const AuthScreenStyles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        width: screenWidth * 0.8,
+        width: screenWidth,
+    },
+    content: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
     },
     title: {
         fontSize: 48,

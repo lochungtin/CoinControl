@@ -14,7 +14,7 @@ interface DataProps {
 class BTMBar extends React.Component<ReduxPropType & DataProps> {
     render() {
         return (
-            <View style={{ ...BottomBarStyles.root, backgroundColor: this.props.theme.dynamic.screen.secondaryBgC }}>
+            <View style={BottomBarStyles.root}>
                 <Text style={{ ...BottomBarStyles.text, color: this.props.theme.dynamic.text.mainC }}>
                     {this.props.text}
                 </Text>

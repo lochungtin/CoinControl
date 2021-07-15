@@ -6,8 +6,6 @@ export const BottomBarStyles = StyleSheet.create({
     root: {
         alignItems: 'center',
         display: 'flex',
-        borderTopEndRadius: 20,
-        borderTopStartRadius: 20,
         flexDirection: 'row',
         height: 100,
         justifyContent: 'center',
