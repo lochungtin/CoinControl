@@ -10,12 +10,11 @@ import Header from '../components/headers/auth';
 
 import { ReduxPropType } from '../types/redux';
 import { ScreenProps } from '../types/uiprops';
-import { AuthScreenStyles, screenHeight, ScreenStyles } from './styles';
+import { AuthScreenStyles, ScreenStyles } from './styles';
 
 class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
     state = {
-        headerHeight: 0,
         email: '',
         pswd: '',
     }
@@ -47,7 +46,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                         <View style={InputStyles.bullet}>
                             <Bullet
                                 onPress={() => { }}
-                                text='LOGIN'
+                                text='login'
                                 width={0.8}
                             />
                         </View>
