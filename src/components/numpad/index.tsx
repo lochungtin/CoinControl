@@ -12,6 +12,7 @@ import { makeGrid } from '../../data/numpad';
 import { NumpadBtnProps } from '../../types/data';
 import { ReduxPropType } from '../../types/redux';
 import { smallKeygen } from '../../utils/keygen';
+import display from '../pickers/time/display';
 
 interface DataProps {
     disableOps?: boolean,
@@ -25,6 +26,9 @@ class Numpad extends React.Component<ReduxPropType & DataProps> {
     }
 
     onPressEql = () => {
+        if (this.state.display === '')
+            return;
+
         if (/^[-]?[0-9]*\.?[0-9]+$/.test(this.state.display))
             this.props.onConfirm(parseFloat(this.state.display));
         else
@@ -54,7 +58,7 @@ class Numpad extends React.Component<ReduxPropType & DataProps> {
                         color,
                         fontSize: valid ? 30 : 24,
                     }}>
-                        {this.state.display.replace(/\*/g, 'x') || 'Start typing ...'}
+                        {this.state.display.replace(/\*/g, 'x') || '00'}
                     </Text>
                 </View>
                 {makeGrid(
@@ -72,6 +76,7 @@ class Numpad extends React.Component<ReduxPropType & DataProps> {
                                     <Btn
                                         {...btnProps}
                                         disabled={btnProps.isOp && (this.props.disableOps || false)}
+                                        highlight={btnProps.icon === 'equal-box' && valid}
                                         key={smallKeygen()}
                                     />
                                 );

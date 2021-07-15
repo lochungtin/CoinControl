@@ -8,7 +8,12 @@ import { NumpadStyles } from './styles';
 import { NumpadBtnProps } from '../../types/data';
 import { ReduxPropType } from '../../types/redux';
 
-class Btn extends React.Component<ReduxPropType & NumpadBtnProps & { disabled: boolean }> {
+interface NumpadControlProps {
+    disabled: boolean,
+    highlight: boolean,
+}
+
+class Btn extends React.Component<ReduxPropType & NumpadBtnProps & NumpadControlProps> {
 
     onPress = () => {
         if (!this.props.disabled)
@@ -16,12 +21,19 @@ class Btn extends React.Component<ReduxPropType & NumpadBtnProps & { disabled: b
     }
 
     render() {
+        let color: string = this.props.settings.theme.dynamic.text.mainC;
+        if (this.props.disabled)
+            color = this.props.settings.theme.dynamic.text.secondaryC;
+
+        if (this.props.highlight)
+            color = this.props.settings.theme.static.accentC;
+
         return (
             <TouchableOpacity onPress={this.onPress} style={NumpadStyles.btn}>
                 <Icon
-                    color={this.props.disabled ? this.props.settings.theme.dynamic.text.secondaryC : this.props.settings.theme.dynamic.text.mainC}
+                    color={color}
                     name={this.props.icon}
-                    size={50}
+                    size={40}
                 />
             </TouchableOpacity>
         );

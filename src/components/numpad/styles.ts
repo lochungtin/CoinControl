@@ -12,7 +12,7 @@ export const NumpadStyles = StyleSheet.create({
         alignItems: 'center',
         display: 'flex',
         flexDirection: 'row',
-        height: 100,
+        height: 70,
         justifyContent: 'space-between',
         width: screenWidth * 0.85,
     },
@@ -30,8 +30,8 @@ export const NumpadStyles = StyleSheet.create({
     btn: {
         alignItems: 'center',
         display: 'flex',
-        height: 80,
+        height: 70,
         justifyContent: 'center',
         width: screenWidth  / 4,
-    }
+    },
 });

@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet } from "react-native";
 
-const screenHeight: number = Dimensions.get('screen').height;
+const screenHeight: number = Dimensions.get('window').height;
 const screenWidth: number = Dimensions.get('screen').width;
 
 export const GeneralModalStyles = StyleSheet.create({
@@ -10,6 +10,14 @@ export const GeneralModalStyles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-end',
         height: screenHeight,
+    },
+    root: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        paddingTop: 20,
+        justifyContent: 'flex-start',
+        width: screenWidth,
     },
     topbar: {
         alignItems: 'center',
@@ -25,18 +33,42 @@ export const GeneralModalStyles = StyleSheet.create({
         height: 5,
         width: 60,
     },
+    selectorRow: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        height: 50,
+        justifyContent: 'space-between',
+        marginBottom: 10,
+        width: screenWidth * 0.85,
+    },
+    selectorLeft: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        width: screenWidth * 0.4,
+    },
+    selectorLabel: {
+        fontSize: 20,
+        marginLeft: 20,
+    },
+    selectorBtn: {
+        alignItems: 'center',
+        borderRadius: 20,
+        borderWidth: 2,
+        display: 'flex',
+        height: 40,
+        justifyContent: 'center',
+        paddingHorizontal: 20,
+    },
+    selectorText: {
+        fontSize: 18,
+        textAlign: 'right',
+    },
 });
 
 export const CategoryModalStyles = StyleSheet.create({
-    root: {
-        alignItems: 'center',
-        display: 'flex',
-        flexDirection: 'column',
-        paddingTop: 20,
-        height: 240,
-        justifyContent: 'flex-start',
-        width: screenWidth,
-    },
     rowContainer: {
         alignItems: 'center',
         display: 'flex',
@@ -61,7 +93,7 @@ export const CategoryModalStyles = StyleSheet.create({
     },
     textInput: {
         fontSize: 24,
-        width: screenWidth *  0.5,
+        width: screenWidth * 0.5,
     },
     label: {
         fontSize: 18,
@@ -74,16 +106,23 @@ export const CategoryModalStyles = StyleSheet.create({
     },
 });
 
-export const PromptModalStyles = StyleSheet.create({
-    root: {
+export const InputModalStyles = StyleSheet.create({
+    inputBox: {
         alignItems: 'center',
         display: 'flex',
-        flexDirection: 'column',
-        paddingTop: 10,
-        height: 350,
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
+        height: 70,
+        marginBottom: 10,
         width: screenWidth,
     },
+    textInput: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        width: screenWidth * 0.6,
+    },
+});
+
+export const PromptModalStyles = StyleSheet.create({
     content: {
         alignItems: 'flex-start',
         display: 'flex',
@@ -133,7 +172,7 @@ export const PromptModalStyles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 20,
+        marginVertical: 20,
         width: screenWidth * 0.8,
     },
 });

@@ -31,7 +31,9 @@ class ModalBase extends React.Component<ReduxPropType & DataProps> {
                     <View style={{ ...GeneralModalStyles.topbar, backgroundColor: this.props.settings.theme.dynamic.screen.bgC }}>
                         <TouchableOpacity onPress={this.props.onClose} style={{ ...GeneralModalStyles.closeBtn, backgroundColor: this.props.settings.theme.dynamic.modal.closeBarC }} />
                     </View>
-                    {this.props.children}
+                    <View style={{ ...GeneralModalStyles.root, backgroundColor: this.props.settings.theme.dynamic.screen.bgC }}>
+                        {this.props.children}
+                    </View>
                 </View>
             </Modal>
         );
