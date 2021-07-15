@@ -33,7 +33,7 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
                         name='alert-circle-outline'
                         size={60}
                     />
-                    <View style={PromptModalStyles.textbox}>
+                    <View style={PromptModalStyles.textBox}>
                         <View style={PromptModalStyles.warningTextBox}>
                             <Text style={{ ...PromptModalStyles.warningText, color: this.props.theme.dynamic.text.mainC }}>
                                 WARNING

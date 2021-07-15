@@ -1,3 +1,4 @@
+import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Button, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';

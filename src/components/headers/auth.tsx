@@ -1,21 +1,38 @@
+import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import { ReduxPropType } from '../../types/redux';
-import { screenWidth } from './styles';
+import { AuthHeaderStyles, screenWidth } from './styles';
 
-class Header extends React.Component<ReduxPropType> {
+import { ReduxPropType } from '../../types/redux';
+import { ScreenProps } from '../../types/uiprops';
+
+class Header extends React.Component<ReduxPropType & ScreenProps> {
     render() {
+        let scale: number = screenWidth / 20;
         return (
-            <Svg>
-                <Path
-                    d='M 0 0 L 0 6 C 3.258 9.22 4.008 5.756 5.779 6.846 C 7.358 8.005 8.687 10.242 10.788 7.71 C 12.503 5.302 14.514 5.42 15.377 7.518 C 16.42 12.385 19 11 19.993 8.801 L 20 0 L 0 0 L 0 6'
-                    fill={this.props.theme.static.accentC}
-                    scale={screenWidth / 20}
-                />
-            </Svg>
+            <View>
+                <StatusBar backgroundColor={this.props.theme.static.accentC} />
+                <View style={{ ...AuthHeaderStyles.stack, height: scale * 11 }}>
+                    <Svg>
+                        <Path
+                            d='M 0 0 L 0 6 C 3.258 9.22 4.008 5.756 5.779 6.846 C 7.358 8.005 8.687 10.242 10.788 7.71 C 12.503 5.302 14.514 5.42 15.377 7.518 C 16.42 12.385 19 11 19.993 8.801 L 20 0 L 0 0 L 0 6'
+                            fill={this.props.theme.static.accentC}
+                            scale={scale}
+                        />
+                    </Svg>
+                    <TouchableOpacity onPress={this.props.navigation.toggleDrawer} style={AuthHeaderStyles.navBtn}>
+                        <Icon
+                            color={this.props.theme.dynamic.icon.drawerC}
+                            name='menu-open'
+                            size={40}
+                        />
+                    </TouchableOpacity>
+                </View>
+            </View>
         );
     }
 }

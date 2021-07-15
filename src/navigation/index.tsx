@@ -1,7 +1,6 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { connect } from 'react-redux';
 
@@ -25,13 +24,13 @@ const Settings = createStackNavigator();
 class AppNav extends React.Component<ReduxPropType> {
 
     category = () =>
-        <Category.Navigator>
+        <Category.Navigator screenOptions={{ headerShown: false }}>
             <Category.Screen name='categoryHome' component={category} />
             <Category.Screen name='newCategory' component={newCategory} />
         </Category.Navigator>
 
     settings = () =>
-        <Settings.Navigator>
+        <Settings.Navigator screenOptions={{ headerShown: false }}>
             {/*<Nav.Screen name='settingsHome' component={settings} />*/}
             <Nav.Screen name='signin' component={signin} />
             <Nav.Screen name='signup' component={signup} />
@@ -41,7 +40,6 @@ class AppNav extends React.Component<ReduxPropType> {
     render() {
         return (
             <NavigationContainer>
-                <StatusBar backgroundColor={this.props.theme.dynamic.screen.bgC} />
                 <Nav.Navigator drawerContent={(props: any) => makeDrawer(props, this.props.theme)} initialRouteName='settings'>
                     <Nav.Screen name='home' component={home} />
                     <Nav.Screen name='record' component={record} />

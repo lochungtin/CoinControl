@@ -144,7 +144,7 @@ export const PromptModalStyles = StyleSheet.create({
         justifyContent: 'space-between',
         width: screenWidth * 0.8,
     },
-    textbox: {
+    textBox: {
         alignItems: 'flex-start',
         display: 'flex',
         flexDirection: 'column',

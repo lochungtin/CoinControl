@@ -11,12 +11,12 @@ import { drawerItemData } from '../data/drawerItems';
 export const makeDrawer = (props: any, theme: ThemeType) =>
     <DrawerContentScrollView {...props} style={{ backgroundColor: theme.dynamic.screen.secondaryBgC }}>
         <View style={DrawerStyles.root}>
+            {console.log(props.state)}
             <View>
                 {props.state.routeNames.slice(0, 4).map((route: any, index: number) => {
                     return (
-                        <View style={DrawerStyles.itemContainer}>
+                        <View key={index} style={DrawerStyles.itemContainer}>
                             <DrawerItem
-                                key={route.key}
                                 icon={(props: any) => {
                                     return (
                                         <Icon
@@ -57,7 +57,7 @@ export const makeDrawer = (props: any, theme: ThemeType) =>
                     style={DrawerStyles.item}
                 />
                 <Icon
-                    color={props.state.index === 5 ? theme.dynamic.text.mainC : 'transparent'}
+                    color={props.state.index === 4 ? theme.dynamic.text.mainC : 'transparent'}
                     name='chevron-left'
                     size={30}
                 />
