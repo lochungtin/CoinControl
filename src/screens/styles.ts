@@ -32,4 +32,17 @@ export const AuthScreenStyles = StyleSheet.create({
         width: screenWidth * 0.8,
         marginVertical: 10,
     },
+    forgotPswd: {
+        alignItems: 'flex-end',
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: 20,
+        width: screenWidth * 0.8,
+    },
+    forgotPswdText: {
+        fontSize: 18,
+    },
+    bullet: {
+        marginTop: 40,
+    },
 });

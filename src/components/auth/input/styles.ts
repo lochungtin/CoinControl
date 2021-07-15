@@ -30,7 +30,4 @@ export const InputStyles = StyleSheet.create({
         fontWeight: 'bold',
         width: screenWidth * 0.55,
     },
-    bullet: {
-        marginTop: 40,
-    },
 });

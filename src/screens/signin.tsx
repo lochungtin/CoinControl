@@ -1,10 +1,9 @@
 import React from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import BTMBar from '../components/auth/bottombar';
 
 import Input from '../components/auth/input';
-import { InputStyles } from '../components/auth/input/styles';
 import Bullet from '../components/bullet';
 import Header from '../components/headers/auth';
 
@@ -43,7 +42,14 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                             onChangeText={(pswd: string) => this.setState({ pswd })}
                             placeholder='Enter your password'
                         />
-                        <View style={InputStyles.bullet}>
+                        <View style={AuthScreenStyles.forgotPswd}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('resetPswd')}>
+                                <Text style={{ ...AuthScreenStyles.forgotPswdText, color: this.props.theme.dynamic.text.mainC }}>
+                                    Forgot Password?
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={AuthScreenStyles.bullet}>
                             <Bullet
                                 onPress={() => { }}
                                 text='login'
