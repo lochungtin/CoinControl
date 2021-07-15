@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { ReduxPropType } from '../types/redux';
 
-import Component from '../components/pickers/multi';
+import Component from '../components/modals/input';
 
 import { colorPickerData } from '../data/color';
 
@@ -23,11 +23,10 @@ class AppNav extends React.Component<ReduxPropType> {
         return (
             <View style={{ backgroundColor: this.props.settings.theme.dynamic.screen.bgC, flex: 1, }}>
                 <Component
-                    items={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
-                    onSelect={console.log}
+                    date={moment().format('DD-MM-YYYY')}
                     open
-                    render={() => <View style={{ height: 50, width: 200 }} />}
-                    selectedIndex={2}
+                    category={{ color: '#00FFB4', icon: 'food-variant', name: 'Food', key: 'a' }}
+                    title={''}
                 />
             </View>
         );
