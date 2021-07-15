@@ -32,7 +32,7 @@ class AppNav extends React.Component<ReduxPropType> {
 
     settings = () =>
         <Settings.Navigator>
-            <Nav.Screen name='settingsHome' component={settings} />
+            {/*<Nav.Screen name='settingsHome' component={settings} />*/}
             <Nav.Screen name='signin' component={signin} />
             <Nav.Screen name='signup' component={signup} />
             <Nav.Screen name='resetPswd' component={resetPswd} />
@@ -42,10 +42,7 @@ class AppNav extends React.Component<ReduxPropType> {
         return (
             <NavigationContainer>
                 <StatusBar backgroundColor={this.props.theme.dynamic.screen.bgC} />
-                <Nav.Navigator
-                    drawerContent={(props: any) => makeDrawer(props, this.props.theme)}
-                    initialRouteName='home'
-                >
+                <Nav.Navigator drawerContent={(props: any) => makeDrawer(props, this.props.theme)} initialRouteName='settings'>
                     <Nav.Screen name='home' component={home} />
                     <Nav.Screen name='record' component={record} />
                     <Nav.Screen name='analytics' component={analytics} />
