@@ -28,6 +28,6 @@ export interface SettingsItem {
     blurred?: boolean
     icon: string,
     label: string,
-    onPress: (value?: boolean) => void,
+    onPress: (value: boolean) => void,
     switch?: boolean,
 }

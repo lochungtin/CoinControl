@@ -69,12 +69,12 @@ export const itemlist = (
                 {
                     icon: 'tag',
                     label: 'Expense Categories',
-                    onPress: () => navigation.navigate('signin', Categories.EXPENSE),
+                    onPress: () => navigation.navigate('category', Categories.EXPENSE),
                 },
                 {
                     icon: 'tag-outline',
                     label: 'Income Categories',
-                    onPress: () => navigation.navigate('signin', Categories.INCOME),
+                    onPress: () => navigation.navigate('category', Categories.INCOME),
                 },
             ],
         },

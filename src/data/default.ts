@@ -92,7 +92,7 @@ export const defaultCategories: CategoryStore  = {
 }
 
 export const defaultSettings: SettingsType = {
-    currency: currencyData['7d30268a'],
+    currency: currencyData['a983c65f'],
     darkMode: true,
     notif: true,
     notifTime: '23:00 PM',

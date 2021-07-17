@@ -52,3 +52,33 @@ export const AuthScreenStyles = StyleSheet.create({
         marginTop: 40,
     },
 });
+
+export const SettingsStyles = StyleSheet.create({
+    root: {
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+    },
+    itemBox: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        height: 50,
+        justifyContent: 'space-between',
+        width: screenWidth * 0.90
+    },
+    header: {
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    colorBox: {
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        width: screenWidth
+    },
+    label: {
+        fontSize: 16,
+        width: screenWidth * 0.6,
+    },
+});

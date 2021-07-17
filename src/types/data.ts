@@ -1,3 +1,9 @@
+// account
+export interface AccountType {
+    email: string,
+    uid: string,
+}
+
 // categories
 export enum Categories {
     EXPENSE,

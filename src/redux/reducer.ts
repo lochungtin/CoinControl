@@ -6,7 +6,22 @@ import { defaultSettings, defaultTheme } from '../data/default';
 import { darkTheme, lightTheme } from '../data/theme';
 
 import { ThemeType } from '../types/color';
-import { ReduxActionType, SettingsType } from '../types/redux';
+import { AccountType, SettingsType } from '../types/data';
+import { ReduxActionType } from '../types/redux';
+
+const updateAccount = (account: AccountType | null = null, action: ReduxActionType) => {
+    switch (action.type) {
+        // sign in
+        case Actions.ACCOUNT_SIGNIN:
+            return action.payload;
+        // sign out
+        case Actions.ACCOUNT_SIGNOUT:
+            return account;
+        // default
+        default:
+            return account;
+    }
+}
 
 const updateSettings = (settings: SettingsType = defaultSettings, action: ReduxActionType) => {
     let update: SettingsType = { ...settings };
@@ -31,6 +46,7 @@ const updateTheme = (theme: ThemeType = defaultTheme, action: ReduxActionType) =
 }
 
 export default combineReducers({
+    account: updateAccount,
     theme: updateTheme,
     settings: updateSettings,
 });
