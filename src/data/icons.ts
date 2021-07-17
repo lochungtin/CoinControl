@@ -4,10 +4,13 @@ export const icons: IconMap = {
     banking: [
         'bank',
         'cash',
+        'credit-card-outline',
         'information-outline',
         'information-variant',
         'wallet-outline',
+        'wallet-plus-outline',
         'text-box-outline',
+        'receipt',
     ],
     entertainment: [
         'balloon',
@@ -21,6 +24,7 @@ export const icons: IconMap = {
         'microsoft-xbox',
         'microsoft-xbox-controller',
         'movie-open-outline',
+        'movie-outline',
         'nintendo-switch',
         'steam',
         'twitch',
@@ -108,7 +112,8 @@ export const icons: IconMap = {
         'dumbbell',
         'football',
         'kettlebell',
-        'tennis',
+        'soccer',
+        'tennis',        
         'weight-lifter',
     ],
     tech: [
