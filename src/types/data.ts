@@ -36,6 +36,11 @@ export interface GoalType {
     name: string,
 }
 
+// icons 
+export interface IconMap {
+    [key: string]: Array<string>,
+}
+
 // prompts
 export interface PromptTextMap {
     [index: number]: string,
