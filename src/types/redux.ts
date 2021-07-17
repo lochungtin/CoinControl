@@ -1,5 +1,5 @@
 import { ThemeType } from './color';
-import { SettingsType } from './data';
+import { CategoryStore, SettingsType } from './data';
 
 // action //
 export interface ReduxActionType {
@@ -9,6 +9,7 @@ export interface ReduxActionType {
 
 // component props //
 export interface ReduxPropType {
+    categories?: CategoryStore,
     settings?: SettingsType,
     theme: ThemeType,
 }

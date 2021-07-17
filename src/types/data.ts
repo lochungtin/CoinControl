@@ -1,4 +1,9 @@
 // categories
+export interface CategoryStore {
+    expense: CategoryMap,
+    income: CategoryMap,
+}
+
 export interface CategoryMap {
     [key: string]: CategoryType,
 }

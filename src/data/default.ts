@@ -1,12 +1,12 @@
 import { darkTheme } from './theme';
 
 import { colorPickerData, TINTED_GREY } from './color';
-
-import { ThemeType } from '../types/color';
-import { CategoryMap, SettingsType } from '../types/data';
 import { currencyData } from './currency';
 
-export const defaultCategories: { expense: CategoryMap, income: CategoryMap } = {
+import { ThemeType } from '../types/color';
+import { CategoryStore, SettingsType } from '../types/data';
+
+export const defaultCategories: CategoryStore  = {
     expense: {
         '9ed0a04': {
             color: colorPickerData['blues']['a'].hex,
