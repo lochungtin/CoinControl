@@ -1,4 +1,4 @@
-import { NumpadBtnProps } from "../types/uiprops";
+import { NumpadBtnProps } from '../types/uiprops';
 
 export const makeGrid = (
     onPressMem: () => void,

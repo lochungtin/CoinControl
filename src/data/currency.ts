@@ -1,4 +1,4 @@
-import { CurrencyMap } from "../types/data";
+import { CurrencyMap } from '../types/data';
 
 export const currencyData: CurrencyMap = {
     'a983c65f': {

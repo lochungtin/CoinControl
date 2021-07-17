@@ -1,4 +1,4 @@
-import { GoalMap } from "../types/data";
+import { GoalMap } from '../types/data';
 
 export const goals: GoalMap = {
     goalD: {
