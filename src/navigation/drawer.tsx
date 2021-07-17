@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ThemeType } from '../types/color';
 import { DrawerStyles } from "./styles";
 
-import { drawerItemData } from '../data/drawerItems';
+import { drawerItemData } from '../data/mapping/drawerItems';
 
 export const makeDrawer = (props: any, theme: ThemeType) =>
     <DrawerContentScrollView {...props} style={{ backgroundColor: theme.dynamic.screen.secondaryBgC }}>

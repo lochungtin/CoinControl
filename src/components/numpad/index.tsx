@@ -8,9 +8,9 @@ import Btn from './btn';
 
 import { NumpadStyles } from './styles';
 
-import { makeGrid } from '../../data/numpad';
+import { makeGrid } from '../../data/mapping/numpad';
 import { ReduxPropType } from '../../types/redux';
-import { NumpadBtnProps } from '../../types/uiprops';
+import { NumpadBtnProps } from '../../types/ui';
 import { smallKeygen } from '../../utils/keygen';
 
 interface DataProps {

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { ScreenStyles } from './styles';
 
 import { ReduxPropType } from '../types/redux';
-import { ScreenProps } from '../types/uiprops';
+import { ScreenProps } from '../types/ui';
 
 class Screen extends React.Component<ReduxPropType & ScreenProps> {
 

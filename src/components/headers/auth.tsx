@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { AuthHeaderStyles, screenWidth } from './styles';
 
 import { ReduxPropType } from '../../types/redux';
-import { ScreenProps } from '../../types/uiprops';
+import { ScreenProps } from '../../types/ui';
 
 class Header extends React.Component<ReduxPropType & ScreenProps> {
     render() {

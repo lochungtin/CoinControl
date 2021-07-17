@@ -7,7 +7,7 @@ import Header from '../components/headers/minimal';
 import { ScreenStyles } from './styles';
 
 import { ReduxPropType } from '../types/redux';
-import { ScreenProps } from '../types/uiprops';
+import { ScreenProps } from '../types/ui';
 
 class Screen extends React.Component<ReduxPropType & ScreenProps> {
     render() {

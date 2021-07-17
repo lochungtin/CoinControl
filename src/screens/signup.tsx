@@ -8,7 +8,7 @@ import Bullet from '../components/bullet';
 import Header from '../components/headers/auth';
 
 import { ReduxPropType } from '../types/redux';
-import { ScreenProps } from '../types/uiprops';
+import { ScreenProps } from '../types/ui';
 import { AuthScreenStyles, ScreenStyles } from './styles';
 
 class Screen extends React.Component<ReduxPropType & ScreenProps> {

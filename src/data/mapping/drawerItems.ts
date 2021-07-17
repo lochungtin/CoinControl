@@ -1,4 +1,4 @@
-import { DrawerItemMap } from '../types/uiprops';
+import { DrawerItemMap } from '../../types/ui';
 
 export const drawerItemData: DrawerItemMap = {
     home: {

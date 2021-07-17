@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import { ReduxPropType } from '../../types/redux';
-import { ScreenProps } from '../../types/uiprops';
+import { ScreenProps } from '../../types/ui';
 import { GeneralHeaderStyles } from './styles';
 
 class Header extends React.Component<ReduxPropType & ScreenProps & { name: string }> {
