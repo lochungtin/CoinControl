@@ -1,5 +1,6 @@
 import { Categories, SettingsType } from "../../types/data";
 import { SettingsCategory } from "../../types/ui";
+import { defaultSettings } from "../default";
 
 export enum SettingsPickers {
     CURRENCY,
@@ -19,11 +20,11 @@ export enum SettingsResets {
 
 export const itemlist = (
     isSignedIn: boolean,
-    onSwitchToggle: (type: SettingsSwitches, on?: boolean) => void,
-    openPicker: (type: SettingsPickers) => void,
+    onSwitchToggle: (type: SettingsSwitches, on: boolean) => void,
     onReset: (type: SettingsResets) => void,
+    openPicker: (type: SettingsPickers) => void,
     navigation: any,
-    settings: SettingsType,
+    settings: SettingsType = defaultSettings,
     signOut: () => void,
 ): Array<SettingsCategory> => [
         {
@@ -57,7 +58,7 @@ export const itemlist = (
                 {
                     icon: 'lightbulb-outline',
                     label: 'Dark Mode',
-                    onPress: (value?: boolean) => onSwitchToggle(SettingsSwitches.DARK_MODE, value),
+                    onPress: (value: boolean) => onSwitchToggle(SettingsSwitches.DARK_MODE, value),
                     switch: true,
                 },
             ],
@@ -68,12 +69,12 @@ export const itemlist = (
                 {
                     icon: 'tag',
                     label: 'Expense Categories',
-                    onPress: navigation.navigate('signin', Categories.EXPENSE),
+                    onPress: () => navigation.navigate('signin', Categories.EXPENSE),
                 },
                 {
                     icon: 'tag-outline',
                     label: 'Income Categories',
-                    onPress: navigation.navigate('signin', Categories.INCOME),
+                    onPress: () => navigation.navigate('signin', Categories.INCOME),
                 },
             ],
         },
@@ -83,7 +84,7 @@ export const itemlist = (
                 {
                     icon: 'bell-outline',
                     label: 'Expense Categories',
-                    onPress: (value?: boolean) => onSwitchToggle(SettingsSwitches.NOTIF, value),
+                    onPress: (value: boolean) => onSwitchToggle(SettingsSwitches.NOTIF, value),
                     switch: settings.notif
                 },
                 {
