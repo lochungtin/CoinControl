@@ -1,4 +1,9 @@
 // categories
+export enum Categories {
+    EXPENSE,
+    INCOME,
+}
+
 export interface CategoryStore {
     expense: CategoryMap,
     income: CategoryMap,

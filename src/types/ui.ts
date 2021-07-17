@@ -18,3 +18,16 @@ export interface DrawerItemProps {
     icon: string,
     label: string,
 }
+
+export interface SettingsCategory {
+    header: string,
+    body: Array<SettingsItem>,
+}
+
+export interface SettingsItem {
+    blurred?: boolean
+    icon: string,
+    label: string,
+    onPress: (value?: boolean) => void,
+    switch?: boolean,
+}
