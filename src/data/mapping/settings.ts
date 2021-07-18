@@ -1,6 +1,7 @@
 import { Categories, SettingsType } from "../../types/data";
 import { SettingsCategory } from "../../types/ui";
 import { defaultSettings } from "../default";
+import { Prompt } from "../prompts";
 
 export enum SettingsPickers {
     CURRENCY,
@@ -12,16 +13,10 @@ export enum SettingsSwitches {
     NOTIF,
 }
 
-export enum SettingsResets {
-    CATEGORIES,
-    EVERYTHING,
-    SETTINGS,
-}
-
 export const itemlist = (
     isSignedIn: boolean,
     onSwitchToggle: (type: SettingsSwitches, on: boolean) => void,
-    onReset: (type: SettingsResets) => void,
+    onReset: (type: Prompt) => void,
     openPicker: (type: SettingsPickers) => void,
     navigation: any,
     settings: SettingsType = defaultSettings,
@@ -101,17 +96,17 @@ export const itemlist = (
                 {
                     icon: 'tag-off-outline',
                     label: 'Reset Categories',
-                    onPress: () => onReset(SettingsResets.CATEGORIES),
+                    onPress: () => onReset(Prompt.DEFAULT_CATEGORIES),
                 },
                 {
                     icon: 'cog-refresh-outline',
                     label: 'Reset Settings',
-                    onPress: () => onReset(SettingsResets.SETTINGS),
+                    onPress: () => onReset(Prompt.DEFAULT_SETTINGS),
                 },
                 {
                     icon: 'alert-circle-outline',
                     label: 'CLEAR ALL DATA',
-                    onPress: () => onReset(SettingsResets.EVERYTHING),
+                    onPress: () => onReset(Prompt.CLEAR_DATA),
                 },
             ],
         },

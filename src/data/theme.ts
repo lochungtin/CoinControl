@@ -34,7 +34,7 @@ export const lightTheme: ThemeType = {
     dynamic: {
         icon: {
             actionC: TINTED_GREY,
-            drawerC: '#DEE9E6',
+            drawerC: TINTED_GREY,
             homeC: '#DEE9E6',
             mainC: '#C4C4C4',
         },
@@ -51,7 +51,7 @@ export const lightTheme: ThemeType = {
             secondaryBgC: '#F1F1F1',
         },
         text: {
-            labelC: '#717171',
+            labelC: BLACK,
             mainC: BLACK,
             secondaryC: '#7A7A7A',
         },
