@@ -43,17 +43,20 @@ const updateSettings = (settings: SettingsType = defaultSettings, action: ReduxA
 }
 
 const updateTheme = (theme: ThemeType = defaultTheme, action: ReduxActionType) => {
+    let update: ThemeType = { ...theme };
     switch (action.type) {
         // set accent
         case Actions.THEME_ACCENT:
-            let update: ThemeType = { ...theme };
+            update.static.accentC = action.payload;
             return update;
         // set dark theme
         case Actions.SETTINGS_SET_DARKMODE:
-            return darkTheme;
+            update.dynamic = darkTheme.dynamic;
+            return update;
         // set light theme
         case Actions.SETTINGS_SET_LIGHTMODE:
-            return lightTheme;
+            update.dynamic = lightTheme.dynamic;
+            return update;
         // default 
         default:
             return theme;

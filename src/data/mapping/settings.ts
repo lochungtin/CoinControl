@@ -5,6 +5,7 @@ import { Prompt } from "../prompts";
 
 export enum SettingsPickers {
     CURRENCY,
+    COLOR,
     TIME,
 }
 
@@ -55,6 +56,11 @@ export const itemlist = (
                     label: 'Dark Mode',
                     onPress: (value: boolean) => onSwitchToggle(SettingsSwitches.DARK_MODE, value),
                     switch: settings.darkMode,
+                },
+                {
+                    icon: 'palette',
+                    label: 'Accent Color',
+                    onPress: () => openPicker(SettingsPickers.COLOR),
                 },
             ],
         },

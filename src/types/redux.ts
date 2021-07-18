@@ -4,7 +4,7 @@ import { AccountType, CategoryStore, SettingsType } from './data';
 // action //
 export interface ReduxActionType {
     type: number,
-    payload?: number,
+    payload?: any,
 }
 
 // component props //

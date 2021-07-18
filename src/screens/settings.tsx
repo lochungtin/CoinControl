@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Header from '../components/headers/minimal';
 import PromptModal from '../components/modals/prompt';
+import ColorPicker from '../components/pickers/color';
 import MultiPicker from '../components/pickers/multi';
 import TimePicker from '../components/pickers/time';
 
@@ -14,7 +15,7 @@ import { ScreenStyles, SettingsStyles } from './styles';
 import { defaultSettings } from '../data/default';
 import { itemlist, SettingsPickers, SettingsSwitches } from '../data/mapping/settings';
 import { Prompt } from '../data/prompts';
-import { clearData, setDarkMode, setDefaultCategories, setDefaultSettings, setLightMode } from '../redux/action';
+import { clearData, setAccent, setDarkMode, setDefaultCategories, setDefaultSettings, setLightMode } from '../redux/action';
 import { store } from '../redux/store';
 import { ReduxPropType } from '../types/redux';
 import { ScreenProps, SettingsCategory, SettingsItem } from '../types/ui';
@@ -23,6 +24,7 @@ import { smallKeygen } from '../utils/keygen';
 class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
     state = {
+        colorPickerOpen: false,
         prompt: -1,
         timePickerOpen: false,
     }
@@ -59,9 +61,19 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
     }
 
     openPicker = (type: SettingsPickers) => {
-        if (type === SettingsPickers.TIME) {
-            this.setState({ timePickerOpen: true });
+        switch (type) {
+            case SettingsPickers.TIME:
+                this.setState({ timePickerOpen: true });
+                break;
+            case SettingsPickers.COLOR:
+                this.setState({ colorPickerOpen: true });
+                break;
         }
+    }
+
+    setAccentColor = (accent: string) => {
+        store.dispatch(setAccent(accent));
+        this.setState({ colorPickerOpen: false });
     }
 
     setNotifTime = (time: string) => {
@@ -135,6 +147,12 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                         })}
                     </ScrollView>
                 </View>
+                <ColorPicker
+                    onClose={() => this.setState({ colorPickerOpen: false })}
+                    onSelect={this.setAccentColor}
+                    open={this.state.colorPickerOpen}
+                    selected={this.props.theme.static.accentC}
+                />
                 <TimePicker
                     am={this.props.settings?.notifTime.substring(6, 8) === 'AM'}
                     hour={parseInt((this.props.settings?.notifTime || defaultSettings.notifTime).substring(0, 2))}
