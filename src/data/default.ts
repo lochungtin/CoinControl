@@ -95,7 +95,7 @@ export const defaultSettings: SettingsType = {
     currency: currencyData['a983c65f'],
     darkMode: true,
     notif: true,
-    notifTime: '23:00 PM',
+    notifTime: '11:00 PM',
     promptTrigger: {
         0: true,
         1: true,

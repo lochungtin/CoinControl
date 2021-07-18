@@ -5,6 +5,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Header from '../components/headers/minimal';
 import PromptModal from '../components/modals/prompt';
+import MultiPicker from '../components/pickers/multi';
+import TimePicker from '../components/pickers/time';
 
 import { WHITE } from '../data/color';
 import { ScreenStyles, SettingsStyles } from './styles';
@@ -16,11 +18,13 @@ import { ReduxPropType } from '../types/redux';
 import { ScreenProps, SettingsCategory, SettingsItem } from '../types/ui';
 import { smallKeygen } from '../utils/keygen';
 import { Prompt } from '../data/prompts';
+import { defaultSettings } from '../data/default';
 
 class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
     state = {
-        prompt: -1
+        prompt: -1,
+        timePickerOpen: false,
     }
 
     confirmReset = (prompt: Prompt, dnsa: boolean) => {
@@ -50,7 +54,15 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
         }
     }
 
-    openPicker = (type: SettingsPickers) => { }
+    openPicker = (type: SettingsPickers) => {
+        if (type === SettingsPickers.TIME) {
+            this.setState({ timePickerOpen: true });
+        }
+    }
+
+    setNotifTime = (time: string) => {
+        this.setState({ timePickerOpen: false });
+    }
 
     signOut = () => { }
 
@@ -119,6 +131,14 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                         })}
                     </ScrollView>
                 </View>
+                <TimePicker
+                    am={this.props.settings?.notifTime.substring(6, 8) === 'AM'}
+                    hour={parseInt((this.props.settings?.notifTime || defaultSettings.notifTime).substring(0, 2))}
+                    minute={(this.props.settings?.notifTime || defaultSettings.notifTime).substring(3, 5)}
+                    onClose={() => this.setState({ timePickerOpen: false })}
+                    onSelect={this.setNotifTime}
+                    open={this.state.timePickerOpen}
+                />
                 <PromptModal
                     onClose={() => this.setState({ prompt: -1 })}
                     onConfirm={(dnsa: boolean) => this.confirmReset(this.state.prompt, dnsa)}
