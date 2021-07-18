@@ -26,6 +26,9 @@ const updateAccount = (account: AccountType | null = null, action: ReduxActionTy
 const updateSettings = (settings: SettingsType = defaultSettings, action: ReduxActionType) => {
     let update: SettingsType = { ...settings };
     switch (action.type) {
+        // set default
+        case Actions.DEFAULT_SETTINGS:
+            return defaultSettings;
         // set dark theme
         case Actions.SETTINGS_SET_DARKMODE:
             update.darkMode = true;
@@ -41,6 +44,10 @@ const updateSettings = (settings: SettingsType = defaultSettings, action: ReduxA
 
 const updateTheme = (theme: ThemeType = defaultTheme, action: ReduxActionType) => {
     switch (action.type) {
+        // set accent
+        case Actions.THEME_ACCENT:
+            let update: ThemeType = { ...theme };
+            return update;
         // set dark theme
         case Actions.SETTINGS_SET_DARKMODE:
             return darkTheme;

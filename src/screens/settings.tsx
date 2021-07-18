@@ -11,14 +11,14 @@ import TimePicker from '../components/pickers/time';
 import { WHITE } from '../data/color';
 import { ScreenStyles, SettingsStyles } from './styles';
 
+import { defaultSettings } from '../data/default';
 import { itemlist, SettingsPickers, SettingsSwitches } from '../data/mapping/settings';
-import { setDarkMode, setLightMode } from '../redux/action';
+import { Prompt } from '../data/prompts';
+import { clearData, setDarkMode, setDefaultCategories, setDefaultSettings, setLightMode } from '../redux/action';
 import { store } from '../redux/store';
 import { ReduxPropType } from '../types/redux';
 import { ScreenProps, SettingsCategory, SettingsItem } from '../types/ui';
 import { smallKeygen } from '../utils/keygen';
-import { Prompt } from '../data/prompts';
-import { defaultSettings } from '../data/default';
 
 class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
@@ -30,14 +30,18 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
     confirmReset = (prompt: Prompt, dnsa: boolean) => {
         switch (prompt) {
             case Prompt.DEFAULT_CATEGORIES:
+                store.dispatch(setDefaultCategories());
                 break;
             case Prompt.DEFAULT_SETTINGS:
+                store.dispatch(setDefaultSettings());
                 break;
             case Prompt.CLEAR_DATA:
+                store.dispatch(clearData());
                 break;
             default:
                 break;
         }
+        this.setState({ prompt: -1 });
     }
 
     onSwitchToggle = (type: SettingsSwitches, on: boolean) => {
