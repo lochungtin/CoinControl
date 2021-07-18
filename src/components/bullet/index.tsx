@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { BulletStyles, screenWidth } from './styles';
 
 import { ReduxPropType } from '../../types/redux';
+import { BLACK, WHITE } from '../../data/color';
 
 interface DataProps {
     inactive?: boolean,
@@ -24,7 +25,7 @@ class Bullet extends React.Component<ReduxPropType & DataProps> {
                     width: screenWidth * this.props.width,
                 }}
             >
-                <Text style={{ ...BulletStyles.text, color: this.props.inactive ? this.props.theme.dynamic.text.contrastC : this.props.theme.dynamic.text.mainC  }}>
+                <Text style={{ ...BulletStyles.text, color: this.props.inactive ? this.props.theme.static.bulletTextC.inactive : this.props.theme.static.bulletTextC.active  }}>
                     {this.props.text.toUpperCase()}
                 </Text>
             </TouchableOpacity>

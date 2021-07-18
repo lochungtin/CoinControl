@@ -18,6 +18,10 @@ export interface ColorPickerCellDataType {
 // theme //
 export interface StaticThemeType {
     accentC: string,
+    bulletTextC: {
+        active: string,
+        inactive: string,
+    },
     icon: IconThemeType,
     secondaryC: string,
 }

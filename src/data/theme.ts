@@ -3,6 +3,10 @@ import { ACCENT, BLACK, GREY, ICONS, WHITE } from './color';
 
 const staticTheme: StaticThemeType = {
     accentC: ACCENT,
+    bulletTextC: {
+        active: BLACK,
+        inactive: WHITE,
+    },
     icon: {
         actionC: GREY,
         drawerC: GREY,
