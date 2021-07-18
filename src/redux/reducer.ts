@@ -26,6 +26,14 @@ const updateAccount = (account: AccountType | null = null, action: ReduxActionTy
 const updateSettings = (settings: SettingsType = defaultSettings, action: ReduxActionType) => {
     let update: SettingsType = { ...settings };
     switch (action.type) {
+        // set dark theme
+        case Actions.SETTINGS_SET_DARKMODE:
+            update.darkMode = true;
+            return update;
+        // set light theme
+        case Actions.SETTINGS_SET_LIGHTMODE:
+            update.darkMode = false;
+            return update;
         default:
             return settings;
     }

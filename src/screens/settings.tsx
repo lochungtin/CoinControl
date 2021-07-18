@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, Switch, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import Header from '../components/headers/minimal';
@@ -11,11 +11,18 @@ import { ScreenProps, SettingsCategory, SettingsItem } from '../types/ui';
 import { itemlist, SettingsPickers, SettingsResets, SettingsSwitches } from '../data/mapping/settings';
 import { smallKeygen } from '../utils/keygen';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { WHITE } from '../data/color';
+import { TouchableOpacity } from 'react-native';
+import { store } from '../redux/store';
+import { setDarkMode, setLightMode } from '../redux/action';
 
 class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
 
-    onSwitchToggle = (type: SettingsSwitches, on: boolean) => { }
+    onSwitchToggle = (type: SettingsSwitches, on: boolean) => {
+        if (type === SettingsSwitches.DARK_MODE)
+            store.dispatch(on ? setDarkMode() : setLightMode());
+    }
 
     onReset = (type: SettingsResets) => { }
 
@@ -24,6 +31,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
     signOut = () => { }
 
     render() {
+        console.log(this.props.settings);
         return (
             <View style={{ ...ScreenStyles.root, backgroundColor: this.props.theme.dynamic.screen.bgC }}>
                 <Header name='settings' navigation={this.props.navigation} />
@@ -46,8 +54,15 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                                 </View>
                                 {category.body.map((item: SettingsItem) => {
                                     return (
-                                        <View key={smallKeygen()} style={{ ...SettingsStyles.colorBox, backgroundColor: this.props.theme.dynamic.screen.secondaryBgC }}>
-                                            <View style={{ ...SettingsStyles.itemBox }}>
+                                        <View
+                                            key={smallKeygen()}
+                                            style={{
+                                                ...SettingsStyles.colorBox,
+                                                backgroundColor: this.props.theme.dynamic.screen.secondaryBgC,
+                                                opacity: item.blurred ? 0.5 : 1,
+                                            }}
+                                        >
+                                            <TouchableOpacity onPress={() => item.onPress(!item.switch)} style={{ ...SettingsStyles.itemBox }}>
                                                 <Icon
                                                     color={this.props.theme.static.accentC}
                                                     name={item.icon}
@@ -56,12 +71,22 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                                                 <Text style={{ ...SettingsStyles.label, color: this.props.theme.dynamic.text.mainC }}>
                                                     {item.label}
                                                 </Text>
-                                                <Icon
-                                                    color={this.props.theme.dynamic.icon.actionC}
-                                                    name='chevron-right'
-                                                    size={30}
-                                                />
-                                            </View>
+                                                {item.switch !== undefined ?
+                                                    <Switch
+                                                        onValueChange={item.onPress}
+                                                        thumbColor={item.switch ? this.props.theme.static.accentC : WHITE}
+                                                        trackColor={{ false: this.props.theme.dynamic.icon.actionC, true: this.props.theme.dynamic.icon.actionC }}
+                                                        value={item.switch}
+                                                    />
+                                                    :
+                                                    <Icon
+                                                        color={this.props.theme.dynamic.icon.actionC}
+                                                        name='chevron-right'
+                                                        size={30}
+                                                    />
+
+                                                }
+                                            </TouchableOpacity>
                                         </View>
                                     );
                                 })}

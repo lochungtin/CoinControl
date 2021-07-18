@@ -59,7 +59,7 @@ export const itemlist = (
                     icon: 'lightbulb-outline',
                     label: 'Dark Mode',
                     onPress: (value: boolean) => onSwitchToggle(SettingsSwitches.DARK_MODE, value),
-                    switch: true,
+                    switch: settings.darkMode,
                 },
             ],
         },
@@ -88,7 +88,7 @@ export const itemlist = (
                     switch: settings.notif
                 },
                 {
-                    blurred: settings.notif,
+                    blurred: !settings.notif,
                     icon: 'subdirectory-arrow-right',
                     label: settings.notifTime,
                     onPress: () => openPicker(SettingsPickers.TIME),
