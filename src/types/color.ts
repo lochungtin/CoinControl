@@ -1,11 +1,11 @@
 // color picker //
 export interface ColorPickerDataType {
     [index: string]: ColorPickerSectorDataType,
-};
+}
 
 export interface ColorPickerSectorDataType {
     [index: string]: ColorPickerCellDataType,
-};
+}
 
 export interface ColorPickerCellDataType {
     hex: string,
@@ -13,44 +13,24 @@ export interface ColorPickerCellDataType {
         x: number,
         y: number,
     },
-};
+}
 
 // theme //
 export interface StaticThemeType {
     accentC: string,
-    bullet: ButtonPairType,
-    cSwitch: ButtonPairType,
-    progressBar: ProgressBarThemeType,
-};
+    icon: IconThemeType,
+    secondaryC: string,
+}
 
 export interface ThemeType {
     dynamic: {
-        icon: IconThemeType,
         modal: ModalThemeType,
         percentageTrackC: string,
         screen: ScreenThemeType,
         text: TextThemeType,
     },
     static: StaticThemeType,
-};
-
-// static
-export interface ButtonPairType {
-    active: {
-        bgC: string,
-        textC: string,
-    },
-    inactive: {
-        bgC: string,
-        textC: string,
-    },
-};
-
-export interface ProgressBarThemeType {
-    highlightC: string,
-    textC: string,
-    trackC: string,
-};
+}
 
 // dynamic
 export interface IconThemeType {
@@ -58,7 +38,7 @@ export interface IconThemeType {
     drawerC: string,
     homeC: string,
     mainC: string,
-};
+}
 
 export interface ModalThemeType {
     closeBarC: string,
@@ -66,15 +46,16 @@ export interface ModalThemeType {
         alpha: number,
         color: string,
     },
-};
+}
 
 export interface ScreenThemeType {
     bgC: string,
     secondaryBgC: string,
-};
+}
 
 export interface TextThemeType {
+    contrastC: string,
     labelC: string,
     mainC: string,
     secondaryC: string,
-};
+}

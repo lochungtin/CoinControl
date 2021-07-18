@@ -1,43 +1,19 @@
 import { StaticThemeType, ThemeType } from '../types/color';
-import { ACCENT, BLACK, SECONDARY_ACCENT, TINTED_GREY, WHITE } from './color';
+import { ACCENT, BLACK, GREY, ICONS, WHITE } from './color';
 
 const staticTheme: StaticThemeType = {
     accentC: ACCENT,
-    bullet: {
-        active: {
-            bgC: ACCENT,
-            textC: BLACK,
-        },
-        inactive: {
-            bgC: TINTED_GREY,
-            textC: WHITE,
-        },
+    icon: {
+        actionC: GREY,
+        drawerC: GREY,
+        homeC: GREY,
+        mainC: ICONS,
     },
-    cSwitch: {
-        active: {
-            bgC: SECONDARY_ACCENT,
-            textC: BLACK,
-        },
-        inactive: {
-            bgC: TINTED_GREY,
-            textC: WHITE,
-        },
-    },
-    progressBar: {
-        highlightC: ACCENT,
-        textC: BLACK,
-        trackC: WHITE,
-    },
+    secondaryC: GREY,
 }
 
 export const lightTheme: ThemeType = {
     dynamic: {
-        icon: {
-            actionC: TINTED_GREY,
-            drawerC: TINTED_GREY,
-            homeC: '#DEE9E6',
-            mainC: '#C4C4C4',
-        },
         modal: {
             closeBarC: '#CACAC7',
             shadow: {
@@ -51,6 +27,7 @@ export const lightTheme: ThemeType = {
             secondaryBgC: '#F1F1F1',
         },
         text: {
+            contrastC: WHITE,
             labelC: BLACK,
             mainC: BLACK,
             secondaryC: '#7A7A7A',
@@ -61,12 +38,6 @@ export const lightTheme: ThemeType = {
 
 export const darkTheme: ThemeType = {
     dynamic: {
-        icon: {
-            actionC: TINTED_GREY,
-            drawerC: TINTED_GREY,
-            homeC: TINTED_GREY,
-            mainC: '#C4C4C4',
-        },
         modal: {
             closeBarC: '#C4C4C4',
             shadow: {
@@ -80,6 +51,7 @@ export const darkTheme: ThemeType = {
             secondaryBgC: '#212121',
         },
         text: {
+            contrastC: BLACK,
             labelC: '#CBCBCB',
             mainC: WHITE,
             secondaryC: '#7A7A7A',

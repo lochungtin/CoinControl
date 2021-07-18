@@ -127,12 +127,12 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                                                         <Switch
                                                             onValueChange={item.onPress}
                                                             thumbColor={item.switch ? this.props.theme.static.accentC : WHITE}
-                                                            trackColor={{ false: this.props.theme.dynamic.icon.actionC, true: this.props.theme.dynamic.icon.actionC }}
+                                                            trackColor={{ false: this.props.theme.static.icon.actionC, true: this.props.theme.static.icon.actionC }}
                                                             value={item.switch}
                                                         />
                                                         :
                                                         <Icon
-                                                            color={this.props.theme.dynamic.icon.actionC}
+                                                            color={this.props.theme.static.icon.actionC}
                                                             name='chevron-right'
                                                             size={30}
                                                         />

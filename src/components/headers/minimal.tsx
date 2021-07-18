@@ -16,7 +16,7 @@ class Header extends React.Component<ReduxPropType & ScreenProps & { name: strin
                 <View style={GeneralHeaderStyles.contentPositioner}>
                     <TouchableOpacity onPress={this.props.navigation.toggleDrawer}>
                         <Icon
-                            color={this.props.theme.dynamic.icon.drawerC}
+                            color={this.props.theme.static.icon.drawerC}
                             name='menu-open'
                             size={40}
                         />

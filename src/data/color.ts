@@ -3,8 +3,8 @@ import { ColorPickerDataType } from '../types/color';
 // colors
 export const ACCENT: string = '#00FFB2';
 export const BLACK: string = '#000000';
-export const SECONDARY_ACCENT: string = '#B8EADB';
-export const TINTED_GREY: string = '#4D5553';
+export const ICONS: string = '#C4C4C4';
+export const GREY: string = '#838383';
 export const WHITE: string = '#FFFFFF';
 
 // color picker data

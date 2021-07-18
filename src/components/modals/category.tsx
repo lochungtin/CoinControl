@@ -68,7 +68,7 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
                                 />
                                 <TouchableOpacity onPress={this.onConfirm}>
                                     <Icon
-                                        color={this.props.theme.dynamic.icon.mainC}
+                                        color={this.props.theme.static.icon.mainC}
                                         name='checkbox-marked-circle-outline'
                                         size={35}
                                     />

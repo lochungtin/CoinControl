@@ -45,7 +45,7 @@ class Picker extends React.Component<ReduxPropType & DataProps> {
                     <View style={DatePickerStyles.controllerRow}>
                         <TouchableOpacity onPress={this.prev}>
                             <Icon
-                                color={this.props.theme.dynamic.icon.mainC}
+                                color={this.props.theme.static.icon.mainC}
                                 name='chevron-left'
                                 size={30}
                             />
@@ -68,7 +68,7 @@ class Picker extends React.Component<ReduxPropType & DataProps> {
                         </Text>
                         <TouchableOpacity onPress={this.next}>
                             <Icon
-                                color={this.props.theme.dynamic.icon.mainC}
+                                color={this.props.theme.static.icon.mainC}
                                 name='chevron-right'
                                 size={30}
                             />

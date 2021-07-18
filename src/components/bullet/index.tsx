@@ -15,20 +15,16 @@ interface DataProps {
 
 class Bullet extends React.Component<ReduxPropType & DataProps> {
     render() {
-        let colors: { bgC: string, textC: string } = this.props.inactive ?
-            this.props.theme.static.bullet.inactive :
-            this.props.theme.static.bullet.active;
-
         return (
             <TouchableOpacity
                 onPress={this.props.onPress}
                 style={{
                     ...BulletStyles.root,
-                    backgroundColor: colors.bgC,
+                    backgroundColor: this.props.inactive ? this.props.theme.static.secondaryC : this.props.theme.static.accentC,
                     width: screenWidth * this.props.width,
                 }}
             >
-                <Text style={{ ...BulletStyles.text, color: colors.textC }}>
+                <Text style={{ ...BulletStyles.text, color: this.props.inactive ? this.props.theme.dynamic.text.contrastC : this.props.theme.dynamic.text.mainC  }}>
                     {this.props.text.toUpperCase()}
                 </Text>
             </TouchableOpacity>
