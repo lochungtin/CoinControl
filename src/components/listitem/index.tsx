@@ -32,7 +32,9 @@ class LItem extends React.Component<ReduxPropType & DataProps> {
                     <Text style={{ ...ListItemStyles.label, color: this.props.theme.dynamic.text.mainC }}>
                         {this.props.uppercase ? this.props.label.toUpperCase() : this.props.label}
                     </Text>
-                    {this.props.children}
+                    <View style={ListItemStyles.rightChild}>
+                        {this.props.children}
+                    </View>
                 </View>
             </TouchableOpacity>
         );

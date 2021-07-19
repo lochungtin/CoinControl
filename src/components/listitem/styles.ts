@@ -27,6 +27,13 @@ export const ListItemStyles = StyleSheet.create({
     },
     label: {
         fontSize: 14,
-        width: screenWidth * 0.4,
+        width: screenWidth * 0.35,
+    },
+    rightChild: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        width: screenWidth * 0.3,
     },
 });

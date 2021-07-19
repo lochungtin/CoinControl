@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 
 import Header from '../components/headers/selector';
 import SubHeader from '../components/headers/sub';
+import LItem from '../components/listitem';
 import CategoryModal from '../components/modals/category';
 import PromptModal from '../components/modals/prompt';
-import LItem from '../components/listitem';
 
 import { ScreenStyles, CategoryScreenStyles } from './styles';
 
@@ -85,7 +85,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
         }));
     }
 
-    unsubscribe = this.props.navigation.addListener('focus', () => this.setState({ category: this.props.route.params.category || Categories.EXPENSE }));
+    unsubscribe = this.props.navigation.addListener('focus', () => this.setState({ category: this.props.route.params?.category || Categories.EXPENSE }));
 
     render() {
         let favs: Array<CategoryType> = [];
