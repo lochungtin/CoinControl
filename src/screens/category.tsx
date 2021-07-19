@@ -22,7 +22,7 @@ import { Prompt } from '../data/prompts';
 class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
     state = {
-        category: this.props.route.params.category || Categories.EXPENSE,
+        category: this.props.route.params?.category || Categories.EXPENSE,
         cmOpen: false,
         pmOpen: null,
         selected: defaultCategories[Categories.EXPENSE]['C0000000'],
