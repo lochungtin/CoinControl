@@ -8,6 +8,7 @@ export interface NumpadBtnProps {
 
 export interface ScreenProps {
     navigation: DrawerNavigationProp<any, any>,
+    route?: any,
 }
 
 export interface DrawerItemMap {

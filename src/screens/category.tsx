@@ -13,7 +13,7 @@ import { ScreenProps } from '../types/ui';
 class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
     state = {
-        category: Categories.EXPENSE,
+        category: this.props.route.params.category || Categories.EXPENSE,
     }
 
     render() {

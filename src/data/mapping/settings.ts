@@ -75,12 +75,12 @@ export const itemlist = (
                 {
                     icon: 'tag',
                     label: 'Expense Categories',
-                    onPress: () => navigation.navigate('category', Categories.EXPENSE),
+                    onPress: () => navigation.navigate('category', { screen: 'categoryHome', params: { category: Categories.EXPENSE } }),
                 },
                 {
                     icon: 'tag-outline',
                     label: 'Income Categories',
-                    onPress: () => navigation.navigate('category', Categories.INCOME),
+                    onPress: () => navigation.navigate('category', { screen: 'categoryHome', params: { category: Categories.INCOME } }),
                 },
             ],
         },

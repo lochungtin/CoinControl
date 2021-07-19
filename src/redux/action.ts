@@ -4,6 +4,9 @@ import { ReduxActionType } from "../types/redux";
 export enum Actions {
     ACCOUNT_SIGNIN,
     ACCOUNT_SIGNOUT,
+    CATEGORY_ADD,
+    CATEGORY_DELETE,
+    CATEGORY_EDIT,
     CLEAR_DATA,
     DEFAULT_CATEGORIES,
     DEFAULT_SETTINGS,
@@ -15,6 +18,22 @@ export enum Actions {
     SETTINGS_SET_NOTIF_TIME,
     THEME_ACCENT,
 }
+
+// cateogies
+export const addCategory = (payload: any): ReduxActionType => ({
+    type: Actions.CATEGORY_ADD,
+    payload,
+});
+
+export const deleteCategory = (payload: any): ReduxActionType => ({
+    type: Actions.CATEGORY_DELETE,
+    payload,
+});
+
+export const editCategory = (payload: any): ReduxActionType => ({
+    type: Actions.CATEGORY_EDIT,
+    payload,
+});
 
 // data
 export const clearData = (): ReduxActionType => ({

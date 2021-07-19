@@ -11,8 +11,7 @@ export enum Categories {
 }
 
 export interface CategoryStore {
-    expense: CategoryMap,
-    income: CategoryMap,
+    [index: number]: CategoryMap,
 }
 
 export interface CategoryMap {
@@ -21,6 +20,7 @@ export interface CategoryMap {
 
 export interface CategoryType {
     color: string,
+    fav: boolean,
     icon: string,
     key: string,
     name: string,

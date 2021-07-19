@@ -27,7 +27,18 @@ const updateAccount = (account: AccountType | null = null, action: ReduxActionTy
 const updateCategories = (categories: CategoryStore = defaultCategories, action: ReduxActionType) => {
     let update: CategoryStore = { ...categories };
     switch (action.type) {
-        
+        // add or edit
+        case Actions.CATEGORY_ADD:
+        case Actions.CATEGORY_EDIT:
+            update[action.payload.category][action.payload.data.key] = action.payload.data;
+            return update;
+        // delete
+        case Actions.CATEGORY_DELETE:
+            delete update[action.payload.category][action.payload.key];
+            return update;
+        // set default
+        case Actions.DEFAULT_CATEGORIES:
+            return defaultCategories;
         // default
         default:
             return categories;
