@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollView, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import Header from '../components/headers/selector';
@@ -13,11 +14,14 @@ import { Categories, CategoryType, IconSection } from '../types/data';
 import { ReduxPropType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
 import { defaultCategories } from '../data/default';
+import moment from 'moment';
 
 class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
     state = {
         category: this.props.route.params?.category || Categories.EXPENSE,
+        open: false,
+        selected: defaultCategories[Categories.EXPENSE]['C0000000'],
     }
 
     componentWillUnmount() {
@@ -59,7 +63,11 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                                         label={category.name}
                                         onPress={() => this.setState({ open: true, selected: category })}
                                     >
-                                        {<View />}
+                                        <Icon
+                                            color={this.props.theme.static.icon.actionC}
+                                            name='chevron-right'
+                                            size={30}
+                                        />
                                     </LItem>
                                 );
                             })}
@@ -73,13 +81,25 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                                         label={category.name}
                                         onPress={() => this.setState({ open: true, selected: category })}
                                     >
-                                        {<View />}
+                                        <Icon
+                                            color={this.props.theme.static.icon.actionC}
+                                            name='chevron-right'
+                                            size={30}
+                                        />
                                     </LItem>
                                 );
                             })}
                         </View>
                     </ScrollView>
                 </View>
+                <InputModal
+                    category={this.state.selected}
+                    date={moment().format('DD-MM-YYYY')}
+                    title=''
+                    onClose={() => this.setState({ open: false })}
+                    onConfirm={() => {}}
+                    open={this.state.open}
+                />
             </>
         );
     }
