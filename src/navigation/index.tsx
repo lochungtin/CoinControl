@@ -24,7 +24,7 @@ const Settings = createStackNavigator();
 class AppNav extends React.Component<ReduxPropType> {
 
     category = () =>
-        <Category.Navigator screenOptions={{ headerShown: false }}>
+        <Category.Navigator initialRouteName='categoryHome' screenOptions={{ headerShown: false }}>
             <Category.Screen name='categoryHome' component={category} />
             <Category.Screen name='newCategory' component={newCategory} />
         </Category.Navigator>

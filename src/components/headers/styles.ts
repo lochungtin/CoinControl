@@ -45,6 +45,11 @@ export const AuthHeaderStyles = StyleSheet.create({
     },
 });
 
-export const MinimalHeaderStyles = StyleSheet.create({
-
+export const SelectorHeaderStyles = StyleSheet.create({
+    rightPositioner: {
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        width: 40,
+    },  
 });

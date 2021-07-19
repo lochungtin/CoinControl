@@ -31,7 +31,7 @@ class Selector extends React.Component<ReduxPropType & DataProps> {
                             'transparent',
                         width: screenWidth * this.props.width * 0.5,
                     }}>
-                    <Text style={{ color: this.props.selected === Categories.EXPENSE ? BLACK : WHITE }}>
+                    <Text style={{ ...SelectorStyles.label, color: this.props.selected === Categories.EXPENSE ? BLACK : WHITE }}>
                         EXPENSE
                     </Text>
                 </TouchableOpacity>
@@ -44,7 +44,7 @@ class Selector extends React.Component<ReduxPropType & DataProps> {
                             'transparent',
                         width: screenWidth * this.props.width * 0.5,
                     }}>
-                    <Text style={{ color: this.props.selected === Categories.INCOME ? BLACK : WHITE }}>
+                    <Text style={{ ...SelectorStyles.label, color: this.props.selected === Categories.INCOME ? BLACK : WHITE }}>
                         INCOME
                     </Text>
                 </TouchableOpacity>

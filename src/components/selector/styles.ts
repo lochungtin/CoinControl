@@ -18,4 +18,8 @@ export const SelectorStyles = StyleSheet.create({
         height: 40,
         justifyContent: 'center',
     },
+    label: {
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
 });

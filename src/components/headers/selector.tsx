@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import Selector from '../selector';
 
-import { GeneralHeaderStyles } from './styles';
+import { GeneralHeaderStyles, SelectorHeaderStyles } from './styles';
 
 import { Categories } from '../../types/data';
 import { ReduxPropType } from '../../types/redux';
@@ -14,7 +14,9 @@ import { ScreenProps } from '../../types/ui';
 
 interface DataProps {
     name: string,
+    onPressRight?: () => void,
     onToggle: (category: Categories) => void,
+    right?: string,
     selected: Categories,
 }
 
@@ -34,17 +36,21 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
                     <Text style={{ ...GeneralHeaderStyles.label, color: this.props.theme.dynamic.text.labelC }}>
                         {this.props.name.toUpperCase()}
                     </Text>
-                    <Icon
-                        color='transparent'
-                        name='menu-open'
-                        size={40}
-                    />
+                    <TouchableOpacity onPress={this.props.onPressRight}>
+                        <View style={SelectorHeaderStyles.rightPositioner}>
+                            <Icon
+                                color={this.props.right ? this.props.theme.static.icon.drawerC : 'transparent'}
+                                name={this.props.right || 'blank'}
+                                size={30}
+                            />
+                        </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={{ height: 10 }} />
                 <Selector
                     onToggle={this.props.onToggle}
                     selected={this.props.selected}
-                    width={0.85}
+                    width={0.9}
                 />
             </View>
         );

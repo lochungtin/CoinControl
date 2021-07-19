@@ -22,7 +22,9 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                 <Header
                     name='categories'
                     navigation={this.props.navigation}
+                    onPressRight={() => this.props.navigation.navigate('newCategory')}
                     onToggle={(category: Categories) => this.setState({ category })}
+                    right='pen'
                     selected={this.state.category}
                 />
             </View>
