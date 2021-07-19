@@ -5,21 +5,24 @@ import { connect } from 'react-redux';
 
 import Header from '../components/headers/selector';
 import SubHeader from '../components/headers/sub';
+import CategoryModal from '../components/modals/category';
 import LItem from '../components/listitem';
 
 import { ScreenStyles, CategoryScreenStyles } from './styles';
 
 import { defaultCategories } from '../data/default';
+import { editCategory } from '../redux/action';
 import { store } from '../redux/store';
 import { Categories, CategoryType } from '../types/data';
 import { ReduxPropType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
-import { editCategory } from '../redux/action';
 
 class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
     state = {
         category: this.props.route.params.category || Categories.EXPENSE,
+        open: false,
+        selected: defaultCategories[Categories.EXPENSE]['C0000000'],
     }
 
     componentWillUnmount() {
@@ -35,7 +38,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                     size={30}
                 />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.setState({ open: true, selected: category })}>
                 <Icon
                     color={this.props.theme.static.icon.actionC}
                     name={'dots-vertical'}
@@ -43,6 +46,15 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                 />
             </TouchableOpacity>
         </View>
+
+    editCategory = (category: CategoryType) => {
+        store.dispatch(editCategory({
+            category: this.state.category,
+            data: category,
+            key: category.key,
+        }));
+        this.setState({ open: false });
+    }
 
     toggleFav = (category: CategoryType) => {
         category.fav = !category.fav;
@@ -61,6 +73,12 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
         Object.keys((this.props.categories || defaultCategories)[this.state.category])
             .map((key: string) => (this.props.categories || defaultCategories)[this.state.category][key])
+            .sort((a: CategoryType, b: CategoryType) => {
+                if (a.key === 'C0000000')
+                    return 1;
+                else
+                    return a.name.localeCompare(b.name);
+            })
             .forEach((category: CategoryType) => {
                 if (category.fav)
                     favs.push(category);
@@ -70,46 +88,54 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
 
         return (
-            <View style={{ ...ScreenStyles.root, backgroundColor: this.props.theme.dynamic.screen.bgC }}>
-                <Header
-                    name='categories'
-                    navigation={this.props.navigation}
-                    onPressRight={() => this.props.navigation.navigate('newCategory')}
-                    onToggle={(category: Categories) => this.setState({ category })}
-                    right='pen'
-                    selected={this.state.category}
+            <>
+                <View style={{ ...ScreenStyles.root, backgroundColor: this.props.theme.dynamic.screen.bgC }}>
+                    <Header
+                        name='categories'
+                        navigation={this.props.navigation}
+                        onPressRight={() => this.props.navigation.navigate('newCategory')}
+                        onToggle={(category: Categories) => this.setState({ category })}
+                        right='tag-plus'
+                        selected={this.state.category}
+                    />
+                    <ScrollView>
+                        <View style={ScreenStyles.scrollView}>
+                            <SubHeader label='favourites' />
+                            {favs.map((category: CategoryType) => {
+                                return (
+                                    <LItem
+                                        uppercase
+                                        category={category}
+                                        key={category.key}
+                                        label={category.name}
+                                    >
+                                        {this.controllers(category)}
+                                    </LItem>
+                                );
+                            })}
+                            <SubHeader label='other categories' />
+                            {others.map((category: CategoryType) => {
+                                return (
+                                    <LItem
+                                        uppercase
+                                        category={category}
+                                        key={category.key}
+                                        label={category.name}
+                                    >
+                                        {category.key === 'C0000000' ? <View style={CategoryScreenStyles.controller} /> : this.controllers(category)}
+                                    </LItem>
+                                );
+                            })}
+                        </View>
+                    </ScrollView>
+                </View>
+                <CategoryModal
+                    category={this.state.selected}
+                    onClose={() => this.setState({ open: false })}
+                    onConfirm={this.editCategory}
+                    open={this.state.open}
                 />
-                <ScrollView>
-                    <View style={ScreenStyles.scrollView}>
-                        <SubHeader label='favourites' />
-                        {favs.map((category: CategoryType) => {
-                            return (
-                                <LItem
-                                    uppercase
-                                    category={category}
-                                    key={category.key}
-                                    label={category.name}
-                                >
-                                    {this.controllers(category)}
-                                </LItem>
-                            );
-                        })}
-                        <SubHeader label='other categories' />
-                        {others.map((category: CategoryType) => {
-                            return (
-                                <LItem
-                                    uppercase
-                                    category={category}
-                                    key={category.key}
-                                    label={category.name}
-                                >
-                                    {category.key === 'C0000000' ? <View style={CategoryScreenStyles.controller} /> : this.controllers(category)}
-                                </LItem>
-                            );
-                        })}
-                    </View>
-                </ScrollView>
-            </View>
+            </>
         );
     }
 }

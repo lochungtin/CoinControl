@@ -26,16 +26,9 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
         name: this.props.category.name,
     }
 
-    onClose = () => {
-        this.setState({
-            color: this.props.category.color,
-            name: this.props.category.name,
-        });
-        this.props.onClose();
-    }
-
     onConfirm = () => this.props.onConfirm({
         color: this.state.color,
+        fav: this.props.category.fav,
         icon: this.props.category.icon,
         key: this.props.category.key,
         name: this.state.name,
@@ -44,10 +37,14 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
     render() {
         return (
             <>
-                <ModalBase onClose={this.onClose} open={this.props.open}>
+                <ModalBase
+                    onClose={this.props.onClose}
+                    onOpen={() => this.setState({ color: this.props.category.color, name: this.props.category.name })}
+                    open={this.props.open}
+                >
                     <KeyboardAvoidingView
                         behavior='padding'
-                        keyboardVerticalOffset={-200}
+                        keyboardVerticalOffset={475}
                         style={GeneralModalStyles.root}
                     >
                         <View style={{ ...CategoryModalStyles.rowContainer, backgroundColor: this.props.theme.dynamic.screen.secondaryBgC }}>

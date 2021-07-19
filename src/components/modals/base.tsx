@@ -11,6 +11,7 @@ interface DataProps {
     children: any,
     open: boolean,
     onClose: () => void,
+    onOpen?: () => void,
 }
 
 class ModalBase extends React.Component<ReduxPropType & DataProps> {
@@ -24,6 +25,7 @@ class ModalBase extends React.Component<ReduxPropType & DataProps> {
                 isVisible={this.props.open}
                 onBackdropPress={this.props.onClose}
                 onBackButtonPress={this.props.onClose}
+                onModalWillShow={this.props.onOpen}
                 propagateSwipe={true}
                 swipeDirection='down'
             >
