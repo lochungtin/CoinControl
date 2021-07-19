@@ -26,7 +26,6 @@ const updateAccount = (account: AccountType | null = null, action: ReduxActionTy
 
 const updateSettings = (settings: SettingsType = defaultSettings, action: ReduxActionType) => {
     let update: SettingsType = { ...settings };
-    console.log(action)
     switch (action.type) {
         // set default
         case Actions.DEFAULT_SETTINGS:

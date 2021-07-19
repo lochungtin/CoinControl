@@ -1,14 +1,42 @@
+import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import { ReduxPropType } from '../../types/redux';
+import { GeneralHeaderStyles } from './styles';
 
-class Header extends React.Component<ReduxPropType> {
+import { Categories } from '../../types/data';
+import { ReduxPropType } from '../../types/redux';
+import { ScreenProps } from '../../types/ui';
+
+interface DataProps {
+    name: string
+    onToggle: (category: Categories) => void,
+}
+
+class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
     render() {
         return (
-            <View>
-
+            <View style={{ ...GeneralHeaderStyles.root, backgroundColor: this.props.theme.dynamic.screen.secondaryBgC }}>
+                <StatusBar backgroundColor={this.props.theme.dynamic.screen.secondaryBgC} />
+                <View style={GeneralHeaderStyles.contentPositioner}>
+                    <TouchableOpacity onPress={this.props.navigation.toggleDrawer}>
+                        <Icon
+                            color={this.props.theme.static.icon.drawerC}
+                            name='menu-open'
+                            size={40}
+                        />
+                    </TouchableOpacity>
+                    <Text style={{ ...GeneralHeaderStyles.label, color: this.props.theme.dynamic.text.labelC }}>
+                        {this.props.name.toUpperCase()}
+                    </Text>
+                    <Icon
+                        color='transparent'
+                        name='menu-open'
+                        size={40}
+                    />
+                </View>
             </View>
         );
     }

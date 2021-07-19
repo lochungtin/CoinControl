@@ -8,7 +8,11 @@ import { ReduxPropType } from '../../types/redux';
 import { ScreenProps } from '../../types/ui';
 import { GeneralHeaderStyles } from './styles';
 
-class Header extends React.Component<ReduxPropType & ScreenProps & { name: string }> {
+interface DataProps {
+    name: string
+}
+
+class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
     render() {
         return (
             <View style={{ ...GeneralHeaderStyles.root, backgroundColor: this.props.theme.dynamic.screen.secondaryBgC }}>
