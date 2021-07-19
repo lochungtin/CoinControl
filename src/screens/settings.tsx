@@ -184,20 +184,22 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                                                     <Text style={{ ...SettingsStyles.label, color: this.props.theme.dynamic.text.mainC }}>
                                                         {item.label}
                                                     </Text>
-                                                    {item.switch !== undefined ?
-                                                        <Switch
-                                                            onValueChange={item.onPress}
-                                                            thumbColor={item.switch ? this.props.theme.static.accentC : WHITE}
-                                                            trackColor={{ false: this.props.theme.static.icon.actionC, true: this.props.theme.static.icon.actionC }}
-                                                            value={item.switch}
-                                                        />
-                                                        :
-                                                        <Icon
-                                                            color={this.props.theme.static.icon.actionC}
-                                                            name='chevron-right'
-                                                            size={30}
-                                                        />
-                                                    }
+                                                    <View style={SettingsStyles.itemRight}>
+                                                        {item.switch !== undefined ?
+                                                            <Switch
+                                                                onValueChange={item.onPress}
+                                                                thumbColor={item.switch ? this.props.theme.static.accentC : WHITE}
+                                                                trackColor={{ false: this.props.theme.static.icon.actionC, true: this.props.theme.static.icon.actionC }}
+                                                                value={item.switch}
+                                                            />
+                                                            :
+                                                            <Icon
+                                                                color={this.props.theme.static.icon.actionC}
+                                                                name='chevron-right'
+                                                                size={30}
+                                                            />
+                                                        }
+                                                    </View>
                                                 </TouchableOpacity>
                                             </View>
                                         );
