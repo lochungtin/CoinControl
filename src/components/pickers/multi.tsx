@@ -16,7 +16,7 @@ interface DataProps {
     onSelect: (obj: any) => void,
     open: boolean,
     render: (obj: any) => ReactElement,
-    selectedIndex: number,
+    selectedIndices: Array<number>,
 }
 
 class Picker extends React.Component<ReduxPropType & DataProps> {
@@ -33,7 +33,7 @@ class Picker extends React.Component<ReduxPropType & DataProps> {
                                     onPress={() => this.props.onSelect(obj)}
                                     style={{
                                         ...MultiPickerStyles.itemContainer,
-                                        ...(this.props.selectedIndex === index ? {
+                                        ...(this.props.selectedIndices.includes(index) ? {
                                             borderColor: this.props.theme.static.accentC,
                                             borderWidth: 2,
                                         } : {}),

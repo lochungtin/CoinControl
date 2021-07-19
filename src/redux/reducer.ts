@@ -8,6 +8,7 @@ import { darkTheme, lightTheme } from '../data/theme';
 import { ThemeType } from '../types/color';
 import { AccountType, SettingsType } from '../types/data';
 import { ReduxActionType } from '../types/redux';
+import { colorPickerData } from '../data/color';
 
 const updateAccount = (account: AccountType | null = null, action: ReduxActionType) => {
     switch (action.type) {
@@ -28,7 +29,14 @@ const updateSettings = (settings: SettingsType = defaultSettings, action: ReduxA
     switch (action.type) {
         // set default
         case Actions.DEFAULT_SETTINGS:
+            update = defaultSettings;
+            for (let i: number = 0; i < 5; ++i)
+                update.promptTrigger[i] = true;
             return defaultSettings;
+        // set prompt show
+        case Actions.PROMPT_SET_SHOW:
+            update.promptTrigger[action.payload.prompt] = action.payload.show;
+            return update;
         // set dark theme
         case Actions.SETTINGS_SET_DARKMODE:
             update.darkMode = true;
@@ -49,6 +57,9 @@ const updateTheme = (theme: ThemeType = defaultTheme, action: ReduxActionType) =
         case Actions.THEME_ACCENT:
             update.static.accentC = action.payload;
             return update;
+        // set default
+        case Actions.DEFAULT_SETTINGS:
+            update.static.accentC = colorPickerData['greens']['a'].hex;
         // set dark theme
         case Actions.SETTINGS_SET_DARKMODE:
             update.dynamic = darkTheme.dynamic;

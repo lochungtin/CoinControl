@@ -8,6 +8,14 @@ export enum Prompt {
     DEFAULT_CATEGORIES,
 }
 
+export const promptNames: PromptTextMap = {
+    0: 'Clear data',
+    1: 'Delete Category',
+    2: 'Delete Record',
+    3: 'Reset Settings',
+    4: 'Reset Categories',
+}
+
 export const prompts: PromptTextMap = {
     0: 'clear all your data',
     1: 'delete a category',

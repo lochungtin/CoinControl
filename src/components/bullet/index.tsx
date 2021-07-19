@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { BulletStyles, screenWidth } from './styles';
 
 import { ReduxPropType } from '../../types/redux';
-import { BLACK, WHITE } from '../../data/color';
 
 interface DataProps {
     inactive?: boolean,

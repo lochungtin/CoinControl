@@ -81,4 +81,15 @@ export const SettingsStyles = StyleSheet.create({
         fontSize: 16,
         width: screenWidth * 0.6,
     },
+    currencyItem: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        height: 60,
+        justifyContent: 'space-between',
+        width: screenWidth * 0.7
+    },
+    currencyText: {
+        fontSize: 16,
+    },
 });

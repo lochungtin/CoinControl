@@ -12,11 +12,13 @@ import TimePicker from '../components/pickers/time';
 import { WHITE } from '../data/color';
 import { ScreenStyles, SettingsStyles } from './styles';
 
+import { currencyData } from '../data/currency';
 import { defaultSettings } from '../data/default';
-import { itemlist, SettingsPickers, SettingsSwitches } from '../data/mapping/settings';
-import { Prompt } from '../data/prompts';
-import { clearData, setAccent, setDarkMode, setDefaultCategories, setDefaultSettings, setLightMode } from '../redux/action';
+import { itemlist, SettingsPickers, SettingsSelects, SettingsSwitches } from '../data/mapping/settings';
+import { Prompt, promptNames } from '../data/prompts';
+import { clearData, setAccent, setDarkMode, setDefaultCategories, setDefaultSettings, setLightMode, setPromptShow } from '../redux/action';
 import { store } from '../redux/store';
+import { CurrencyType } from '../types/data';
 import { ReduxPropType } from '../types/redux';
 import { ScreenProps, SettingsCategory, SettingsItem } from '../types/ui';
 import { smallKeygen } from '../utils/keygen';
@@ -25,11 +27,15 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
     state = {
         colorPickerOpen: false,
+        multiPickerOpen: -1,
+        multiPickerData: [],
+        multiPickerSelected: [],
         prompt: -1,
         timePickerOpen: false,
     }
 
-    confirmReset = (prompt: Prompt, dnsa: boolean) => {
+    confirmReset = (prompt: Prompt, show: boolean) => {
+        store.dispatch(setPromptShow({ prompt, show }));
         switch (prompt) {
             case Prompt.DEFAULT_CATEGORIES:
                 store.dispatch(setDefaultCategories());
@@ -46,29 +52,62 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
         this.setState({ prompt: -1 });
     }
 
+    multiSelectRender = (obj: any) => {
+        switch (this.state.multiPickerOpen) {
+            case SettingsSelects.CURRENCY:
+                let currency: CurrencyType = obj;
+                return (
+                    <View style={SettingsStyles.currencyItem}>
+                        <Icon
+                            color={this.props.theme.static.accentC}
+                            name={currency.icon}
+                            size={30}
+                        />
+                        <Text style={{ ...SettingsStyles.currencyText, color: this.props.theme.dynamic.text.mainC }}>
+                            {currency.name}
+                        </Text>
+                    </View>
+                );
+            case SettingsSelects.PROMPT:
+                let prompt: number = obj;
+                return (
+                    <View style={SettingsStyles.currencyItem}>
+                        <Icon
+                            color={this.props.theme.static.accentC}
+                            name={this.props.settings?.promptTrigger[prompt] ? 'text-box' : 'text-box-remove-outline'}
+                            size={30}
+                        />
+                        <Text style={{ ...SettingsStyles.currencyText, color: this.props.theme.dynamic.text.mainC }}>
+                            {promptNames[prompt]}
+                        </Text>
+                    </View>
+                );
+            default:
+                return <View />;
+        }
+    }
+
+    multiSelected = (obj: any) => {
+
+    }
+
     onSwitchToggle = (type: SettingsSwitches, on: boolean) => {
         if (type === SettingsSwitches.DARK_MODE)
             store.dispatch(on ? setDarkMode() : setLightMode());
     }
 
     onReset = (prompt: Prompt) => {
-        if (this.props.settings?.promptTrigger[prompt]) {
+        if (this.props.settings?.promptTrigger[prompt])
             this.setState({ prompt });
-        }
-        else {
+        else
             this.confirmReset(prompt, false);
-        }
     }
 
     openPicker = (type: SettingsPickers) => {
-        switch (type) {
-            case SettingsPickers.TIME:
-                this.setState({ timePickerOpen: true });
-                break;
-            case SettingsPickers.COLOR:
-                this.setState({ colorPickerOpen: true });
-                break;
-        }
+        if (type === SettingsPickers.TIME)
+            return this.setState({ timePickerOpen: true });
+        if (type === SettingsPickers.COLOR)
+            return this.setState({ colorPickerOpen: true });
     }
 
     setAccentColor = (accent: string) => {
@@ -83,6 +122,18 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
     signOut = () => { }
 
     render() {
+        let data: Array<any> = [];
+        let selected: Array<number> = [];
+        if (this.state.multiPickerOpen === SettingsSelects.CURRENCY) {
+            data = Object.keys(currencyData).map((key: string) => currencyData[key]);
+            selected = [data.findIndex((cur: CurrencyType) => cur.key === this.props.settings?.currency.key)];
+        }
+
+        if (this.state.multiPickerOpen === SettingsSelects.PROMPT) {
+            data = Object.keys(this.props.settings?.promptTrigger || []);
+            selected = data.filter((key: number) => this.props.settings?.promptTrigger[key]);
+        }
+
         return (
             <>
                 <View style={{ ...ScreenStyles.root, backgroundColor: this.props.theme.dynamic.screen.bgC }}>
@@ -93,6 +144,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                             this.onSwitchToggle,
                             this.onReset,
                             this.openPicker,
+                            (multiPickerOpen: SettingsSelects) => this.setState({ multiPickerOpen }),
                             this.props.navigation,
                             this.props.settings,
                             this.signOut,
@@ -136,7 +188,6 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                                                             name='chevron-right'
                                                             size={30}
                                                         />
-
                                                     }
                                                 </TouchableOpacity>
                                             </View>
@@ -147,6 +198,14 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                         })}
                     </ScrollView>
                 </View>
+                <MultiPicker
+                    items={data}
+                    onClose={() => this.setState({ multiPickerOpen: -1 })}
+                    onSelect={this.multiSelected}
+                    open={this.state.multiPickerOpen !== -1}
+                    selectedIndices={selected}
+                    render={this.multiSelectRender}
+                />
                 <ColorPicker
                     onClose={() => this.setState({ colorPickerOpen: false })}
                     onSelect={this.setAccentColor}
@@ -163,7 +222,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                 />
                 <PromptModal
                     onClose={() => this.setState({ prompt: -1 })}
-                    onConfirm={(dnsa: boolean) => this.confirmReset(this.state.prompt, dnsa)}
+                    onConfirm={(dnsa: boolean) => this.confirmReset(this.state.prompt, !dnsa)}
                     open={this.state.prompt !== -1}
                     prompt={this.state.prompt}
                 />

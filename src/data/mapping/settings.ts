@@ -4,9 +4,13 @@ import { defaultSettings } from "../default";
 import { Prompt } from "../prompts";
 
 export enum SettingsPickers {
-    CURRENCY,
     COLOR,
     TIME,
+}
+
+export enum SettingsSelects {
+    PROMPT,
+    CURRENCY,
 }
 
 export enum SettingsSwitches {
@@ -19,6 +23,7 @@ export const itemlist = (
     onSwitchToggle: (type: SettingsSwitches, on: boolean) => void,
     onReset: (type: Prompt) => void,
     openPicker: (type: SettingsPickers) => void,
+    openSelect: (type: SettingsSelects) => void,
     navigation: any,
     settings: SettingsType = defaultSettings,
     signOut: () => void,
@@ -44,7 +49,7 @@ export const itemlist = (
                 {
                     icon: settings.currency.icon,
                     label: 'Currency Label',
-                    onPress: () => openPicker(SettingsPickers.CURRENCY),
+                    onPress: () => openSelect(SettingsSelects.CURRENCY),
                 },
             ],
         },
@@ -93,6 +98,11 @@ export const itemlist = (
                     icon: 'subdirectory-arrow-right',
                     label: settings.notifTime,
                     onPress: () => openPicker(SettingsPickers.TIME),
+                },
+                {
+                    icon: 'comment-text-outline',
+                    label: 'Pop Up Warnings',
+                    onPress: () => openSelect(SettingsSelects.PROMPT),
                 },
             ],
         },

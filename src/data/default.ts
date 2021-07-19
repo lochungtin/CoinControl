@@ -1,6 +1,6 @@
 import { darkTheme } from './theme';
 
-import { colorPickerData, TINTED_GREY } from './color';
+import { colorPickerData, GREY } from './color';
 import { currencyData } from './currency';
 
 import { ThemeType } from '../types/color';
@@ -45,7 +45,7 @@ export const defaultCategories: CategoryStore  = {
             name: 'transport',
         },
         'C0000000': {
-            color: TINTED_GREY,
+            color: GREY,
             icon: 'image-outline',
             key: 'C0000000',
             name: 'other',
@@ -83,7 +83,7 @@ export const defaultCategories: CategoryStore  = {
             name: 'salary',
         },
         'C0000000': {
-            color: TINTED_GREY,
+            color: GREY,
             icon: 'image-outline',
             key: 'C0000000',
             name: 'other'

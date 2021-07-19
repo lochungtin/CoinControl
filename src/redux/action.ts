@@ -6,6 +6,7 @@ export enum Actions {
     CLEAR_DATA,
     DEFAULT_CATEGORIES,
     DEFAULT_SETTINGS,
+    PROMPT_SET_SHOW,
     SETTINGS_SET_DARKMODE,
     SETTINGS_SET_LIGHTMODE,
     THEME_ACCENT,
@@ -34,6 +35,11 @@ export const setDefaultSettings = (): ReduxActionType => ({
 
 export const setLightMode = (): ReduxActionType => ({
     type: Actions.SETTINGS_SET_LIGHTMODE,
+});
+
+export const setPromptShow = (payload: any): ReduxActionType => ({
+    type: Actions.PROMPT_SET_SHOW,
+    payload,
 });
 
 export const signIn = (payload: any): ReduxActionType => ({

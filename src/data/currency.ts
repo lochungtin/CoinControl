@@ -16,15 +16,15 @@ export const currencyData: CurrencyMap = {
         key: '67d259fc',
         name: 'Euro',
     },
+    'e938ce67': {
+        icon: 'currency-usd',
+        key: 'e938ce67',
+        name: 'Hong Kong Dollar',
+    },
     '805d4a43': {
         icon: 'currency-twd',
         key: '805d4a43',
         name: 'New Taiwan Dollar',
-    },
-    'e938ce67': {
-        icon: 'currency-usd',
-        key: 'e938ce67',
-        name: 'HK Dollar',
     },
     '59fe219a': {
         icon: 'currency-jpy',

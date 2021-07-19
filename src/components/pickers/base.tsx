@@ -24,6 +24,7 @@ class PickerBase extends React.Component<ReduxPropType & DataProps> {
                 isVisible={this.props.open}
                 onBackdropPress={this.props.onClose}
                 onBackButtonPress={this.props.onClose}
+                onSwipeComplete={this.props.onClose}
                 propagateSwipe={true}
                 swipeDirection='down'
             >
