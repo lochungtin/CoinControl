@@ -6,6 +6,7 @@ import { ReduxPropType } from '../../types/redux';
 import { SubHeaderStyles } from './styles';
 
 interface DataProps {
+    highlight?: boolean
     label: string,
 }
 
@@ -13,7 +14,7 @@ class Header extends React.Component<ReduxPropType & DataProps> {
     render() {
         return (
             <View style={SubHeaderStyles.root}>
-                <Text style={{ ...SubHeaderStyles.label, color: this.props.theme.dynamic.text.labelC }}>
+                <Text style={{ ...SubHeaderStyles.label, color: this.props.highlight ? this.props.theme.static.accentC : this.props.theme.dynamic.text.labelC }}>
                     {this.props.label.toUpperCase()}
                 </Text>
             </View>

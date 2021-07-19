@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
@@ -93,7 +93,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                     <Header
                         name='categories'
                         navigation={this.props.navigation}
-                        onPressRight={() => this.props.navigation.navigate('newCategory')}
+                        onPressRight={() => this.props.navigation.navigate('newCategory', this.state.category)}
                         onToggle={(category: Categories) => this.setState({ category })}
                         right='tag-plus'
                         selected={this.state.category}

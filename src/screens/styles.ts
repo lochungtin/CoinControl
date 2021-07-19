@@ -17,6 +17,7 @@ export const ScreenStyles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
+        width: screenWidth,
     },
 });
 
@@ -109,5 +110,16 @@ export const CategoryScreenStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: screenWidth * 0.2,
+    },
+});
+
+export const NewCatScreenStyles = StyleSheet.create({
+    row: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        height: 80,
+        justifyContent: 'space-between',
+        width: screenWidth * 0.9,
     },
 });

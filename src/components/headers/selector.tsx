@@ -13,6 +13,7 @@ import { ReduxPropType } from '../../types/redux';
 import { ScreenProps } from '../../types/ui';
 
 interface DataProps {
+    backMode?: boolean,
     name: string,
     onPressRight?: () => void,
     onToggle: (category: Categories) => void,
@@ -21,15 +22,23 @@ interface DataProps {
 }
 
 class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
+
+    onPress = () => {
+        if (this.props.backMode)
+            this.props.navigation.goBack();
+        else
+            this.props.navigation.toggleDrawer();
+    }
+
     render() {
         return (
             <View style={{ ...GeneralHeaderStyles.root, backgroundColor: this.props.theme.dynamic.screen.secondaryBgC }}>
                 <StatusBar backgroundColor={this.props.theme.dynamic.screen.secondaryBgC} />
                 <View style={GeneralHeaderStyles.contentPositioner}>
-                    <TouchableOpacity onPress={this.props.navigation.toggleDrawer}>
+                    <TouchableOpacity onPress={this.onPress}>
                         <Icon
                             color={this.props.theme.static.icon.drawerC}
-                            name='menu-open'
+                            name={this.props.backMode ? 'chevron-left' : 'menu-open'}
                             size={40}
                         />
                     </TouchableOpacity>
