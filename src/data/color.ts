@@ -7,6 +7,15 @@ export const ICONS: string = '#C4C4C4';
 export const GREY: string = '#838383';
 export const WHITE: string = '#FFFFFF';
 
+const rand = (max: number): number => Math.floor(Math.random() * max) % max;
+
+export const pickRandom = (): string => {
+    let group: string = Object.keys(colorPickerData)[rand(6)];
+    let pos: string = ['a', 'b', 'c', 'd', 'e'][rand(5)];
+
+    return colorPickerData[group][pos].hex;
+}
+
 // color picker data
 export const colorPickerData: ColorPickerDataType = {
     blues: {

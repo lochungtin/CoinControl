@@ -6,22 +6,25 @@ import { connect } from 'react-redux';
 import Header from '../components/headers/selector';
 import SubHeader from '../components/headers/sub';
 import CategoryModal from '../components/modals/category';
+import PromptModal from '../components/modals/prompt';
 import LItem from '../components/listitem';
 
 import { ScreenStyles, CategoryScreenStyles } from './styles';
 
 import { defaultCategories } from '../data/default';
-import { editCategory } from '../redux/action';
+import { deleteCategory, editCategory, setPromptShow } from '../redux/action';
 import { store } from '../redux/store';
 import { Categories, CategoryType } from '../types/data';
 import { ReduxPropType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
+import { Prompt } from '../data/prompts';
 
 class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
     state = {
         category: this.props.route.params.category || Categories.EXPENSE,
-        open: false,
+        cmOpen: false,
+        pmOpen: null,
         selected: defaultCategories[Categories.EXPENSE]['C0000000'],
     }
 
@@ -38,14 +41,31 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                     size={30}
                 />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.setState({ open: true, selected: category })}>
+            <TouchableOpacity onPress={() => this.deleteCategory(category)}>
                 <Icon
                     color={this.props.theme.static.icon.actionC}
-                    name={'dots-vertical'}
+                    name={'trash-can'}
                     size={30}
                 />
             </TouchableOpacity>
         </View>
+
+    confirmDelete = (category: CategoryType | null, show: boolean) => {
+        if (category !== null)
+            store.dispatch(deleteCategory({
+                category: this.state.category,
+                key: category.key,
+            }));
+        store.dispatch(setPromptShow({ propmt: Prompt.DELETE_CATEGORY, show }));
+        this.setState({ pmOpen: null });
+    }
+
+    deleteCategory = (category: CategoryType) => {
+        if (this.props.settings?.promptTrigger[Prompt.DELETE_CATEGORY])
+            this.setState({ pmOpen: category });
+        else
+            this.confirmDelete(category, false)
+    }
 
     editCategory = (category: CategoryType) => {
         store.dispatch(editCategory({
@@ -108,6 +128,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                                         category={category}
                                         key={category.key}
                                         label={category.name}
+                                        onPress={() => this.setState({ open: true, selected: category })}
                                     >
                                         {this.controllers(category)}
                                     </LItem>
@@ -121,6 +142,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                                         category={category}
                                         key={category.key}
                                         label={category.name}
+                                        onPress={() => this.setState({ open: true, selected: category })}
                                     >
                                         {category.key === 'C0000000' ? <View style={CategoryScreenStyles.controller} /> : this.controllers(category)}
                                     </LItem>
@@ -131,9 +153,15 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                 </View>
                 <CategoryModal
                     category={this.state.selected}
-                    onClose={() => this.setState({ open: false })}
+                    onClose={() => this.setState({ cmOpen: false })}
                     onConfirm={this.editCategory}
-                    open={this.state.open}
+                    open={this.state.cmOpen}
+                />
+                <PromptModal
+                    onClose={() => this.setState({ pmOpen: false })}
+                    onConfirm={(dnsa: boolean) => this.confirmDelete(this.state.pmOpen, !dnsa)}
+                    open={this.state.pmOpen !== null}
+                    prompt={Prompt.DELETE_CATEGORY}
                 />
             </>
         );
@@ -142,6 +170,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
 const mapStateToProps = (state: ReduxPropType) => ({
     categories: state.categories,
+    settings: state.settings,
     theme: state.theme,
 });
 
