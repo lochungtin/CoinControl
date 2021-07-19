@@ -67,10 +67,6 @@ export const SettingsStyles = StyleSheet.create({
         justifyContent: 'space-between',
         width: screenWidth * 0.90
     },
-    header: {
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
     colorBox: {
         alignItems: 'center',
         display: 'flex',

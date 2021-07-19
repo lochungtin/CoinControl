@@ -64,7 +64,7 @@ export const itemlist = (
                 },
                 {
                     icon: 'palette',
-                    label: 'Accent Color',
+                    label: 'Accent Colour',
                     onPress: () => openPicker(SettingsPickers.COLOR),
                 },
             ],

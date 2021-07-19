@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Header from '../components/headers/minimal';
+import SubHeader from '../components/headers/sub';
 import PromptModal from '../components/modals/prompt';
 import ColorPicker from '../components/pickers/color';
 import MultiPicker from '../components/pickers/multi';
@@ -170,11 +171,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                         ).map((category: SettingsCategory) => {
                             return (
                                 <View key={smallKeygen()} style={SettingsStyles.root}>
-                                    <View style={SettingsStyles.itemBox}>
-                                        <Text style={{ ...SettingsStyles.header, color: this.props.theme.dynamic.text.labelC }}>
-                                            {category.header.toUpperCase()}
-                                        </Text>
-                                    </View>
+                                    <SubHeader label={category.header} />
                                     {category.body.map((item: SettingsItem) => {
                                         return (
                                             <View
@@ -185,7 +182,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                                                     opacity: item.blurred ? 0.5 : 1,
                                                 }}
                                             >
-                                                <TouchableOpacity onPress={() => item.onPress(!item.switch)} style={{ ...SettingsStyles.itemBox }}>
+                                                <TouchableOpacity onPress={() => item.onPress(!item.switch)} style={SettingsStyles.itemBox}>
                                                     <Icon
                                                         color={this.props.theme.static.accentC}
                                                         name={item.icon}

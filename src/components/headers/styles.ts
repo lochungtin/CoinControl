@@ -53,3 +53,18 @@ export const SelectorHeaderStyles = StyleSheet.create({
         width: 40,
     },  
 });
+
+export const SubHeaderStyles = StyleSheet.create({
+    root: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        height: 50,
+        justifyContent: 'space-between',
+        width: screenWidth * 0.90
+    },
+    label: {
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+})
