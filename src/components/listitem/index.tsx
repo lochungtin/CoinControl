@@ -10,9 +10,10 @@ import { ListItemStyles } from './styles';
 
 interface DataProps {
     category: CategoryType,
+    children?: ReactElement,
+    key: string,
     label: string,
-    onPress: () => void,
-    right: ReactElement,
+    onPress?: () => void,
     uppercase?: boolean,
 }
 
@@ -31,7 +32,7 @@ class LItem extends React.Component<ReduxPropType & DataProps> {
                     <Text style={{ ...ListItemStyles.label, color: this.props.theme.dynamic.text.mainC }}>
                         {this.props.uppercase ? this.props.label.toUpperCase() : this.props.label}
                     </Text>
-                    {this.props.right}
+                    {this.props.children}
                 </View>
             </TouchableOpacity>
         );

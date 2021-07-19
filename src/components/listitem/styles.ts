@@ -27,6 +27,6 @@ export const ListItemStyles = StyleSheet.create({
     },
     label: {
         fontSize: 14,
-        width: screenWidth * 0.5,
+        width: screenWidth * 0.4,
     },
 });

@@ -12,6 +12,12 @@ export const ScreenStyles = StyleSheet.create({
         justifyContent: 'flex-start',
         width: screenWidth,
     },
+    scrollView: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+    },
 });
 
 export const AuthScreenStyles = StyleSheet.create({
@@ -93,5 +99,15 @@ export const SettingsStyles = StyleSheet.create({
     },
     currencyText: {
         fontSize: 16,
+    },
+});
+
+export const CategoryScreenStyles = StyleSheet.create({
+    controller: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: screenWidth * 0.2,
     },
 });

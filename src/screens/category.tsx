@@ -1,12 +1,13 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import Header from '../components/headers/selector';
 import SubHeader from '../components/headers/sub';
 import LItem from '../components/listitem';
 
-import { ScreenStyles } from './styles';
+import { ScreenStyles, CategoryScreenStyles } from './styles';
 
 import { Categories, CategoryType } from '../types/data';
 import { ReduxPropType } from '../types/redux';
@@ -22,6 +23,24 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
     componentWillUnmount() {
         this.unsubscribe();
     }
+
+    controllers = (category: CategoryType) =>
+        <View style={CategoryScreenStyles.controller}>
+            <TouchableOpacity>
+                <Icon
+                    color={this.props.theme.static.accentC}
+                    name={category.fav ? 'heart' : 'heart-outline'}
+                    size={30}
+                />
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Icon
+                    color={this.props.theme.static.icon.actionC}
+                    name={'dots-vertical'}
+                    size={30}
+                />
+            </TouchableOpacity>
+        </View>
 
     unsubscribe = this.props.navigation.addListener('focus', () => this.setState({ category: this.props.route.params.category || Categories.EXPENSE }));
 
@@ -49,30 +68,36 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                     right='pen'
                     selected={this.state.category}
                 />
-                <SubHeader label='favourites' />
-                {favs.map((category: CategoryType) => {
-                    return (
-                        <LItem
-                            uppercase
-                            category={category}
-                            label={category.name}
-                            onPress={() => { }}
-                            right={<View />}
-                        />
-                    );
-                })}
-                <SubHeader label='other categories' />
-                {others.map((category: CategoryType) => {
-                    return (
-                        <LItem
-                            uppercase
-                            category={category}
-                            label={category.name}
-                            onPress={() => { }}
-                            right={<View />}
-                        />
-                    );
-                })}
+                <ScrollView>
+                    <View style={ScreenStyles.scrollView}>
+                        <SubHeader label='favourites' />
+                        {favs.map((category: CategoryType) => {
+                            return (
+                                <LItem
+                                    uppercase
+                                    category={category}
+                                    key={category.key}
+                                    label={category.name}
+                                >
+                                    {this.controllers(category)}
+                                </LItem>
+                            );
+                        })}
+                        <SubHeader label='other categories' />
+                        {others.map((category: CategoryType) => {
+                            return (
+                                <LItem
+                                    uppercase
+                                    category={category}
+                                    key={category.key}
+                                    label={category.name}
+                                >
+                                    {category.key === 'C0000000' ? <View style={CategoryScreenStyles.controller} /> : this.controllers(category)}
+                                </LItem>
+                            );
+                        })}
+                    </View>
+                </ScrollView>
             </View>
         );
     }
