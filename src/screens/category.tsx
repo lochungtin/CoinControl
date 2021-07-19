@@ -16,6 +16,13 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
         category: this.props.route.params.category || Categories.EXPENSE,
     }
 
+    
+    componentWillUnmount() {
+        this.unsubscribe();
+    }
+    
+    unsubscribe = this.props.navigation.addListener('focus', () => this.setState({ category: this.props.route.params.category || Categories.EXPENSE }));
+
     render() {
         return (
             <View style={{ ...ScreenStyles.root, backgroundColor: this.props.theme.dynamic.screen.bgC }}>
