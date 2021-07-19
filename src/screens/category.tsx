@@ -9,10 +9,12 @@ import LItem from '../components/listitem';
 
 import { ScreenStyles, CategoryScreenStyles } from './styles';
 
+import { defaultCategories } from '../data/default';
+import { store } from '../redux/store';
 import { Categories, CategoryType } from '../types/data';
 import { ReduxPropType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
-import { defaultCategories } from '../data/default';
+import { editCategory } from '../redux/action';
 
 class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
@@ -26,7 +28,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
     controllers = (category: CategoryType) =>
         <View style={CategoryScreenStyles.controller}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.toggleFav(category)}>
                 <Icon
                     color={this.props.theme.static.accentC}
                     name={category.fav ? 'heart' : 'heart-outline'}
@@ -41,6 +43,15 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                 />
             </TouchableOpacity>
         </View>
+
+    toggleFav = (category: CategoryType) => {
+        category.fav = !category.fav;
+        store.dispatch(editCategory({
+            category: this.state.category,
+            data: category,
+            key: category.key,
+        }));
+    }
 
     unsubscribe = this.props.navigation.addListener('focus', () => this.setState({ category: this.props.route.params.category || Categories.EXPENSE }));
 
