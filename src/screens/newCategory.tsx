@@ -9,16 +9,15 @@ import CategoryModal from '../components/modals/category';
 
 import { NewCatScreenStyles, ScreenStyles } from './styles';
 
+import { pickRandom } from '../data/color';
 import { defaultCategories } from '../data/default';
 import { icons } from '../data/icons';
-import { Categories, CategoryType } from '../types/data';
+import { Categories, CategoryType, IconSection } from '../types/data';
 import { addCategory } from '../redux/action';
 import { store } from '../redux/store';
 import { ReduxPropType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
-import { groupBy } from '../utils/array';
 import { keygen, smallKeygen } from '../utils/keygen';
-import { pickRandom } from '../data/color';
 
 class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
@@ -48,7 +47,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                 fav: false,
                 icon: name,
                 name: '',
-            }
+            },
         });
     }
 
@@ -66,13 +65,11 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                     <SubHeader label='select an icon' />
                     <ScrollView>
                         <View style={ScreenStyles.scrollView}>
-                            {Object.keys(icons).map((group: string) => {
-                                let grpIcons: Array<string> = icons[group];
-
+                            {icons.map((section: IconSection) => {
                                 return (
                                     <View key={smallKeygen()}>
-                                        <SubHeader highlight label={group} />
-                                        {groupBy(grpIcons, 5).map((row: Array<string | null>) => {
+                                        <SubHeader highlight label={section.header} />
+                                        {section.data.map((row: Array<string | null>) => {
                                             return (
                                                 <View key={smallKeygen()} style={NewCatScreenStyles.row}>
                                                     {row.map((elem: string | null) => {

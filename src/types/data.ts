@@ -48,8 +48,9 @@ export interface GoalType {
 }
 
 // icons 
-export interface IconMap {
-    [key: string]: Array<string>,
+export interface IconSection {
+    header: string,
+    data: Array<Array<string | null>>
 }
 
 // prompts
@@ -67,5 +68,5 @@ export interface SettingsType {
     darkMode: boolean,
     notif: boolean,
     notifTime: string,
-    promptTrigger: PromptTriggerMap,    
+    promptTrigger: PromptTriggerMap,
 }
