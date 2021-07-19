@@ -33,9 +33,9 @@ const updateSettings = (settings: SettingsType = defaultSettings, action: ReduxA
             for (let i: number = 0; i < 5; ++i)
                 update.promptTrigger[i] = true;
             return defaultSettings;
-        // set prompt show
-        case Actions.PROMPT_SET_SHOW:
-            update.promptTrigger[action.payload.prompt] = action.payload.show;
+        // set currency
+        case Actions.SETTINGS_SET_CURRENCY:
+            update.currency = action.payload;
             return update;
         // set dark theme
         case Actions.SETTINGS_SET_DARKMODE:
@@ -44,6 +44,10 @@ const updateSettings = (settings: SettingsType = defaultSettings, action: ReduxA
         // set light theme
         case Actions.SETTINGS_SET_LIGHTMODE:
             update.darkMode = false;
+            return update;
+        // set prompt show
+        case Actions.SETTINGS_SET_PROMPT_SHOW:
+            update.promptTrigger[action.payload.prompt] = action.payload.show;
             return update;
         default:
             return settings;

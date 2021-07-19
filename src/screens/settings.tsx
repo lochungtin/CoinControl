@@ -16,7 +16,7 @@ import { currencyData } from '../data/currency';
 import { defaultSettings } from '../data/default';
 import { itemlist, SettingsPickers, SettingsSelects, SettingsSwitches } from '../data/mapping/settings';
 import { Prompt, promptNames } from '../data/prompts';
-import { clearData, setAccent, setDarkMode, setDefaultCategories, setDefaultSettings, setLightMode, setPromptShow } from '../redux/action';
+import { clearData, setAccent, setCurrency, setDarkMode, setDefaultCategories, setDefaultSettings, setLightMode, setPromptShow } from '../redux/action';
 import { store } from '../redux/store';
 import { CurrencyType } from '../types/data';
 import { ReduxPropType } from '../types/redux';
@@ -88,7 +88,12 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
     }
 
     multiSelected = (obj: any) => {
-
+        if (this.state.multiPickerOpen === SettingsSelects.CURRENCY) {
+            store.dispatch(setCurrency(obj));
+            this.setState({ multiPickerOpen: -1 });
+        }
+        if (this.state.multiPickerOpen === SettingsSelects.PROMPT)
+            store.dispatch(setPromptShow({ prompt: obj, show: !this.props.settings?.promptTrigger[obj] }));
     }
 
     onSwitchToggle = (type: SettingsSwitches, on: boolean) => {
@@ -131,7 +136,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
         if (this.state.multiPickerOpen === SettingsSelects.PROMPT) {
             data = Object.keys(this.props.settings?.promptTrigger || []);
-            selected = data.filter((key: number) => this.props.settings?.promptTrigger[key]);
+            selected = [];
         }
 
         return (
