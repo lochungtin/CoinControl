@@ -26,6 +26,7 @@ const updateAccount = (account: AccountType | null = null, action: ReduxActionTy
 
 const updateSettings = (settings: SettingsType = defaultSettings, action: ReduxActionType) => {
     let update: SettingsType = { ...settings };
+    console.log(action)
     switch (action.type) {
         // set default
         case Actions.DEFAULT_SETTINGS:
@@ -48,6 +49,14 @@ const updateSettings = (settings: SettingsType = defaultSettings, action: ReduxA
         // set prompt show
         case Actions.SETTINGS_SET_PROMPT_SHOW:
             update.promptTrigger[action.payload.prompt] = action.payload.show;
+            return update;
+        // set notif on
+        case Actions.SETTINGS_SET_NOTIF_ON:
+            update.notif = action.payload;
+            return update;
+        // set notif time
+        case Actions.SETTINGS_SET_NOTIF_TIME:
+            update.notifTime = action.payload;
             return update;
         default:
             return settings;

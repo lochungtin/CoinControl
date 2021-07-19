@@ -11,6 +11,8 @@ export enum Actions {
     SETTINGS_SET_DARKMODE,
     SETTINGS_SET_LIGHTMODE,
     SETTINGS_SET_PROMPT_SHOW,
+    SETTINGS_SET_NOTIF_ON,
+    SETTINGS_SET_NOTIF_TIME,
     THEME_ACCENT,
 }
 
@@ -51,6 +53,17 @@ export const setPromptShow = (payload: any): ReduxActionType => ({
 // set currency
 export const setCurrency = (payload: CurrencyType): ReduxActionType => ({
     type: Actions.SETTINGS_SET_CURRENCY,
+    payload,
+});
+
+// set notifications
+export const setNotifOn = (payload: boolean): ReduxActionType => ({
+    type: Actions.SETTINGS_SET_NOTIF_ON,
+    payload,
+});
+
+export const setNotifTime = (payload: string): ReduxActionType => ({
+    type: Actions.SETTINGS_SET_NOTIF_TIME,
     payload,
 });
 

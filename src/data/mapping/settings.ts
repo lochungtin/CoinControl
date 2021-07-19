@@ -89,7 +89,7 @@ export const itemlist = (
             body: [
                 {
                     icon: 'bell-outline',
-                    label: 'Expense Categories',
+                    label: 'Daily Notifications',
                     onPress: (value: boolean) => onSwitchToggle(SettingsSwitches.NOTIF, value),
                     switch: settings.notif
                 },
