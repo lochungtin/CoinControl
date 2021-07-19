@@ -39,7 +39,7 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
                     <TouchableOpacity onPress={this.props.onPressRight}>
                         <View style={SelectorHeaderStyles.rightPositioner}>
                             <Icon
-                                color={this.props.right ? this.props.theme.static.icon.drawerC : 'transparent'}
+                                color={this.props.right ? this.props.theme.static.accentC : 'transparent'}
                                 name={this.props.right || 'blank'}
                                 size={30}
                             />

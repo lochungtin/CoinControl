@@ -2,11 +2,11 @@ import { combineReducers } from 'redux';
 
 import { Actions } from './action';
 
-import { defaultSettings, defaultTheme } from '../data/default';
+import { defaultCategories, defaultSettings, defaultTheme } from '../data/default';
 import { darkTheme, lightTheme } from '../data/theme';
 
 import { ThemeType } from '../types/color';
-import { AccountType, SettingsType } from '../types/data';
+import { AccountType, CategoryStore, SettingsType } from '../types/data';
 import { ReduxActionType } from '../types/redux';
 import { colorPickerData } from '../data/color';
 
@@ -21,6 +21,16 @@ const updateAccount = (account: AccountType | null = null, action: ReduxActionTy
         // default
         default:
             return account;
+    }
+}
+
+const updateCategories = (categories: CategoryStore = defaultCategories, action: ReduxActionType) => {
+    let update: CategoryStore = { ...categories };
+    switch (action.type) {
+        
+        // default
+        default:
+            return categories;
     }
 }
 
@@ -88,6 +98,7 @@ const updateTheme = (theme: ThemeType = defaultTheme, action: ReduxActionType) =
 
 export default combineReducers({
     account: updateAccount,
+    categories: updateCategories,
     theme: updateTheme,
     settings: updateSettings,
 });

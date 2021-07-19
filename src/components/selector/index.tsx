@@ -1,3 +1,4 @@
+import Color from '@enigmaoffline/node-color';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
@@ -16,6 +17,8 @@ interface DataProps {
 
 class Selector extends React.Component<ReduxPropType & DataProps> {
     render() {
+        let hightlight: string = Color.arrToHex(Color.mixByHex(this.props.theme.static.accentC, WHITE, 0.35));
+
         return (
             <View style={{
                 ...SelectorStyles.root,
@@ -26,9 +29,7 @@ class Selector extends React.Component<ReduxPropType & DataProps> {
                     onPress={() => this.props.onToggle(Categories.EXPENSE)}
                     style={{
                         ...SelectorStyles.highlight,
-                        backgroundColor: this.props.selected === Categories.EXPENSE ?
-                            this.props.theme.static.accentC :
-                            'transparent',
+                        backgroundColor: this.props.selected === Categories.EXPENSE ? hightlight : 'transparent',
                         width: screenWidth * this.props.width * 0.5,
                     }}>
                     <Text style={{ ...SelectorStyles.label, color: this.props.selected === Categories.EXPENSE ? BLACK : WHITE }}>
@@ -39,9 +40,7 @@ class Selector extends React.Component<ReduxPropType & DataProps> {
                     onPress={() => this.props.onToggle(Categories.INCOME)}
                     style={{
                         ...SelectorStyles.highlight,
-                        backgroundColor: this.props.selected === Categories.INCOME ?
-                            this.props.theme.static.accentC :
-                            'transparent',
+                        backgroundColor: this.props.selected === Categories.INCOME ? hightlight : 'transparent',
                         width: screenWidth * this.props.width * 0.5,
                     }}>
                     <Text style={{ ...SelectorStyles.label, color: this.props.selected === Categories.INCOME ? BLACK : WHITE }}>

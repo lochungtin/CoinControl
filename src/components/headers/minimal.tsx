@@ -4,9 +4,10 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
+import { GeneralHeaderStyles } from './styles';
+
 import { ReduxPropType } from '../../types/redux';
 import { ScreenProps } from '../../types/ui';
-import { GeneralHeaderStyles } from './styles';
 
 interface DataProps {
     name: string
