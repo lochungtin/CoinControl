@@ -5,36 +5,47 @@ import { BLACK, WHITE } from '../../data/color';
 
 import { Categories } from '../../types/data';
 import { ReduxPropType } from '../../types/redux';
+import { screenWidth } from '../bullet/styles';
+import { SelectorStyles } from './styles';
 
 interface DataProps {
     onToggle: (category: Categories) => void,
     selected: Categories,
+    width: number,
 }
 
 class Selector extends React.Component<ReduxPropType & DataProps> {
     render() {
         return (
-            <View style={{ backgroundColor: this.props.theme.static.secondaryC }}>
-                <TouchableOpacity 
-                    onPress={() => this.props.onToggle(Categories.EXPENSE)} 
-                    style={{ 
-                        backgroundColor: this.props.selected === Categories.EXPENSE ? 
-                            this.props.theme.static.accentC : 
+            <View style={{
+                ...SelectorStyles.root,
+                backgroundColor: this.props.theme.static.secondaryC,
+                width: screenWidth * this.props.width,
+            }}>
+                <TouchableOpacity
+                    onPress={() => this.props.onToggle(Categories.EXPENSE)}
+                    style={{
+                        ...SelectorStyles.highlight,
+                        backgroundColor: this.props.selected === Categories.EXPENSE ?
+                            this.props.theme.static.accentC :
                             'transparent',
-                        }}>
+                        width: screenWidth * this.props.width * 0.5,
+                    }}>
                     <Text style={{ color: this.props.selected === Categories.EXPENSE ? BLACK : WHITE }}>
                         EXPENSE
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity 
-                    onPress={() => this.props.onToggle(Categories.INCOME)} 
-                    style={{ 
-                        backgroundColor: this.props.selected === Categories.INCOME ? 
-                            this.props.theme.static.accentC : 
+                <TouchableOpacity
+                    onPress={() => this.props.onToggle(Categories.INCOME)}
+                    style={{
+                        ...SelectorStyles.highlight,
+                        backgroundColor: this.props.selected === Categories.INCOME ?
+                            this.props.theme.static.accentC :
                             'transparent',
-                        }}>
+                        width: screenWidth * this.props.width * 0.5,
+                    }}>
                     <Text style={{ color: this.props.selected === Categories.INCOME ? BLACK : WHITE }}>
-                        EXPENSE
+                        INCOME
                     </Text>
                 </TouchableOpacity>
             </View>

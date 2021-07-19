@@ -4,6 +4,8 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
+import Selector from '../selector';
+
 import { GeneralHeaderStyles } from './styles';
 
 import { Categories } from '../../types/data';
@@ -11,8 +13,9 @@ import { ReduxPropType } from '../../types/redux';
 import { ScreenProps } from '../../types/ui';
 
 interface DataProps {
-    name: string
+    name: string,
     onToggle: (category: Categories) => void,
+    selected: Categories,
 }
 
 class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
@@ -37,6 +40,12 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
                         size={40}
                     />
                 </View>
+                <View style={{ height: 10 }} />
+                <Selector
+                    onToggle={this.props.onToggle}
+                    selected={this.props.selected}
+                    width={0.85}
+                />
             </View>
         );
     }

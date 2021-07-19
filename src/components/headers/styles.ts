@@ -8,7 +8,7 @@ export const GeneralHeaderStyles = StyleSheet.create({
         borderBottomEndRadius: 20,
         borderBottomStartRadius: 20,
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'center',
         paddingTop: 45,
         paddingBottom: 15,
