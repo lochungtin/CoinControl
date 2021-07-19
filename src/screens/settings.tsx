@@ -16,7 +16,18 @@ import { currencyData } from '../data/currency';
 import { defaultSettings } from '../data/default';
 import { itemlist, SettingsPickers, SettingsSelects, SettingsSwitches } from '../data/mapping/settings';
 import { Prompt, promptNames } from '../data/prompts';
-import { clearData, setAccent, setCurrency, setDarkMode, setDefaultCategories, setDefaultSettings, setLightMode, setNotifOn, setNotifTime, setPromptShow } from '../redux/action';
+import {
+    clearData,
+    setAccent,
+    setCurrency,
+    setDarkMode,
+    setDefaultCategories,
+    setDefaultSettings,
+    setLightMode,
+    setNotifOn,
+    setNotifTime,
+    setPromptShow,
+} from '../redux/action';
 import { store } from '../redux/store';
 import { CurrencyType } from '../types/data';
 import { ReduxPropType } from '../types/redux';
@@ -142,7 +153,6 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
             selected = [];
         }
 
-        console.log(this.props.settings)
         return (
             <>
                 <View style={{ ...ScreenStyles.root, backgroundColor: this.props.theme.dynamic.screen.bgC }}>
