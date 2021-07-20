@@ -37,6 +37,16 @@ export interface CurrencyType {
     name: string,
 }
 
+// data
+export interface DataType {
+    categoryKey: string,
+    categoryType: Categories,
+    date: string,
+    key: string,
+    title: string,
+    value: number,
+}
+
 // goals
 export interface GoalMap {
     [key: string]: GoalType,

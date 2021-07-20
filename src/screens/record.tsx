@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -10,13 +11,17 @@ import InputModal from '../components/modals/input';
 
 import { ScreenStyles } from './styles';
 
-import { Categories, CategoryType, IconSection } from '../types/data';
+import { Categories, CategoryType, DataType } from '../types/data';
 import { ReduxPropType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
 import { defaultCategories } from '../data/default';
-import moment from 'moment';
+import { keygen } from '../utils/keygen';
 
-class Screen extends React.Component<ReduxPropType & ScreenProps> {
+interface DataProps {
+    data?: DataType,
+}
+
+class Screen extends React.Component<ReduxPropType & ScreenProps & DataProps> {
 
     state = {
         category: this.props.route.params?.category || Categories.EXPENSE,
@@ -93,11 +98,16 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                     </ScrollView>
                 </View>
                 <InputModal
-                    category={this.state.selected}
-                    date={moment().format('DD-MM-YYYY')}
-                    title=''
+                    data={this.props.data || {
+                        categoryKey: this.state.selected.key,
+                        categoryType: this.state.category,
+                        date: moment().format('DD-MM-YYYY'),
+                        key: keygen(),
+                        title: '',
+                        value: 0,
+                    }}
                     onClose={() => this.setState({ open: false })}
-                    onConfirm={() => {}}
+                    onConfirm={console.log}
                     open={this.state.open}
                 />
             </>

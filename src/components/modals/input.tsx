@@ -1,5 +1,6 @@
 import React from 'react';
-import { TextInput, View } from 'react-native';
+import { Text, TextInput, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import Numpad from '../numpad';
@@ -10,41 +11,50 @@ import Selector from './selector';
 
 import { InputModalStyles } from './styles';
 
-import { CategoryType } from '../../types/data';
+import { WHITE } from '../../data/color';
+import { defaultCategories } from '../../data/default';
+import { CategoryType, DataType } from '../../types/data';
 import { ReduxPropType } from '../../types/redux';
 
 interface DataProps {
-    category: CategoryType,
-    date: string,
+    data: DataType,
     onClose: () => void,
-    onConfirm: (obj: any) => void,
+    onConfirm: (obj: DataType) => void,
     open: boolean,
-    title: string,
 }
 
 class Modal extends React.Component<ReduxPropType & DataProps> {
 
     state = {
-        category: this.props.category,
-        date: this.props.date,
+        categoryKey: this.props.data.categoryKey,
+        date: this.props.data.date,
         dpOpen: false,
         msOpen: false,
-        title: this.props.title,
+        title: this.props.data.title,
     }
 
-    onConfirm = (value: number) => {
-        console.log({
-            value,
-            date: this.state.date,
-            title: this.state.title,
-            category: this.state.category,
-        });
-    }
+    onConfirm = (value: number) => this.props.onConfirm({
+        value,
+        categoryKey: this.state.categoryKey,
+        categoryType: this.props.data.categoryType,
+        date: this.state.date,
+        key: this.props.data.key,
+        title: this.state.title,
+    });
 
     render() {
+        let keylist: Array<string> = Object.keys((this.props.categories || defaultCategories)[this.props.data.categoryType]);
+        let categories: Array<CategoryType> = keylist.map((key: string) => (this.props.categories || defaultCategories)[this.props.data.categoryType][key]);
+
+        let category: CategoryType = (this.props.categories || defaultCategories)[this.props.data.categoryType][this.state.categoryKey];
+
         return (
             <>
-                <ModalBase onClose={this.props.onClose} open={this.props.open}>
+                <ModalBase
+                    onClose={this.props.onClose}
+                    onOpen={() => this.setState({ categoryKey: this.props.data.categoryKey, date: this.props.data.date, title: this.props.data.title })}
+                    open={this.props.open}
+                >
                     <View style={{ ...InputModalStyles.inputBox, backgroundColor: this.props.theme.dynamic.screen.secondaryBgC }}>
                         <TextInput
                             onChangeText={(title: string) => this.setState({ title })}
@@ -55,10 +65,10 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
                         />
                     </View>
                     <Selector
-                        icon={this.props.category.icon}
+                        icon={category.icon}
                         label='Category'
                         onPress={() => this.setState({ msOpen: true })}
-                        text={this.props.category.name}
+                        text={category.name.toUpperCase()}
                     />
                     <Selector
                         icon='calendar-month'
@@ -75,18 +85,27 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
                     selected={this.state.date}
                 />
                 <MultiPicker
-                    items={[]}
+                    items={categories}
                     onClose={() => this.setState({ msOpen: false })}
-                    onSelect={(category: CategoryType) => this.setState({ category, msOpen: false })}
+                    onSelect={(category: CategoryType) => this.setState({ categoryKey: category.key, msOpen: false })}
                     open={this.state.msOpen}
                     render={(category: CategoryType) => {
                         return (
-                            <View>
-
+                            <View key={category.key} style={InputModalStyles.category}>
+                                <View style={{ ...InputModalStyles.icon, backgroundColor: category.color }}>
+                                    <Icon
+                                        color={WHITE}
+                                        name={category.icon}
+                                        size={25}
+                                    />
+                                </View>
+                                <Text style={{ ...InputModalStyles.label, color: this.props.theme.dynamic.text.mainC }}>
+                                    {category.name.toUpperCase()}
+                                </Text>
                             </View>
                         );
                     }}
-                    selectedIndex={[{}].indexOf(this.state.category)}
+                    selectedIndices={[keylist.indexOf(this.state.categoryKey)]}
                 />
             </>
         );
@@ -94,6 +113,7 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
 }
 
 const mapStateToProps = (state: ReduxPropType) => ({
+    categories: state.categories,
     theme: state.theme,
 });
 

@@ -124,8 +124,8 @@ export const InputModalStyles = StyleSheet.create({
     inputBox: {
         alignItems: 'center',
         display: 'flex',
-        justifyContent: 'center',
         height: 70,
+        justifyContent: 'center',
         marginBottom: 10,
         width: screenWidth,
     },
@@ -133,6 +133,25 @@ export const InputModalStyles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         width: screenWidth * 0.6,
+    },
+    category: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        height: 50,
+        justifyContent: 'space-between',
+        width: screenWidth * 0.7,
+    },
+    icon: {
+        alignItems: 'center',
+        borderRadius: 10,
+        display: 'flex',
+        justifyContent: 'center',
+        height: 40,
+        width: 40,
+    },
+    label: {
+        fontSize: 16,
     },
 });
 
