@@ -76,7 +76,7 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
                         onPress={() => this.setState({ dpOpen: true })}
                         text={this.state.date}
                     />
-                    <Numpad onConfirm={this.onConfirm} />
+                    <Numpad onConfirm={this.onConfirm} value={this.props.data.value} />
                 </ModalBase>
                 <DatePicker
                     onClose={() => this.setState({ dpOpen: false })}

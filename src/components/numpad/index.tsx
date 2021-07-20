@@ -16,13 +16,16 @@ import { smallKeygen } from '../../utils/keygen';
 interface DataProps {
     disableOps?: boolean,
     onConfirm: (num: number) => void,
+    value: number,
 }
 
 class Numpad extends React.Component<ReduxPropType & DataProps> {
 
     state = {
-        display: ''
+        display: this.props.value.toString() || '',
     }
+
+    onPressBkS = () => this.setState({ display: this.state.display.substring(0, this.state.display.length - 1) });
 
     onPressEql = () => {
         if (this.state.display === '')
@@ -34,13 +37,20 @@ class Numpad extends React.Component<ReduxPropType & DataProps> {
             this.setState({ display: Solver.solve(Solver.tokenize(this.state.display)).toString() });
     }
 
+    onPressChr = (chr: string) => {
+        if (this.state.display === '0')
+            this.setState({ display: chr });
+        else
+            this.setState({ display: this.state.display + chr });
+    }
+
     render() {
         let valid: boolean = /^[-]?[0-9]*\.?[0-9]+$/.test(this.state.display);
 
         let color: string = this.props.theme.dynamic.text.mainC;
         if (valid)
             color = this.props.theme.static.accentC;
-        
+
         if (!this.state.display)
             color = this.props.theme.dynamic.text.secondaryC;
 
@@ -64,32 +74,32 @@ class Numpad extends React.Component<ReduxPropType & DataProps> {
                     () => { },
                     () => { },
                     () => { },
-                    () => this.setState({ display: this.state.display.substring(0, this.state.display.length - 1) }),
+                    this.onPressBkS,
                     this.onPressEql,
-                    (chr: string) => this.setState({ display: this.state.display + chr }),
+                    this.onPressChr,
                 ).map((row: Array<NumpadBtnProps>) => {
                     return (
-                        <View key={smallKeygen()} style={NumpadStyles.row}>
-                            {row.map((btnProps: NumpadBtnProps) => {
-                                return (
-                                    <Btn
-                                        {...btnProps}
-                                        disabled={btnProps.isOp && (this.props.disableOps || false)}
-                                        highlight={btnProps.icon === 'equal-box' && valid}
-                                        key={smallKeygen()}
-                                    />
-                                );
-                            })}
-                        </View>
+                    <View key={smallKeygen()} style={NumpadStyles.row}>
+                        {row.map((btnProps: NumpadBtnProps) => {
+                            return (
+                                <Btn
+                                    {...btnProps}
+                                    disabled={btnProps.isOp && (this.props.disableOps || false)}
+                                    highlight={btnProps.icon === 'equal-box' && valid}
+                                    key={smallKeygen()}
+                                />
+                            );
+                        })}
+                    </View>
                     );
                 })}
             </View>
-        );
+                );
     }
 }
 
 const mapStateToProps = (state: ReduxPropType) => ({
-    theme: state.theme,
+                    theme: state.theme,
 });
 
-export default connect(mapStateToProps)(Numpad);
+                export default connect(mapStateToProps)(Numpad);
