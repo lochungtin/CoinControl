@@ -38,6 +38,11 @@ export interface CurrencyType {
 }
 
 // data
+export interface DataStore {
+    data: DataMap,
+    stats: StateType,
+}
+
 export interface DataMap {
     [key: string]: DataType,
 }
@@ -51,7 +56,35 @@ export interface DataType {
     value: number,
 }
 
+export interface StateType {
+    balance: number,
+    expense: {
+        [key: string]: {
+            amount: number,
+            count: number
+        },
+    },
+    goal: {
+        config: GoalConfigType,
+        left: number,
+        used: number,
+    },
+    income: {
+        [key: string]: {
+            amount: number,
+            count: number
+        },
+    },
+    totalExpense: number,
+    totalIncome: number,
+}
+
 // goals
+export interface GoalConfigType {
+    max: number,
+    type: GoalType,
+}
+
 export interface GoalMap {
     [key: string]: GoalType,
 }
@@ -59,6 +92,7 @@ export interface GoalMap {
 export interface GoalType {
     key: string,
     name: string,
+    text: string,
 }
 
 // icons 

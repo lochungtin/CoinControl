@@ -4,9 +4,10 @@ import { colorPickerData, GREY } from './color';
 import { currencyData } from './currency';
 
 import { ThemeType } from '../types/color';
-import { CategoryStore, SettingsType } from '../types/data';
+import { CategoryStore, DataStore, SettingsType } from '../types/data';
+import { goals } from './goal';
 
-export const defaultCategories: CategoryStore  = {
+export const defaultCategories: CategoryStore = {
     0: {
         '9ed0a04': {
             color: colorPickerData['blues']['a'].hex,
@@ -102,6 +103,31 @@ export const defaultCategories: CategoryStore  = {
             name: 'other'
         },
     },
+}
+
+export const defaultData: DataStore = {
+    data: {
+
+    },
+    stats: {
+        balance: 0,
+        expense: {
+
+        },
+        goal: {
+            config: {
+                max: 0,
+                type: goals['goalN'],
+            },
+            left: 0,
+            used: 0,
+        },
+        income: {
+
+        },
+        totalExpense: 0,
+        totalIncome: 0,
+    }
 }
 
 export const defaultSettings: SettingsType = {

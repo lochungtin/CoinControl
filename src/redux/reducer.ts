@@ -2,11 +2,11 @@ import { combineReducers } from 'redux';
 
 import { Actions } from './action';
 
-import { defaultCategories, defaultSettings, defaultTheme } from '../data/default';
+import { defaultCategories, defaultData, defaultSettings, defaultTheme } from '../data/default';
 import { darkTheme, lightTheme } from '../data/theme';
 
 import { ThemeType } from '../types/color';
-import { AccountType, CategoryStore, DataMap, DataType, SettingsType } from '../types/data';
+import { AccountType, CategoryStore, DataMap, DataStore, DataType, SettingsType } from '../types/data';
 import { ReduxActionType } from '../types/redux';
 import { colorPickerData } from '../data/color';
 import { DisplaySectionType } from '../types/ui';
@@ -46,41 +46,48 @@ const updateCategories = (categories: CategoryStore = defaultCategories, action:
     }
 }
 
-const updateData = (data: DataMap = {}, action: ReduxActionType) => {
-    let update: DataMap = { ...data };
+const updateData = (data: DataStore = defaultData, action: ReduxActionType) => {
+    let update: DataStore = { ...data };
     switch (action.type) {
         // add or edit
         case Actions.RECORD_ADD:
         case Actions.RECORD_EDIT:
-            update[action.payload.key] = action.payload;
-            return update;
+            update.data[action.payload.key] = action.payload;
+            break;
         // delete
         case Actions.RECORD_DELETE:
-            delete update[action.payload.key];
-            return update;
+            delete update.data[action.payload.key];
+            break;
         // delete category - set category to other
         case Actions.CATEGORY_DELETE:
             Object.keys(update).forEach((key: string) => {
-                let record: DataType = update[key];
+                let record: DataType = update.data[key];
                 if (record.categoryKey === action.payload.key)
                     record.categoryKey = 'C0000000';
             });
-            return update;
+            break;
+        // set goal
+        case Actions.GOAL_SET:
+            update.stats.goal.config = action.payload;
         // default
         default:
             return data;
     }
+    return update;
 }
 
 const updateDisplay = (display: Array<DisplaySectionType> = [], action: ReduxActionType) => {
+    if (!action.payload)
+        return display;
+
     let update: Array<DisplaySectionType> = [...display];
 
     let sectionIndex = update.findIndex((section: DisplaySectionType) => section.date === action.payload.date);
     let section: DisplaySectionType;
 
-    if (sectionIndex === -1) 
+    if (sectionIndex === -1)
         section = { date: action.payload.date, keys: [] }
-    else 
+    else
         section = update[sectionIndex];
 
     switch (action.type) {
@@ -166,6 +173,8 @@ const updateTheme = (theme: ThemeType = defaultTheme, action: ReduxActionType) =
 export default combineReducers({
     account: updateAccount,
     categories: updateCategories,
+    data: updateData,
+    display: updateDisplay,
     theme: updateTheme,
     settings: updateSettings,
 });

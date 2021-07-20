@@ -1,4 +1,4 @@
-import { CurrencyType, DataType } from "../types/data";
+import { CurrencyType, DataType, GoalConfigType, GoalType } from "../types/data";
 import { ReduxActionType } from "../types/redux";
 
 export enum Actions {
@@ -10,6 +10,7 @@ export enum Actions {
     CLEAR_DATA,
     DEFAULT_CATEGORIES,
     DEFAULT_SETTINGS,
+    GOAL_SET,
     RECORD_ADD,
     RECORD_DELETE,
     RECORD_EDIT,
@@ -61,6 +62,12 @@ export const setDefaultCategories = (): ReduxActionType => ({
 
 export const setDefaultSettings = (): ReduxActionType => ({
     type: Actions.DEFAULT_SETTINGS,
+});
+
+// goals
+export const setGoal = (payload: GoalConfigType): ReduxActionType => ({
+    type: Actions.GOAL_SET,
+    payload,
 });
 
 // records
