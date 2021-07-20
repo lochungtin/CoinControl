@@ -26,7 +26,7 @@ interface DataProps {
 class Modal extends React.Component<ReduxPropType & DataProps> {
 
     state = {
-        categoryKey: this.props.data.categoryKey,
+        categoryKey: this.props.data.categoryKey || 'C0000000',
         date: this.props.data.date,
         dpOpen: false,
         msOpen: false,
@@ -47,6 +47,12 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
         title: this.state.title,
     });
 
+    onOpen = () => this.setState({
+        categoryKey: this.props.data.categoryKey,
+        date: this.props.data.date,
+        title: this.props.data.title,
+    });
+
     render() {
         let keylist: Array<string> = Object.keys((this.props.categories || defaultCategories)[this.props.data.categoryType]);
         let categories: Array<CategoryType> = keylist.map((key: string) => (this.props.categories || defaultCategories)[this.props.data.categoryType][key]);
@@ -57,7 +63,7 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
             <>
                 <ModalBase
                     onClose={this.onClose}
-                    onOpen={() => this.setState({ categoryKey: this.props.data.categoryKey, date: this.props.data.date, title: this.props.data.title })}
+                    onOpen={this.onOpen}
                     open={this.props.open}
                 >
                     <View style={{ ...InputModalStyles.inputBox, backgroundColor: this.props.theme.dynamic.screen.secondaryBgC }}>

@@ -16,6 +16,8 @@ import { ReduxPropType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
 import { defaultCategories } from '../data/default';
 import { keygen } from '../utils/keygen';
+import { store } from '../redux/store';
+import { addRecord } from '../redux/action';
 
 interface DataProps {
     data?: DataType,
@@ -31,6 +33,12 @@ class Screen extends React.Component<ReduxPropType & ScreenProps & DataProps> {
 
     componentWillUnmount() {
         this.unsubscribe();
+    }
+
+    onConfirm = (obj: DataType) => {
+        store.dispatch(addRecord(obj));
+        this.setState({ open: false });
+        this.props.navigation.navigate('home');
     }
 
     unsubscribe = this.props.navigation.addListener('focus', () => this.setState({ category: this.props.route.params?.category || Categories.EXPENSE }));

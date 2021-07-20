@@ -23,7 +23,23 @@ class Numpad extends React.Component<ReduxPropType & DataProps> {
 
     state = {
         display: this.props.value.toString() || '',
+        mem: '',
     }
+
+    onPressMem = () => {
+        if (this.state.mem === '')
+            return;
+
+        let lastChr: string = this.state.display.slice(-1);
+        let add: string = /[0-9]/.test(lastChr) || lastChr === ')' ? '*' : '0';
+
+        if (lastChr === '.')
+            add = '0*';
+
+        this.setState({ display: this.state.display + add + this.state.mem})
+    }
+
+    onPressClr = () => this.setState({ display: '0', mem: '' });
 
     onPressBkS = () => this.setState({ display: this.state.display.substring(0, this.state.display.length - 1) });
 
@@ -33,13 +49,17 @@ class Numpad extends React.Component<ReduxPropType & DataProps> {
 
         if (/^[-]?[0-9]*\.?[0-9]+$/.test(this.state.display))
             this.props.onConfirm(parseFloat(this.state.display));
-        else
-            this.setState({ display: Solver.solve(Solver.tokenize(this.state.display)).toString() });
+        else {
+            let ans: string = Solver.solve(Solver.tokenize(this.state.display)).toString();
+            this.setState({ display: ans, mem: ans });
+        }
     }
 
     onPressChr = (chr: string) => {
-        if (this.state.display === '0')
+        if (this.state.display === '0' && !['+', '-', '*', '/', '.'].includes(chr))
             this.setState({ display: chr });
+        else if (this.state.display === '' && ['+', '-', '*', '/', '.'].includes(chr))
+            this.setState({ display: '0' + chr });
         else
             this.setState({ display: this.state.display + chr });
     }
@@ -71,35 +91,35 @@ class Numpad extends React.Component<ReduxPropType & DataProps> {
                     </Text>
                 </View>
                 {makeGrid(
+                    this.onPressMem,
                     () => { },
-                    () => { },
-                    () => { },
+                    this.onPressClr,
                     this.onPressBkS,
                     this.onPressEql,
                     this.onPressChr,
                 ).map((row: Array<NumpadBtnProps>) => {
                     return (
-                    <View key={smallKeygen()} style={NumpadStyles.row}>
-                        {row.map((btnProps: NumpadBtnProps) => {
-                            return (
-                                <Btn
-                                    {...btnProps}
-                                    disabled={btnProps.isOp && (this.props.disableOps || false)}
-                                    highlight={btnProps.icon === 'equal-box' && valid}
-                                    key={smallKeygen()}
-                                />
-                            );
-                        })}
-                    </View>
+                        <View key={smallKeygen()} style={NumpadStyles.row}>
+                            {row.map((btnProps: NumpadBtnProps) => {
+                                return (
+                                    <Btn
+                                        {...btnProps}
+                                        disabled={btnProps.isOp && (this.props.disableOps || false)}
+                                        highlight={btnProps.icon === 'equal-box' && valid}
+                                        key={smallKeygen()}
+                                    />
+                                );
+                            })}
+                        </View>
                     );
                 })}
             </View>
-                );
+        );
     }
 }
 
 const mapStateToProps = (state: ReduxPropType) => ({
-                    theme: state.theme,
+    theme: state.theme,
 });
 
-                export default connect(mapStateToProps)(Numpad);
+export default connect(mapStateToProps)(Numpad);

@@ -1,14 +1,8 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 
-export interface NumpadBtnProps {
-    icon: string,
-    isOp: boolean,
-    onPress: () => void,
-}
-
-export interface ScreenProps {
-    navigation: DrawerNavigationProp<any, any>,
-    route?: any,
+export interface DisplaySectionType {
+    date: string,
+    keys: Array<string>,
 }
 
 export interface DrawerItemMap {
@@ -18,6 +12,17 @@ export interface DrawerItemMap {
 export interface DrawerItemProps {
     icon: string,
     label: string,
+}
+
+export interface NumpadBtnProps {
+    icon: string,
+    isOp: boolean,
+    onPress: () => void,
+}
+
+export interface ScreenProps {
+    navigation: DrawerNavigationProp<any, any>,
+    route?: any,
 }
 
 export interface SettingsCategory {

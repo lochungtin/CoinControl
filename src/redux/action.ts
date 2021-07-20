@@ -1,4 +1,4 @@
-import { CurrencyType } from "../types/data";
+import { CurrencyType, DataType } from "../types/data";
 import { ReduxActionType } from "../types/redux";
 
 export enum Actions {
@@ -10,6 +10,9 @@ export enum Actions {
     CLEAR_DATA,
     DEFAULT_CATEGORIES,
     DEFAULT_SETTINGS,
+    RECORD_ADD,
+    RECORD_DELETE,
+    RECORD_EDIT,
     SETTINGS_SET_CURRENCY,
     SETTINGS_SET_DARKMODE,
     SETTINGS_SET_LIGHTMODE,
@@ -18,6 +21,17 @@ export enum Actions {
     SETTINGS_SET_NOTIF_TIME,
     THEME_ACCENT,
 }
+
+// account
+export const signIn = (payload: any): ReduxActionType => ({
+    type: Actions.ACCOUNT_SIGNIN,
+    payload,
+});
+
+export const signOut = (): ReduxActionType => ({
+    type: Actions.ACCOUNT_SIGNOUT,
+});
+
 
 // cateogies
 export const addCategory = (payload: any): ReduxActionType => ({
@@ -40,7 +54,7 @@ export const clearData = (): ReduxActionType => ({
     type: Actions.CLEAR_DATA,
 });
 
-// set defaults
+// defaults
 export const setDefaultCategories = (): ReduxActionType => ({
     type: Actions.DEFAULT_CATEGORIES,
 });
@@ -49,7 +63,44 @@ export const setDefaultSettings = (): ReduxActionType => ({
     type: Actions.DEFAULT_SETTINGS,
 });
 
-// set themes
+// records
+export const addRecord = (payload: DataType): ReduxActionType => ({
+    type: Actions.RECORD_ADD,
+    payload,
+});
+
+export const deleteRecord = (payload: DataType): ReduxActionType => ({
+    type: Actions.RECORD_DELETE,
+    payload,
+});
+
+export const editRecord = (payload: DataType): ReduxActionType => ({
+    type: Actions.RECORD_EDIT,
+    payload,
+});
+
+// settings
+export const setPromptShow = (payload: any): ReduxActionType => ({
+    type: Actions.SETTINGS_SET_PROMPT_SHOW,
+    payload,
+});
+
+export const setCurrency = (payload: CurrencyType): ReduxActionType => ({
+    type: Actions.SETTINGS_SET_CURRENCY,
+    payload,
+});
+
+export const setNotifOn = (payload: boolean): ReduxActionType => ({
+    type: Actions.SETTINGS_SET_NOTIF_ON,
+    payload,
+});
+
+export const setNotifTime = (payload: string): ReduxActionType => ({
+    type: Actions.SETTINGS_SET_NOTIF_TIME,
+    payload,
+});
+
+// themes
 export const setAccent = (payload: string): ReduxActionType => ({
     type: Actions.THEME_ACCENT,
     payload,
@@ -61,37 +112,4 @@ export const setDarkMode = (): ReduxActionType => ({
 
 export const setLightMode = (): ReduxActionType => ({
     type: Actions.SETTINGS_SET_LIGHTMODE,
-});
-
-// set prompt show
-export const setPromptShow = (payload: any): ReduxActionType => ({
-    type: Actions.SETTINGS_SET_PROMPT_SHOW,
-    payload,
-});
-
-// set currency
-export const setCurrency = (payload: CurrencyType): ReduxActionType => ({
-    type: Actions.SETTINGS_SET_CURRENCY,
-    payload,
-});
-
-// set notifications
-export const setNotifOn = (payload: boolean): ReduxActionType => ({
-    type: Actions.SETTINGS_SET_NOTIF_ON,
-    payload,
-});
-
-export const setNotifTime = (payload: string): ReduxActionType => ({
-    type: Actions.SETTINGS_SET_NOTIF_TIME,
-    payload,
-});
-
-// account
-export const signIn = (payload: any): ReduxActionType => ({
-    type: Actions.ACCOUNT_SIGNIN,
-    payload,
-});
-
-export const signOut = (): ReduxActionType => ({
-    type: Actions.ACCOUNT_SIGNOUT,
 });

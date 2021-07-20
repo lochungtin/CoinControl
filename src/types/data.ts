@@ -38,6 +38,10 @@ export interface CurrencyType {
 }
 
 // data
+export interface DataMap {
+    [key: string]: DataType,
+}
+
 export interface DataType {
     categoryKey: string,
     categoryType: Categories,

@@ -6,9 +6,10 @@ import { defaultCategories, defaultSettings, defaultTheme } from '../data/defaul
 import { darkTheme, lightTheme } from '../data/theme';
 
 import { ThemeType } from '../types/color';
-import { AccountType, CategoryStore, SettingsType } from '../types/data';
+import { AccountType, CategoryStore, DataMap, DataType, SettingsType } from '../types/data';
 import { ReduxActionType } from '../types/redux';
 import { colorPickerData } from '../data/color';
+import { DisplaySectionType } from '../types/ui';
 
 const updateAccount = (account: AccountType | null = null, action: ReduxActionType) => {
     switch (action.type) {
@@ -42,6 +43,61 @@ const updateCategories = (categories: CategoryStore = defaultCategories, action:
         // default
         default:
             return categories;
+    }
+}
+
+const updateData = (data: DataMap = {}, action: ReduxActionType) => {
+    let update: DataMap = { ...data };
+    switch (action.type) {
+        // add or edit
+        case Actions.RECORD_ADD:
+        case Actions.RECORD_EDIT:
+            update[action.payload.key] = action.payload;
+            return update;
+        // delete
+        case Actions.RECORD_DELETE:
+            delete update[action.payload.key];
+            return update;
+        // delete category - set category to other
+        case Actions.CATEGORY_DELETE:
+            Object.keys(update).forEach((key: string) => {
+                let record: DataType = update[key];
+                if (record.categoryKey === action.payload.key)
+                    record.categoryKey = 'C0000000';
+            });
+            return update;
+        // default
+        default:
+            return data;
+    }
+}
+
+const updateDisplay = (display: Array<DisplaySectionType> = [], action: ReduxActionType) => {
+    let update: Array<DisplaySectionType> = [...display];
+
+    let sectionIndex = update.findIndex((section: DisplaySectionType) => section.date === action.payload.date);
+    let section: DisplaySectionType;
+
+    if (sectionIndex === -1) 
+        section = { date: action.payload.date, keys: [] }
+    else 
+        section = update[sectionIndex];
+
+    switch (action.type) {
+        // add record
+        case Actions.RECORD_ADD:
+            section.keys.push(action.payload);
+            return update;
+        // delete record
+        case Actions.RECORD_DELETE:
+            return update;
+        // edit record
+        case Actions.RECORD_EDIT:
+            // let oldSectionIndex = update.findIndex((section: DisplaySectionType) => section.date === action.payload.date);
+            return update;
+        // default
+        default:
+            return display;
     }
 }
 
