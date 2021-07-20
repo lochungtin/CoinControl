@@ -33,6 +33,11 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
         title: this.props.data.title,
     }
 
+    onClose = () => {
+        this.setState({ categoryKey: 'C0000000' });
+        this.props.onClose();
+    }
+
     onConfirm = (value: number) => this.props.onConfirm({
         value,
         categoryKey: this.state.categoryKey,
@@ -51,7 +56,7 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
         return (
             <>
                 <ModalBase
-                    onClose={this.props.onClose}
+                    onClose={this.onClose}
                     onOpen={() => this.setState({ categoryKey: this.props.data.categoryKey, date: this.props.data.date, title: this.props.data.title })}
                     open={this.props.open}
                 >
