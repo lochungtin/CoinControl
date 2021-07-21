@@ -11,7 +11,7 @@ import MultiPicker from '../components/pickers/multi';
 import TimePicker from '../components/pickers/time';
 
 import { WHITE } from '../data/color';
-import { ScreenStyles, SettingsStyles } from './styles';
+import { ScreenStyles, SettingsScreenStyles } from './styles';
 
 import { currencyData } from '../data/currency';
 import { defaultSettings } from '../data/default';
@@ -69,13 +69,13 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
             case SettingsSelects.CURRENCY:
                 let currency: CurrencyType = obj;
                 return (
-                    <View style={SettingsStyles.currencyItem}>
+                    <View style={SettingsScreenStyles.currencyItem}>
                         <Icon
                             color={this.props.theme.static.accentC}
                             name={currency.icon}
                             size={30}
                         />
-                        <Text style={{ ...SettingsStyles.currencyText, color: this.props.theme.dynamic.text.mainC }}>
+                        <Text style={{ ...SettingsScreenStyles.currencyText, color: this.props.theme.dynamic.text.mainC }}>
                             {currency.name}
                         </Text>
                     </View>
@@ -83,13 +83,13 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
             case SettingsSelects.PROMPT:
                 let prompt: number = obj;
                 return (
-                    <View style={SettingsStyles.currencyItem}>
+                    <View style={SettingsScreenStyles.currencyItem}>
                         <Icon
                             color={this.props.theme.static.accentC}
                             name={this.props.settings?.promptTrigger[prompt] ? 'text-box' : 'text-box-remove-outline'}
                             size={30}
                         />
-                        <Text style={{ ...SettingsStyles.currencyText, color: this.props.theme.dynamic.text.mainC }}>
+                        <Text style={{ ...SettingsScreenStyles.currencyText, color: this.props.theme.dynamic.text.mainC }}>
                             {promptNames[prompt]}
                         </Text>
                     </View>
@@ -170,28 +170,28 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                             this.signOut,
                         ).map((category: SettingsCategory) => {
                             return (
-                                <View key={smallKeygen()} style={SettingsStyles.root}>
+                                <View key={smallKeygen()} style={SettingsScreenStyles.root}>
                                     <SubHeader label={category.header} />
                                     {category.body.map((item: SettingsItem) => {
                                         return (
                                             <View
                                                 key={smallKeygen()}
                                                 style={{
-                                                    ...SettingsStyles.colorBox,
+                                                    ...SettingsScreenStyles.colorBox,
                                                     backgroundColor: this.props.theme.dynamic.screen.secondaryBgC,
                                                     opacity: item.blurred ? 0.5 : 1,
                                                 }}
                                             >
-                                                <TouchableOpacity onPress={() => item.onPress(!item.switch)} style={SettingsStyles.itemBox}>
+                                                <TouchableOpacity onPress={() => item.onPress(!item.switch)} style={SettingsScreenStyles.itemBox}>
                                                     <Icon
                                                         color={this.props.theme.static.accentC}
                                                         name={item.icon}
                                                         size={25}
                                                     />
-                                                    <Text style={{ ...SettingsStyles.label, color: this.props.theme.dynamic.text.mainC }}>
+                                                    <Text style={{ ...SettingsScreenStyles.label, color: this.props.theme.dynamic.text.mainC }}>
                                                         {item.label}
                                                     </Text>
-                                                    <View style={SettingsStyles.itemRight}>
+                                                    <View style={SettingsScreenStyles.itemRight}>
                                                         {item.switch !== undefined ?
                                                             <Switch
                                                                 onValueChange={item.onPress}

@@ -94,7 +94,7 @@ export const NewCatScreenStyles = StyleSheet.create({
     },
 });
 
-export const SettingsStyles = StyleSheet.create({
+export const SettingsScreenStyles = StyleSheet.create({
     root: {
         alignItems: 'center',
         display: 'flex',
