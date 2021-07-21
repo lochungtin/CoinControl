@@ -59,6 +59,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
 											return (
 												<LItem
+													fallbackCatName
 													category={categories[record.categoryType][record.categoryKey]}
 													key={record.key}
 													label={record.title}

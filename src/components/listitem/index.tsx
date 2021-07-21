@@ -11,6 +11,7 @@ import { ListItemStyles } from './styles';
 interface DataProps {
     category: CategoryType,
     children?: ReactElement,
+    fallbackCatName?: boolean,
     key: string,
     label: string,
     onPress?: () => void,
@@ -19,6 +20,10 @@ interface DataProps {
 
 class LItem extends React.Component<ReduxPropType & DataProps> {
     render() {
+        let label: string = this.props.label;
+        if (!label && this.props.fallbackCatName)
+            label = this.props.category.name.toUpperCase();
+
         return (
             <TouchableOpacity onPress={this.props.onPress} style={{ ...ListItemStyles.root, backgroundColor: this.props.theme.dynamic.screen.secondaryBgC }}>
                 <View style={ListItemStyles.contentPositioner}>
@@ -30,7 +35,7 @@ class LItem extends React.Component<ReduxPropType & DataProps> {
                         />
                     </View>
                     <Text style={{ ...ListItemStyles.label, color: this.props.theme.dynamic.text.mainC }}>
-                        {this.props.uppercase ? this.props.label.toUpperCase() : this.props.label}
+                        {this.props.uppercase ? label.toUpperCase() : label}
                     </Text>
                     <View style={ListItemStyles.rightChild}>
                         {this.props.children}
