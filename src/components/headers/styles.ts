@@ -108,6 +108,9 @@ export const HomeHeaderStyles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        position: 'absolute',
+        right: 30,
+        top: 240,
         width: screenWidth * 0.175,
     }
 });

@@ -5,29 +5,35 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import GoalModal from '../../components/modals/goal';
+import DatePicker from '../../components/pickers/date';
+import MultiPicker from '../../components/pickers/multi';
 import PGBar from '../progressbar';
 
 import { GeneralHeaderStyles, HomeHeaderStyles } from './styles';
 
-import { defaultData, defaultSettings } from '../../data/default';
+import { defaultCategories, defaultData, defaultSettings } from '../../data/default';
 import { goals } from '../../data/goal';
 import { setGoal } from '../../redux/action';
 import { store } from '../../redux/store';
-import { CategoryType, GoalConfigType } from '../../types/data';
+import { Categories, CategoryStore, CategoryType, DataStore, GoalConfigType } from '../../types/data';
 import { ReduxPropType } from '../../types/redux';
 import { ScreenProps } from '../../types/ui';
+import moment from 'moment';
 
 interface DataProps {
     onFilterDate: (date: string) => void,
-    onFilterCategory: (category: CategoryType) => void,
+    onFilterCategory: (category: CategoryType | undefined) => void,
     onPressSync: () => void,
 }
 
 class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
 
     state = {
-        gmOpen: false,
+        categoryFiltering: false,
+        dateFiltering: false,
         dpOpen: false,
+        gmOpen: false,
+        mpOpen: false,
     }
 
     onConfirmGoal = (config: GoalConfigType) => {
@@ -38,18 +44,45 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
         this.setState({ gmOpen: false });
     }
 
+    onFilterDate = (date: string) => {
+        this.props.onFilterDate(date);
+        this.setState({ dpOpen: false });
+    }
+
+    toggleCategoryFilter = () => {
+        if (this.state.categoryFiltering)
+            this.props.onFilterCategory(undefined);
+        else
+            this.setState({ mpOpen: true });
+    }
+
+    toggleDateFilter = () => {
+        if (this.state.dateFiltering)
+            this.props.onFilterDate('');
+        else
+            this.setState({ dpOpen: true });
+    }
+
     render() {
-        let splt: Array<string> = (this.props.data || defaultData).stats.balance.toString().split('.') || ['0'];
+        let data: DataStore = (this.props.data || defaultData);
+        let allCategories: CategoryStore = (this.props.categories || defaultCategories);
+
+        let splt: Array<string> = data.stats.balance.toString().split('.') || ['0'];
 
         let balance: string = splt[0] || '420';
         let decimal: string = ((splt[1] || '00') + '00').slice(0, 2);
 
-        let goalPrompt: string = (this.props.data || defaultData).stats.goal.left.toString();
+        let goalPrompt: string = data.stats.goal.left.toString();
 
         if (this.props.data?.stats.goal.config.type.key === 'goalN')
             goalPrompt = goals['goalN'].text;
         else
             goalPrompt += ' ' + goals[this.props.data?.stats.goal.config.type.key || 'goalD'].text;
+
+        let categories: Array<CategoryType> = [
+            ...Object.keys(data.stats.expense).map((key: string) => allCategories[Categories.EXPENSE][key]),
+            ...Object.keys(data.stats.income).map((key: string) => allCategories[Categories.INCOME][key]),
+        ];
 
         return (
             <>
@@ -111,31 +144,40 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
                                 </TouchableOpacity>
                             </View>
                         </View>
-                        <View style={HomeHeaderStyles.right}>
-                            <View style={HomeHeaderStyles.controller}>
-                                <TouchableOpacity>
-                                    <Icon
-                                        color={this.props.theme.static.accentC}
-                                        name='tag-heart-outline'
-                                        size={25}
-                                    />
-                                </TouchableOpacity>
-                                <TouchableOpacity>
-                                    <Icon
-                                        color={this.props.theme.static.accentC}
-                                        name='calendar-month'
-                                        size={25}
-                                    />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
+                        <Icon
+                            color={'transparent'}
+                            name='menu-open'
+                            size={40}
+                        />
                     </View>
+                </View>
+                <View style={HomeHeaderStyles.controller}>
+                    <TouchableOpacity onPress={this.toggleCategoryFilter}>
+                        <Icon
+                            color={this.state.categoryFiltering ? this.props.theme.static.accentC : this.props.theme.dynamic.text.mainC}
+                            name='tag-heart-outline'
+                            size={25}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={this.toggleDateFilter}>
+                        <Icon
+                            color={this.state.dateFiltering ? this.props.theme.static.accentC : this.props.theme.dynamic.text.mainC}
+                            name='calendar-month'
+                            size={25}
+                        />
+                    </TouchableOpacity>
                 </View>
                 <GoalModal
                     onClose={() => this.setState({ gmOpen: false })}
                     onConfirm={this.onConfirmGoal}
                     open={this.state.gmOpen}
                     config={(this.props.data || defaultData)?.stats.goal.config}
+                />
+                <DatePicker
+                    onClose={() => this.setState({ dpOpen: false })}
+                    onSelect={this.onFilterDate}
+                    open={this.state.dpOpen}
+                    selected={moment().format('DD-MM-YYYY')}
                 />
             </>
         );
@@ -144,6 +186,7 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
 
 const mapStateToProps = (state: ReduxPropType) => ({
     data: state.data,
+    categories: state.categories,
     goal: state.goal,
     settings: state.settings,
     theme: state.theme,

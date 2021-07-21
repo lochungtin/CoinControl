@@ -17,17 +17,18 @@ import { CategoryType } from '../types/data';
 class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
     state = {
-        imOpen: false,
+        render: false,
     }
 
     render() {
+        console.log(this.props.data, this.props.display)
         return (
             <>
                 <View style={{ ...ScreenStyles.root, backgroundColor: this.props.theme.dynamic.screen.bgC }}>
                     <Header
                         navigation={this.props.navigation}
                         onFilterDate={(date: string) => console.log(date)}
-                        onFilterCategory={(category: CategoryType) => console.log(category)}
+                        onFilterCategory={(category: CategoryType | undefined) => console.log(category)}
                         onPressSync={() => { }}
                     />
                 </View>

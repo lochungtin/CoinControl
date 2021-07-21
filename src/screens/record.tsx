@@ -20,7 +20,7 @@ import { store } from '../redux/store';
 import { addRecord } from '../redux/action';
 
 interface DataProps {
-    data?: DataType,
+    record?: DataType,
 }
 
 class Screen extends React.Component<ReduxPropType & ScreenProps & DataProps> {
@@ -106,7 +106,10 @@ class Screen extends React.Component<ReduxPropType & ScreenProps & DataProps> {
                     </ScrollView>
                 </View>
                 <InputModal
-                    data={this.props.data || {
+                    onClose={() => this.setState({ open: false })}
+                    onConfirm={this.onConfirm}
+                    open={this.state.open}
+                    record={this.props.record || {
                         categoryKey: this.state.selected.key,
                         categoryType: this.state.category,
                         date: moment().format('DD-MM-YYYY'),
@@ -114,9 +117,6 @@ class Screen extends React.Component<ReduxPropType & ScreenProps & DataProps> {
                         title: '',
                         value: 0,
                     }}
-                    onClose={() => this.setState({ open: false })}
-                    onConfirm={console.log}
-                    open={this.state.open}
                 />
             </>
         );

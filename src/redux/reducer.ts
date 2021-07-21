@@ -49,6 +49,9 @@ const updateCategories = (categories: CategoryStore = defaultCategories, action:
 const updateData = (data: DataStore = defaultData, action: ReduxActionType) => {
     let update: DataStore = { ...data };
     switch (action.type) {
+        // clear all
+        case Actions.CLEAR_DATA:
+            return defaultData;
         // add or edit
         case Actions.RECORD_ADD:
         case Actions.RECORD_EDIT:
@@ -74,6 +77,7 @@ const updateData = (data: DataStore = defaultData, action: ReduxActionType) => {
         default:
             return data;
     }
+    // update stats
     return update;
 }
 
@@ -84,17 +88,19 @@ const updateDisplay = (display: Array<DisplaySectionType> = [], action: ReduxAct
     let update: Array<DisplaySectionType> = [...display];
 
     let sectionIndex = update.findIndex((section: DisplaySectionType) => section.date === action.payload.date);
-    let section: DisplaySectionType;
 
-    if (sectionIndex === -1)
-        section = { date: action.payload.date, keys: [] }
-    else
-        section = update[sectionIndex];
+    if (sectionIndex === -1) {
+        sectionIndex = update.length;
+        update.push({ date: action.payload.date, keys: [] });
+    }
 
     switch (action.type) {
+        // clear all
+        case Actions.CLEAR_DATA:
+            return [];
         // add record
         case Actions.RECORD_ADD:
-            section.keys.push(action.payload);
+            update[sectionIndex].keys.push(action.payload.key);
             return update;
         // delete record
         case Actions.RECORD_DELETE:

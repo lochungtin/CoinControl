@@ -17,7 +17,7 @@ import { CategoryType, DataType } from '../../types/data';
 import { ReduxPropType } from '../../types/redux';
 
 interface DataProps {
-    data: DataType,
+    record: DataType,
     onClose: () => void,
     onConfirm: (obj: DataType) => void,
     open: boolean,
@@ -26,11 +26,11 @@ interface DataProps {
 class Modal extends React.Component<ReduxPropType & DataProps> {
 
     state = {
-        categoryKey: this.props.data.categoryKey || 'C0000000',
-        date: this.props.data.date,
+        categoryKey: this.props.record.categoryKey || 'C0000000',
+        date: this.props.record.date,
         dpOpen: false,
         msOpen: false,
-        title: this.props.data.title,
+        title: this.props.record.title,
     }
 
     onClose = () => {
@@ -41,23 +41,23 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
     onConfirm = (value: number) => this.props.onConfirm({
         value,
         categoryKey: this.state.categoryKey,
-        categoryType: this.props.data.categoryType,
+        categoryType: this.props.record.categoryType,
         date: this.state.date,
-        key: this.props.data.key,
+        key: this.props.record.key,
         title: this.state.title,
     });
 
     onOpen = () => this.setState({
-        categoryKey: this.props.data.categoryKey,
-        date: this.props.data.date,
-        title: this.props.data.title,
+        categoryKey: this.props.record.categoryKey,
+        date: this.props.record.date,
+        title: this.props.record.title,
     });
 
     render() {
-        let keylist: Array<string> = Object.keys((this.props.categories || defaultCategories)[this.props.data.categoryType]);
-        let categories: Array<CategoryType> = keylist.map((key: string) => (this.props.categories || defaultCategories)[this.props.data.categoryType][key]);
+        let keylist: Array<string> = Object.keys((this.props.categories || defaultCategories)[this.props.record.categoryType]);
+        let categories: Array<CategoryType> = keylist.map((key: string) => (this.props.categories || defaultCategories)[this.props.record.categoryType][key]);
 
-        let category: CategoryType = (this.props.categories || defaultCategories)[this.props.data.categoryType][this.state.categoryKey];
+        let category: CategoryType = (this.props.categories || defaultCategories)[this.props.record.categoryType][this.state.categoryKey];
 
         return (
             <>
@@ -87,7 +87,7 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
                         onPress={() => this.setState({ dpOpen: true })}
                         text={this.state.date}
                     />
-                    <Numpad onConfirm={this.onConfirm} value={this.props.data.value} />
+                    <Numpad onConfirm={this.onConfirm} value={this.props.record.value} />
                 </ModalBase>
                 <DatePicker
                     onClose={() => this.setState({ dpOpen: false })}
