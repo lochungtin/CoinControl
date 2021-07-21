@@ -50,6 +50,7 @@ export const HomeHeaderStyles = StyleSheet.create({
         alignItems: 'flex-start',
         display: 'flex',
         flexDirection: 'row',
+        height: 160,
         justifyContent: 'space-between',
         width: screenWidth * 0.8,
     },
@@ -77,7 +78,7 @@ export const HomeHeaderStyles = StyleSheet.create({
         fontSize: 18,
     },
     pgbar: {
-        marginVertical: 10,
+        marginVertical: 15,
     },
     actionBtnRow: {
         alignItems: 'center',
@@ -94,6 +95,21 @@ export const HomeHeaderStyles = StyleSheet.create({
         justifyContent: 'center',
         width: 40,
     },
+    right: {
+        alignItems: 'flex-end',
+        display: 'flex',
+        flexDirection: 'column',
+        height: 210,
+        justifyContent: 'flex-end',
+        width: 40,
+    },
+    controller: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: screenWidth * 0.175,
+    }
 });
 
 export const SelectorHeaderStyles = StyleSheet.create({
