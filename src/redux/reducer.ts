@@ -69,6 +69,7 @@ const updateData = (data: DataStore = defaultData, action: ReduxActionType) => {
         // set goal
         case Actions.GOAL_SET:
             update.stats.goal.config = action.payload;
+            return update;
         // default
         default:
             return data;

@@ -45,13 +45,64 @@ export const AuthHeaderStyles = StyleSheet.create({
     },
 });
 
+export const HomeHeaderStyles = StyleSheet.create({
+    contentPositioner: {
+        alignItems: 'flex-start',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: screenWidth * 0.8,
+    },
+    content: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        paddingTop: 10,
+        width: screenWidth * 0.4,
+    },
+    balanceRow: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    balance: {
+        fontSize: 36,
+    },
+    decimal: {
+        fontSize: 24,
+    },
+    goal: {
+        fontSize: 18,
+    },
+    pgbar: {
+        marginVertical: 10,
+    },
+    actionBtnRow: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: screenWidth * 0.4,
+    },
+    actionBtn: {
+        alignItems: 'center',
+        borderRadius: 20,
+        display: 'flex',
+        height: 40,
+        justifyContent: 'center',
+        width: 40,
+    },
+});
+
 export const SelectorHeaderStyles = StyleSheet.create({
     rightPositioner: {
         alignItems: 'center',
         display: 'flex',
         justifyContent: 'center',
         width: 40,
-    },  
+    },
 });
 
 export const SubHeaderStyles = StyleSheet.create({
@@ -67,4 +118,4 @@ export const SubHeaderStyles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
     },
-})
+});

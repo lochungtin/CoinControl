@@ -8,22 +8,22 @@ import MultiPicker from '../pickers/multi';
 import ModalBase from './base';
 import Selector from './selector';
 
-import { GoalType } from '../../types/data';
+import { GoalConfigType, GoalType } from '../../types/data';
 import { ReduxPropType } from '../../types/redux';
 import { goals } from '../../data/goal';
 import { GoalModalStyles } from './styles';
 
 interface DataProps {
-    goal: GoalType,
+    config: GoalConfigType,
     onClose: () => void,
-    onConfirm: (goal: GoalType, value: number) => void,
+    onConfirm: (config: GoalConfigType) => void,
     open: boolean,
 }
 
-class Modal extends React.Component<ReduxPropType & DataProps> {
+class Modal extends React.Component<ReduxPropType & DataProps & DataProps> {
 
     state = {
-        goal: this.props.goal,
+        goal: this.props.config.type,
         msOpen: false,
     }
 
@@ -38,7 +38,11 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
                         onPress={() => this.setState({ msOpen: true })}
                         text={this.state.goal.name}
                     />
-                    <Numpad disableOps onConfirm={(value: number) => this.props.onConfirm(this.state.goal, value)} />
+                    <Numpad
+                        disableOps
+                        onConfirm={(max: number) => this.props.onConfirm({ max, type: this.state.goal, })}
+                        value={this.props.config.max}
+                    />
                 </ModalBase>
                 <MultiPicker
                     items={goalList}
@@ -59,7 +63,7 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
                             </View>
                         );
                     }}
-                    selectedIndex={Object.keys(goals).indexOf(this.state.goal.key)}
+                    selectedIndices={[Object.keys(goals).indexOf(this.state.goal.key)]}
                 />
             </>
         );

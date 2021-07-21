@@ -4,17 +4,38 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import { GeneralHeaderStyles } from './styles';
+import PGBar from '../progressbar';
 
+import { GeneralHeaderStyles, HomeHeaderStyles } from './styles';
+
+import { defaultData, defaultSettings } from '../../data/default';
+import { goals } from '../../data/goal';
 import { ReduxPropType } from '../../types/redux';
 import { ScreenProps } from '../../types/ui';
 
-class Header extends React.Component<ReduxPropType & ScreenProps> {
+interface DataProps {
+    onPressGoal: () => void,
+    onPressSync: () => void,
+}
+
+class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
     render() {
+        let splt: Array<string> = (this.props.data || defaultData).stats.balance.toString().split('.') || ['0'];
+
+        let balance: string = splt[0] || '420';
+        let decimal: string = ((splt[1] || '00') + '00').slice(0, 2);
+
+        let goalPrompt: string = (this.props.data || defaultData).stats.goal.left.toString();
+
+        if (this.props.data?.stats.goal.config.type.key === 'goalN')
+            goalPrompt = goals['goalN'].text;
+        else
+            goalPrompt += ' ' +  goals[this.props.data?.stats.goal.config.type.key || 'goalD'].text;
+
         return (
             <View style={{ ...GeneralHeaderStyles.root, backgroundColor: this.props.theme.dynamic.screen.secondaryBgC }}>
                 <StatusBar backgroundColor={this.props.theme.dynamic.screen.secondaryBgC} />
-                <View style={GeneralHeaderStyles.contentPositioner}>
+                <View style={HomeHeaderStyles.contentPositioner}>
                     <TouchableOpacity onPress={this.props.navigation.toggleDrawer}>
                         <Icon
                             color={this.props.theme.static.icon.drawerC}
@@ -22,8 +43,53 @@ class Header extends React.Component<ReduxPropType & ScreenProps> {
                             size={40}
                         />
                     </TouchableOpacity>
-                    <View>
-                        
+                    <View style={HomeHeaderStyles.content}>
+                        <View style={HomeHeaderStyles.balanceRow}>
+                            <Icon
+                                color={this.props.theme.dynamic.text.mainC}
+                                name={(this.props.settings || defaultSettings).currency.icon}
+                                size={36}
+                            />
+                            <Text style={{ ...HomeHeaderStyles.balance, color: this.props.theme.dynamic.text.mainC }}>
+                                {balance}
+                            </Text>
+                            <Text style={{ ...HomeHeaderStyles.decimal, color: this.props.theme.dynamic.text.mainC }}>
+                                {'.' + decimal}
+                            </Text>
+                        </View>
+                        <Text style={{ ...HomeHeaderStyles.goal, color: this.props.theme.dynamic.text.labelC }}>
+                            {goalPrompt}
+                        </Text>
+                        <View style={HomeHeaderStyles.pgbar}>
+                            <PGBar
+                                height={5}
+                                progress={0.75}
+                                width={0.45}
+                            />
+                        </View>
+                        <View style={HomeHeaderStyles.actionBtnRow}>
+                            <TouchableOpacity onPress={this.props.onPressGoal} style={{ ...HomeHeaderStyles.actionBtn, backgroundColor: this.props.theme.static.icon.homeC }}>
+                                <Icon
+                                    color={this.props.theme.static.accentC}
+                                    name='trophy-outline'
+                                    size={25}
+                                />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('record')} style={{ ...HomeHeaderStyles.actionBtn, backgroundColor: this.props.theme.static.icon.homeC }}>
+                                <Icon
+                                    color={this.props.theme.static.accentC}
+                                    name='plus'
+                                    size={25}
+                                />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={this.props.onPressSync} style={{ ...HomeHeaderStyles.actionBtn, backgroundColor: this.props.theme.static.icon.homeC }}>
+                                <Icon
+                                    color={this.props.theme.static.accentC}
+                                    name='restart'
+                                    size={25}
+                                />
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     <Icon
                         color='transparent'
@@ -39,6 +105,7 @@ class Header extends React.Component<ReduxPropType & ScreenProps> {
 const mapStateToProps = (state: ReduxPropType) => ({
     data: state.data,
     goal: state.goal,
+    settings: state.settings,
     theme: state.theme,
 });
 
