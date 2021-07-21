@@ -19,6 +19,7 @@ import { Categories, CategoryStore, CategoryType, DataStore, GoalConfigType } fr
 import { ReduxPropType } from '../../types/redux';
 import { ScreenProps } from '../../types/ui';
 import moment from 'moment';
+import { WHITE } from '../../data/color';
 
 interface DataProps {
     onFilterDate: (date: string) => void,
@@ -29,11 +30,15 @@ interface DataProps {
 class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
 
     state = {
-        categoryFiltering: false,
+        categoriesFiltering: [],
         dateFiltering: false,
         dpOpen: false,
         gmOpen: false,
         mpOpen: false,
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe();
     }
 
     onConfirmGoal = (config: GoalConfigType) => {
@@ -50,9 +55,9 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
     }
 
     toggleCategoryFilter = () => {
-        if (this.state.categoryFiltering) {
+        if (this.state.categoriesFiltering) {
             this.props.onFilterCategory(undefined);
-            this.setState({ categoryFiltering: false });
+            this.setState({ categoriesFiltering: false });
         }
         else
             this.setState({ mpOpen: true });
@@ -66,6 +71,8 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
         else
             this.setState({ dpOpen: true });
     }
+
+    unsubscribe = () => this.props.navigation.addListener('focus', () => this.setState({ categoriesFiltering: [] }))
 
     render() {
         let data: DataStore = (this.props.data || defaultData);
@@ -159,14 +166,14 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
                     <TouchableOpacity
                         style={{
                             ...HomeHeaderStyles.controller,
-                            backgroundColor: this.state.categoryFiltering ?
+                            backgroundColor: this.state.categoriesFiltering ?
                                 this.props.theme.static.accentC :
                                 this.props.theme.dynamic.text.mainC
                         }}
                         onPress={this.toggleCategoryFilter}
                     >
                         <Icon
-                            color={this.state.categoryFiltering ? this.props.theme.dynamic.text.mainC : this.props.theme.static.accentC}
+                            color={this.state.categoriesFiltering ? this.props.theme.dynamic.text.mainC : this.props.theme.static.accentC}
                             name='tag-heart-outline'
                             size={20}
                         />
@@ -198,6 +205,29 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
                     onSelect={this.onFilterDate}
                     open={this.state.dpOpen}
                     selected={moment().format('DD-MM-YYYY')}
+                />
+                <MultiPicker
+                    items={categories}
+                    onClose={() => this.setState({ mpOpen: false })}
+                    onSelect={this.onConfirmGoal}
+                    open={this.state.mpOpen}
+                    render={(category: CategoryType) => {
+                        return (
+                            <View key={category.key} style={HomeHeaderStyles.category}>
+                                <View style={{ ...HomeHeaderStyles.icon, backgroundColor: category.color }}>
+                                    <Icon
+                                        color={WHITE}
+                                        name={category.icon}
+                                        size={25}
+                                    />
+                                </View>
+                                <Text style={{ ...HomeHeaderStyles.label, color: this.props.theme.dynamic.text.mainC }}>
+                                    {category.name.toUpperCase()}
+                                </Text>
+                            </View>
+                        );
+                    }}
+                    selectedIndices={this.state.categoriesFiltering}
                 />
             </>
         );

@@ -122,6 +122,25 @@ export const HomeHeaderStyles = StyleSheet.create({
         justifyContent: 'center',
         width: 35,
     },
+    category: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        height: 50,
+        justifyContent: 'space-between',
+        width: screenWidth * 0.7,
+    },
+    icon: {
+        alignItems: 'center',
+        borderRadius: 10,
+        display: 'flex',
+        justifyContent: 'center',
+        height: 40,
+        width: 40,
+    },
+    label: {
+        fontSize: 16,
+    },
 });
 
 export const SelectorHeaderStyles = StyleSheet.create({

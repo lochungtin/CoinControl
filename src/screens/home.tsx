@@ -34,18 +34,11 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
 		return (
 			<>
-				<View
-					style={{
-						...ScreenStyles.root,
-						backgroundColor: this.props.theme.dynamic.screen.bgC,
-					}}
-				>
+				<View style={{ ...ScreenStyles.root, backgroundColor: this.props.theme.dynamic.screen.bgC }}>
 					<Header
 						navigation={this.props.navigation}
+						onFilterCategory={(filterCategory: CategoryType | undefined) => this.setState({ filterCategory })}
 						onFilterDate={(filterDate: string) => this.setState({ filterDate })}
-						onFilterCategory={(category: CategoryType | undefined) =>
-							console.log(category)
-						}
 						onPressSync={() => { }}
 					/>
 					<ScrollView>
