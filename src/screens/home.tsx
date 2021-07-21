@@ -19,13 +19,18 @@ import { ScrollView } from 'react-native-gesture-handler';
 class Screen extends React.Component<ReduxPropType & ScreenProps> {
 	state = {
 		render: false,
+		filterDate: '',
+		filterCategory: undefined,
 	};
 
 	render() {
-		let sections: Array<DisplaySectionType> = this.props.display || [];
 		let categories: CategoryStore = this.props.categories || defaultCategories;
 		let data: DataMap = this.props.data?.data || {};
 		let settings: SettingsType = this.props.settings || defaultSettings;
+
+		let sections: Array<DisplaySectionType> = this.props.display || [];
+		if (this.state.filterDate)
+			sections = sections.filter((section: DisplaySectionType) => section.date === this.state.filterDate);
 
 		return (
 			<>
@@ -37,7 +42,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 				>
 					<Header
 						navigation={this.props.navigation}
-						onFilterDate={(date: string) => console.log(date)}
+						onFilterDate={(filterDate: string) => this.setState({ filterDate })}
 						onFilterCategory={(category: CategoryType | undefined) =>
 							console.log(category)
 						}
@@ -45,35 +50,35 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 					/>
 					<ScrollView>
 						<View style={ScreenStyles.scrollView}>
-						{sections.map((section: DisplaySectionType) => {
-							return (
-								<>
-									<SubHeader label={section.date} />
-									{section.keys.map((key: string) => {
-										let record: DataType = data[key];
+							{sections.map((section: DisplaySectionType) => {
+								return (
+									<>
+										<SubHeader label={section.date} />
+										{section.keys.map((key: string) => {
+											let record: DataType = data[key];
 
-										return (
-											<LItem
-												category={categories[record.categoryType][record.categoryKey]}
-												key={record.key}
-												label={record.title}
-											>
-												<View style={HomeScreenStyles.valueBox}>
-													<Icon
-														color={this.props.theme.dynamic.text.mainC}
-														name={settings.currency.icon}
-														size={20}
-													/>
-													<Text style={{ ...HomeScreenStyles.value, color: this.props.theme.dynamic.text.mainC }}>
-														{record.value}
-													</Text>
-												</View>
-											</LItem>
-										);
-									})}
-								</>
-							);
-						})}
+											return (
+												<LItem
+													category={categories[record.categoryType][record.categoryKey]}
+													key={record.key}
+													label={record.title}
+												>
+													<View style={HomeScreenStyles.valueBox}>
+														<Icon
+															color={this.props.theme.dynamic.text.mainC}
+															name={settings.currency.icon}
+															size={20}
+														/>
+														<Text style={{ ...HomeScreenStyles.value, color: this.props.theme.dynamic.text.mainC }}>
+															{record.value}
+														</Text>
+													</View>
+												</LItem>
+											);
+										})}
+									</>
+								);
+							})}
 						</View>
 					</ScrollView>
 				</View>

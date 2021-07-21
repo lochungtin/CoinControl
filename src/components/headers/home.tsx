@@ -46,19 +46,23 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
 
     onFilterDate = (date: string) => {
         this.props.onFilterDate(date);
-        this.setState({ dpOpen: false });
+        this.setState({ dateFiltering: true, dpOpen: false, });
     }
 
     toggleCategoryFilter = () => {
-        if (this.state.categoryFiltering)
+        if (this.state.categoryFiltering) {
             this.props.onFilterCategory(undefined);
+            this.setState({ categoryFiltering: false });
+        }
         else
             this.setState({ mpOpen: true });
     }
 
     toggleDateFilter = () => {
-        if (this.state.dateFiltering)
+        if (this.state.dateFiltering) {
             this.props.onFilterDate('');
+            this.setState({ dateFiltering: false });
+        }
         else
             this.setState({ dpOpen: true });
     }
