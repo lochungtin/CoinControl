@@ -7,8 +7,8 @@ export const ListItemStyles = StyleSheet.create({
         alignItems: 'center',
         display: 'flex',
         justifyContent: 'center',
+        padding: 10,
         width: screenWidth,
-        marginBottom: 15,
     },
     contentPositioner: {
         alignItems: 'center',

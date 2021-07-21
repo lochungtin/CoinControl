@@ -20,7 +20,7 @@ interface DataProps {
 class LItem extends React.Component<ReduxPropType & DataProps> {
     render() {
         return (
-            <TouchableOpacity onPress={this.props.onPress} style={ListItemStyles.root}>
+            <TouchableOpacity onPress={this.props.onPress} style={{ ...ListItemStyles.root, backgroundColor: this.props.theme.dynamic.screen.secondaryBgC }}>
                 <View style={ListItemStyles.contentPositioner}>
                     <View style={{ ...ListItemStyles.icon, backgroundColor: this.props.category.color }}>
                         <Icon

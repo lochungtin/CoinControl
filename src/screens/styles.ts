@@ -60,6 +60,40 @@ export const AuthScreenStyles = StyleSheet.create({
     },
 });
 
+export const CategoryScreenStyles = StyleSheet.create({
+    controller: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: screenWidth * 0.2,
+    },
+});
+
+export const HomeScreenStyles = StyleSheet.create({
+    valueBox: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        width: screenWidth * 0.3,
+    },
+    value: {
+        fontSize: 16,
+    },
+});
+
+export const NewCatScreenStyles = StyleSheet.create({
+    row: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        height: 80,
+        justifyContent: 'space-between',
+        width: screenWidth * 0.9,
+    },
+});
+
 export const SettingsStyles = StyleSheet.create({
     root: {
         alignItems: 'center',
@@ -100,26 +134,5 @@ export const SettingsStyles = StyleSheet.create({
     },
     currencyText: {
         fontSize: 16,
-    },
-});
-
-export const CategoryScreenStyles = StyleSheet.create({
-    controller: {
-        alignItems: 'center',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: screenWidth * 0.2,
-    },
-});
-
-export const NewCatScreenStyles = StyleSheet.create({
-    row: {
-        alignItems: 'center',
-        display: 'flex',
-        flexDirection: 'row',
-        height: 80,
-        justifyContent: 'space-between',
-        width: screenWidth * 0.9,
     },
 });
