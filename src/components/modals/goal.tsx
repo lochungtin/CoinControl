@@ -31,7 +31,11 @@ class Modal extends React.Component<ReduxPropType & DataProps & DataProps> {
         let goalList: Array<GoalType> = Object.keys(goals).map((key: string) => goals[key]);
         return (
             <>
-                <ModalBase onClose={this.props.onClose} open={this.props.open}>
+                <ModalBase
+                    onClose={this.props.onClose}
+                    onOpen={() => this.setState({ goal: this.props.config.type })}
+                    open={this.props.open}
+                >
                     <Selector
                         icon={'shield-check-outline'}
                         label='Goal'

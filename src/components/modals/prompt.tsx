@@ -24,19 +24,13 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
         checked: false,
     }
 
-    onClose = () => {
-        this.props.onClose();
-        this.setState({ checked: false });
-    }
-
-    onConfirm = () => {
-        this.props.onConfirm(this.state.checked);
-        this.setState({ checked: false });
-    }
-
     render() {
         return (
-            <ModalBase onClose={this.onClose} open={this.props.open}>
+            <ModalBase
+                onClose={this.props.onClose}
+                onOpen={() => this.setState({ checked: false })}
+                open={this.props.open}
+            >
                 <View style={PromptModalStyles.content}>
                     <Icon
                         color={this.props.theme.static.accentC}
@@ -70,13 +64,13 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
                 </View>
                 <View style={PromptModalStyles.bullets}>
                     <Bullet
-                        onPress={this.onConfirm}
+                        onPress={() => this.props.onConfirm(this.state.checked)}
                         text='confirm'
                         width={0.375}
                     />
                     <Bullet
                         inactive
-                        onPress={this.onClose}
+                        onPress={this.props.onClose}
                         text='cancel'
                         width={0.375}
                     />
