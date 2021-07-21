@@ -10,8 +10,8 @@ import ColorPicker from '../components/pickers/color';
 import MultiPicker from '../components/pickers/multi';
 import TimePicker from '../components/pickers/time';
 
-import { WHITE } from '../data/color';
 import { ScreenStyles, SettingsScreenStyles } from './styles';
+import { WHITE } from '../data/color';
 
 import { currencyData } from '../data/currency';
 import { defaultSettings } from '../data/default';

@@ -10,8 +10,8 @@ import ModalBase from './base';
 import Selector from './selector';
 
 import { InputModalStyles } from './styles';
-
 import { WHITE } from '../../data/color';
+
 import { defaultCategories } from '../../data/default';
 import { CategoryType, DataType } from '../../types/data';
 import { ReduxPropType } from '../../types/redux';

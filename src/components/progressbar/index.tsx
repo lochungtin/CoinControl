@@ -1,10 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
+
+import { PGBarStyles, screenWidth } from './style';
 import { WHITE } from '../../data/color';
 
 import { ReduxPropType } from '../../types/redux';
-import { PGBarStyles, screenWidth } from './style';
 
 interface DataProps {
     height: number,

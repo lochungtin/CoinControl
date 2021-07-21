@@ -2,11 +2,12 @@ import React, { ReactElement } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
+
+import { ListItemStyles } from './styles';
 import { WHITE } from '../../data/color';
 
 import { CategoryType } from '../../types/data';
 import { ReduxPropType } from '../../types/redux';
-import { ListItemStyles } from './styles';
 
 interface DataProps {
     category: CategoryType,

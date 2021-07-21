@@ -1,15 +1,17 @@
+import moment from 'moment';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import GoalModal from '../../components/modals/goal';
-import DatePicker from '../../components/pickers/date';
-import MultiPicker from '../../components/pickers/multi';
+import GoalModal from '../modals/goal';
+import DatePicker from '../pickers/date';
+import MultiPicker from '../pickers/multi';
 import PGBar from '../progressbar';
 
 import { GeneralHeaderStyles, HomeHeaderStyles } from './styles';
+import { WHITE } from '../../data/color';
 
 import { defaultCategories, defaultData, defaultSettings } from '../../data/default';
 import { goals } from '../../data/goal';
@@ -18,8 +20,6 @@ import { store } from '../../redux/store';
 import { Categories, CategoryStore, CategoryType, DataStore, GoalConfigType } from '../../types/data';
 import { ReduxPropType } from '../../types/redux';
 import { ScreenProps } from '../../types/ui';
-import moment from 'moment';
-import { WHITE } from '../../data/color';
 
 interface DataProps {
     onFilterDate: (date: string) => void,
