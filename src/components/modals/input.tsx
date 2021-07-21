@@ -38,14 +38,17 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
         this.props.onClose();
     }
 
-    onConfirm = (value: number) => this.props.onConfirm({
-        value,
-        categoryKey: this.state.categoryKey,
-        categoryType: this.props.record.categoryType,
-        date: this.state.date,
-        key: this.props.record.key,
-        title: this.state.title,
-    });
+    onConfirm = (value: number) => {
+        this.setState({ categoryKey: 'C0000000' });
+        this.props.onConfirm({
+            value,
+            categoryKey: this.state.categoryKey,
+            categoryType: this.props.record.categoryType,
+            date: this.state.date,
+            key: this.props.record.key,
+            title: this.state.title,
+        });
+    }
 
     onOpen = () => this.setState({
         categoryKey: this.props.record.categoryKey,
@@ -58,6 +61,8 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
         let categories: Array<CategoryType> = keylist.map((key: string) => (this.props.categories || defaultCategories)[this.props.record.categoryType][key]);
 
         let category: CategoryType = (this.props.categories || defaultCategories)[this.props.record.categoryType][this.state.categoryKey];
+
+        console.log(this.props.record.categoryType, this.state.categoryKey, category);
 
         return (
             <>

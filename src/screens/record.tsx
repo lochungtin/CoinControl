@@ -61,7 +61,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps & DataProps> {
                     <Header
                         name='new record'
                         navigation={this.props.navigation}
-                        onToggle={(category: Categories) => this.setState({ category })}
+                        onToggle={(category: Categories) => this.setState({ category, selected: defaultCategories[Categories.EXPENSE]['C0000000'] })}
                         selected={this.state.category}
                     />
                     <ScrollView>
