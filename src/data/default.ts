@@ -116,10 +116,10 @@ export const defaultData: DataStore = {
         },
         goal: {
             config: {
-                max: 0,
+                max: 1,
                 type: goals['goalN'],
             },
-            left: 0,
+            left: 1,
             used: 0,
         },
         income: {

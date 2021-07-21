@@ -11,7 +11,6 @@ import { ScreenStyles } from './styles';
 import { defaultData } from '../data/default';
 import { ScreenProps } from '../types/ui';
 import { ReduxPropType } from '../types/redux';
-import category from '../components/modals/category';
 import { CategoryType } from '../types/data';
 
 class Screen extends React.Component<ReduxPropType & ScreenProps> {

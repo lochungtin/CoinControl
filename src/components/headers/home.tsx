@@ -116,7 +116,7 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
                             <View style={HomeHeaderStyles.pgbar}>
                                 <PGBar
                                     height={5}
-                                    progress={0.75}
+                                    progress={data.stats.goal.left / data.stats.goal.config.max}
                                     width={0.45}
                                 />
                             </View>
