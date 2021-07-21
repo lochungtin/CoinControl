@@ -10,6 +10,7 @@ import { AccountType, CategoryStore, DataMap, DataStore, DataType, SettingsType 
 import { ReduxActionType } from '../types/redux';
 import { colorPickerData } from '../data/color';
 import { DisplaySectionType } from '../types/ui';
+import moment from 'moment';
 
 const updateAccount = (account: AccountType | null = null, action: ReduxActionType) => {
     switch (action.type) {
@@ -101,18 +102,20 @@ const updateDisplay = (display: Array<DisplaySectionType> = [], action: ReduxAct
         // add record
         case Actions.RECORD_ADD:
             update[sectionIndex].keys.push(action.payload.key);
-            return update;
+            break;
         // delete record
         case Actions.RECORD_DELETE:
-            return update;
+            break;
         // edit record
         case Actions.RECORD_EDIT:
             // let oldSectionIndex = update.findIndex((section: DisplaySectionType) => section.date === action.payload.date);
-            return update;
+            break;
         // default
         default:
             return display;
     }
+    update.sort((a: DisplaySectionType, b: DisplaySectionType) => moment(b.date, 'DD-MM-YYYY').isAfter(moment(a.date, 'DD-MM-YYYY')) ? 1 : -1);
+    return update;
 }
 
 const updateSettings = (settings: SettingsType = defaultSettings, action: ReduxActionType) => {

@@ -103,16 +103,25 @@ export const HomeHeaderStyles = StyleSheet.create({
         justifyContent: 'flex-end',
         width: 40,
     },
-    controller: {
+    controllerBox: {
         alignItems: 'center',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         position: 'absolute',
-        right: 30,
-        top: 240,
-        width: screenWidth * 0.175,
-    }
+        right: 15,
+        top: 200,
+        width: screenWidth * 0.20,
+        zIndex: 1,
+    },
+    controller: {
+        alignItems: 'center',
+        borderRadius: 15,
+        display: 'flex',
+        height: 35,
+        justifyContent: 'center',
+        width: 35,
+    },
 });
 
 export const SelectorHeaderStyles = StyleSheet.create({

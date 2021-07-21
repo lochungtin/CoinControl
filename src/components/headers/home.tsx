@@ -151,19 +151,35 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
                         />
                     </View>
                 </View>
-                <View style={HomeHeaderStyles.controller}>
-                    <TouchableOpacity onPress={this.toggleCategoryFilter}>
+                <View style={HomeHeaderStyles.controllerBox}>
+                    <TouchableOpacity
+                        style={{
+                            ...HomeHeaderStyles.controller,
+                            backgroundColor: this.state.categoryFiltering ?
+                                this.props.theme.static.accentC :
+                                this.props.theme.dynamic.text.mainC
+                        }}
+                        onPress={this.toggleCategoryFilter}
+                    >
                         <Icon
-                            color={this.state.categoryFiltering ? this.props.theme.static.accentC : this.props.theme.dynamic.text.mainC}
+                            color={this.state.categoryFiltering ? this.props.theme.dynamic.text.mainC : this.props.theme.static.accentC}
                             name='tag-heart-outline'
-                            size={25}
+                            size={20}
                         />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={this.toggleDateFilter}>
+                    <TouchableOpacity
+                        style={{
+                            ...HomeHeaderStyles.controller,
+                            backgroundColor: this.state.dateFiltering ?
+                                this.props.theme.static.accentC :
+                                this.props.theme.dynamic.text.mainC
+                        }}
+                        onPress={this.toggleDateFilter}
+                    >
                         <Icon
-                            color={this.state.dateFiltering ? this.props.theme.static.accentC : this.props.theme.dynamic.text.mainC}
+                            color={this.state.dateFiltering ? this.props.theme.dynamic.text.mainC : this.props.theme.static.accentC}
                             name='calendar-month'
-                            size={25}
+                            size={20}
                         />
                     </TouchableOpacity>
                 </View>

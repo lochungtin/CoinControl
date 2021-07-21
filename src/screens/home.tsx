@@ -14,6 +14,7 @@ import { defaultCategories, defaultData, defaultSettings } from '../data/default
 import { DisplaySectionType, ScreenProps } from '../types/ui';
 import { ReduxPropType } from '../types/redux';
 import { CategoryStore, CategoryType, DataMap, DataType, SettingsType } from '../types/data';
+import { ScrollView } from 'react-native-gesture-handler';
 
 class Screen extends React.Component<ReduxPropType & ScreenProps> {
 	state = {
@@ -42,35 +43,39 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 						}
 						onPressSync={() => { }}
 					/>
-					{sections.map((section: DisplaySectionType) => {
-						return (
-							<>
-								<SubHeader label={section.date} />
-								{section.keys.map((key: string) => {
-									let record: DataType = data[key];
+					<ScrollView>
+						<View style={ScreenStyles.scrollView}>
+						{sections.map((section: DisplaySectionType) => {
+							return (
+								<>
+									<SubHeader label={section.date} />
+									{section.keys.map((key: string) => {
+										let record: DataType = data[key];
 
-									return (
-										<LItem
-											category={categories[record.categoryType][record.categoryKey]}
-											key={record.key}
-											label={record.title}
-										>
-											<View style={HomeScreenStyles.valueBox}>
-												<Icon
-													color={this.props.theme.dynamic.text.mainC}
-													name={settings.currency.icon}
-													size={20}
-												/>
-												<Text style={{ ...HomeScreenStyles.value, color: this.props.theme.dynamic.text.mainC }}>
-													{record.value}
-												</Text>
-											</View>
-										</LItem>
-									);
-								})}
-							</>
-						);
-					})}
+										return (
+											<LItem
+												category={categories[record.categoryType][record.categoryKey]}
+												key={record.key}
+												label={record.title}
+											>
+												<View style={HomeScreenStyles.valueBox}>
+													<Icon
+														color={this.props.theme.dynamic.text.mainC}
+														name={settings.currency.icon}
+														size={20}
+													/>
+													<Text style={{ ...HomeScreenStyles.value, color: this.props.theme.dynamic.text.mainC }}>
+														{record.value}
+													</Text>
+												</View>
+											</LItem>
+										);
+									})}
+								</>
+							);
+						})}
+						</View>
+					</ScrollView>
 				</View>
 			</>
 		);
