@@ -166,14 +166,14 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
                     <TouchableOpacity
                         style={{
                             ...HomeHeaderStyles.controller,
-                            backgroundColor: this.state.categoriesFiltering ?
+                            backgroundColor: this.state.categoriesFiltering.length !== 0 ?
                                 this.props.theme.static.accentC :
                                 this.props.theme.dynamic.text.mainC
                         }}
                         onPress={this.toggleCategoryFilter}
                     >
                         <Icon
-                            color={this.state.categoriesFiltering ? this.props.theme.dynamic.text.mainC : this.props.theme.static.accentC}
+                            color={this.state.categoriesFiltering.length !== 0 ? this.props.theme.dynamic.text.mainC : this.props.theme.static.accentC}
                             name='tag-heart-outline'
                             size={20}
                         />
