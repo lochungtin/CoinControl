@@ -19,11 +19,7 @@ import { keygen } from '../utils/keygen';
 import { store } from '../redux/store';
 import { addRecord } from '../redux/action';
 
-interface DataProps {
-    record?: DataType,
-}
-
-class Screen extends React.Component<ReduxPropType & ScreenProps & DataProps> {
+class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
     state = {
         category: this.props.route.params?.category || Categories.EXPENSE,
@@ -109,7 +105,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps & DataProps> {
                     onClose={() => this.setState({ open: false })}
                     onConfirm={this.onConfirm}
                     open={this.state.open}
-                    record={this.props.record || {
+                    record={{
                         categoryKey: this.state.selected.key,
                         categoryType: this.state.category,
                         date: moment().format('DD-MM-YYYY'),

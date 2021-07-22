@@ -13,14 +13,18 @@ import { HomeScreenStyles, ScreenStyles } from './styles';
 import { defaultCategories, defaultData, defaultSettings } from '../data/default';
 import { DisplaySectionType, ScreenProps } from '../types/ui';
 import { ReduxPropType } from '../types/redux';
-import { CategoryStore, CategoryType, DataMap, DataType, SettingsType } from '../types/data';
+import { Categories, CategoryStore, CategoryType, DataMap, DataType, SettingsType } from '../types/data';
 import { ScrollView } from 'react-native-gesture-handler';
+import { keygen } from '../utils/keygen';
+import moment from 'moment';
 
 class Screen extends React.Component<ReduxPropType & ScreenProps> {
 	state = {
-		render: false,
-		filterDate: '',
+		edit: undefined,
 		filterCategory: undefined,
+		filterDate: '',
+		open: false,
+		render: false,
 	};
 
 	render() {
@@ -46,7 +50,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 							{sections.map((section: DisplaySectionType) => {
 								return (
 									<>
-										<SubHeader label={section.date} />
+										<SubHeader key={section.date} label={section.date} />
 										{section.keys.map((key: string) => {
 											let record: DataType = data[key];
 
@@ -55,6 +59,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 													fallbackCatName
 													category={categories[record.categoryType][record.categoryKey]}
 													key={record.key}
+													onPress={() => this.setState({ edit: record, open: true})}
 													label={record.title}
 												>
 													<View style={HomeScreenStyles.valueBox}>
@@ -76,6 +81,19 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 						</View>
 					</ScrollView>
 				</View>
+				<InputModal
+					record={this.state.edit || {
+						categoryKey: 'C0000000',
+						categoryType: Categories.EXPENSE,
+						date: moment().format('DD-MM-YYYY'),
+						key: keygen(),
+						title: '',
+						value: 0,
+					}}
+					onClose={() => this.setState({ open: false })}
+					onConfirm={(obj: DataType) => console.log(obj)}
+					open={this.state.open}
+				/>
 			</>
 		);
 	}

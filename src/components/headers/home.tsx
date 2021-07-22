@@ -168,7 +168,7 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
                             ...HomeHeaderStyles.controller,
                             backgroundColor: this.state.categoriesFiltering.length !== 0 ?
                                 this.props.theme.static.accentC :
-                                this.props.theme.dynamic.text.mainC
+                                this.props.theme.dynamic.text.mainC,
                         }}
                         onPress={this.toggleCategoryFilter}
                     >
@@ -183,7 +183,7 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
                             ...HomeHeaderStyles.controller,
                             backgroundColor: this.state.dateFiltering ?
                                 this.props.theme.static.accentC :
-                                this.props.theme.dynamic.text.mainC
+                                this.props.theme.dynamic.text.mainC,
                         }}
                         onPress={this.toggleDateFilter}
                     >

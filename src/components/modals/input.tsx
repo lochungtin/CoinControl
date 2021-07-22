@@ -62,8 +62,6 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
 
         let category: CategoryType = (this.props.categories || defaultCategories)[this.props.record.categoryType][this.state.categoryKey];
 
-        console.log(this.props.record.categoryType, this.state.categoryKey, category);
-
         return (
             <>
                 <ModalBase
