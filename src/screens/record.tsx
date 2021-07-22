@@ -17,7 +17,7 @@ import { ScreenProps } from '../types/ui';
 import { defaultCategories } from '../data/default';
 import { keygen } from '../utils/keygen';
 import { store } from '../redux/store';
-import { addRecord } from '../redux/action';
+import { dataAdd } from '../redux/action';
 
 class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
@@ -32,7 +32,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
     }
 
     onConfirm = (obj: DataType) => {
-        store.dispatch(addRecord(obj));
+        store.dispatch(dataAdd(obj));
         this.setState({ open: false });
         this.props.navigation.navigate('home');
     }

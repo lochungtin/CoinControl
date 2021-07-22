@@ -18,16 +18,16 @@ import { defaultSettings } from '../data/default';
 import { itemlist, SettingsPickers, SettingsSelects, SettingsSwitches } from '../data/mapping/settings';
 import { Prompt, promptNames } from '../data/prompts';
 import {
-    clearData,
-    setAccent,
-    setCurrency,
-    setDarkMode,
-    setDefaultCategories,
-    setDefaultSettings,
-    setLightMode,
-    setNotifOn,
-    setNotifTime,
-    setPromptShow,
+    dataClear,
+    themeSetAccent,
+    settingsSetCurrency,
+    themeSetDarkMode,
+    categorySetDefault,
+    settingsSetDefault,
+    themeSetLightMode,
+    settingsSetNotifOn,
+    settingsSetNotifTime,
+    settingsSetPromptShow,
 } from '../redux/action';
 import { store } from '../redux/store';
 import { CurrencyType } from '../types/data';
@@ -47,16 +47,16 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
     }
 
     confirmReset = (prompt: Prompt, show: boolean) => {
-        store.dispatch(setPromptShow({ prompt, show }));
+        store.dispatch(settingsSetPromptShow({ prompt, show }));
         switch (prompt) {
             case Prompt.DEFAULT_CATEGORIES:
-                store.dispatch(setDefaultCategories());
+                store.dispatch(categorySetDefault());
                 break;
             case Prompt.DEFAULT_SETTINGS:
-                store.dispatch(setDefaultSettings());
+                store.dispatch(settingsSetDefault());
                 break;
             case Prompt.CLEAR_DATA:
-                store.dispatch(clearData());
+                store.dispatch(dataClear());
                 break;
             default:
                 break;
@@ -101,18 +101,18 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
     multiSelected = (obj: any) => {
         if (this.state.multiPickerOpen === SettingsSelects.CURRENCY) {
-            store.dispatch(setCurrency(obj));
+            store.dispatch(settingsSetCurrency(obj));
             this.setState({ multiPickerOpen: -1 });
         }
         if (this.state.multiPickerOpen === SettingsSelects.PROMPT)
-            store.dispatch(setPromptShow({ prompt: obj, show: !this.props.settings?.promptTrigger[obj] }));
+            store.dispatch(settingsSetPromptShow({ prompt: obj, show: !this.props.settings?.promptTrigger[obj] }));
     }
 
     onSwitchToggle = (type: SettingsSwitches, on: boolean) => {
         if (type === SettingsSwitches.DARK_MODE)
-            store.dispatch(on ? setDarkMode() : setLightMode());
+            store.dispatch(on ? themeSetDarkMode() : themeSetLightMode());
         if (type === SettingsSwitches.NOTIF)
-            store.dispatch(setNotifOn(on));
+            store.dispatch(settingsSetNotifOn(on));
     }
 
     onReset = (prompt: Prompt) => {
@@ -129,13 +129,13 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
             return this.setState({ colorPickerOpen: true });
     }
 
-    setAccentColor = (accent: string) => {
-        store.dispatch(setAccent(accent));
+    themeSetAccentColor = (accent: string) => {
+        store.dispatch(themeSetAccent(accent));
         this.setState({ colorPickerOpen: false });
     }
 
-    setNotifTime = (time: string) => {
-        store.dispatch(setNotifTime(time));
+    settingsSetNotifTime = (time: string) => {
+        store.dispatch(settingsSetNotifTime(time));
         this.setState({ timePickerOpen: false });
     }
 
@@ -226,7 +226,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                 />
                 <ColorPicker
                     onClose={() => this.setState({ colorPickerOpen: false })}
-                    onSelect={this.setAccentColor}
+                    onSelect={this.themeSetAccentColor}
                     open={this.state.colorPickerOpen}
                     selected={this.props.theme.static.accentC}
                 />
@@ -235,7 +235,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                     hour={parseInt((this.props.settings?.notifTime || defaultSettings.notifTime).substring(0, 2))}
                     minute={(this.props.settings?.notifTime || defaultSettings.notifTime).substring(3, 5)}
                     onClose={() => this.setState({ timePickerOpen: false })}
-                    onSelect={this.setNotifTime}
+                    onSelect={this.settingsSetNotifTime}
                     open={this.state.timePickerOpen}
                 />
                 <PromptModal

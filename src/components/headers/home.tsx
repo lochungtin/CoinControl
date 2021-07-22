@@ -13,7 +13,7 @@ import { GeneralHeaderStyles, HomeHeaderStyles } from './styles';
 
 import { defaultData, defaultSettings } from '../../data/default';
 import { Goal, goalExceededText, goals } from '../../data/goal';
-import { setGoal } from '../../redux/action';
+import { dataSetGoal } from '../../redux/action';
 import { store } from '../../redux/store';
 import { DataStore, GoalConfigType } from '../../types/data';
 import { ReduxPropType } from '../../types/redux';
@@ -39,7 +39,7 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
     }
 
     onConfirmGoal = (config: GoalConfigType) => {
-        store.dispatch(setGoal(config));
+        store.dispatch(dataSetGoal(config));
         this.setState({ gmOpen: false });
     }
 

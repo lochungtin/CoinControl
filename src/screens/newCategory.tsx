@@ -13,7 +13,7 @@ import { pickRandom } from '../data/color';
 import { defaultCategories } from '../data/default';
 import { icons } from '../data/icons';
 import { Categories, CategoryType, IconSection } from '../types/data';
-import { addCategory } from '../redux/action';
+import { categoryAdd } from '../redux/action';
 import { store } from '../redux/store';
 import { ReduxPropType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
@@ -27,8 +27,8 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
         selected: defaultCategories[Categories.EXPENSE]['C0000000'],
     }
 
-    editCategory = (category: CategoryType) => {
-        store.dispatch(addCategory({
+    categoryEdit = (category: CategoryType) => {
+        store.dispatch(categoryAdd({
             category: this.state.category,
             data: category,
             key: category.key,
@@ -98,7 +98,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                 <CategoryModal
                     category={this.state.selected}
                     onClose={() => this.setState({ open: false })}
-                    onConfirm={this.editCategory}
+                    onConfirm={this.categoryEdit}
                     open={this.state.open}
                 />
             </>

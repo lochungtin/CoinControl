@@ -19,7 +19,7 @@ import { Categories, CategoryStore, DataMap, DataType, SettingsType } from '../t
 import { ScrollView } from 'react-native-gesture-handler';
 import { keygen } from '../utils/keygen';
 import { store } from '../redux/store';
-import { deleteRecord, editRecord, setPromptShow } from '../redux/action';
+import { dataDelete, dataEdit, settingsSetPromptShow } from '../redux/action';
 import { Prompt } from '../data/prompts';
 
 const alternative: DataType = {
@@ -44,12 +44,12 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
 	confirmDelete = (record: DataType | null, show: boolean) => {
 		if (record !== null)
-			store.dispatch(deleteRecord(record));
-		store.dispatch(setPromptShow({ prompt: Prompt.DELETE_RECORD, show }));
+			store.dispatch(dataDelete(record));
+		store.dispatch(settingsSetPromptShow({ prompt: Prompt.DELETE_RECORD, show }));
 		this.setState({ pmOpen: null });
 	}
 
-	deleteRecord = (record: DataType) => {
+	dataDelete = (record: DataType) => {
 		if (this.props.settings?.promptTrigger[Prompt.DELETE_RECORD])
 			this.setState({ pmOpen: record });
 		else
@@ -57,7 +57,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 	}
 
 	onEdit = (obj: DataType) => {
-		store.dispatch(editRecord({ new: obj, old: this.state.edit || alternative }));
+		store.dispatch(dataEdit({ new: obj, old: this.state.edit || alternative }));
 		this.setState({ edit: alternative, imOpen: false });
 	}
 
@@ -99,7 +99,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 													label={record.title}
 												>
 													{this.state.deleteMode ?
-														<TouchableOpacity onPress={() => this.deleteRecord(record)}>
+														<TouchableOpacity onPress={() => this.dataDelete(record)}>
 															<Icon
 																color={this.props.theme.dynamic.text.mainC}
 																name='trash-can-outline'
