@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { GeneralModalStyles } from './styles';
 
-import { ReduxPropType } from '../../types/redux';
+import { ReduxThemeType } from '../../types/redux';
 
 interface DataProps {
     children: any,
@@ -14,7 +14,7 @@ interface DataProps {
     onOpen?: () => void,
 }
 
-class ModalBase extends React.Component<ReduxPropType & DataProps> {
+class ModalBase extends React.Component<ReduxThemeType & DataProps> {
     render() {
         return (
             <Modal
@@ -42,7 +42,7 @@ class ModalBase extends React.Component<ReduxPropType & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

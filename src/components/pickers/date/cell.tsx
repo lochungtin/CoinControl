@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
-import { ReduxPropType } from '../../../types/redux';
+import { ReduxThemeType } from '../../../types/redux';
 import { DatePickerStyles } from '../styles';
 
 interface DataProps {
@@ -14,7 +14,7 @@ interface DataProps {
     special: boolean,
 }
 
-class Cell extends React.Component<ReduxPropType & DataProps> {
+class Cell extends React.Component<ReduxThemeType & DataProps> {
 
     render() {
         let parsed: number = parseInt(this.props.data.substring(0, 2));
@@ -46,7 +46,7 @@ class Cell extends React.Component<ReduxPropType & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

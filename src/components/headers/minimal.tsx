@@ -6,14 +6,14 @@ import { connect } from 'react-redux';
 
 import { GeneralHeaderStyles } from './styles';
 
-import { ReduxPropType } from '../../types/redux';
+import { ReduxThemeType } from '../../types/redux';
 import { ScreenProps } from '../../types/ui';
 
 interface DataProps {
     name: string
 }
 
-class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
+class Header extends React.Component<ReduxThemeType & ScreenProps & DataProps> {
     render() {
         return (
             <View style={{ ...GeneralHeaderStyles.root, backgroundColor: this.props.theme.dynamic.screen.secondaryBgC }}>
@@ -40,7 +40,7 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

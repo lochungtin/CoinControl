@@ -56,7 +56,9 @@ const updateData = (data: DataStore = defaultData, action: ReduxActionType) => {
             break;
         // clear
         case Actions.DATA_CLEAR:
-            return defaultData;
+            update = { ...defaultData };
+            console.log(update);
+            return update;
         // delete
         case Actions.DATA_DELETE:
             delete update.data[action.payload.key];

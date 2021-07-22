@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { GeneralPickerStyles } from './styles';
 
-import { ReduxPropType } from '../../types/redux';
+import { ReduxThemeType } from '../../types/redux';
 
 interface DataProps {
     children: any,
@@ -13,7 +13,7 @@ interface DataProps {
     onClose: () => void,
 }
 
-class PickerBase extends React.Component<ReduxPropType & DataProps> {
+class PickerBase extends React.Component<ReduxThemeType & DataProps> {
     render() {
         return (
             <Modal
@@ -36,7 +36,7 @@ class PickerBase extends React.Component<ReduxPropType & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

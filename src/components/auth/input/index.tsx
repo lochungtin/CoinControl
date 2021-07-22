@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { InputStyles } from './styles';
 
-import { ReduxPropType } from '../../../types/redux';
+import { ReduxThemeType } from '../../../types/redux';
 
 interface DataProps {
     hidden?: boolean,
@@ -15,7 +15,7 @@ interface DataProps {
     placeholder: string,
 }
 
-class Input extends React.Component<ReduxPropType & DataProps> {
+class Input extends React.Component<ReduxThemeType & DataProps> {
     render() {
         return (
             <View style={{ ...InputStyles.root, backgroundColor: this.props.theme.dynamic.screen.secondaryBgC }}>
@@ -41,7 +41,7 @@ class Input extends React.Component<ReduxPropType & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

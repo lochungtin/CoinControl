@@ -9,7 +9,7 @@ import Selector from '../selector';
 import { GeneralHeaderStyles, SelectorHeaderStyles } from './styles';
 
 import { Categories } from '../../types/data';
-import { ReduxPropType } from '../../types/redux';
+import { ReduxThemeType } from '../../types/redux';
 import { ScreenProps } from '../../types/ui';
 
 interface DataProps {
@@ -21,7 +21,7 @@ interface DataProps {
     selected: Categories,
 }
 
-class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
+class Header extends React.Component<ReduxThemeType & ScreenProps & DataProps> {
 
     onPress = () => {
         if (this.props.backMode)
@@ -66,7 +66,7 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

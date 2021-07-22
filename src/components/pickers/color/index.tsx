@@ -9,7 +9,7 @@ import { colorPickerData } from '../../../data/color';
 import { ColorPickerStyles } from '../styles';
 
 import { ColorPickerCellDataType, ColorPickerSectorDataType } from '../../../types/color';
-import { ReduxPropType } from '../../../types/redux';
+import { ReduxThemeType } from '../../../types/redux';
 import { smallKeygen } from '../../../utils/keygen';
 
 interface DataProps {
@@ -19,7 +19,7 @@ interface DataProps {
     selected: string,
 }
 
-class Picker extends React.Component<ReduxPropType & DataProps> {
+class Picker extends React.Component<ReduxThemeType & DataProps> {
     render() {
         return (
             <BaseModal onClose={this.props.onClose} open={this.props.open}>
@@ -67,7 +67,7 @@ class Picker extends React.Component<ReduxPropType & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

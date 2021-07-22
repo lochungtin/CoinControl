@@ -7,7 +7,7 @@ import BaseModal from './base';
 import { GeneralModalStyles } from '../modals/styles';
 import { MultiPickerStyles } from './styles';
 
-import { ReduxPropType } from '../../types/redux';
+import { ReduxThemeType } from '../../types/redux';
 import { smallKeygen } from '../../utils/keygen';
 
 interface DataProps {
@@ -19,7 +19,7 @@ interface DataProps {
     selectedIndices: Array<number>,
 }
 
-class Picker extends React.Component<ReduxPropType & DataProps> {
+class Picker extends React.Component<ReduxThemeType & DataProps> {
     render() {
         return (
             <BaseModal open={this.props.open} onClose={this.props.onClose}>
@@ -50,7 +50,7 @@ class Picker extends React.Component<ReduxPropType & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

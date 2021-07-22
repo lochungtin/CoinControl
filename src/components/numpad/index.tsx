@@ -9,7 +9,7 @@ import Btn from './btn';
 import { NumpadStyles } from './styles';
 
 import { makeGrid } from '../../data/mapping/numpad';
-import { ReduxPropType } from '../../types/redux';
+import { ReduxThemeType } from '../../types/redux';
 import { NumpadBtnProps } from '../../types/ui';
 import { smallKeygen } from '../../utils/keygen';
 
@@ -19,7 +19,7 @@ interface DataProps {
     value: number,
 }
 
-class Numpad extends React.Component<ReduxPropType & DataProps> {
+class Numpad extends React.Component<ReduxThemeType & DataProps> {
 
     state = {
         display: this.props.value.toString() || '',
@@ -118,7 +118,7 @@ class Numpad extends React.Component<ReduxPropType & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

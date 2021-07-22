@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { PGBarStyles, screenWidth } from './style';
 import { WHITE } from '../../data/color';
 
-import { ReduxPropType } from '../../types/redux';
+import { ReduxThemeType } from '../../types/redux';
 
 interface DataProps {
     height: number,
@@ -13,7 +13,7 @@ interface DataProps {
     width: number,
 }
 
-class PGBar extends React.Component<ReduxPropType & DataProps> {
+class PGBar extends React.Component<ReduxThemeType & DataProps> {
     render() {
         return (
             <View
@@ -37,7 +37,7 @@ class PGBar extends React.Component<ReduxPropType & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

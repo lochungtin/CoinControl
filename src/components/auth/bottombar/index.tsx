@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 
-import { ReduxPropType } from '../../../types/redux';
+import { ReduxThemeType } from '../../../types/redux';
 import { BottomBarStyles } from './styles';
 
 interface DataProps {
@@ -11,7 +11,7 @@ interface DataProps {
     text: string,
 }
 
-class BTMBar extends React.Component<ReduxPropType & DataProps> {
+class BTMBar extends React.Component<ReduxThemeType & DataProps> {
     render() {
         return (
             <View style={BottomBarStyles.root}>
@@ -28,7 +28,7 @@ class BTMBar extends React.Component<ReduxPropType & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { BLACK, WHITE } from '../../data/color';
 
 import { Categories } from '../../types/data';
-import { ReduxPropType } from '../../types/redux';
+import { ReduxThemeType } from '../../types/redux';
 import { screenWidth } from '../bullet/styles';
 import { SelectorStyles } from './styles';
 
@@ -15,7 +15,7 @@ interface DataProps {
     width: number,
 }
 
-class Selector extends React.Component<ReduxPropType & DataProps> {
+class Selector extends React.Component<ReduxThemeType & DataProps> {
     render() {
         let hightlight: string = Color.arrToHex(Color.mixByHex(this.props.theme.static.accentC, WHITE, 0.35));
 
@@ -52,7 +52,7 @@ class Selector extends React.Component<ReduxPropType & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

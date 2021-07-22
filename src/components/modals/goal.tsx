@@ -12,7 +12,7 @@ import { GoalModalStyles } from './styles';
 
 import { Goal, goals } from '../../data/goal';
 import { GoalConfigType, GoalType } from '../../types/data';
-import { ReduxPropType } from '../../types/redux';
+import { ReduxThemeType } from '../../types/redux';
 
 interface DataProps {
     config: GoalConfigType,
@@ -21,7 +21,7 @@ interface DataProps {
     open: boolean,
 }
 
-class Modal extends React.Component<ReduxPropType & DataProps & DataProps> {
+class Modal extends React.Component<ReduxThemeType & DataProps & DataProps> {
 
     state = {
         goal: this.props.config.type,
@@ -77,7 +77,7 @@ class Modal extends React.Component<ReduxPropType & DataProps & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

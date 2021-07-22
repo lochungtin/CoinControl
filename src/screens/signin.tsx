@@ -9,10 +9,10 @@ import Header from '../components/headers/auth';
 
 import { AuthScreenStyles, ScreenStyles } from './styles';
 
-import { ReduxPropType } from '../types/redux';
+import { ReduxThemeType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
 
-class Screen extends React.Component<ReduxPropType & ScreenProps> {
+class Screen extends React.Component<ReduxThemeType & ScreenProps> {
 
     state = {
         email: '',
@@ -70,7 +70,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

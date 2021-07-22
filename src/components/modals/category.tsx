@@ -9,7 +9,7 @@ import ModalBase from './base';
 import { CategoryModalStyles, GeneralModalStyles } from './styles';
 
 import { CategoryType } from '../../types/data';
-import { ReduxPropType } from '../../types/redux';
+import { ReduxThemeType } from '../../types/redux';
 
 interface DataProps {
     category: CategoryType,
@@ -18,7 +18,7 @@ interface DataProps {
     open: boolean,
 }
 
-class Modal extends React.Component<ReduxPropType & DataProps> {
+class Modal extends React.Component<ReduxThemeType & DataProps> {
 
     state = {
         color: this.props.category.color,
@@ -91,7 +91,7 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

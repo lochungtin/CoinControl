@@ -2,9 +2,9 @@ import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 
-import { ReduxPropType } from '../types/redux';
+import { ReduxThemeType } from '../types/redux';
 
-class Screen extends React.Component<ReduxPropType> {
+class Screen extends React.Component<ReduxThemeType> {
     render() {
         return (
             <View>
@@ -14,7 +14,7 @@ class Screen extends React.Component<ReduxPropType> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

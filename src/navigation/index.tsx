@@ -14,14 +14,14 @@ import settings from '../screens/settings';
 import signin from '../screens/signin';
 import signup from '../screens/signup';
 
-import { ReduxPropType } from '../types/redux';
+import { ReduxThemeType } from '../types/redux';
 import { makeDrawer } from './drawer';
 
 const Nav = createDrawerNavigator();
 const Category = createStackNavigator();
 const Settings = createStackNavigator();
 
-class AppNav extends React.Component<ReduxPropType> {
+class AppNav extends React.Component<ReduxThemeType> {
 
     category = () =>
         <Category.Navigator initialRouteName='categoryHome' screenOptions={{ headerShown: false }}>
@@ -52,7 +52,7 @@ class AppNav extends React.Component<ReduxPropType> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

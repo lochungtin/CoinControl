@@ -12,9 +12,9 @@ import LItem from '../components/listitem';
 
 import { HomeScreenStyles, ScreenStyles } from './styles';
 
-import { defaultCategories, defaultSettings } from '../data/default';
+import { defaultCategories, defaultData, defaultSettings } from '../data/default';
 import { DisplaySectionType, ScreenProps } from '../types/ui';
-import { ReduxPropType } from '../types/redux';
+import { ReduxThemeType } from '../types/redux';
 import { Categories, CategoryStore, DataMap, DataType, SettingsType } from '../types/data';
 import { ScrollView } from 'react-native-gesture-handler';
 import { keygen } from '../utils/keygen';
@@ -31,7 +31,7 @@ const alternative: DataType = {
 	value: 0,
 }
 
-class Screen extends React.Component<ReduxPropType & ScreenProps> {
+class Screen extends React.Component<ReduxThemeType & ScreenProps> {
 	state = {
 		deleteMode: false,
 		edit: undefined,
@@ -65,7 +65,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 	}
 
 	render() {
-		console.log(this.props.data);
+		console.log(defaultData);
 
 		let categories: CategoryStore = this.props.categories || defaultCategories;
 		let data: DataMap = this.props.data?.data || {};
@@ -146,7 +146,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 	}
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
 	categories: state.categories,
 	data: state.data,
 	display: state.display,

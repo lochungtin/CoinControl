@@ -15,11 +15,11 @@ import { icons } from '../data/icons';
 import { Categories, CategoryType, IconSection } from '../types/data';
 import { categoryAdd } from '../redux/action';
 import { store } from '../redux/store';
-import { ReduxPropType } from '../types/redux';
+import { ReduxThemeType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
 import { keygen, smallKeygen } from '../utils/keygen';
 
-class Screen extends React.Component<ReduxPropType & ScreenProps> {
+class Screen extends React.Component<ReduxThemeType & ScreenProps> {
 
     state = {
         category: this.props.route.params,
@@ -106,7 +106,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

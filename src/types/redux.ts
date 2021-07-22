@@ -9,7 +9,7 @@ export interface ReduxActionType {
 }
 
 // component props //
-export interface ReduxPropType {
+export interface ReduxThemeType {
     account?: AccountType,
     categories?: CategoryStore,
     data?: DataStore,

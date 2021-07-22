@@ -15,11 +15,11 @@ import { defaultCategories } from '../data/default';
 import { categoryDelete, categoryEdit, dataSetRecordCatToOther, settingsSetPromptShow } from '../redux/action';
 import { store } from '../redux/store';
 import { Categories, CategoryType } from '../types/data';
-import { ReduxPropType } from '../types/redux';
+import { ReduxThemeType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
 import { Prompt } from '../data/prompts';
 
-class Screen extends React.Component<ReduxPropType & ScreenProps> {
+class Screen extends React.Component<ReduxThemeType & ScreenProps> {
 
     state = {
         category: this.props.route.params?.category || Categories.EXPENSE,
@@ -176,7 +176,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     categories: state.categories,
     settings: state.settings,
     theme: state.theme,

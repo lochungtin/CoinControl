@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { ColorPickerStyles } from '../styles';
 
 import { ColorPickerCellDataType } from '../../../types/color';
-import { ReduxPropType } from '../../../types/redux';
+import { ReduxThemeType } from '../../../types/redux';
 
 interface DataProps {
     data: ColorPickerCellDataType,
@@ -14,7 +14,7 @@ interface DataProps {
     onPress: (hex: string) => void,
 }
 
-class Bubble extends React.Component<ReduxPropType & DataProps> {
+class Bubble extends React.Component<ReduxThemeType & DataProps> {
     render() {
         return (
             <TouchableOpacity 
@@ -34,7 +34,7 @@ class Bubble extends React.Component<ReduxPropType & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

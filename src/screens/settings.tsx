@@ -35,11 +35,11 @@ import {
 } from '../redux/action';
 import { store } from '../redux/store';
 import { CurrencyType } from '../types/data';
-import { ReduxPropType } from '../types/redux';
+import { ReduxThemeType } from '../types/redux';
 import { ScreenProps, SettingsCategory, SettingsItem } from '../types/ui';
 import { smallKeygen } from '../utils/keygen';
 
-class Screen extends React.Component<ReduxPropType & ScreenProps> {
+class Screen extends React.Component<ReduxThemeType & ScreenProps> {
 
     state = {
         colorPickerOpen: false,
@@ -60,7 +60,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                 store.dispatch(settingsSetDefault());
                 store.dispatch(settingsSetDarkMode());
                 store.dispatch(themeSetDarkMode());
-                store.dispatch(themeSetAccent(colorPickerData['green']['a'].hex));
+                store.dispatch(themeSetAccent(colorPickerData['greens']['a'].hex));
                 // bypass for clear data
                 if (prompt === Prompt.DEFAULT_SETTINGS)
                     break;
@@ -261,7 +261,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     account: state.account,
     settings: state.settings,
     theme: state.theme,

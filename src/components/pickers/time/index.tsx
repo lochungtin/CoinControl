@@ -9,7 +9,7 @@ import Slider from './slider';
 
 import { TimePickerStyles } from '../styles';
 
-import { ReduxPropType } from '../../../types/redux';
+import { ReduxThemeType } from '../../../types/redux';
 
 interface DataProps {
     am: boolean,
@@ -20,7 +20,7 @@ interface DataProps {
     open: boolean,
 }
 
-class Picker extends React.Component<ReduxPropType & DataProps> {
+class Picker extends React.Component<ReduxThemeType & DataProps> {
 
     state = {
         am: this.props.am,
@@ -85,7 +85,7 @@ class Picker extends React.Component<ReduxPropType & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

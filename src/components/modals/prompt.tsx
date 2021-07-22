@@ -9,7 +9,7 @@ import ModalBase from './base';
 import { PromptModalStyles } from './styles';
 
 import { Prompt, prompts } from '../../data/prompts';
-import { ReduxPropType } from '../../types/redux';
+import { ReduxThemeType } from '../../types/redux';
 
 interface DataProps {
     onClose: () => void,
@@ -18,7 +18,7 @@ interface DataProps {
     prompt: Prompt,
 }
 
-class Modal extends React.Component<ReduxPropType & DataProps> {
+class Modal extends React.Component<ReduxThemeType & DataProps> {
 
     state = {
         checked: false,
@@ -80,7 +80,7 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

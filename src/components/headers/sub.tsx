@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
-import { ReduxPropType } from '../../types/redux';
+import { ReduxThemeType } from '../../types/redux';
 import { SubHeaderStyles } from './styles';
 
 interface DataProps {
@@ -10,7 +10,7 @@ interface DataProps {
     label: string,
 }
 
-class Header extends React.Component<ReduxPropType & DataProps> {
+class Header extends React.Component<ReduxThemeType & DataProps> {
     render() {
         return (
             <View style={SubHeaderStyles.root}>
@@ -22,7 +22,7 @@ class Header extends React.Component<ReduxPropType & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

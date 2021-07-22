@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { BulletStyles, screenWidth } from './styles';
 
-import { ReduxPropType } from '../../types/redux';
+import { ReduxThemeType } from '../../types/redux';
 
 interface DataProps {
     inactive?: boolean,
@@ -13,7 +13,7 @@ interface DataProps {
     width: number,
 }
 
-class Bullet extends React.Component<ReduxPropType & DataProps> {
+class Bullet extends React.Component<ReduxThemeType & DataProps> {
     render() {
         return (
             <TouchableOpacity
@@ -32,7 +32,7 @@ class Bullet extends React.Component<ReduxPropType & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { TimePickerStyles } from '../styles';
 
-import { ReduxPropType } from '../../../types/redux';
+import { ReduxThemeType } from '../../../types/redux';
 
 interface DataProps {
     max: number,
@@ -16,7 +16,7 @@ interface DataProps {
     value: number,
 }
 
-class CSlider extends React.Component<ReduxPropType & DataProps> {
+class CSlider extends React.Component<ReduxThemeType & DataProps> {
     render() {
         return (
             <View style={TimePickerStyles.sliderRoot}>
@@ -39,7 +39,7 @@ class CSlider extends React.Component<ReduxPropType & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

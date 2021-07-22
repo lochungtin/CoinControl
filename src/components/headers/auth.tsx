@@ -7,10 +7,10 @@ import { connect } from 'react-redux';
 
 import { AuthHeaderStyles, screenWidth } from './styles';
 
-import { ReduxPropType } from '../../types/redux';
+import { ReduxThemeType } from '../../types/redux';
 import { ScreenProps } from '../../types/ui';
 
-class Header extends React.Component<ReduxPropType & ScreenProps> {
+class Header extends React.Component<ReduxThemeType & ScreenProps> {
     render() {
         let scale: number = screenWidth / 20;
         return (
@@ -41,7 +41,7 @@ class Header extends React.Component<ReduxPropType & ScreenProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

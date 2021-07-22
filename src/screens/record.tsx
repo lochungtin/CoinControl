@@ -12,14 +12,14 @@ import InputModal from '../components/modals/input';
 import { ScreenStyles } from './styles';
 
 import { Categories, CategoryType, DataType } from '../types/data';
-import { ReduxPropType } from '../types/redux';
+import { ReduxThemeType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
 import { defaultCategories } from '../data/default';
 import { keygen } from '../utils/keygen';
 import { store } from '../redux/store';
 import { dataAdd, displayAdd } from '../redux/action';
 
-class Screen extends React.Component<ReduxPropType & ScreenProps> {
+class Screen extends React.Component<ReduxThemeType & ScreenProps> {
 
     state = {
         category: this.props.route.params?.category || Categories.EXPENSE,
@@ -120,7 +120,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     categories: state.categories,
     theme: state.theme,
 });

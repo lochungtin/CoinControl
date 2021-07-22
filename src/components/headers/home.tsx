@@ -16,7 +16,7 @@ import { Goal, goalExceededText, goals } from '../../data/goal';
 import { dataSetGoal } from '../../redux/action';
 import { store } from '../../redux/store';
 import { DataStore, GoalConfigType } from '../../types/data';
-import { ReduxPropType } from '../../types/redux';
+import { ReduxThemeType } from '../../types/redux';
 import { ScreenProps } from '../../types/ui';
 
 interface DataProps {
@@ -25,7 +25,7 @@ interface DataProps {
     toggleDeleting: (deleteMode: boolean) => void,
 }
 
-class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
+class Header extends React.Component<ReduxThemeType & ScreenProps & DataProps> {
 
     state = {
         deleting: false,
@@ -201,7 +201,7 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     data: state.data,
     categories: state.categories,
     settings: state.settings,

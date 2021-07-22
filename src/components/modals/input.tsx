@@ -14,7 +14,7 @@ import { WHITE } from '../../data/color';
 
 import { defaultCategories } from '../../data/default';
 import { CategoryType, DataType } from '../../types/data';
-import { ReduxPropType } from '../../types/redux';
+import { ReduxThemeType } from '../../types/redux';
 
 interface DataProps {
     record: DataType,
@@ -24,7 +24,7 @@ interface DataProps {
     open: boolean,
 }
 
-class Modal extends React.Component<ReduxPropType & DataProps> {
+class Modal extends React.Component<ReduxThemeType & DataProps> {
 
     state = {
         categoryKey: this.props.record.categoryKey || 'C0000000',
@@ -127,7 +127,7 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     categories: state.categories,
     theme: state.theme,
 });

@@ -8,7 +8,7 @@ import ModalBase from './base';
 
 import { GeneralModalStyles, InputModalStyles } from './styles';
 
-import { ReduxPropType } from '../../types/redux';
+import { ReduxThemeType } from '../../types/redux';
 
 interface DataProps {
     icon: string,
@@ -17,7 +17,7 @@ interface DataProps {
     text: string,
 }
 
-class Modal extends React.Component<ReduxPropType & DataProps> {
+class Modal extends React.Component<ReduxThemeType & DataProps> {
     render() {
         return (
             <View style={GeneralModalStyles.selectorRow}>
@@ -41,7 +41,7 @@ class Modal extends React.Component<ReduxPropType & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

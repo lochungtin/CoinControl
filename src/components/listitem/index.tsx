@@ -7,7 +7,7 @@ import { ListItemStyles } from './styles';
 import { WHITE } from '../../data/color';
 
 import { CategoryType } from '../../types/data';
-import { ReduxPropType } from '../../types/redux';
+import { ReduxThemeType } from '../../types/redux';
 
 interface DataProps {
     category: CategoryType,
@@ -19,7 +19,7 @@ interface DataProps {
     uppercase?: boolean,
 }
 
-class LItem extends React.Component<ReduxPropType & DataProps> {
+class LItem extends React.Component<ReduxThemeType & DataProps> {
     render() {
         let label: string = this.props.label;
         if (!label && this.props.fallbackCatName)
@@ -47,7 +47,7 @@ class LItem extends React.Component<ReduxPropType & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

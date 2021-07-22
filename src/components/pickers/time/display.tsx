@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { TimePickerStyles } from '../styles';
 
-import { ReduxPropType } from '../../../types/redux';
+import { ReduxThemeType } from '../../../types/redux';
 
 interface DataProps {
     highlight?: boolean,
@@ -12,7 +12,7 @@ interface DataProps {
     text: string,
 }
 
-class Display extends React.Component<ReduxPropType & DataProps> {
+class Display extends React.Component<ReduxThemeType & DataProps> {
     render() {
         return (
             <TouchableOpacity
@@ -38,7 +38,7 @@ class Display extends React.Component<ReduxPropType & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 

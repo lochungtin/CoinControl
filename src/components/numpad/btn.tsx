@@ -6,14 +6,14 @@ import { connect } from 'react-redux';
 import { NumpadStyles } from './styles';
 
 import { NumpadBtnProps } from '../../types/data';
-import { ReduxPropType } from '../../types/redux';
+import { ReduxThemeType } from '../../types/redux';
 
 interface NumpadControlProps {
     disabled: boolean,
     highlight: boolean,
 }
 
-class Btn extends React.Component<ReduxPropType & NumpadBtnProps & NumpadControlProps> {
+class Btn extends React.Component<ReduxThemeType & NumpadBtnProps & NumpadControlProps> {
 
     onPress = () => {
         if (!this.props.disabled)
@@ -40,7 +40,7 @@ class Btn extends React.Component<ReduxPropType & NumpadBtnProps & NumpadControl
     }
 }
 
-const mapStateToProps = (state: ReduxPropType) => ({
+const mapStateToProps = (state: ReduxThemeType) => ({
     theme: state.theme,
 });
 
