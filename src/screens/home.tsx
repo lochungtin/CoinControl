@@ -62,8 +62,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 	}
 
 	render() {
-
-		console.log(this.props.settings);
+		console.log(this.props.data);
 
 		let categories: CategoryStore = this.props.categories || defaultCategories;
 		let data: DataMap = this.props.data?.data || {};

@@ -13,7 +13,7 @@ import { GeneralHeaderStyles, HomeHeaderStyles } from './styles';
 import { WHITE } from '../../data/color';
 
 import { defaultData, defaultSettings } from '../../data/default';
-import { goals } from '../../data/goal';
+import { Goal, goals } from '../../data/goal';
 import { setGoal } from '../../redux/action';
 import { store } from '../../redux/store';
 import { DataStore, GoalConfigType } from '../../types/data';
@@ -40,9 +40,6 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
     }
 
     onConfirmGoal = (config: GoalConfigType) => {
-        if (config.type.key === 'goalN')
-            config.max = 0;
-
         store.dispatch(setGoal(config));
         this.setState({ gmOpen: false });
     }
@@ -69,7 +66,7 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
     unsubscribe = () => this.props.navigation.addListener('focus', () => this.setState({ categoriesFiltering: [] }))
 
     render() {
-        let data: DataStore = (this.props.data || defaultData);
+        let data: DataStore = this.props.data || defaultData;
 
         let splt: Array<string> = data.stats.balance.toString().split('.') || ['0'];
 
@@ -78,10 +75,10 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
 
         let goalPrompt: string = data.stats.goal.left.toString();
 
-        if (this.props.data?.stats.goal.config.type.key === 'goalN')
-            goalPrompt = goals['goalN'].text;
+        if (this.props.data?.stats.goal.config.type === Goal.NONE)
+            goalPrompt = goals[Goal.NONE].text;
         else
-            goalPrompt += ' ' + goals[this.props.data?.stats.goal.config.type.key || 'goalD'].text;
+            goalPrompt += ' ' + goals[data.stats.goal.config.type].text;
 
         return (
             <>
@@ -202,7 +199,6 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
 const mapStateToProps = (state: ReduxPropType) => ({
     data: state.data,
     categories: state.categories,
-    goal: state.goal,
     settings: state.settings,
     theme: state.theme,
 });

@@ -1,23 +1,26 @@
 import { GoalMap } from '../types/data';
 
+export enum Goal {
+    DAILY,
+    WEEKLY,
+    MONTHLY,
+    NONE,
+}
+
 export const goals: GoalMap = {
-    goalD: {
-        key: 'goalD',
+    0: {
         name: 'Daily',
         text: 'left for the day',
     },
-    goalW: {
-        key: 'goalW',
+    1: {
         name: 'Weekly',
         text: 'left for the week',
     },
-    goalM: {
-        key: 'goalM',
+    2: {
         name: 'Monthly',
         text: 'left for the month',
     },
-    goalN: {
-        key: 'goalN',
+    3: {
         name: 'None',
         text: 'No goal set',
     },

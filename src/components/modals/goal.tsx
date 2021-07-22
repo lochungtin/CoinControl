@@ -8,10 +8,11 @@ import MultiPicker from '../pickers/multi';
 import ModalBase from './base';
 import Selector from './selector';
 
+import { GoalModalStyles } from './styles';
+
+import { Goal, goals } from '../../data/goal';
 import { GoalConfigType, GoalType } from '../../types/data';
 import { ReduxPropType } from '../../types/redux';
-import { goals } from '../../data/goal';
-import { GoalModalStyles } from './styles';
 
 interface DataProps {
     config: GoalConfigType,
@@ -28,7 +29,7 @@ class Modal extends React.Component<ReduxPropType & DataProps & DataProps> {
     }
 
     render() {
-        let goalList: Array<GoalType> = Object.keys(goals).map((key: string) => goals[key]);
+        let goalList: Array<GoalType> = Object.keys(goals).map((key: string) => goals[parseInt(key)]);
         return (
             <>
                 <ModalBase
@@ -40,7 +41,7 @@ class Modal extends React.Component<ReduxPropType & DataProps & DataProps> {
                         icon={'shield-check-outline'}
                         label='Goal'
                         onPress={() => this.setState({ msOpen: true })}
-                        text={this.state.goal.name}
+                        text={goals[this.state.goal].name}
                     />
                     <Numpad
                         disableOps
@@ -49,16 +50,18 @@ class Modal extends React.Component<ReduxPropType & DataProps & DataProps> {
                     />
                 </ModalBase>
                 <MultiPicker
-                    items={goalList}
+                    items={[0, 1, 2, 3]}
                     onClose={() => this.setState({ msOpen: false })}
-                    onSelect={(goal: GoalType) => this.setState({ goal, msOpen: false })}
+                    onSelect={(goal: number) => this.setState({ goal, msOpen: false })}
                     open={this.state.msOpen}
-                    render={(goal: GoalType) => {
+                    render={(index: number) => {
+                        let goal: GoalType = goals[index];
+
                         return (
                             <View style={GoalModalStyles.selectionRoot}>
                                 <Icon
                                     color={this.props.theme.static.accentC}
-                                    name={`shield-${goal.key === 'goalN' ? 'off-' : ''}outline`}
+                                    name={`shield-${index === Goal.NONE ? 'off-' : ''}outline`}
                                     size={25}
                                 />
                                 <Text style={{ ...GoalModalStyles.selectionText, color: this.props.theme.dynamic.text.mainC }}>
@@ -67,7 +70,7 @@ class Modal extends React.Component<ReduxPropType & DataProps & DataProps> {
                             </View>
                         );
                     }}
-                    selectedIndices={[Object.keys(goals).indexOf(this.state.goal.key)]}
+                    selectedIndices={[this.state.goal]}
                 />
             </>
         );

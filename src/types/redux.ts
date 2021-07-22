@@ -1,5 +1,5 @@
 import { ThemeType } from './color';
-import { AccountType, CategoryStore, DataStore, GoalDataType, SettingsType } from './data';
+import { AccountType, CategoryStore, DataStore, SettingsType } from './data';
 import { DisplaySectionType } from './ui';
 
 // action //
@@ -14,7 +14,6 @@ export interface ReduxPropType {
     categories?: CategoryStore,
     data?: DataStore,
     display?: Array<DisplaySectionType>,
-    goal?: GoalDataType,
     settings?: SettingsType,
     theme: ThemeType,
 }

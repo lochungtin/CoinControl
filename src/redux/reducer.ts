@@ -1,16 +1,17 @@
+import moment from 'moment';
 import { combineReducers } from 'redux';
 
 import { Actions } from './action';
 
-import { defaultCategories, defaultData, defaultSettings, defaultTheme } from '../data/default';
+import { colorPickerData } from '../data/color';
+import { clearCategories, defaultCategories, defaultData, defaultSettings, defaultTheme } from '../data/default';
 import { darkTheme, lightTheme } from '../data/theme';
 
 import { ThemeType } from '../types/color';
-import { AccountType, CategoryStore, DataMap, DataStore, DataType, SettingsType } from '../types/data';
+import { AccountType, CategoryStore, DataStore, DataType, SettingsType } from '../types/data';
 import { ReduxActionType } from '../types/redux';
-import { colorPickerData } from '../data/color';
 import { DisplaySectionType } from '../types/ui';
-import moment from 'moment';
+import { Goal } from '../data/goal';
 
 const updateAccount = (account: AccountType | null = null, action: ReduxActionType) => {
     switch (action.type) {
@@ -76,18 +77,51 @@ const updateData = (data: DataStore = defaultData, action: ReduxActionType) => {
         // set goal
         case Actions.GOAL_SET:
             update.stats.goal.config = action.payload;
-            return update;
+            break;
         // default
         default:
             return data;
     }
+    // reset stats
+    update.stats.balance = 0
+    update.stats.categories = { ...clearCategories };
+    update.stats.goal.left = 0;
+    update.stats.goal.used = 0;
     // update stats
+    Object.keys(update.data).forEach((key: string) => {
+        let record: DataType = update.data[key];
+
+        // update balance
+        update.stats.balance += (record.categoryType * 2 - 1) * record.value;
+
+        // update category tally
+        if (update.stats.categories[record.categoryType].tally[record.categoryKey] === undefined)
+            update.stats.categories[record.categoryType].tally[record.categoryKey] = {
+                amount: 0,
+                count: 0,
+            };
+
+        update.stats.categories[record.categoryType].tally[record.categoryKey].amount += record.value;
+        update.stats.categories[record.categoryType].tally[record.categoryKey].count += 1;
+
+        // update goal
+        switch (update.stats.goal.config.type) {
+            case Goal.DAILY:
+                break;
+            case Goal.WEEKLY:
+                break;
+            case Goal.MONTHLY:
+                break;
+            default:
+                break;       
+        }
+    });
     return update;
 }
 
 const displayAdd = (update: Array<DisplaySectionType>, record: DataType) => {
     var sectionIndex = update.findIndex((section: DisplaySectionType) => section.date === record.date);
-        
+
     if (sectionIndex === -1) {
         sectionIndex = update.length;
         update.push({ date: record.date, keys: [] });
@@ -101,7 +135,7 @@ const displayDelete = (update: Array<DisplaySectionType>, record: DataType) => {
 
     if (update[sectionIndex].keys.length === 1)
         update.splice(sectionIndex, 1);
-    else 
+    else
         update[sectionIndex].keys.splice(update[sectionIndex].keys.indexOf(record.key), 1);
 }
 

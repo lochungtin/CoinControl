@@ -4,8 +4,23 @@ import { colorPickerData, GREY } from './color';
 import { currencyData } from './currency';
 
 import { ThemeType } from '../types/color';
-import { CategoryStore, DataStore, SettingsType } from '../types/data';
-import { goals } from './goal';
+import { CategoryStatType, CategoryStore, DataStore, SettingsType } from '../types/data';
+import { Goal, goals } from './goal';
+
+export const clearCategories: { [index: number]: CategoryStatType } = {
+    0: {
+        tally: {
+
+        },
+        total: 0,
+    },
+    1: {
+        tally: {
+
+        },
+        total: 0,
+    },
+}
 
 export const defaultCategories: CategoryStore = {
     0: {
@@ -111,22 +126,15 @@ export const defaultData: DataStore = {
     },
     stats: {
         balance: 0,
-        expense: {
-
-        },
+        categories: clearCategories,
         goal: {
             config: {
                 max: 1,
-                type: goals['goalN'],
+                type: Goal.NONE,
             },
             left: 1,
             used: 0,
         },
-        income: {
-
-        },
-        totalExpense: 0,
-        totalIncome: 0,
     }
 }
 
