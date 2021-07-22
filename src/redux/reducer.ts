@@ -8,7 +8,7 @@ import { clearCategories, defaultCategories, defaultData, defaultSettings, defau
 import { darkTheme, lightTheme } from '../data/theme';
 
 import { ThemeType } from '../types/color';
-import { AccountType, CategoryStore, DataStore, DataType, SettingsType } from '../types/data';
+import { AccountType, Categories, CategoryStore, DataStore, DataType, SettingsType } from '../types/data';
 import { ReduxActionType } from '../types/redux';
 import { DisplaySectionType } from '../types/ui';
 import { Goal } from '../data/goal';
@@ -88,6 +88,26 @@ const updateData = (data: DataStore = defaultData, action: ReduxActionType) => {
     update.stats.goal.left = 0;
     update.stats.goal.used = 0;
     // update stats
+    let goalCapDate: moment.Moment | undefined = undefined;
+    let now: moment.Moment = moment()
+        .set('hour', 0)
+        .set('minute', 0)
+        .set('second', 0)
+        .set('millisecond', 0);
+    switch (update.stats.goal.config.type) {
+        case Goal.DAILY:
+            goalCapDate = now;
+            break;
+        case Goal.WEEKLY:
+            goalCapDate = now.subtract(now.get('day'), 'day');
+            break;
+        case Goal.MONTHLY:
+            goalCapDate = now.set('D', 1);
+            break;
+        default:
+            break;
+    }
+
     Object.keys(update.data).forEach((key: string) => {
         let record: DataType = update.data[key];
 
@@ -105,15 +125,17 @@ const updateData = (data: DataStore = defaultData, action: ReduxActionType) => {
         update.stats.categories[record.categoryType].tally[record.categoryKey].count += 1;
 
         // update goal
-        switch (update.stats.goal.config.type) {
-            case Goal.DAILY:
-                break;
-            case Goal.WEEKLY:
-                break;
-            case Goal.MONTHLY:
-                break;
-            default:
-                break;       
+        if (record.categoryType === Categories.EXPENSE) {
+            switch (update.stats.goal.config.type) {
+                case Goal.DAILY:
+                    break;
+                case Goal.WEEKLY:
+                    break;
+                case Goal.MONTHLY:
+                    break;
+                default:
+                    break;
+            }
         }
     });
     return update;

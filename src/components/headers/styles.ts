@@ -67,6 +67,7 @@ export const HomeHeaderStyles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
+        width: screenWidth,
     },
     balance: {
         fontSize: 36,
@@ -76,6 +77,8 @@ export const HomeHeaderStyles = StyleSheet.create({
     },
     goal: {
         fontSize: 18,
+        textAlign: 'center',
+        width: screenWidth,
     },
     pgbar: {
         marginVertical: 15,

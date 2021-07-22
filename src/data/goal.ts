@@ -22,6 +22,8 @@ export const goals: GoalMap = {
     },
     3: {
         name: 'None',
-        text: 'No goal set',
+        text: 'No Goals Set',
     },
 }
+
+export const goalExceededText: string = 'Goal Exceed';
