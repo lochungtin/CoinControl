@@ -17,6 +17,8 @@ import { Categories, CategoryStore, CategoryType, DataMap, DataType, SettingsTyp
 import { ScrollView } from 'react-native-gesture-handler';
 import { keygen } from '../utils/keygen';
 import moment from 'moment';
+import { store } from '../redux/store';
+import { deleteRecord } from '../redux/action';
 
 class Screen extends React.Component<ReduxPropType & ScreenProps> {
 	state = {
@@ -59,7 +61,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 													fallbackCatName
 													category={categories[record.categoryType][record.categoryKey]}
 													key={record.key}
-													onPress={() => this.setState({ edit: record, open: true})}
+													onPress={() => store.dispatch(deleteRecord(record))}
 													label={record.title}
 												>
 													<View style={HomeScreenStyles.valueBox}>

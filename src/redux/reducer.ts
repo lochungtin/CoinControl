@@ -53,14 +53,17 @@ const updateData = (data: DataStore = defaultData, action: ReduxActionType) => {
         // clear all
         case Actions.CLEAR_DATA:
             return defaultData;
-        // add or edit
+        // add
         case Actions.RECORD_ADD:
-        case Actions.RECORD_EDIT:
             update.data[action.payload.key] = action.payload;
             break;
         // delete
         case Actions.RECORD_DELETE:
             delete update.data[action.payload.key];
+            break;
+        // edit
+        case Actions.RECORD_EDIT:
+            update.data[action.payload.new.key] = action.payload.new;
             break;
         // delete category - set category to other
         case Actions.CATEGORY_DELETE:
@@ -83,32 +86,33 @@ const updateData = (data: DataStore = defaultData, action: ReduxActionType) => {
 }
 
 const updateDisplay = (display: Array<DisplaySectionType> = [], action: ReduxActionType) => {
-    if (!action.payload)
-        return display;
-
     let update: Array<DisplaySectionType> = [...display];
-
-    let sectionIndex = update.findIndex((section: DisplaySectionType) => section.date === action.payload.date);
-
-    if (sectionIndex === -1) {
-        sectionIndex = update.length;
-        update.push({ date: action.payload.date, keys: [] });
-    }
-
     switch (action.type) {
         // clear all
         case Actions.CLEAR_DATA:
             return [];
         // add record
         case Actions.RECORD_ADD:
+            var sectionIndex = update.findIndex((section: DisplaySectionType) => section.date === action.payload.date);
+        
+            if (sectionIndex === -1) {
+                sectionIndex = update.length;
+                update.push({ date: action.payload.date, keys: [] });
+            }
+
             update[sectionIndex].keys.push(action.payload.key);
             break;
         // delete record
         case Actions.RECORD_DELETE:
+            var sectionIndex = update.findIndex((section: DisplaySectionType) => section.date === action.payload.date);
+
+            if (update[sectionIndex].keys.length === 1)
+                update.splice(sectionIndex, 1);
+            else 
+                update[sectionIndex].keys.splice(update[sectionIndex].keys.indexOf(action.payload.key), 1);
             break;
         // edit record
         case Actions.RECORD_EDIT:
-            // let oldSectionIndex = update.findIndex((section: DisplaySectionType) => section.date === action.payload.date);
             break;
         // default
         default:
