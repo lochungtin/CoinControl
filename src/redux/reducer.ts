@@ -53,7 +53,16 @@ const updateData = (data: DataStore = defaultData, action: ReduxActionType) => {
     switch (action.type) {
         // clear all
         case Actions.CLEAR_DATA:
-            return defaultData;
+            update.stats.balance = 0
+            update.stats.categories = { ...clearCategories };
+            update.stats.goal.config = {
+                type: Goal.NONE,
+                max: 10,
+            };
+            update.stats.goal.left = 10;
+            update.stats.goal.used = 0;
+            update.data = {};
+            return update;
         // add
         case Actions.RECORD_ADD:
             update.data[action.payload.key] = action.payload;

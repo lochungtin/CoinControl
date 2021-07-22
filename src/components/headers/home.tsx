@@ -13,7 +13,7 @@ import { GeneralHeaderStyles, HomeHeaderStyles } from './styles';
 import { WHITE } from '../../data/color';
 
 import { defaultData, defaultSettings } from '../../data/default';
-import { Goal, goals } from '../../data/goal';
+import { Goal, goalExceededText, goals } from '../../data/goal';
 import { setGoal } from '../../redux/action';
 import { store } from '../../redux/store';
 import { DataStore, GoalConfigType } from '../../types/data';
@@ -73,9 +73,15 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
         let balance: string = splt[0] || '420';
         let decimal: string = ((splt[1] || '00') + '00').slice(0, 2);
 
+        let progress: number = data.stats.goal.left / data.stats.goal.config.max;
+        if (data.stats.goal.used > data.stats.goal.config.max)
+            progress = 0;
+
         let goalPrompt: string = data.stats.goal.left.toFixed(2).toString();
 
-        if (this.props.data?.stats.goal.config.type === Goal.NONE)
+        if (data.stats.goal.left < 0)
+            goalPrompt = goalExceededText;
+        else if (this.props.data?.stats.goal.config.type === Goal.NONE)
             goalPrompt = goals[Goal.NONE].text;
         else
             goalPrompt += ' ' + goals[data.stats.goal.config.type].text;
@@ -112,7 +118,7 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
                             <View style={HomeHeaderStyles.pgbar}>
                                 <PGBar
                                     height={5}
-                                    progress={data.stats.goal.left / data.stats.goal.config.max}
+                                    progress={progress}
                                     width={0.45}
                                 />
                             </View>

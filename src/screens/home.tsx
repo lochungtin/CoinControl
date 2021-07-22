@@ -58,7 +58,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
 	onEdit = (obj: DataType) => {
 		store.dispatch(editRecord({ new: obj, old: this.state.edit || alternative }));
-		this.setState({ edit: alternative, open: false });
+		this.setState({ edit: alternative, imOpen: false });
 	}
 
 	render() {

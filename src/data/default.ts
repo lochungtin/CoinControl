@@ -129,10 +129,10 @@ export const defaultData: DataStore = {
         categories: clearCategories,
         goal: {
             config: {
-                max: 1,
+                max: 10,
                 type: Goal.NONE,
             },
-            left: 1,
+            left: 10,
             used: 0,
         },
     }
