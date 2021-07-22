@@ -19,7 +19,7 @@ import { Categories, CategoryStore, DataMap, DataType, SettingsType } from '../t
 import { ScrollView } from 'react-native-gesture-handler';
 import { keygen } from '../utils/keygen';
 import { store } from '../redux/store';
-import { dataDelete, dataEdit, settingsSetPromptShow } from '../redux/action';
+import { dataDelete, dataEdit, displayDelete, displayEdit, settingsSetPromptShow } from '../redux/action';
 import { Prompt } from '../data/prompts';
 
 const alternative: DataType = {
@@ -43,8 +43,10 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 	}
 
 	confirmDelete = (record: DataType | null, show: boolean) => {
-		if (record !== null)
+		if (record !== null) {
 			store.dispatch(dataDelete(record));
+			store.dispatch(displayDelete(record));
+		}
 		store.dispatch(settingsSetPromptShow({ prompt: Prompt.DELETE_RECORD, show }));
 		this.setState({ pmOpen: null });
 	}
@@ -58,6 +60,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 
 	onEdit = (obj: DataType) => {
 		store.dispatch(dataEdit({ new: obj, old: this.state.edit || alternative }));
+		store.dispatch(displayEdit({ new: obj, old: this.state.edit || alternative }));
 		this.setState({ edit: alternative, imOpen: false });
 	}
 

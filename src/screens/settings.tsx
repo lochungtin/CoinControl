@@ -11,7 +11,7 @@ import MultiPicker from '../components/pickers/multi';
 import TimePicker from '../components/pickers/time';
 
 import { ScreenStyles, SettingsScreenStyles } from './styles';
-import { WHITE } from '../data/color';
+import { colorPickerData, WHITE } from '../data/color';
 
 import { currencyData } from '../data/currency';
 import { defaultSettings } from '../data/default';
@@ -28,6 +28,10 @@ import {
     settingsSetNotifOn,
     settingsSetNotifTime,
     settingsSetPromptShow,
+    dataSetAllRecordCatToOther,
+    settingsSetDarkMode,
+    displayClear,
+    settingsSetLightMode,
 } from '../redux/action';
 import { store } from '../redux/store';
 import { CurrencyType } from '../types/data';
@@ -49,14 +53,20 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
     confirmReset = (prompt: Prompt, show: boolean) => {
         store.dispatch(settingsSetPromptShow({ prompt, show }));
         switch (prompt) {
-            case Prompt.DEFAULT_CATEGORIES:
-                store.dispatch(categorySetDefault());
-                break;
-            case Prompt.DEFAULT_SETTINGS:
-                store.dispatch(settingsSetDefault());
-                break;
             case Prompt.CLEAR_DATA:
                 store.dispatch(dataClear());
+                store.dispatch(displayClear());
+            case Prompt.DEFAULT_SETTINGS:
+                store.dispatch(settingsSetDefault());
+                store.dispatch(settingsSetDarkMode());
+                store.dispatch(themeSetDarkMode());
+                store.dispatch(themeSetAccent(colorPickerData['green']['a'].hex));
+                // bypass for clear data
+                if (prompt === Prompt.DEFAULT_SETTINGS)
+                    break;
+            case Prompt.DEFAULT_CATEGORIES:
+                store.dispatch(categorySetDefault());
+                store.dispatch(dataSetAllRecordCatToOther());
                 break;
             default:
                 break;
@@ -109,8 +119,10 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
     }
 
     onSwitchToggle = (type: SettingsSwitches, on: boolean) => {
-        if (type === SettingsSwitches.DARK_MODE)
+        if (type === SettingsSwitches.DARK_MODE) {
             store.dispatch(on ? themeSetDarkMode() : themeSetLightMode());
+            store.dispatch(on ? settingsSetDarkMode() : settingsSetLightMode());
+        }
         if (type === SettingsSwitches.NOTIF)
             store.dispatch(settingsSetNotifOn(on));
     }

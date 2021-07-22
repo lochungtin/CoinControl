@@ -94,7 +94,7 @@ export const dataSetGoal = (payload: GoalConfigType): ReduxActionType => ({
     payload,
 });
 
-export const dataSetRecordCatToOther = (payload: DataType): ReduxActionType => ({
+export const dataSetRecordCatToOther = (payload: any): ReduxActionType => ({
     type: Actions.DATA_TO_CAT_OTHER,
     payload,
 });

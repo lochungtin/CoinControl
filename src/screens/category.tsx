@@ -12,7 +12,7 @@ import PromptModal from '../components/modals/prompt';
 import { ScreenStyles, CategoryScreenStyles } from './styles';
 
 import { defaultCategories } from '../data/default';
-import { categoryDelete, categoryEdit, settingsSetPromptShow } from '../redux/action';
+import { categoryDelete, categoryEdit, dataSetRecordCatToOther, settingsSetPromptShow } from '../redux/action';
 import { store } from '../redux/store';
 import { Categories, CategoryType } from '../types/data';
 import { ReduxPropType } from '../types/redux';
@@ -51,11 +51,16 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
         </View>
 
     confirmDelete = (category: CategoryType | null, show: boolean) => {
-        if (category !== null)
+        if (category !== null) {
             store.dispatch(categoryDelete({
                 category: this.state.category,
                 key: category.key,
             }));
+            store.dispatch(dataSetRecordCatToOther({
+                category: this.state.category,
+                key: category.key,
+            }));
+        }
         store.dispatch(settingsSetPromptShow({ prompt: Prompt.DELETE_CATEGORY, show }));
         this.setState({ pmOpen: null });
     }
