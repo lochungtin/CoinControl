@@ -10,7 +10,6 @@ import DatePicker from '../pickers/date';
 import PGBar from '../progressbar';
 
 import { GeneralHeaderStyles, HomeHeaderStyles } from './styles';
-import { WHITE } from '../../data/color';
 
 import { defaultData, defaultSettings } from '../../data/default';
 import { Goal, goalExceededText, goals } from '../../data/goal';

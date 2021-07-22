@@ -5,13 +5,13 @@ import { Actions } from './action';
 
 import { colorPickerData } from '../data/color';
 import { clearCategories, defaultCategories, defaultData, defaultSettings, defaultTheme } from '../data/default';
+import { Goal } from '../data/goal';
 import { darkTheme, lightTheme } from '../data/theme';
 
 import { ThemeType } from '../types/color';
 import { AccountType, Categories, CategoryStore, DataStore, DataType, SettingsType } from '../types/data';
 import { ReduxActionType } from '../types/redux';
 import { DisplaySectionType } from '../types/ui';
-import { Goal } from '../data/goal';
 
 const updateAccount = (account: AccountType | null = null, action: ReduxActionType) => {
     switch (action.type) {
@@ -40,6 +40,7 @@ const updateCategories = (categories: CategoryStore = defaultCategories, action:
             delete update[action.payload.category][action.payload.key];
             return update;
         // set default
+        case Actions.CLEAR_DATA:
         case Actions.DEFAULT_CATEGORIES:
             return defaultCategories;
         // default
@@ -77,9 +78,16 @@ const updateData = (data: DataStore = defaultData, action: ReduxActionType) => {
             break;
         // delete category - set category to other
         case Actions.CATEGORY_DELETE:
-            Object.keys(update).forEach((key: string) => {
+            Object.keys(update.data).forEach((key: string) => {
                 let record: DataType = update.data[key];
                 if (record.categoryKey === action.payload.key)
+                    record.categoryKey = 'C0000000';
+            });
+            break;
+        case Actions.DEFAULT_CATEGORIES:
+            Object.keys(update.data).forEach((key: string) => {
+                let record: DataType = update.data[key];
+                if (record.categoryKey)
                     record.categoryKey = 'C0000000';
             });
             break;
@@ -195,6 +203,7 @@ const updateSettings = (settings: SettingsType = defaultSettings, action: ReduxA
     let update: SettingsType = { ...settings };
     switch (action.type) {
         // set default
+        case Actions.CLEAR_DATA:
         case Actions.DEFAULT_SETTINGS:
             update = defaultSettings;
             for (let i: number = 0; i < 5; ++i)
@@ -205,6 +214,7 @@ const updateSettings = (settings: SettingsType = defaultSettings, action: ReduxA
             update.currency = action.payload;
             return update;
         // set dark theme
+        case Actions.CLEAR_DATA:
         case Actions.SETTINGS_SET_DARKMODE:
             update.darkMode = true;
             return update;
@@ -237,9 +247,11 @@ const updateTheme = (theme: ThemeType = defaultTheme, action: ReduxActionType) =
             update.static.accentC = action.payload;
             return update;
         // set default
+        case Actions.CLEAR_DATA:
         case Actions.DEFAULT_SETTINGS:
             update.static.accentC = colorPickerData['greens']['a'].hex;
         // set dark theme
+        case Actions.CLEAR_DATA:
         case Actions.SETTINGS_SET_DARKMODE:
             update.dynamic = darkTheme.dynamic;
             return update;

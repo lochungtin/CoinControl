@@ -5,7 +5,7 @@ import { currencyData } from './currency';
 
 import { ThemeType } from '../types/color';
 import { CategoryStatType, CategoryStore, DataStore, SettingsType } from '../types/data';
-import { Goal, goals } from './goal';
+import { Goal } from './goal';
 
 export const clearCategories: { [index: number]: CategoryStatType } = {
     0: {
@@ -22,13 +22,28 @@ export const clearCategories: { [index: number]: CategoryStatType } = {
     },
 }
 
+export const defaultCategoryKeys: Array<string> = [
+    'C0000000',
+    '9ed0a104',
+    '7a3e8956',
+    '7295dbe6',
+    'ce94266d',
+    '8b941459',
+    'b32699f2',
+    '4bf463c8',
+    'a94590b3',
+    '573a577f',
+    '53ebaad5',
+    '94827936',
+];
+
 export const defaultCategories: CategoryStore = {
     0: {
-        '9ed0a04': {
+        '9ed01a04': {
             color: colorPickerData['blues']['a'].hex,
             fav: false,
             icon: 'clipboard-text-outline',
-            key: '9ed0a04',
+            key: '9ed01a04',
             name: 'bills',
         },
         '7a3e8956': {

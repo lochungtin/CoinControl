@@ -85,7 +85,10 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
         }));
     }
 
-    unsubscribe = this.props.navigation.addListener('focus', () => this.setState({ category: this.props.route.params?.category || Categories.EXPENSE }));
+    unsubscribe = this.props.navigation.addListener('focus', () => this.setState({ 
+        category: this.props.route.params?.category || Categories.EXPENSE,
+        selected: defaultCategories[Categories.EXPENSE]['C0000000'],
+    }));
 
     render() {
         let favs: Array<CategoryType> = [];
