@@ -125,19 +125,13 @@ const updateData = (data: DataStore = defaultData, action: ReduxActionType) => {
         update.stats.categories[record.categoryType].tally[record.categoryKey].count += 1;
 
         // update goal
-        if (record.categoryType === Categories.EXPENSE) {
-            switch (update.stats.goal.config.type) {
-                case Goal.DAILY:
-                    break;
-                case Goal.WEEKLY:
-                    break;
-                case Goal.MONTHLY:
-                    break;
-                default:
-                    break;
-            }
-        }
+        if (record.categoryType === Categories.EXPENSE && goalCapDate !== undefined && !moment(record.date, 'DD-MM-YYYY').isBefore(goalCapDate))
+            update.stats.goal.used += record.value;
     });
+
+    // update goal
+    update.stats.goal.left = update.stats.goal.config.max - update.stats.goal.used;
+
     return update;
 }
 

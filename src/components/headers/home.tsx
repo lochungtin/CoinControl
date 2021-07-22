@@ -73,7 +73,7 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
         let balance: string = splt[0] || '420';
         let decimal: string = ((splt[1] || '00') + '00').slice(0, 2);
 
-        let goalPrompt: string = data.stats.goal.left.toString();
+        let goalPrompt: string = data.stats.goal.left.toFixed(2).toString();
 
         if (this.props.data?.stats.goal.config.type === Goal.NONE)
             goalPrompt = goals[Goal.NONE].text;
