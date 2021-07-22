@@ -56,7 +56,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                 category: this.state.category,
                 key: category.key,
             }));
-        store.dispatch(setPromptShow({ propmt: Prompt.DELETE_CATEGORY, show }));
+        store.dispatch(setPromptShow({ prompt: Prompt.DELETE_CATEGORY, show }));
         this.setState({ pmOpen: null });
     }
 
@@ -64,7 +64,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
         if (this.props.settings?.promptTrigger[Prompt.DELETE_CATEGORY])
             this.setState({ pmOpen: category });
         else
-            this.confirmDelete(category, false)
+            this.confirmDelete(category, false);
     }
 
     editCategory = (category: CategoryType) => {
@@ -158,7 +158,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
                     open={this.state.cmOpen}
                 />
                 <PromptModal
-                    onClose={() => this.setState({ pmOpen: false })}
+                    onClose={() => this.setState({ pmOpen: null })}
                     onConfirm={(dnsa: boolean) => this.confirmDelete(this.state.pmOpen, !dnsa)}
                     open={this.state.pmOpen !== null}
                     prompt={Prompt.DELETE_CATEGORY}

@@ -7,34 +7,32 @@ import { connect } from 'react-redux';
 
 import GoalModal from '../modals/goal';
 import DatePicker from '../pickers/date';
-import MultiPicker from '../pickers/multi';
 import PGBar from '../progressbar';
 
 import { GeneralHeaderStyles, HomeHeaderStyles } from './styles';
 import { WHITE } from '../../data/color';
 
-import { defaultCategories, defaultData, defaultSettings } from '../../data/default';
+import { defaultData, defaultSettings } from '../../data/default';
 import { goals } from '../../data/goal';
 import { setGoal } from '../../redux/action';
 import { store } from '../../redux/store';
-import { Categories, CategoryStore, CategoryType, DataStore, GoalConfigType } from '../../types/data';
+import { DataStore, GoalConfigType } from '../../types/data';
 import { ReduxPropType } from '../../types/redux';
 import { ScreenProps } from '../../types/ui';
 
 interface DataProps {
     onFilterDate: (date: string) => void,
-    onFilterCategory: (category: CategoryType | undefined) => void,
     onPressSync: () => void,
+    toggleDeleting: (deleteMode: boolean) => void,
 }
 
 class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
 
     state = {
-        categoriesFiltering: [],
+        deleting: false,
         dateFiltering: false,
         dpOpen: false,
         gmOpen: false,
-        mpOpen: false,
     }
 
     componentWillUnmount() {
@@ -54,15 +52,6 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
         this.setState({ dateFiltering: true, dpOpen: false, });
     }
 
-    toggleCategoryFilter = () => {
-        if (this.state.categoriesFiltering) {
-            this.props.onFilterCategory(undefined);
-            this.setState({ categoriesFiltering: false });
-        }
-        else
-            this.setState({ mpOpen: true });
-    }
-
     toggleDateFilter = () => {
         if (this.state.dateFiltering) {
             this.props.onFilterDate('');
@@ -72,11 +61,15 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
             this.setState({ dpOpen: true });
     }
 
+    toggleDeleteMode = () => {
+        this.props.toggleDeleting(!this.state.deleting);
+        this.setState({ deleting: !this.state.deleting });
+    }
+
     unsubscribe = () => this.props.navigation.addListener('focus', () => this.setState({ categoriesFiltering: [] }))
 
     render() {
         let data: DataStore = (this.props.data || defaultData);
-        let allCategories: CategoryStore = (this.props.categories || defaultCategories);
 
         let splt: Array<string> = data.stats.balance.toString().split('.') || ['0'];
 
@@ -89,11 +82,6 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
             goalPrompt = goals['goalN'].text;
         else
             goalPrompt += ' ' + goals[this.props.data?.stats.goal.config.type.key || 'goalD'].text;
-
-        let categories: Array<CategoryType> = [
-            ...Object.keys(data.stats.expense).map((key: string) => allCategories[Categories.EXPENSE][key]),
-            ...Object.keys(data.stats.income).map((key: string) => allCategories[Categories.INCOME][key]),
-        ];
 
         return (
             <>
@@ -164,32 +152,32 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
                 </View>
                 <View style={HomeHeaderStyles.controllerBox}>
                     <TouchableOpacity
-                        style={{
-                            ...HomeHeaderStyles.controller,
-                            backgroundColor: this.state.categoriesFiltering.length !== 0 ?
-                                this.props.theme.static.accentC :
-                                this.props.theme.dynamic.text.mainC,
-                        }}
-                        onPress={this.toggleCategoryFilter}
-                    >
-                        <Icon
-                            color={this.state.categoriesFiltering.length !== 0 ? this.props.theme.dynamic.text.mainC : this.props.theme.static.accentC}
-                            name='tag-heart-outline'
-                            size={20}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
+                        onPress={this.toggleDateFilter}
                         style={{
                             ...HomeHeaderStyles.controller,
                             backgroundColor: this.state.dateFiltering ?
                                 this.props.theme.static.accentC :
                                 this.props.theme.dynamic.text.mainC,
                         }}
-                        onPress={this.toggleDateFilter}
                     >
                         <Icon
                             color={this.state.dateFiltering ? this.props.theme.dynamic.text.mainC : this.props.theme.static.accentC}
                             name='calendar-month'
+                            size={20}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={this.toggleDeleteMode}
+                        style={{
+                            ...HomeHeaderStyles.controller,
+                            backgroundColor: this.state.deleting ?
+                                this.props.theme.static.accentC :
+                                this.props.theme.dynamic.text.mainC
+                        }}
+                    >
+                        <Icon
+                            color={this.state.deleting ? this.props.theme.dynamic.text.mainC : this.props.theme.static.accentC}
+                            name='trash-can'
                             size={20}
                         />
                     </TouchableOpacity>
@@ -205,29 +193,6 @@ class Header extends React.Component<ReduxPropType & ScreenProps & DataProps> {
                     onSelect={this.onFilterDate}
                     open={this.state.dpOpen}
                     selected={moment().format('DD-MM-YYYY')}
-                />
-                <MultiPicker
-                    items={categories}
-                    onClose={() => this.setState({ mpOpen: false })}
-                    onSelect={this.onConfirmGoal}
-                    open={this.state.mpOpen}
-                    render={(category: CategoryType) => {
-                        return (
-                            <View key={category.key} style={HomeHeaderStyles.category}>
-                                <View style={{ ...HomeHeaderStyles.icon, backgroundColor: category.color }}>
-                                    <Icon
-                                        color={WHITE}
-                                        name={category.icon}
-                                        size={25}
-                                    />
-                                </View>
-                                <Text style={{ ...HomeHeaderStyles.label, color: this.props.theme.dynamic.text.mainC }}>
-                                    {category.name.toUpperCase()}
-                                </Text>
-                            </View>
-                        );
-                    }}
-                    selectedIndices={this.state.categoriesFiltering}
                 />
             </>
         );

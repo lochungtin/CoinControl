@@ -20,6 +20,7 @@ interface DataProps {
     record: DataType,
     onClose: () => void,
     onConfirm: (obj: DataType) => void,
+    onDelete?: () => void,
     open: boolean,
 }
 

@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -6,19 +7,20 @@ import { connect } from 'react-redux';
 import Header from '../components/headers/home';
 import SubHeader from '../components/headers/sub';
 import InputModal from '../components/modals/input';
+import PromptModal from '../components/modals/prompt';
 import LItem from '../components/listitem';
 
 import { HomeScreenStyles, ScreenStyles } from './styles';
 
-import { defaultCategories, defaultData, defaultSettings } from '../data/default';
+import { defaultCategories, defaultSettings } from '../data/default';
 import { DisplaySectionType, ScreenProps } from '../types/ui';
 import { ReduxPropType } from '../types/redux';
-import { Categories, CategoryStore, CategoryType, DataMap, DataType, SettingsType } from '../types/data';
+import { Categories, CategoryStore, DataMap, DataType, SettingsType } from '../types/data';
 import { ScrollView } from 'react-native-gesture-handler';
 import { keygen } from '../utils/keygen';
-import moment from 'moment';
 import { store } from '../redux/store';
-import { editRecord } from '../redux/action';
+import { deleteRecord, editRecord, setPromptShow } from '../redux/action';
+import { Prompt } from '../data/prompts';
 
 const alternative: DataType = {
 	categoryKey: 'C0000000',
@@ -31,11 +33,27 @@ const alternative: DataType = {
 
 class Screen extends React.Component<ReduxPropType & ScreenProps> {
 	state = {
+		deleteMode: false,
 		edit: undefined,
 		filterCategory: undefined,
 		filterDate: '',
-		open: false,
+		imOpen: false,
+		pmOpen: null,
 		render: false,
+	}
+
+	confirmDelete = (record: DataType | null, show: boolean) => {
+		if (record !== null)
+			store.dispatch(deleteRecord(record));
+		store.dispatch(setPromptShow({ prompt: Prompt.DELETE_RECORD, show }));
+		this.setState({ pmOpen: null });
+	}
+
+	deleteRecord = (record: DataType) => {
+		if (this.props.settings?.promptTrigger[Prompt.DELETE_RECORD])
+			this.setState({ pmOpen: record });
+		else
+			this.confirmDelete(record, false);
 	}
 
 	onEdit = (obj: DataType) => {
@@ -44,6 +62,9 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 	}
 
 	render() {
+
+		console.log(this.props.settings);
+
 		let categories: CategoryStore = this.props.categories || defaultCategories;
 		let data: DataMap = this.props.data?.data || {};
 		let settings: SettingsType = this.props.settings || defaultSettings;
@@ -57,16 +78,16 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 				<View style={{ ...ScreenStyles.root, backgroundColor: this.props.theme.dynamic.screen.bgC }}>
 					<Header
 						navigation={this.props.navigation}
-						onFilterCategory={(filterCategory: CategoryType | undefined) => this.setState({ filterCategory })}
 						onFilterDate={(filterDate: string) => this.setState({ filterDate })}
 						onPressSync={() => { }}
+						toggleDeleting={(deleteMode: boolean) => this.setState({ deleteMode })}
 					/>
 					<ScrollView>
 						<View style={ScreenStyles.scrollView}>
 							{sections.map((section: DisplaySectionType) => {
 								return (
-									<>
-										<SubHeader key={section.date} label={section.date} />
+									<View key={section.date} style={ScreenStyles.scrollView}>
+										<SubHeader label={section.date} />
 										{section.keys.map((key: string) => {
 											let record: DataType = data[key];
 
@@ -75,23 +96,32 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 													fallbackCatName
 													category={categories[record.categoryType][record.categoryKey]}
 													key={record.key}
-													onPress={() => this.setState({ edit: record, open: true })}
+													onPress={() => this.setState({ edit: record, imOpen: true })}
 													label={record.title}
 												>
-													<View style={HomeScreenStyles.valueBox}>
-														<Icon
-															color={this.props.theme.dynamic.text.mainC}
-															name={settings.currency.icon}
-															size={20}
-														/>
-														<Text style={{ ...HomeScreenStyles.value, color: this.props.theme.dynamic.text.mainC }}>
-															{record.value}
-														</Text>
-													</View>
+													{this.state.deleteMode ?
+														<TouchableOpacity onPress={() => this.deleteRecord(record)}>
+															<Icon
+																color={this.props.theme.dynamic.text.mainC}
+																name='trash-can-outline'
+																size={25}
+															/>
+														</TouchableOpacity> :
+														<View style={HomeScreenStyles.valueBox}>
+															<Icon
+																color={this.props.theme.dynamic.text.mainC}
+																name={settings.currency.icon}
+																size={20}
+															/>
+															<Text style={{ ...HomeScreenStyles.value, color: this.props.theme.dynamic.text.mainC }}>
+																{record.value}
+															</Text>
+														</View>
+													}
 												</LItem>
 											);
 										})}
-									</>
+									</View>
 								);
 							})}
 						</View>
@@ -99,9 +129,15 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 				</View>
 				<InputModal
 					record={this.state.edit || alternative}
-					onClose={() => this.setState({ open: false })}
+					onClose={() => this.setState({ edit: alternative, imOpen: false })}
 					onConfirm={this.onEdit}
-					open={this.state.open}
+					open={this.state.imOpen}
+				/>
+				<PromptModal
+					onClose={() => this.setState({ pmOpen: null })}
+					onConfirm={(dnsa: boolean) => this.confirmDelete(this.state.pmOpen, !dnsa)}
+					open={this.state.pmOpen !== null}
+					prompt={Prompt.DELETE_RECORD}
 				/>
 			</>
 		);
@@ -112,6 +148,7 @@ const mapStateToProps = (state: ReduxPropType) => ({
 	categories: state.categories,
 	data: state.data,
 	display: state.display,
+	settings: state.settings,
 	theme: state.theme,
 });
 
