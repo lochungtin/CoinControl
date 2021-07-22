@@ -29,7 +29,6 @@ class Modal extends React.Component<ReduxThemeType & DataProps & DataProps> {
     }
 
     render() {
-        let goalList: Array<GoalType> = Object.keys(goals).map((key: string) => goals[parseInt(key)]);
         return (
             <>
                 <ModalBase

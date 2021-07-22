@@ -12,14 +12,19 @@ import PromptModal from '../components/modals/prompt';
 import { ScreenStyles, CategoryScreenStyles } from './styles';
 
 import { defaultCategories } from '../data/default';
+import { Prompt } from '../data/prompts';
 import { categoryDelete, categoryEdit, dataSetRecordCatToOther, settingsSetPromptShow } from '../redux/action';
 import { store } from '../redux/store';
-import { Categories, CategoryType } from '../types/data';
+import { Categories, CategoryStore, CategoryType, SettingsType } from '../types/data';
 import { ReduxThemeType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
-import { Prompt } from '../data/prompts';
 
-class Screen extends React.Component<ReduxThemeType & ScreenProps> {
+interface AdditionalReduxType {
+    categories: CategoryStore,
+    settings: SettingsType,
+}
+
+class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxType> {
 
     state = {
         category: this.props.route.params?.category || Categories.EXPENSE,
@@ -176,7 +181,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxThemeType) => ({
+const mapStateToProps = (state: ReduxThemeType & AdditionalReduxType) => ({
     categories: state.categories,
     settings: state.settings,
     theme: state.theme,

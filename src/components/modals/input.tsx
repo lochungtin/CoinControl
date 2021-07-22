@@ -9,12 +9,16 @@ import MultiPicker from '../pickers/multi';
 import ModalBase from './base';
 import Selector from './selector';
 
-import { InputModalStyles } from './styles';
 import { WHITE } from '../../data/color';
+import { InputModalStyles } from './styles';
 
 import { defaultCategories } from '../../data/default';
-import { CategoryType, DataType } from '../../types/data';
+import { CategoryStore, CategoryType, DataType } from '../../types/data';
 import { ReduxThemeType } from '../../types/redux';
+
+interface AdditionalReduxType {
+    categories: CategoryStore,
+}
 
 interface DataProps {
     record: DataType,
@@ -24,7 +28,7 @@ interface DataProps {
     open: boolean,
 }
 
-class Modal extends React.Component<ReduxThemeType & DataProps> {
+class Modal extends React.Component<ReduxThemeType & AdditionalReduxType & DataProps> {
 
     state = {
         categoryKey: this.props.record.categoryKey || 'C0000000',
@@ -127,7 +131,7 @@ class Modal extends React.Component<ReduxThemeType & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxThemeType) => ({
+const mapStateToProps = (state: ReduxThemeType & AdditionalReduxType) => ({
     categories: state.categories,
     theme: state.theme,
 });

@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 
 import { NumpadStyles } from './styles';
 
-import { NumpadBtnProps } from '../../types/data';
 import { ReduxThemeType } from '../../types/redux';
+import { NumpadBtnProps } from '../../types/ui';
 
 interface NumpadControlProps {
     disabled: boolean,

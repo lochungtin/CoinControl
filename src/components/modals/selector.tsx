@@ -1,12 +1,9 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import Numpad from '../numpad';
-import ModalBase from './base';
-
-import { GeneralModalStyles, InputModalStyles } from './styles';
+import { GeneralModalStyles } from './styles';
 
 import { ReduxThemeType } from '../../types/redux';
 

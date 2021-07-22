@@ -12,15 +12,22 @@ import LItem from '../components/listitem';
 
 import { HomeScreenStyles, ScreenStyles } from './styles';
 
-import { defaultCategories, defaultData, defaultSettings } from '../data/default';
+import { defaultData } from '../data/default';
 import { DisplaySectionType, ScreenProps } from '../types/ui';
 import { ReduxThemeType } from '../types/redux';
-import { Categories, CategoryStore, DataMap, DataType, SettingsType } from '../types/data';
+import { Categories, CategoryStore, DataMap, DataStore, DataType, SettingsType } from '../types/data';
 import { ScrollView } from 'react-native-gesture-handler';
 import { keygen } from '../utils/keygen';
 import { store } from '../redux/store';
 import { dataDelete, dataEdit, displayDelete, displayEdit, settingsSetPromptShow } from '../redux/action';
 import { Prompt } from '../data/prompts';
+
+interface AdditionalReduxType {
+    categories: CategoryStore,
+	data: DataStore,
+	display: Array<DisplaySectionType>,
+    settings: SettingsType,
+}
 
 const alternative: DataType = {
 	categoryKey: 'C0000000',
@@ -31,7 +38,7 @@ const alternative: DataType = {
 	value: 0,
 }
 
-class Screen extends React.Component<ReduxThemeType & ScreenProps> {
+class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxType> {
 	state = {
 		deleteMode: false,
 		edit: undefined,
@@ -67,10 +74,6 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps> {
 	render() {
 		console.log(defaultData);
 
-		let categories: CategoryStore = this.props.categories || defaultCategories;
-		let data: DataMap = this.props.data?.data || {};
-		let settings: SettingsType = this.props.settings || defaultSettings;
-
 		let sections: Array<DisplaySectionType> = this.props.display || [];
 		if (this.state.filterDate)
 			sections = sections.filter((section: DisplaySectionType) => section.date === this.state.filterDate);
@@ -91,12 +94,12 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps> {
 									<View key={section.date} style={ScreenStyles.scrollView}>
 										<SubHeader label={section.date} />
 										{section.keys.map((key: string) => {
-											let record: DataType = data[key];
+											let record: DataType = this.props.data.data[key];
 
 											return (
 												<LItem
 													fallbackCatName
-													category={categories[record.categoryType][record.categoryKey]}
+													category={this.props.categories[record.categoryType][record.categoryKey]}
 													key={record.key}
 													onPress={() => this.setState({ edit: record, imOpen: true })}
 													label={record.title}
@@ -112,7 +115,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps> {
 														<View style={HomeScreenStyles.valueBox}>
 															<Icon
 																color={this.props.theme.dynamic.text.mainC}
-																name={settings.currency.icon}
+																name={this.props.settings.currency.icon}
 																size={20}
 															/>
 															<Text style={{ ...HomeScreenStyles.value, color: this.props.theme.dynamic.text.mainC }}>
@@ -146,7 +149,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps> {
 	}
 }
 
-const mapStateToProps = (state: ReduxThemeType) => ({
+const mapStateToProps = (state: ReduxThemeType & AdditionalReduxType) => ({
 	categories: state.categories,
 	data: state.data,
 	display: state.display,

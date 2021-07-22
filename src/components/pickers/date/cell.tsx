@@ -2,8 +2,9 @@ import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
-import { ReduxThemeType } from '../../../types/redux';
 import { DatePickerStyles } from '../styles';
+
+import { ReduxThemeType } from '../../../types/redux';
 
 interface DataProps {
     data: string,

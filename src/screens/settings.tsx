@@ -14,7 +14,6 @@ import { ScreenStyles, SettingsScreenStyles } from './styles';
 import { colorPickerData, WHITE } from '../data/color';
 
 import { currencyData } from '../data/currency';
-import { defaultSettings } from '../data/default';
 import { itemlist, SettingsPickers, SettingsSelects, SettingsSwitches } from '../data/mapping/settings';
 import { Prompt, promptNames } from '../data/prompts';
 import {
@@ -34,12 +33,17 @@ import {
     settingsSetLightMode,
 } from '../redux/action';
 import { store } from '../redux/store';
-import { CurrencyType } from '../types/data';
+import { AccountType, CurrencyType, SettingsType } from '../types/data';
 import { ReduxThemeType } from '../types/redux';
 import { ScreenProps, SettingsCategory, SettingsItem } from '../types/ui';
 import { smallKeygen } from '../utils/keygen';
 
-class Screen extends React.Component<ReduxThemeType & ScreenProps> {
+interface AdditionalReduxType {
+    account: AccountType | null,
+    settings: SettingsType,
+}
+
+class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxType> {
 
     state = {
         colorPickerOpen: false,
@@ -244,8 +248,8 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps> {
                 />
                 <TimePicker
                     am={this.props.settings?.notifTime.substring(6, 8) === 'AM'}
-                    hour={parseInt((this.props.settings?.notifTime || defaultSettings.notifTime).substring(0, 2))}
-                    minute={(this.props.settings?.notifTime || defaultSettings.notifTime).substring(3, 5)}
+                    hour={parseInt(this.props.settings.notifTime.substring(0, 2))}
+                    minute={this.props.settings.notifTime.substring(3, 5)}
                     onClose={() => this.setState({ timePickerOpen: false })}
                     onSelect={this.settingsSetNotifTime}
                     open={this.state.timePickerOpen}
@@ -261,7 +265,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxThemeType) => ({
+const mapStateToProps = (state: ReduxThemeType & AdditionalReduxType) => ({
     account: state.account,
     settings: state.settings,
     theme: state.theme,

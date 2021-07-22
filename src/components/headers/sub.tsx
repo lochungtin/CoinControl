@@ -2,8 +2,9 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
-import { ReduxThemeType } from '../../types/redux';
 import { SubHeaderStyles } from './styles';
+
+import { ReduxThemeType } from '../../types/redux';
 
 interface DataProps {
     highlight?: boolean

@@ -1,6 +1,5 @@
 import { Categories, SettingsType } from "../../types/data";
 import { SettingsCategory } from "../../types/ui";
-import { defaultSettings } from "../default";
 import { Prompt } from "../prompts";
 
 export enum SettingsPickers {
@@ -25,7 +24,7 @@ export const itemlist = (
     openPicker: (type: SettingsPickers) => void,
     openSelect: (type: SettingsSelects) => void,
     navigation: any,
-    settings: SettingsType = defaultSettings,
+    settings: SettingsType,
     signOut: () => void,
 ): Array<SettingsCategory> => [
         {

@@ -11,13 +11,18 @@ import PGBar from '../progressbar';
 
 import { GeneralHeaderStyles, HomeHeaderStyles } from './styles';
 
-import { defaultData, defaultSettings } from '../../data/default';
 import { Goal, goalExceededText, goals } from '../../data/goal';
 import { dataSetGoal } from '../../redux/action';
 import { store } from '../../redux/store';
-import { DataStore, GoalConfigType } from '../../types/data';
+import { CategoryStore, DataStore, GoalConfigType, SettingsType } from '../../types/data';
 import { ReduxThemeType } from '../../types/redux';
 import { ScreenProps } from '../../types/ui';
+
+interface AdditionalReduxType {
+    data: DataStore,
+    categories: CategoryStore,
+    settings: SettingsType,
+}
 
 interface DataProps {
     onFilterDate: (date: string) => void,
@@ -25,7 +30,7 @@ interface DataProps {
     toggleDeleting: (deleteMode: boolean) => void,
 }
 
-class Header extends React.Component<ReduxThemeType & ScreenProps & DataProps> {
+class Header extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxType & DataProps> {
 
     state = {
         deleting: false,
@@ -65,25 +70,23 @@ class Header extends React.Component<ReduxThemeType & ScreenProps & DataProps> {
     unsubscribe = () => this.props.navigation.addListener('focus', () => this.setState({ categoriesFiltering: [] }))
 
     render() {
-        let data: DataStore = this.props.data || defaultData;
-
-        let splt: Array<string> = data.stats.balance.toString().split('.') || ['0'];
+        let splt: Array<string> = this.props.data.stats.balance.toString().split('.') || ['0'];
 
         let balance: string = splt[0] || '420';
         let decimal: string = ((splt[1] || '00') + '00').slice(0, 2);
 
-        let progress: number = data.stats.goal.left / data.stats.goal.config.max;
-        if (data.stats.goal.used > data.stats.goal.config.max)
+        let progress: number = this.props.data.stats.goal.left / this.props.data.stats.goal.config.max;
+        if (this.props.data.stats.goal.used > this.props.data.stats.goal.config.max)
             progress = 0;
 
-        let goalPrompt: string = data.stats.goal.left.toFixed(2).toString();
+        let goalPrompt: string = this.props.data.stats.goal.left.toFixed(2).toString();
 
-        if (data.stats.goal.left < 0)
+        if (this.props.data.stats.goal.left < 0)
             goalPrompt = goalExceededText;
-        else if (this.props.data?.stats.goal.config.type === Goal.NONE)
+        else if (this.props.data.stats.goal.config.type === Goal.NONE)
             goalPrompt = goals[Goal.NONE].text;
         else
-            goalPrompt += ' ' + goals[data.stats.goal.config.type].text;
+            goalPrompt += ' ' + goals[this.props.data.stats.goal.config.type].text;
 
         return (
             <>
@@ -101,7 +104,7 @@ class Header extends React.Component<ReduxThemeType & ScreenProps & DataProps> {
                             <View style={HomeHeaderStyles.balanceRow}>
                                 <Icon
                                     color={this.props.theme.dynamic.text.mainC}
-                                    name={(this.props.settings || defaultSettings).currency.icon}
+                                    name={this.props.settings.currency.icon}
                                     size={36}
                                 />
                                 <Text style={{ ...HomeHeaderStyles.balance, color: this.props.theme.dynamic.text.mainC }}>
@@ -188,7 +191,7 @@ class Header extends React.Component<ReduxThemeType & ScreenProps & DataProps> {
                     onClose={() => this.setState({ gmOpen: false })}
                     onConfirm={this.onConfirmGoal}
                     open={this.state.gmOpen}
-                    config={(this.props.data || defaultData)?.stats.goal.config}
+                    config={this.props.data.stats.goal.config}
                 />
                 <DatePicker
                     onClose={() => this.setState({ dpOpen: false })}
@@ -201,7 +204,7 @@ class Header extends React.Component<ReduxThemeType & ScreenProps & DataProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxThemeType) => ({
+const mapStateToProps = (state: ReduxThemeType & AdditionalReduxType) => ({
     data: state.data,
     categories: state.categories,
     settings: state.settings,

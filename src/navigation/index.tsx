@@ -13,9 +13,9 @@ import resetPswd from '../screens/resetPswd';
 import settings from '../screens/settings';
 import signin from '../screens/signin';
 import signup from '../screens/signup';
+import { makeDrawer } from './drawer';
 
 import { ReduxThemeType } from '../types/redux';
-import { makeDrawer } from './drawer';
 
 const Nav = createDrawerNavigator();
 const Category = createStackNavigator();

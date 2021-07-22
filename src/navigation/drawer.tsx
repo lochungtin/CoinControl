@@ -3,10 +3,10 @@ import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { ThemeType } from '../types/color';
 import { DrawerStyles } from "./styles";
 
 import { drawerItemData } from '../data/mapping/drawerItems';
+import { ThemeType } from '../types/color';
 
 export const makeDrawer = (props: any, theme: ThemeType) =>
     <DrawerContentScrollView {...props} style={{ backgroundColor: theme.dynamic.screen.secondaryBgC }}>

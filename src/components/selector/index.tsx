@@ -2,12 +2,12 @@ import Color from '@enigmaoffline/node-color';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
+
 import { BLACK, WHITE } from '../../data/color';
+import { screenWidth, SelectorStyles } from './styles';
 
 import { Categories } from '../../types/data';
 import { ReduxThemeType } from '../../types/redux';
-import { screenWidth } from '../bullet/styles';
-import { SelectorStyles } from './styles';
 
 interface DataProps {
     onToggle: (category: Categories) => void,

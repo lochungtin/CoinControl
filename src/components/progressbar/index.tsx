@@ -2,8 +2,8 @@ import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 
-import { PGBarStyles, screenWidth } from './style';
 import { WHITE } from '../../data/color';
+import { PGBarStyles, screenWidth } from './style';
 
 import { ReduxThemeType } from '../../types/redux';
 
