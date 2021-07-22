@@ -18,7 +18,16 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { keygen } from '../utils/keygen';
 import moment from 'moment';
 import { store } from '../redux/store';
-import { deleteRecord } from '../redux/action';
+import { editRecord } from '../redux/action';
+
+const alternative: DataType = {
+	categoryKey: 'C0000000',
+	categoryType: Categories.EXPENSE,
+	date: moment().format('DD-MM-YYYY'),
+	key: keygen(),
+	title: '',
+	value: 0,
+}
 
 class Screen extends React.Component<ReduxPropType & ScreenProps> {
 	state = {
@@ -27,7 +36,12 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 		filterDate: '',
 		open: false,
 		render: false,
-	};
+	}
+
+	onEdit = (obj: DataType) => {
+		store.dispatch(editRecord({ new: obj, old: this.state.edit || alternative }));
+		this.setState({ edit: alternative, open: false });
+	}
 
 	render() {
 		let categories: CategoryStore = this.props.categories || defaultCategories;
@@ -61,7 +75,7 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 													fallbackCatName
 													category={categories[record.categoryType][record.categoryKey]}
 													key={record.key}
-													onPress={() => store.dispatch(deleteRecord(record))}
+													onPress={() => this.setState({ edit: record, open: true })}
 													label={record.title}
 												>
 													<View style={HomeScreenStyles.valueBox}>
@@ -84,16 +98,9 @@ class Screen extends React.Component<ReduxPropType & ScreenProps> {
 					</ScrollView>
 				</View>
 				<InputModal
-					record={this.state.edit || {
-						categoryKey: 'C0000000',
-						categoryType: Categories.EXPENSE,
-						date: moment().format('DD-MM-YYYY'),
-						key: keygen(),
-						title: '',
-						value: 0,
-					}}
+					record={this.state.edit || alternative}
 					onClose={() => this.setState({ open: false })}
-					onConfirm={(obj: DataType) => console.log(obj)}
+					onConfirm={this.onEdit}
 					open={this.state.open}
 				/>
 			</>

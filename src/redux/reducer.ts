@@ -85,6 +85,26 @@ const updateData = (data: DataStore = defaultData, action: ReduxActionType) => {
     return update;
 }
 
+const displayAdd = (update: Array<DisplaySectionType>, record: DataType) => {
+    var sectionIndex = update.findIndex((section: DisplaySectionType) => section.date === record.date);
+        
+    if (sectionIndex === -1) {
+        sectionIndex = update.length;
+        update.push({ date: record.date, keys: [] });
+    }
+
+    update[sectionIndex].keys.push(record.key);
+}
+
+const displayDelete = (update: Array<DisplaySectionType>, record: DataType) => {
+    var sectionIndex = update.findIndex((section: DisplaySectionType) => section.date === record.date);
+
+    if (update[sectionIndex].keys.length === 1)
+        update.splice(sectionIndex, 1);
+    else 
+        update[sectionIndex].keys.splice(update[sectionIndex].keys.indexOf(record.key), 1);
+}
+
 const updateDisplay = (display: Array<DisplaySectionType> = [], action: ReduxActionType) => {
     let update: Array<DisplaySectionType> = [...display];
     switch (action.type) {
@@ -93,26 +113,16 @@ const updateDisplay = (display: Array<DisplaySectionType> = [], action: ReduxAct
             return [];
         // add record
         case Actions.RECORD_ADD:
-            var sectionIndex = update.findIndex((section: DisplaySectionType) => section.date === action.payload.date);
-        
-            if (sectionIndex === -1) {
-                sectionIndex = update.length;
-                update.push({ date: action.payload.date, keys: [] });
-            }
-
-            update[sectionIndex].keys.push(action.payload.key);
+            displayAdd(update, action.payload);
             break;
         // delete record
         case Actions.RECORD_DELETE:
-            var sectionIndex = update.findIndex((section: DisplaySectionType) => section.date === action.payload.date);
-
-            if (update[sectionIndex].keys.length === 1)
-                update.splice(sectionIndex, 1);
-            else 
-                update[sectionIndex].keys.splice(update[sectionIndex].keys.indexOf(action.payload.key), 1);
+            displayDelete(update, action.payload);
             break;
         // edit record
         case Actions.RECORD_EDIT:
+            displayDelete(update, action.payload.old);
+            displayAdd(update, action.payload.new);
             break;
         // default
         default:

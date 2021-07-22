@@ -81,7 +81,7 @@ export const deleteRecord = (payload: DataType): ReduxActionType => ({
     payload,
 });
 
-export const editRecord = (payload: DataType): ReduxActionType => ({
+export const editRecord = (payload: { new: DataType, old: DataType }): ReduxActionType => ({
     type: Actions.RECORD_EDIT,
     payload,
 });
