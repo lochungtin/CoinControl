@@ -166,7 +166,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
         }
 
         if (this.state.multiPickerOpen === SettingsSelects.PROMPT) {
-            data = Object.keys(this.props.settings?.promptTrigger || []);
+            data = Object.keys(this.props.settings.promptTrigger);
             selected = [];
         }
 
