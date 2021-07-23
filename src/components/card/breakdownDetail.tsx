@@ -30,7 +30,7 @@ class Card extends React.Component<ReduxThemeType & DataProps & AdditionalReduxT
                 <View style={GeneralCardStyles.mainContent}>
                     {this.props.categoryKey === '' ?
                         <Text style={{ ...GeneralCardStyles.nullPrompt, color: this.props.theme.dynamic.text.secondaryC }}>
-                            Select a category from "breakdown" to start using this card
+                            Select a category from "breakdown" by clicking the donut slices or the category list to start using this card
                         </Text>
                         :
                         <View>

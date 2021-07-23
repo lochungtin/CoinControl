@@ -4,8 +4,9 @@ import { ScrollView, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import BreakdownCard from '../components/card/breakdown';
-import CashflowCard from '../components/card/cashflow';
 import BDDetailsCard from '../components/card/breakdownDetail';
+import CashflowCard from '../components/card/cashflow';
+import CFDetailsCard from '../components/card/cashflowDetail';
 import GoalCard from '../components/card/goal';
 import Header from '../components/headers/minimal';
 
@@ -94,6 +95,11 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
                             keyList={categoryKeys}
                             onSelectCategory={(cfCategoryType: Categories, cfCategoryKey: string) => this.setState({ cfCategoryKey, cfCategoryType })}
                             onSelectDate={(date: string) => this.setState({ date })}
+                        />
+                        <CFDetailsCard
+                            categoryKey={this.state.cfCategoryKey}
+                            categoryType={this.state.cfCategoryType}
+                            date={this.state.date}
                         />
                         <BreakdownCard
                             onSelectCategory={(bdCategoryType: Categories, bdCategoryKey: string) => this.setState({ bdCategoryKey, bdCategoryType })}

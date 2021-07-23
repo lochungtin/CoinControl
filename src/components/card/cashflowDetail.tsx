@@ -31,7 +31,7 @@ class Card extends React.Component<ReduxThemeType & DataProps & AdditionalReduxT
                 <View style={GeneralCardStyles.mainContent}>
                     {this.props.categoryKey === '' ?
                         <Text style={{ ...GeneralCardStyles.nullPrompt, color: this.props.theme.dynamic.text.secondaryC }}>
-                            Select a category from "breakdown" to start using this card
+                            Select a category or a date from "7 day cashflow" by clicking on the columns or the cateogory list to start using this card
                         </Text>
                         :
                         <View>
