@@ -24,7 +24,7 @@ export const clearCategories: { [index: number]: CategoryStatType } = Object.fre
 
 export const defaultCategoryKeys: Array<string> = [
     'C0000000',
-    '9ed0a104',
+    '9ed01a04',
     '7a3e8956',
     '7295dbe6',
     'ce94266d',

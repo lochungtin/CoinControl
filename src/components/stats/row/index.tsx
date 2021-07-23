@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 
 import { RowStyles } from './styles';
 
-import { ReduxThemeType } from '../../../types/redux';
 import { SettingsType } from '../../../types/data';
+import { ReduxThemeType } from '../../../types/redux';
 
 interface AdditionalReduxType {
     settings: SettingsType,
