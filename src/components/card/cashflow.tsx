@@ -21,6 +21,10 @@ interface AdditionalReduxType {
 }
 
 interface DataProps {
+	categoryList: Array<CategoryType>,
+	colorList: Array<string>,
+	dataList: Array<{[key: string]: any}>,
+	keyList: Array<string>,
     onSelectCategory: (categoryType: Categories, categoryKey: string) => void,
 	onSelectDate: (date: string) => void,
 }
@@ -55,56 +59,6 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType & DataPr
     }
 
 	render() {
-		let data: Array<{ [key: string]: any }> = [];
-		let sevenDaysAgo: moment.Moment = moment().subtract(7, 'days');
-
-		let recordKeys: Array<DisplaySectionType> = this.props.display
-			.slice(0, 7)
-			.filter((section: DisplaySectionType) => moment(section.date, 'DD-MM-YYYY').isAfter(sevenDaysAgo));
-
-		let categoryKeyArr: Array<string> = [];
-		let recordList: Array<DataType> = [];
-
-		recordKeys.map((section: DisplaySectionType) => {
-			section.keys.map((key: string) => {
-				let record: DataType = this.props.data.data[key];
-
-				if (this.state.categoryType === record.categoryType) {
-					categoryKeyArr.push(record.categoryKey);
-					recordList.push(record);
-				}
-			});
-		});
-
-		let categoryKeys: Array<string> = Array.from(new Set(categoryKeyArr));
-		let categories: Array<CategoryType> = [];
-		let colors: Array<string> = categoryKeys.map((categoryKey: string) => {
-			let category: CategoryType = this.props.categories[this.state.categoryType][categoryKey];
-			categories.push(category);
-
-			return category.color;
-		});
-
-		for (let i: number = 0; i < 7; i++) {
-			sevenDaysAgo.add(1, 'days');
-
-			let datapoint: { [key: string]: any } = {
-				date: sevenDaysAgo.format('DD-MM-YYYY'),
-			};
-
-			categoryKeys.forEach((key: string) => {
-				datapoint[key] = 0;
-			});
-
-			data.push(datapoint);
-		}
-
-		recordList.forEach((record: DataType) => {
-			let index = data.findIndex((datapoint: { [key: string]: any }) => datapoint['date'] === record.date);
-
-			data[index][record.categoryKey] += record.value;
-		});
-
 		return (
 			<CardBase icon='chart-timeline-variant' title='7 day cashflow'>
 				<View style={GeneralCardStyles.mainContent}>
@@ -113,18 +67,18 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType & DataPr
 						selected={this.state.categoryType}
 						width={0.85}
 					/>
-					{data.length !== 0 && <View style={CashflowCardStyles.chartPadding}>
+					{this.props.dataList.length !== 0 && <View style={CashflowCardStyles.chartPadding}>
 						<StackChart
-							colors={colors}
-							data={data}
+							colors={this.props.colorList}
+							data={this.props.dataList}
 							height={150}
-							keys={categoryKeys}
+							keys={this.props.keyList}
 							onPress={console.log}
 							width={screenWidth * 0.8}
 						/>
 					</View>}
-					{data.length !== 0 && <List
-						categoryList={categories}
+					{this.props.dataList.length !== 0 && <List
+						categoryList={this.props.categoryList}
 						onSelectCategory={this.onSelectCategory}
 					/>}
 				</View>
