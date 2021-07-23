@@ -1,14 +1,25 @@
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { connect } from 'react-redux';
 
-import { ReduxThemeType } from '../types/redux';
+import Header from '../components/headers/minimal';
+import Cashflow from '../components/card/cashflow';
 
-class Screen extends React.Component<ReduxThemeType> {
+import { ScreenStyles } from './styles';
+
+import { ReduxThemeType } from '../types/redux';
+import { ScreenProps } from '../types/ui';
+
+class Screen extends React.Component<ReduxThemeType & ScreenProps> {
     render() {
         return (
-            <View>
-
+            <View style={{ ...ScreenStyles.root, backgroundColor: this.props.theme.dynamic.screen.bgC }}>
+                <Header name='analytics' navigation={this.props.navigation} />
+                <ScrollView>
+                    <View style={ScreenStyles.scrollView}>
+                        <Cashflow />
+                    </View>
+                </ScrollView>
             </View>
         );
     }
