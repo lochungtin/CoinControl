@@ -36,7 +36,7 @@ class Card extends React.Component<ReduxThemeType & DataProps & AdditionalReduxT
                         <View>
                             <View style={DetailCardStyles.topRow}>
                                 <Text style={{ ...DetailCardStyles.selected, color: this.props.theme.dynamic.text.mainC }}>
-                                    {'Selected: '}
+                                    Selected:
                                 </Text>
                                 <Category category={this.props.categories[this.props.categoryType][this.props.categoryKey]} />
                             </View>

@@ -70,10 +70,11 @@ export const GoalCardStyles = StyleSheet.create({
     topRow: {
         alignItems: 'center',
         display: 'flex',
-        justifyContent: 'center',
-        width: screenWidth * 0.85,
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
     },
     typeText: {
+        fontSize: 18,
         fontWeight: 'bold',
     },
     textRow: {

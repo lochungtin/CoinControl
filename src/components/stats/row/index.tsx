@@ -48,7 +48,7 @@ class Row extends React.Component<ReduxThemeType & AdditionalReduxType & DataPro
                         color: this.props.theme.dynamic.text.mainC,
                         fontWeight: this.props.bold ? 'bold' : 'normal',
                     }}>
-                        {this.props.value.toFixed(2)}
+                        {this.props.noCurrency ? this.props.value : this.props.value.toFixed(2)}
                     </Text>
                 </View>
             </View>

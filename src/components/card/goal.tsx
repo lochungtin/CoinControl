@@ -35,10 +35,10 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType> {
                         <View>
                             <View style={GoalCardStyles.topRow}>
                                 <Text style={{ ...GoalCardStyles.text, color: this.props.theme.dynamic.text.mainC }}>
-                                    {`Goal Type: `}
-                                    <Text style={{ ...GoalCardStyles.typeText, color: this.props.theme.static.accentC }}>
-                                        {goals[this.props.data.stats.goal.config.type].name.toUpperCase()}
-                                    </Text>
+                                    Goal Type:
+                                </Text>
+                                <Text style={{ ...GoalCardStyles.typeText, color: this.props.theme.static.accentC }}>
+                                    {goals[this.props.data.stats.goal.config.type].name.toUpperCase()}
                                 </Text>
                             </View>
                             <View style={GoalCardStyles.pgbarBox}>
