@@ -3,7 +3,7 @@ import { Dimensions, StyleSheet } from 'react-native';
 const screenWidth: number = Dimensions.get('screen').width;
 
 export const RowStyles = StyleSheet.create({
-    textRow: {
+    root: {
         alignItems: 'center',
         borderBottomWidth: 2,
         display: 'flex',

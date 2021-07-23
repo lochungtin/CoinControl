@@ -1,6 +1,4 @@
-import { Dimensions, StyleSheet } from 'react-native';
-
-const screenWidth: number = Dimensions.get('screen').width;
+import { StyleSheet } from 'react-native';
 
 export const CategoryStyles = StyleSheet.create({
     category: {
@@ -9,7 +7,6 @@ export const CategoryStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 15,
-        width: screenWidth * 0.4,
     },
     icon: {
         alignItems: 'center',
@@ -20,6 +17,6 @@ export const CategoryStyles = StyleSheet.create({
         width: 30,
     },
     text: {
-        width: screenWidth * 0.4 - 45,
+        marginLeft: 10,
     },
 });

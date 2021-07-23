@@ -2,10 +2,11 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
+import Category from '../stats/category';
 import Row from '../stats/row';
 import CardBase from './base';
 
-import { GeneralCardStyles } from './styles';
+import { DetailCardStyles, GeneralCardStyles } from './styles';
 
 import { ReduxThemeType } from '../../types/redux';
 import { Categories, CategoryStore, CategoryTallyType, DataStore } from '../../types/data';
@@ -33,6 +34,12 @@ class Card extends React.Component<ReduxThemeType & DataProps & AdditionalReduxT
                         </Text>
                         :
                         <View>
+                            <View style={DetailCardStyles.topRow}>
+                                <Text style={{ ...DetailCardStyles.selected, color: this.props.theme.dynamic.text.mainC }}>
+                                    {'Selected: '}
+                                </Text>
+                                <Category category={this.props.categories[this.props.categoryType][this.props.categoryKey]} />
+                            </View>
                             <Row label='Total:' value={categoryStats.amount} />
                             <Row
                                 noCurrency

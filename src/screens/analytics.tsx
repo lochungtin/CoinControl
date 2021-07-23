@@ -10,9 +10,9 @@ import Header from '../components/headers/minimal';
 
 import { ScreenStyles } from './styles';
 
+import { Categories } from '../types/data';
 import { ReduxThemeType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
-import { Categories } from '../types/data';
 
 class Screen extends React.Component<ReduxThemeType & ScreenProps> {
 

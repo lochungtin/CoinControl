@@ -53,6 +53,19 @@ export const PieCardStyles = StyleSheet.create({
     },
 });
 
+export const DetailCardStyles = StyleSheet.create({
+    topRow: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+    },
+    selected: {
+        fontSize: 18,
+        marginBottom: 15,
+    }
+});
+
 export const GoalCardStyles = StyleSheet.create({
     topRow: {
         alignItems: 'center',

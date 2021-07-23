@@ -21,7 +21,7 @@ class List extends React.Component<ReduxThemeType & DataProps> {
 
         return (
             <View style={ListStyles.root}>
-                <View>
+                <View style={ListStyles.column}>
                     {part1.map((category: CategoryType) => {
                         return (
                             <Category
@@ -32,7 +32,7 @@ class List extends React.Component<ReduxThemeType & DataProps> {
                         );
                     })}
                 </View>
-                <View>
+                <View style={ListStyles.column}>
                     {part2.map((category: CategoryType) => {
                         return (
                             <Category

@@ -22,7 +22,7 @@ interface DataProps {
 class Row extends React.Component<ReduxThemeType & AdditionalReduxType & DataProps> {
     render() {
         return (
-            <View style={{ ...RowStyles.textRow, borderBottomColor: this.props.theme.dynamic.screen.bgC }}>
+            <View style={{ ...RowStyles.root, borderBottomColor: this.props.theme.dynamic.screen.bgC }}>
                 <View style={RowStyles.textBox}>
                     <Icon
                         color={this.props.theme.static.accentC}

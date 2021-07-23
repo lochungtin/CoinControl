@@ -15,7 +15,7 @@ interface AdditionalReduxType {
 
 interface DataProps {
     category: CategoryType,
-    onPress: () => void,
+    onPress?: () => void,
 }
 
 class Row extends React.Component<ReduxThemeType & AdditionalReduxType & DataProps> {

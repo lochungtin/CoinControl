@@ -11,4 +11,11 @@ export const ListStyles = StyleSheet.create({
         marginTop: 15,
         width: screenWidth * 0.85,
     },
+    column: {
+        alignItems: 'flex-start',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        width: screenWidth * 0.4,
+    }
 });
