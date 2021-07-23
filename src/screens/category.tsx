@@ -104,8 +104,8 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
         let favs: Array<CategoryType> = [];
         let others: Array<CategoryType> = [];
 
-        Object.keys((this.props.categories || defaultCategories)[this.state.category])
-            .map((key: string) => (this.props.categories || defaultCategories)[this.state.category][key])
+        Object.keys((this.props.categories)[this.state.category])
+            .map((key: string) => (this.props.categories)[this.state.category][key])
             .sort((a: CategoryType, b: CategoryType) => {
                 if (a.key === 'C0000000')
                     return 1;

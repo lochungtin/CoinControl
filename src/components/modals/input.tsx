@@ -62,10 +62,10 @@ class Modal extends React.Component<ReduxThemeType & AdditionalReduxType & DataP
     });
 
     render() {
-        let keylist: Array<string> = Object.keys((this.props.categories || defaultCategories)[this.props.record.categoryType]);
-        let categories: Array<CategoryType> = keylist.map((key: string) => (this.props.categories || defaultCategories)[this.props.record.categoryType][key]);
+        let keylist: Array<string> = Object.keys((this.props.categories)[this.props.record.categoryType]);
+        let categories: Array<CategoryType> = keylist.map((key: string) => (this.props.categories)[this.props.record.categoryType][key]);
 
-        let category: CategoryType = (this.props.categories || defaultCategories)[this.props.record.categoryType][this.state.categoryKey];
+        let category: CategoryType = (this.props.categories)[this.props.record.categoryType][this.state.categoryKey];
 
         return (
             <>

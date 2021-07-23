@@ -72,9 +72,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
 	}
 
 	render() {
-		console.log('D', defaultData, this.props.data === defaultData);
-
-		let sections: Array<DisplaySectionType> = this.props.display || [];
+		let sections: Array<DisplaySectionType> = this.props.display;
 		if (this.state.filterDate)
 			sections = sections.filter((section: DisplaySectionType) => section.date === this.state.filterDate);
 
