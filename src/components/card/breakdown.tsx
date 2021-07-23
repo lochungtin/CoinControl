@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import PieChart from '../charts/pie';
 import Selector from '../selector';
+import Row from '../stats/row';
 import CardBase from './base';
 
 import { GeneralCardStyles, PieCardStyles } from './styles';
@@ -55,10 +56,12 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType> {
                         selected={this.state.category}
                         width={0.85}
                     />
-                    <View>
-                        <Text>
-                            {`Total: ${categoryStat.total}`}
-                        </Text>
+                    <View style={PieCardStyles.rowPadding}>
+                        <Row
+                            bold
+                            label='Total:'
+                            value={categoryStat.total}
+                        />
                     </View>
                     <PieChart
                         data={pieData}

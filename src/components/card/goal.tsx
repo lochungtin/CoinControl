@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import PGBar from '../progressbar';
+import Row from '../stats/row';
 import CardBase from './base';
 
 import { GeneralCardStyles, GoalCardStyles } from './styles';
@@ -51,57 +52,9 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType> {
                                     {`${(progress * 100).toFixed(2)}%`}
                                 </Text>
                             </View>
-                            <View style={{ ...GoalCardStyles.textRow, borderBottomColor: this.props.theme.dynamic.screen.bgC }}>
-                                <Icon
-                                    color={this.props.theme.static.accentC}
-                                    name='chevron-right'
-                                    size={30}
-                                />
-                                <View style={GoalCardStyles.textBox}>
-                                    <Icon
-                                        color={this.props.theme.dynamic.text.mainC}
-                                        name={this.props.settings.currency.icon}
-                                        size={20}
-                                    />
-                                    <Text style={{ ...GoalCardStyles.text, color: this.props.theme.dynamic.text.mainC }}>
-                                        {`${this.props.data.stats.goal.config.max.toFixed(2)} set limit`}
-                                    </Text>
-                                </View>
-                            </View>
-                            <View style={{ ...GoalCardStyles.textRow, borderBottomColor: this.props.theme.dynamic.screen.bgC }}>
-                                <Icon
-                                    color={this.props.theme.static.accentC}
-                                    name='chevron-right'
-                                    size={30}
-                                />
-                                <View style={GoalCardStyles.textBox}>
-                                    <Icon
-                                        color={this.props.theme.dynamic.text.mainC}
-                                        name={this.props.settings.currency.icon}
-                                        size={20}
-                                    />
-                                    <Text style={{ ...GoalCardStyles.text, color: this.props.theme.dynamic.text.mainC }}>
-                                        {`${this.props.data.stats.goal.left.toFixed(2)} remaining`}
-                                    </Text>
-                                </View>
-                            </View>
-                            <View style={{ ...GoalCardStyles.textRow, borderBottomColor: this.props.theme.dynamic.screen.bgC }}>
-                                <Icon
-                                    color={this.props.theme.static.accentC}
-                                    name='chevron-right'
-                                    size={30}
-                                />
-                                <View style={GoalCardStyles.textBox}>
-                                    <Icon
-                                        color={this.props.theme.dynamic.text.mainC}
-                                        name={this.props.settings.currency.icon}
-                                        size={20}
-                                    />
-                                    <Text style={{ ...GoalCardStyles.text, color: this.props.theme.dynamic.text.mainC }}>
-                                        {`${this.props.data.stats.goal.used.toFixed(2)} used so far`}
-                                    </Text>
-                                </View>
-                            </View>
+                            <Row label='Set Limit:' value={this.props.data.stats.goal.config.max} />
+                            <Row label='Remaining:' value={this.props.data.stats.goal.left} />
+                            <Row label='Used:' value={this.props.data.stats.goal.used} />
                         </View>
                     }
                 </View>

@@ -44,12 +44,15 @@ export const GeneralCardStyles = StyleSheet.create({
 });
 
 export const PieCardStyles = StyleSheet.create({
+    rowPadding: {
+        marginTop: 15,
+    },
     selectList: {
         alignItems: 'flex-start',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginVertical: 15,
+        marginTop: 15,
         width: screenWidth * 0.85,
     },
     category: {
@@ -70,7 +73,7 @@ export const PieCardStyles = StyleSheet.create({
     },
     text: {
         width: screenWidth * 0.4 - 45,
-    }
+    },
 });
 
 export const GoalCardStyles = StyleSheet.create({
