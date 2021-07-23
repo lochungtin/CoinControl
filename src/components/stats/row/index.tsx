@@ -15,6 +15,7 @@ interface AdditionalReduxType {
 interface DataProps {
     bold?: boolean,
     label: string,
+    noCurrency?: boolean,
     value: number,
 }
 
@@ -37,11 +38,11 @@ class Row extends React.Component<ReduxThemeType & AdditionalReduxType & DataPro
                     </Text>
                 </View>
                 <View style={RowStyles.textBox}>
-                    <Icon
+                    {!this.props.noCurrency && <Icon
                         color={this.props.theme.dynamic.text.mainC}
                         name={this.props.settings.currency.icon}
                         size={20}
-                    />
+                    />}
                     <Text style={{
                         ...RowStyles.text,
                         color: this.props.theme.dynamic.text.mainC,

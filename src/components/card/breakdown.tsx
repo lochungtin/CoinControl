@@ -8,25 +8,36 @@ import Selector from '../selector';
 import Row from '../stats/row';
 import CardBase from './base';
 
+import { WHITE } from '../../data/color';
 import { GeneralCardStyles, PieCardStyles } from './styles';
 
 import { ReduxThemeType } from '../../types/redux';
 import { Categories, CategoryStatType, CategoryStore, CategoryType, DataStore } from '../../types/data';
 import { PieArcProps } from '../../types/ui';
-import { WHITE } from '../../data/color';
 
 interface AdditionalReduxType {
     categories: CategoryStore,
     data: DataStore,
 }
 
-class Card extends React.Component<ReduxThemeType & AdditionalReduxType> {
+interface DataProps {
+    onSelectCategory: (category: string) => void,
+}
+
+class Card extends React.Component<ReduxThemeType & AdditionalReduxType & DataProps> {
 
     state = {
-        category: Categories.EXPENSE
+        category: Categories.EXPENSE,
+        selected: '',
     }
 
-    selectCategory = (category: string) => { console.log(category) }
+    onSelectCategory = (selected: string) => {
+        if (this.state.selected === selected)
+            selected = '';
+
+        this.setState({ selected });
+        this.props.onSelectCategory(selected);
+    }
 
     render() {
         let categoryStat: CategoryStatType = this.props.data.stats.categories[this.state.category];
@@ -40,7 +51,7 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType> {
             return ({
                 svg: {
                     fill: category.color,
-                    onPress: () => this.selectCategory(key),
+                    onPress: () => this.onSelectCategory(key),
                 },
                 value: obj.amount,
             });
@@ -74,7 +85,7 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType> {
                                 return (
                                     <TouchableOpacity
                                         key={category.key}
-                                        onPress={() => this.selectCategory(category.key)}
+                                        onPress={() => this.onSelectCategory(category.key)}
                                         style={PieCardStyles.category}
                                     >
                                         <View style={{ ...PieCardStyles.icon, backgroundColor: category.color }}>
@@ -96,7 +107,7 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType> {
                                 return (
                                     <TouchableOpacity
                                         key={category.key}
-                                        onPress={() => this.selectCategory(category.key)}
+                                        onPress={() => this.onSelectCategory(category.key)}
                                         style={PieCardStyles.category}
                                     >
                                         <View style={{ ...PieCardStyles.icon, backgroundColor: category.color }}>

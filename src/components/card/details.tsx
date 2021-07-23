@@ -15,12 +15,23 @@ interface AdditionalReduxType {
     data: DataStore,
 }
 
-class Card extends React.Component<ReduxThemeType> {
+interface DataProps {
+    categoryKey: string,
+}
+
+class Card extends React.Component<ReduxThemeType & DataProps> {
     render() {
         return (
             <CardBase icon='card-text-outline' title='details'>
-                <View>
-
+                <View style={GeneralCardStyles.mainContent}>
+                    {this.props.categoryKey === '' ?
+                        <Text style={{ ...GeneralCardStyles.nullPrompt, color: this.props.theme.dynamic.text.secondaryC }}>
+                            Select a category from "breakdown" to start using this card
+                        </Text>
+                        :
+                        <View>
+                        </View>
+                    }
                 </View>
             </CardBase>
         );

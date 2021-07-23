@@ -41,6 +41,10 @@ export const GeneralCardStyles = StyleSheet.create({
         paddingTop: 15,
         width: screenWidth * 0.85,
     },
+    nullPrompt: {
+        fontSize: 16,
+        textAlign: 'center',
+    },
 });
 
 export const PieCardStyles = StyleSheet.create({
@@ -77,9 +81,6 @@ export const PieCardStyles = StyleSheet.create({
 });
 
 export const GoalCardStyles = StyleSheet.create({
-    noGoalText: {
-        fontSize: 16,
-    },
     topRow: {
         alignItems: 'center',
         display: 'flex',

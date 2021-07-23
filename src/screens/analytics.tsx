@@ -14,6 +14,11 @@ import { ReduxThemeType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
 
 class Screen extends React.Component<ReduxThemeType & ScreenProps> {
+
+    state = {
+        categoryKey: '',
+    }
+
     render() {
         return (
             <View style={{ ...ScreenStyles.root, backgroundColor: this.props.theme.dynamic.screen.bgC }}>
@@ -21,8 +26,8 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps> {
                 <ScrollView>
                     <View style={ScreenStyles.scrollView}>
                         <CashflowCard />
-                        <BreakdownCard />
-                        <DetailsCard />
+                        <BreakdownCard onSelectCategory={(categoryKey: string) => this.setState({ categoryKey })} />
+                        <DetailsCard categoryKey={this.state.categoryKey} />
                         <GoalCard />
                     </View>
                 </ScrollView>
