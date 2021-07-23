@@ -12,11 +12,13 @@ import { ScreenStyles } from './styles';
 
 import { ReduxThemeType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
+import { Categories } from '../types/data';
 
 class Screen extends React.Component<ReduxThemeType & ScreenProps> {
 
     state = {
         categoryKey: '',
+        categoryType: Categories.EXPENSE,
     }
 
     render() {
@@ -26,8 +28,8 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps> {
                 <ScrollView>
                     <View style={ScreenStyles.scrollView}>
                         <CashflowCard />
-                        <BreakdownCard onSelectCategory={(categoryKey: string) => this.setState({ categoryKey })} />
-                        <DetailsCard categoryKey={this.state.categoryKey} />
+                        <BreakdownCard onSelectCategory={(categoryType: Categories, categoryKey: string) => this.setState({ categoryKey, categoryType })} />
+                        <DetailsCard categoryKey={this.state.categoryKey} categoryType={this.state.categoryType} />
                         <GoalCard />
                     </View>
                 </ScrollView>

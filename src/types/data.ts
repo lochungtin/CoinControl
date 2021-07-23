@@ -70,12 +70,14 @@ export interface StatType {
 
 export interface CategoryStatType {
     tally: {
-        [key: string]: {
-            amount: number,
-            count: number
-        },
+        [key: string]: CategoryTallyType,
     },
     total: number,
+}
+
+export interface CategoryTallyType {
+    amount: number,
+    count: number
 }
 
 // goals

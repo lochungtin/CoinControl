@@ -1,14 +1,14 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
+import Row from '../stats/row';
 import CardBase from './base';
 
 import { GeneralCardStyles } from './styles';
 
 import { ReduxThemeType } from '../../types/redux';
-import { CategoryStore, DataStore } from '../../types/data';
+import { Categories, CategoryStore, CategoryTallyType, DataStore } from '../../types/data';
 
 interface AdditionalReduxType {
     categories: CategoryStore,
@@ -16,11 +16,14 @@ interface AdditionalReduxType {
 }
 
 interface DataProps {
+    categoryType: Categories,
     categoryKey: string,
 }
 
-class Card extends React.Component<ReduxThemeType & DataProps> {
+class Card extends React.Component<ReduxThemeType & DataProps & AdditionalReduxType> {
     render() {
+        let categoryStats: CategoryTallyType = this.props.data.stats.categories[this.props.categoryType].tally[this.props.categoryKey];
+
         return (
             <CardBase icon='card-text-outline' title='details'>
                 <View style={GeneralCardStyles.mainContent}>
@@ -30,6 +33,13 @@ class Card extends React.Component<ReduxThemeType & DataProps> {
                         </Text>
                         :
                         <View>
+                            <Row label='Total:' value={categoryStats.amount} />
+                            <Row
+                                noCurrency
+                                label='Entries:'
+                                value={categoryStats.count}
+                            />
+                            <Row label='Average per Entry:' value={categoryStats.amount / categoryStats.count} />
                         </View>
                     }
                 </View>

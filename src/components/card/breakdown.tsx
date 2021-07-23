@@ -11,8 +11,8 @@ import CardBase from './base';
 import { WHITE } from '../../data/color';
 import { GeneralCardStyles, PieCardStyles } from './styles';
 
+import { Categories, CategoryStatType, CategoryStore, CategoryTallyType, CategoryType, DataStore } from '../../types/data';
 import { ReduxThemeType } from '../../types/redux';
-import { Categories, CategoryStatType, CategoryStore, CategoryType, DataStore } from '../../types/data';
 import { PieArcProps } from '../../types/ui';
 
 interface AdditionalReduxType {
@@ -21,31 +21,36 @@ interface AdditionalReduxType {
 }
 
 interface DataProps {
-    onSelectCategory: (category: string) => void,
+    onSelectCategory: (categoryType: Categories, categoryKey: string) => void,
 }
 
 class Card extends React.Component<ReduxThemeType & AdditionalReduxType & DataProps> {
 
     state = {
-        category: Categories.EXPENSE,
-        selected: '',
+        categoryType: Categories.EXPENSE,
+        categoryKey: '',
     }
 
-    onSelectCategory = (selected: string) => {
-        if (this.state.selected === selected)
-            selected = '';
+    onSelectCategory = (categoryKey: string) => {
+        if (this.state.categoryKey === categoryKey)
+            categoryKey = '';
 
-        this.setState({ selected });
-        this.props.onSelectCategory(selected);
+        this.setState({ categoryKey });
+        this.props.onSelectCategory(this.state.categoryType, categoryKey);
+    }
+
+    onToggleCategory = (categoryType: Categories) => {
+        this.setState({ categoryType });
+        this.props.onSelectCategory(this.state.categoryType, '');
     }
 
     render() {
-        let categoryStat: CategoryStatType = this.props.data.stats.categories[this.state.category];
+        let categoryStat: CategoryStatType = this.props.data.stats.categories[this.state.categoryType];
         let categoryListP2: Array<CategoryType> = [];
         let pieData: Array<PieArcProps> = Object.keys(categoryStat.tally).map((key: string) => {
-            let obj: { amount: number, count: number } = categoryStat.tally[key];
+            let obj: CategoryTallyType = categoryStat.tally[key];
 
-            let category: CategoryType = this.props.categories[this.state.category][key];
+            let category: CategoryType = this.props.categories[this.state.categoryType][key];
             categoryListP2.push(category);
 
             return ({
@@ -63,8 +68,8 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType & DataPr
             <CardBase icon='chart-donut' title='breakdown'>
                 <View style={GeneralCardStyles.mainContent}>
                     <Selector
-                        onToggle={(category: Categories) => this.setState({ category })}
-                        selected={this.state.category}
+                        onToggle={this.onToggleCategory}
+                        selected={this.state.categoryType}
                         width={0.85}
                     />
                     <View style={PieCardStyles.rowPadding}>
