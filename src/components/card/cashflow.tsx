@@ -27,7 +27,7 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType> {
 	}
 
 	render() {
-		let data: Array<{ [key: string]: number }> = [];
+		let data: Array<{ [key: string]: any }> = [];
 		let sevenDaysAgo: moment.Moment = moment().subtract(7, 'days');
 
 		let recordKeys: Array<DisplaySectionType> = this.props.display
@@ -35,11 +35,16 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType> {
 			.filter((section: DisplaySectionType) => moment(section.date, 'DD-MM-YYYY').isAfter(sevenDaysAgo));
 
 		let categoryArr: Array<string> = [];
-		recordKeys.forEach((section: DisplaySectionType) => {
-			section.keys.forEach((key: string) => {
+		let recordList: Array<DataType> = [];
+
+		recordKeys.map((section: DisplaySectionType) => {
+			section.keys.map((key: string) => {
 				let record: DataType = this.props.data.data[key];
-				if (this.state.categoryType === record.categoryType)
+
+				if (this.state.categoryType === record.categoryType) {
 					categoryArr.push(record.categoryKey);
+					recordList.push(record);
+				}
 			});
 		});
 
@@ -48,6 +53,29 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType> {
 
 		console.log(categories);
 		console.log(colors);
+		console.log(recordList);
+
+		for (let i: number = 0; i < 7; i++) {
+			sevenDaysAgo.add(1, 'days');
+
+			let datapoint: {[key: string]: any} = {
+				date: sevenDaysAgo.format('DD-MM-YYYY'),
+			};
+
+			categories.forEach((key: string) => {
+				datapoint[key] = 0;
+			});
+
+			data.push(datapoint);
+		}
+
+		recordList.forEach((record: DataType) => {
+			let index = data.findIndex((datapoint: {[key: string]: any}) => datapoint['date'] === record.date);
+
+			data[index][record.categoryKey] += record.value;
+		});
+
+		console.log(data);
 
 		return (
 			<CardBase icon='chart-timeline-variant' title='7 day cashflow'>
