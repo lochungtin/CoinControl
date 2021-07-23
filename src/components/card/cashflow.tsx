@@ -10,67 +10,44 @@ import CardBase from './base';
 import { CashflowCardStyles, GeneralCardStyles, screenWidth } from './styles';
 
 import { ReduxThemeType } from '../../types/redux';
-import { Categories, CategoryStore, DataStore } from '../../types/data';
+import { Categories, CategoryStore, DataStore, DataType } from '../../types/data';
+import { DisplaySectionType } from '../../types/ui';
+import moment from 'moment';
 
 interface AdditionalReduxType {
 	categories: CategoryStore,
 	data: DataStore,
+	display: Array<DisplaySectionType>,
 }
 
-class Card extends React.Component<ReduxThemeType> {
+class Card extends React.Component<ReduxThemeType & AdditionalReduxType> {
 
 	state = {
 		categoryType: Categories.EXPENSE,
 	}
 
 	render() {
-		const data = [
-			{
-				apples: 1,
-				bananas: 2,
-				cherries: 3,
-				dates: 4,
-			},
-			{
-				apples: 3,
-				bananas: 3,
-				cherries: 5,
-				dates: 1,
-			},
-			{
-				apples: 2,
-				bananas: 4,
-				cherries: 1,
-				dates: 1,
-			},
-			{
-				apples: 1,
-				bananas: 0,
-				cherries: 5,
-				dates: 2,
-			},
-			{
-				apples: 1,
-				bananas: 0,
-				cherries: 5,
-				dates: 2,
-			},
-			{
-				apples: 1,
-				bananas: 0,
-				cherries: 5,
-				dates: 2,
-			},
-			{
-				bananas: 0,
-				apples: 1,
-				cherries: 5,
-				dates: 2,
-			},
-		]
+		let data: Array<{ [key: string]: number }> = [];
+		let sevenDaysAgo: moment.Moment = moment().subtract(7, 'days');
 
-		const colors = ['#7b4173', '#a55194', '#ce6dbd', '#de9ed6']
-		const keys = ['apples', 'bananas', 'cherries', 'dates']
+		let recordKeys: Array<DisplaySectionType> = this.props.display
+			.slice(0, 7)
+			.filter((section: DisplaySectionType) => moment(section.date, 'DD-MM-YYYY').isAfter(sevenDaysAgo));
+
+		let categoryArr: Array<string> = [];
+		recordKeys.forEach((section: DisplaySectionType) => {
+			section.keys.forEach((key: string) => {
+				let record: DataType = this.props.data.data[key];
+				if (this.state.categoryType === record.categoryType)
+					categoryArr.push(record.categoryKey);
+			});
+		});
+
+		let categories: Array<string> = Array.from(new Set(categoryArr));
+		let colors: Array<string> = categories.map((categoryKey: string) => this.props.categories[this.state.categoryType][categoryKey].color);
+
+		console.log(categories);
+		console.log(colors);
 
 		return (
 			<CardBase icon='chart-timeline-variant' title='7 day cashflow'>
@@ -80,15 +57,15 @@ class Card extends React.Component<ReduxThemeType> {
 						selected={this.state.categoryType}
 						width={0.85}
 					/>
-					<View style={CashflowCardStyles.chartPadding}>
+					{data.length !== 0 && <View style={CashflowCardStyles.chartPadding}>
 						<StackChart
 							colors={colors}
 							data={data}
 							height={250}
-							keys={keys}
+							keys={categories}
 							width={screenWidth * 0.8}
 						/>
-					</View>
+					</View>}
 				</View>
 			</CardBase>
 		);
@@ -98,6 +75,7 @@ class Card extends React.Component<ReduxThemeType> {
 const mapStateToProps = (state: ReduxThemeType & AdditionalReduxType) => ({
 	categories: state.categories,
 	data: state.data,
+	display: state.display,
 	theme: state.theme,
 });
 

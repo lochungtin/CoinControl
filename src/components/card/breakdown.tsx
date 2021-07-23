@@ -76,15 +76,15 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType & DataPr
                             value={categoryStat.total}
                         />
                     </View>
-                    <PieChart
+                    {categoryStat.total !== 0 && <PieChart
                         data={pieData}
                         size={250}
                         width={0.1}
-                    />
-                    <List
+                    />}
+                    {categoryStat.total !== 0 && <List
                         categoryList={categoryList}
                         onSelectCategory={this.onSelectCategory}
-                    />
+                    />}
                 </View>
             </CardBase>
         );
