@@ -28,7 +28,7 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType> {
             <CardBase icon='shield-outline' title='goal status'>
                 <View style={GeneralCardStyles.content}>
                     {this.props.data.stats.goal.config.type === Goal.NONE ?
-                        <Text style={{ color: this.props.theme.dynamic.text.secondaryC }}>
+                        <Text style={{ ...GoalCardStyles.noGoalText, color: this.props.theme.dynamic.text.secondaryC }}>
                             Set a goal to start using this card
                         </Text>
                         :

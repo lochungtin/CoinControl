@@ -36,6 +36,10 @@ export const GeneralCardStyles = StyleSheet.create({
 });
 
 export const GoalCardStyles = StyleSheet.create({
+    noGoalText: {
+        fontSize: 16,
+        marginTop: 15,
+    },
     topRow: {
         alignItems: 'center',
         display: 'flex',
