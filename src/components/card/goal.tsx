@@ -9,8 +9,8 @@ import CardBase from './base';
 import { GeneralCardStyles, GoalCardStyles } from './styles';
 
 import { Goal, goals } from '../../data/goal';
-import { ReduxThemeType } from '../../types/redux';
 import { CategoryStore, DataStore, SettingsType } from '../../types/data';
+import { ReduxThemeType } from '../../types/redux';
 
 interface AdditionalReduxType {
     categories: CategoryStore,

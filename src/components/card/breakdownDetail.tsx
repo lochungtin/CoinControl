@@ -8,8 +8,8 @@ import CardBase from './base';
 
 import { DetailCardStyles, GeneralCardStyles } from './styles';
 
-import { ReduxThemeType } from '../../types/redux';
 import { Categories, CategoryStore, CategoryTallyType, DataStore } from '../../types/data';
+import { ReduxThemeType } from '../../types/redux';
 
 interface AdditionalReduxType {
     categories: CategoryStore,

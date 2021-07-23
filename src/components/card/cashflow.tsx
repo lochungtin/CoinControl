@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
@@ -9,10 +10,9 @@ import CardBase from './base';
 
 import { CashflowCardStyles, GeneralCardStyles, screenWidth } from './styles';
 
-import { ReduxThemeType } from '../../types/redux';
 import { Categories, CategoryStore, CategoryType, DataStore, DataType } from '../../types/data';
+import { ReduxThemeType } from '../../types/redux';
 import { DisplaySectionType } from '../../types/ui';
-import moment from 'moment';
 
 interface AdditionalReduxType {
 	categories: CategoryStore,
