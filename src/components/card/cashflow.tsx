@@ -20,7 +20,7 @@ class Card extends React.Component<ReduxThemeType> {
         return (
             <CardBase icon='chart-timeline-variant' title='7 day cashflow'>
                 <View>
-
+                    
                 </View>
             </CardBase>
         );

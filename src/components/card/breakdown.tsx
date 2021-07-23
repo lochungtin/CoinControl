@@ -18,7 +18,7 @@ interface AdditionalReduxType {
 class Card extends React.Component<ReduxThemeType> {
     render() {
         return (
-            <CardBase icon='chart-timeline-variant' title='7 day cashflow'>
+            <CardBase icon='chart-donut' title='breakdown'>
                 <View>
 
                 </View>

@@ -2,8 +2,11 @@ import React from 'react';
 import { ScrollView, View } from 'react-native';
 import { connect } from 'react-redux';
 
+import BreakdownCard from '../components/card/breakdown';
+import CashflowCard from '../components/card/cashflow';
+import DetailsCard from '../components/card/details';
+import GoalCard from '../components/card/goal';
 import Header from '../components/headers/minimal';
-import Cashflow from '../components/card/cashflow';
 
 import { ScreenStyles } from './styles';
 
@@ -17,7 +20,10 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps> {
                 <Header name='analytics' navigation={this.props.navigation} />
                 <ScrollView>
                     <View style={ScreenStyles.scrollView}>
-                        <Cashflow />
+                        <CashflowCard />
+                        <BreakdownCard />
+                        <DetailsCard />
+                        <GoalCard />
                     </View>
                 </ScrollView>
             </View>
@@ -30,3 +36,4 @@ const mapStateToProps = (state: ReduxThemeType) => ({
 });
 
 export default connect(mapStateToProps)(Screen);
+
