@@ -8,9 +8,9 @@ import CardBase from './base';
 
 import { GeneralCardStyles, GoalCardStyles } from './styles';
 
+import { Goal, goals } from '../../data/goal';
 import { ReduxThemeType } from '../../types/redux';
 import { CategoryStore, DataStore, SettingsType } from '../../types/data';
-import { Goal, goals } from '../../data/goal';
 
 interface AdditionalReduxType {
     categories: CategoryStore,
@@ -26,7 +26,7 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType> {
 
         return (
             <CardBase icon='shield-outline' title='goal status'>
-                <View style={GeneralCardStyles.content}>
+                <View style={GeneralCardStyles.mainContent}>
                     {this.props.data.stats.goal.config.type === Goal.NONE ?
                         <Text style={{ ...GoalCardStyles.noGoalText, color: this.props.theme.dynamic.text.secondaryC }}>
                             Set a goal to start using this card

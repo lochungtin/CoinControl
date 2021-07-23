@@ -20,6 +20,14 @@ export interface NumpadBtnProps {
     onPress: () => void,
 }
 
+export interface PieArcProps {
+    svg: {
+        fill: string,
+        onPress: () => void,
+    },
+    value: number,
+}
+
 export interface ScreenProps {
     navigation: DrawerNavigationProp<any, any>,
     route?: any,
