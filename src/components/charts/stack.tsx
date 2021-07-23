@@ -1,16 +1,15 @@
-import * as array from 'd3-array'
-import * as scale from 'd3-scale'
-import * as shape from 'd3-shape'
-import React from 'react'
-import { Svg, Path } from 'react-native-svg'
+import * as array from 'd3-array';
+import * as scale from 'd3-scale';
+import * as shape from 'd3-shape';
+import React from 'react';
+import { Svg, Path } from 'react-native-svg';
 
 interface DataProps {
-    height: number
-    width: number
-    keys: Array<string>,
     colors: Array<string>
     data: Array<{[key: string]: number}>,
-    sidePadding: number
+    height: number
+    keys: Array<string>,
+    width: number
 }
 
 export default class BarChart extends React.Component<DataProps> {
@@ -23,8 +22,8 @@ export default class BarChart extends React.Component<DataProps> {
         let x: any = scale
             .scaleBand()
             .domain(this.props.data.map((_, index: number) => index.toString()))
-            .range([this.props.sidePadding, this.props.width - this.props.sidePadding])
-            .paddingInner(0.3)
+            .range([0, this.props.width])
+            .paddingInner(0.4)
             .paddingOuter(0);
 
         let y: any = scale

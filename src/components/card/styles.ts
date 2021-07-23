@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
-const screenWidth: number = Dimensions.get('screen').width;
+export const screenWidth: number = Dimensions.get('screen').width;
 
 export const GeneralCardStyles = StyleSheet.create({
     root: {
@@ -44,6 +44,12 @@ export const GeneralCardStyles = StyleSheet.create({
     nullPrompt: {
         fontSize: 16,
         textAlign: 'center',
+    },
+});
+
+export const CashflowCardStyles = StyleSheet.create({
+    chartPadding: {
+        marginTop: 15,
     },
 });
 
