@@ -1,14 +1,13 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 
 import PieChart from '../charts/pie';
 import Selector from '../selector';
+import List from '../stats/list';
 import Row from '../stats/row';
 import CardBase from './base';
 
-import { WHITE } from '../../data/color';
 import { GeneralCardStyles, PieCardStyles } from './styles';
 
 import { Categories, CategoryStatType, CategoryStore, CategoryTallyType, CategoryType, DataStore } from '../../types/data';
@@ -46,12 +45,12 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType & DataPr
 
     render() {
         let categoryStat: CategoryStatType = this.props.data.stats.categories[this.state.categoryType];
-        let categoryListP2: Array<CategoryType> = [];
+        let categoryList: Array<CategoryType> = [];
         let pieData: Array<PieArcProps> = Object.keys(categoryStat.tally).map((key: string) => {
             let obj: CategoryTallyType = categoryStat.tally[key];
 
             let category: CategoryType = this.props.categories[this.state.categoryType][key];
-            categoryListP2.push(category);
+            categoryList.push(category);
 
             return ({
                 svg: {
@@ -61,8 +60,6 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType & DataPr
                 value: obj.amount,
             });
         });
-
-        let categoryListP1: Array<CategoryType> = categoryListP2.splice(0, Math.ceil(categoryListP2.length / 2));
 
         return (
             <CardBase icon='chart-donut' title='breakdown'>
@@ -84,52 +81,10 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType & DataPr
                         size={250}
                         width={0.1}
                     />
-                    <View style={PieCardStyles.selectList}>
-                        <View>
-                            {categoryListP1.map((category: CategoryType) => {
-                                return (
-                                    <TouchableOpacity
-                                        key={category.key}
-                                        onPress={() => this.onSelectCategory(category.key)}
-                                        style={PieCardStyles.category}
-                                    >
-                                        <View style={{ ...PieCardStyles.icon, backgroundColor: category.color }}>
-                                            <Icon
-                                                color={WHITE}
-                                                name={category.icon}
-                                                size={20}
-                                            />
-                                        </View>
-                                        <Text style={{ ...PieCardStyles.text, color: this.props.theme.dynamic.text.mainC }}>
-                                            {category.name.toUpperCase()}
-                                        </Text>
-                                    </TouchableOpacity>
-                                );
-                            })}
-                        </View>
-                        <View>
-                            {categoryListP2.map((category: CategoryType) => {
-                                return (
-                                    <TouchableOpacity
-                                        key={category.key}
-                                        onPress={() => this.onSelectCategory(category.key)}
-                                        style={PieCardStyles.category}
-                                    >
-                                        <View style={{ ...PieCardStyles.icon, backgroundColor: category.color }}>
-                                            <Icon
-                                                color={WHITE}
-                                                name={category.icon}
-                                                size={20}
-                                            />
-                                        </View>
-                                        <Text style={{ ...PieCardStyles.text, color: this.props.theme.dynamic.text.mainC }}>
-                                            {category.name.toUpperCase()}
-                                        </Text>
-                                    </TouchableOpacity>
-                                );
-                            })}
-                        </View>
-                    </View>
+                    <List
+                        categoryList={categoryList}
+                        onSelectCategory={this.onSelectCategory}
+                    />
                 </View>
             </CardBase>
         );
