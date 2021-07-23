@@ -26,7 +26,8 @@ const updateAccount = (account: AccountType | null = null, action: ReduxActionTy
     }
 }
 
-const updateCategories = (categories: CategoryStore = defaultCategories, action: ReduxActionType) => {
+const staticDefaultCategories: CategoryStore = { ...defaultCategories };
+const updateCategories = (categories: CategoryStore = { ...defaultCategories }, action: ReduxActionType) => {
     let update: CategoryStore = { ...categories };
     switch (action.type) {
         // add or edit
@@ -40,15 +41,16 @@ const updateCategories = (categories: CategoryStore = defaultCategories, action:
             return update;
         // set default
         case Actions.CATEGORY_SET_DEFAULT:
-            return defaultCategories;
+            return staticDefaultCategories;
         // default
         default:
             return categories;
     }
 }
 
-const updateData = (data: DataStore = defaultData, action: ReduxActionType) => {
-    let update: DataStore = { ...data };
+const staticDefaultData: DataStore = { ...defaultData };
+const updateData = (data: DataStore = { ...defaultData }, action: ReduxActionType) => {
+    const update: DataStore = { ...data };
     switch (action.type) {
         // add
         case Actions.DATA_ADD:
@@ -56,9 +58,7 @@ const updateData = (data: DataStore = defaultData, action: ReduxActionType) => {
             break;
         // clear
         case Actions.DATA_CLEAR:
-            update = { ...defaultData };
-            console.log(update);
-            return update;
+            return staticDefaultData;
         // delete
         case Actions.DATA_DELETE:
             delete update.data[action.payload.key];
@@ -139,7 +139,6 @@ const updateData = (data: DataStore = defaultData, action: ReduxActionType) => {
 
     // update goal
     update.stats.goal.left = update.stats.goal.config.max - update.stats.goal.used;
-
     return update;
 }
 
@@ -190,7 +189,8 @@ const updateDisplay = (display: Array<DisplaySectionType> = [], action: ReduxAct
     return update;
 }
 
-const updateSettings = (settings: SettingsType = defaultSettings, action: ReduxActionType) => {
+const staticDefaultSettings: SettingsType = { ...defaultSettings };
+const updateSettings = (settings: SettingsType = { ...defaultSettings }, action: ReduxActionType) => {
     let update: SettingsType = { ...settings };
     switch (action.type) {
         // set currency
@@ -199,7 +199,7 @@ const updateSettings = (settings: SettingsType = defaultSettings, action: ReduxA
             return update;
         // set default
         case Actions.SETTINGS_SET_DEFAULT:
-            return defaultSettings;
+            return staticDefaultSettings;
         // set dark theme
         case Actions.SETTINGS_SET_DARKMODE:
             update.darkMode = true;

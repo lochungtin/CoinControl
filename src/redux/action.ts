@@ -1,3 +1,4 @@
+import { defaultData } from "../data/default";
 import { CurrencyType, DataType, GoalConfigType } from "../types/data";
 import { ReduxActionType } from "../types/redux";
 
@@ -77,6 +78,7 @@ export const dataAdd = (payload: DataType): ReduxActionType => ({
 
 export const dataClear = (): ReduxActionType => ({
     type: Actions.DATA_CLEAR,
+    payload: defaultData,
 });
 
 export const dataDelete = (payload: DataType): ReduxActionType => ({

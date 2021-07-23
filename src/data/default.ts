@@ -7,7 +7,7 @@ import { ThemeType } from '../types/color';
 import { CategoryStatType, CategoryStore, DataStore, SettingsType } from '../types/data';
 import { Goal } from './goal';
 
-export const clearCategories: { [index: number]: CategoryStatType } = {
+export const clearCategories: { [index: number]: CategoryStatType } = Object.freeze({
     0: {
         tally: {
 
@@ -20,7 +20,7 @@ export const clearCategories: { [index: number]: CategoryStatType } = {
         },
         total: 0,
     },
-}
+});
 
 export const defaultCategoryKeys: Array<string> = [
     'C0000000',
@@ -135,7 +135,7 @@ export const defaultCategories: CategoryStore = {
     },
 }
 
-export const defaultData: DataStore = {
+export const defaultData: DataStore = Object.freeze({
     data: {
 
     },
@@ -151,9 +151,9 @@ export const defaultData: DataStore = {
             used: 0,
         },
     }
-}
+});
 
-export const defaultSettings: SettingsType = {
+export const defaultSettings: SettingsType = Object.freeze({
     currency: currencyData['a983c65f'],
     darkMode: true,
     notif: true,
@@ -165,6 +165,6 @@ export const defaultSettings: SettingsType = {
         3: true,
         4: true,
     },
-}
+});
 
 export const defaultTheme: ThemeType = darkTheme;

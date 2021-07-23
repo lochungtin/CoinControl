@@ -15,7 +15,7 @@ import { HomeScreenStyles, ScreenStyles } from './styles';
 import { defaultData } from '../data/default';
 import { DisplaySectionType, ScreenProps } from '../types/ui';
 import { ReduxThemeType } from '../types/redux';
-import { Categories, CategoryStore, DataMap, DataStore, DataType, SettingsType } from '../types/data';
+import { Categories, CategoryStore, DataStore, DataType, SettingsType } from '../types/data';
 import { ScrollView } from 'react-native-gesture-handler';
 import { keygen } from '../utils/keygen';
 import { store } from '../redux/store';
@@ -72,7 +72,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
 	}
 
 	render() {
-		console.log(defaultData);
+		console.log('D', defaultData, this.props.data === defaultData);
 
 		let sections: Array<DisplaySectionType> = this.props.display || [];
 		if (this.state.filterDate)
