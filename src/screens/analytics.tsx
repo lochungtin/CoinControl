@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import BreakdownCard from '../components/card/breakdown';
 import CashflowCard from '../components/card/cashflow';
-import DetailsCard from '../components/card/details';
+import BDDetailsCard from '../components/card/breakdownDetail';
 import GoalCard from '../components/card/goal';
 import Header from '../components/headers/minimal';
 
@@ -17,8 +17,11 @@ import { ScreenProps } from '../types/ui';
 class Screen extends React.Component<ReduxThemeType & ScreenProps> {
 
     state = {
-        categoryKey: '',
-        categoryType: Categories.EXPENSE,
+        bdCategoryKey: '',
+        bdCategoryType: Categories.EXPENSE,
+        cfCategoryKey: '',
+        cfCategoryType: Categories.EXPENSE,
+        date: '',
     }
 
     render() {
@@ -27,9 +30,17 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps> {
                 <Header name='analytics' navigation={this.props.navigation} />
                 <ScrollView>
                     <View style={ScreenStyles.scrollView}>
-                        <CashflowCard />
-                        <BreakdownCard onSelectCategory={(categoryType: Categories, categoryKey: string) => this.setState({ categoryKey, categoryType })} />
-                        <DetailsCard categoryKey={this.state.categoryKey} categoryType={this.state.categoryType} />
+                        <CashflowCard
+                            onSelectCategory={(cfCategoryType: Categories, cfCategoryKey: string) => this.setState({ cfCategoryKey, cfCategoryType })}
+                            onSelectDate={(date: string) => this.setState({ date })}
+                        />
+                        <BreakdownCard
+                            onSelectCategory={(bdCategoryType: Categories, bdCategoryKey: string) => this.setState({ bdCategoryKey, bdCategoryType })}
+                        />
+                        <BDDetailsCard
+                            categoryKey={this.state.bdCategoryKey}
+                            categoryType={this.state.bdCategoryType}
+                        />
                         <GoalCard />
                     </View>
                 </ScrollView>

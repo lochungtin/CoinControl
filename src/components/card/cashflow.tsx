@@ -1,6 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 
 import StackChart from '../charts/stack';
@@ -21,11 +20,39 @@ interface AdditionalReduxType {
 	display: Array<DisplaySectionType>,
 }
 
-class Card extends React.Component<ReduxThemeType & AdditionalReduxType> {
+interface DataProps {
+    onSelectCategory: (categoryType: Categories, categoryKey: string) => void,
+	onSelectDate: (date: string) => void,
+}
+
+class Card extends React.Component<ReduxThemeType & AdditionalReduxType & DataProps> {
 
 	state = {
+		categoryKey: '',
 		categoryType: Categories.EXPENSE,
+		date: '',
 	}
+
+	onSelectCategory = (categoryKey: string) => {
+        if (this.state.categoryKey === categoryKey)
+            categoryKey = '';
+
+        this.setState({ categoryKey });
+        this.props.onSelectCategory(this.state.categoryType, categoryKey);
+    }
+
+	onSelectDate = (date: string) => {
+        if (this.state.date === date)
+            date = '';
+
+        this.setState({ date });
+        this.props.onSelectDate(date);
+	}
+
+	onToggleCategory = (categoryType: Categories) => {
+        this.setState({ categoryType });
+        this.props.onSelectCategory(this.state.categoryType, '');
+    }
 
 	render() {
 		let data: Array<{ [key: string]: any }> = [];
@@ -58,10 +85,6 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType> {
 			return category.color;
 		});
 
-		console.log(categories);
-		console.log(colors);
-		console.log(recordList);
-
 		for (let i: number = 0; i < 7; i++) {
 			sevenDaysAgo.add(1, 'days');
 
@@ -86,7 +109,7 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType> {
 			<CardBase icon='chart-timeline-variant' title='7 day cashflow'>
 				<View style={GeneralCardStyles.mainContent}>
 					<Selector
-						onToggle={(categoryType: Categories) => this.setState({ categoryType })}
+						onToggle={this.onToggleCategory}
 						selected={this.state.categoryType}
 						width={0.85}
 					/>
@@ -96,12 +119,13 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType> {
 							data={data}
 							height={150}
 							keys={categoryKeys}
+							onPress={console.log}
 							width={screenWidth * 0.8}
 						/>
 					</View>}
 					{data.length !== 0 && <List
 						categoryList={categories}
-						onSelectCategory={console.log}
+						onSelectCategory={this.onSelectCategory}
 					/>}
 				</View>
 			</CardBase>

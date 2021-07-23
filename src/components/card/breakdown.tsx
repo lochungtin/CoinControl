@@ -26,8 +26,8 @@ interface DataProps {
 class Card extends React.Component<ReduxThemeType & AdditionalReduxType & DataProps> {
 
     state = {
-        categoryType: Categories.EXPENSE,
         categoryKey: '',
+        categoryType: Categories.EXPENSE,
     }
 
     onSelectCategory = (categoryKey: string) => {

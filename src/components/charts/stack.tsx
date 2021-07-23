@@ -6,9 +6,10 @@ import { Svg, Path } from 'react-native-svg';
 
 interface DataProps {
     colors: Array<string>
-    data: Array<{[key: string]: number}>,
+    data: Array<{[key: string]: any}>,
     height: number
     keys: Array<string>,
+    onPress: (date: string) => void,
     width: number
 }
 
@@ -46,6 +47,7 @@ export default class BarChart extends React.Component<DataProps> {
                                     .defined((d) => !isNaN(d[0]) && !isNaN(d[1]))([entry, entry]) || undefined
                                 }
                                 fill={this.props.colors[keyIndex]}
+                                onPress={() => this.props.onPress(this.props.data[entryIndex].date)}
                             />
                         );
                     });
