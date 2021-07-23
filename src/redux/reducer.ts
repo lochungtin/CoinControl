@@ -90,7 +90,7 @@ const updateData = (data: DataStore = defaultData, action: ReduxActionType) => {
     }
     // reset stats
     update.stats.balance = 0
-    update.stats.categories = { ...clearCategories };
+    update.stats.categories = JSON.parse(JSON.stringify(clearCategories));
     update.stats.goal.left = 0;
     update.stats.goal.used = 0;
     // update stats
@@ -129,6 +129,8 @@ const updateData = (data: DataStore = defaultData, action: ReduxActionType) => {
 
         update.stats.categories[record.categoryType].tally[record.categoryKey].amount += record.value;
         update.stats.categories[record.categoryType].tally[record.categoryKey].count += 1;
+
+        update.stats.categories[record.categoryType].total += record.value;
 
         // update goal
         if (record.categoryType === Categories.EXPENSE && goalCapDate !== undefined && !moment(record.date, 'DD-MM-YYYY').isBefore(goalCapDate))
