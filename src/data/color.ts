@@ -241,3 +241,14 @@ export const colorPickerData: ColorPickerDataType = {
         },
     },
 }
+
+export const flashMessageConfig = {
+    success: {
+        backgroundColor: '#7BD1C2',
+        color: BLACK,
+    },
+    fail: {
+        backgroundColor: '#C21860',
+        color: WHITE,
+    },
+}

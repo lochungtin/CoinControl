@@ -1,5 +1,5 @@
 import { defaultData } from "../data/default";
-import { CurrencyType, DataType, GoalConfigType } from "../types/data";
+import { AccountType, CurrencyType, DataType, GoalConfigType } from "../types/data";
 import { ReduxActionType } from "../types/redux";
 
 export enum Actions {
@@ -39,7 +39,7 @@ export enum Actions {
 }
 
 // account
-export const accountSignIn = (payload: any): ReduxActionType => ({
+export const accountSignIn = (payload: AccountType): ReduxActionType => ({
     type: Actions.ACCOUNT_SIGNIN,
     payload,
 });

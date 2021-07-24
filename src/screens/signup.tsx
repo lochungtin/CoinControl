@@ -7,9 +7,14 @@ import Input from '../components/auth/input';
 import Bullet from '../components/bullet';
 import Header from '../components/headers/auth';
 
+import { AuthScreenStyles, ScreenStyles } from './styles';
+
+import { signUp } from '../firebase/auth';
+import { accountSignIn } from '../redux/action';
+import { store } from '../redux/store';
+import { AccountType } from '../types/data';
 import { ReduxThemeType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
-import { AuthScreenStyles, ScreenStyles } from './styles';
 
 class Screen extends React.Component<ReduxThemeType & ScreenProps> {
 
@@ -18,6 +23,16 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps> {
         pswd: '',
         rePswd: '',
     }
+
+    signUp = () => signUp(
+        this.state.email,
+        this.state.pswd,
+        this.state.rePswd,
+        (account: AccountType) => {
+            store.dispatch(accountSignIn(account));
+            this.props.navigation.navigate('settingsHome');
+        }
+    );
 
     render() {
         return (
@@ -53,7 +68,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps> {
                         />
                         <View style={AuthScreenStyles.bullet}>
                             <Bullet
-                                onPress={() => { }}
+                                onPress={this.signUp}
                                 text='create account'
                                 width={0.8}
                             />

@@ -10,6 +10,7 @@ import Header from '../components/headers/auth';
 import { AuthScreenStyles, ScreenStyles } from './styles';
 
 import { signIn } from '../firebase/auth';
+import { AccountType } from '../types/data';
 import { ReduxThemeType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
 import { accountSignIn } from '../redux/action';
@@ -22,9 +23,14 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps> {
         pswd: '',
     }
 
-    signIn = () => {
-        signIn(this.state.email, this.state.pswd);
-    }
+    signIn = () => signIn(
+        this.state.email,
+        this.state.pswd,
+        (account: AccountType) => {
+            store.dispatch(accountSignIn(account));
+            this.props.navigation.navigate('settingsHome');
+        }
+    );
 
     render() {
         return (

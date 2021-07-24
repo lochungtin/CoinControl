@@ -19,7 +19,7 @@ const updateAccount = (account: AccountType | null = null, action: ReduxActionTy
             return action.payload;
         // sign out
         case Actions.ACCOUNT_SIGNOUT:
-            return account;
+            return null;
         // default
         default:
             return account;
