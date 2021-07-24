@@ -44,8 +44,6 @@ export const merge = (uid: string, data: DataMap, categoryStore: CategoryStore, 
         1: mergedIncome,
     };
 
-    console.log(mergedData);
-
     store.dispatch(categoryOverwrite(mergedCategories));
     store.dispatch(dataOverwrite(mergedData));
     store.dispatch(displayOverwrite(mergedData));
