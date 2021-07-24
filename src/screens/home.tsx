@@ -85,14 +85,17 @@ class HomeScreen extends React.Component<ReduxThemeType & ScreenProps & Addition
 		this.setState({ edit: null, imOpen: false });
 	}
 
-	sync = () => firebaseFetchAll(this.props.account.uid)
-		.then((snapshot: FirebaseFullSnapshot) => merge(
-			this.props.account.uid,
-			this.props.data.data,
-			this.props.categories,
-			snapshot
-		))
-		.catch(firebaseDefaultErrorCallback);
+	sync = () => {
+		if (this.props.account)
+			firebaseFetchAll(this.props.account.uid)
+				.then((snapshot: FirebaseFullSnapshot) => merge(
+					this.props.account.uid,
+					this.props.data.data,
+					this.props.categories,
+					snapshot
+				))
+				.catch(firebaseDefaultErrorCallback);
+	}
 
 	render() {
 		let sections: Array<DisplaySectionType> = this.props.display;
