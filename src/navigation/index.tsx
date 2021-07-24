@@ -39,6 +39,7 @@ class AppNav extends React.Component<ReduxThemeType> {
         </Settings.Navigator>
 
     render() {
+        console.log(this.props.theme);
         return (
             <NavigationContainer>
                 <Nav.Navigator drawerContent={(props: any) => makeDrawer(props, this.props.theme)} initialRouteName='home'>
