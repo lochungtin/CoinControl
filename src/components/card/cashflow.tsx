@@ -41,7 +41,7 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType & DataPr
         if (this.state.categoryKey === categoryKey)
             categoryKey = '';
 
-        this.setState({ categoryKey });
+        this.setState({ categoryKey, date: '' });
         this.props.onSelectCategory(this.state.categoryType, categoryKey);
     }
 
@@ -49,7 +49,7 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType & DataPr
         if (this.state.date === date)
             date = '';
 
-        this.setState({ date });
+        this.setState({ date, categoryKey: '' });
         this.props.onSelectDate(date);
 	}
 
