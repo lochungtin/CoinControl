@@ -50,7 +50,7 @@ export const firebaseUpdateCategory = (
 ) => {
     let update: FirebaseUpdateType = {};
 
-    update[`/UserData/${uid}/category/${categoryType}/${payload.key}`] = payload.key;
+    update[`/UserData/${uid}/category/${categoryType}/${payload.key}`] = payload;
 
     db.ref().update(update, firebaseDefaultErrorCallback);
 }

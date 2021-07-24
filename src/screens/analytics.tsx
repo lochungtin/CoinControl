@@ -16,13 +16,13 @@ import { Categories, CategoryStore, CategoryType, DataStore, DataType } from '..
 import { ReduxThemeType } from '../types/redux';
 import { DisplaySectionType, ScreenProps } from '../types/ui';
 
-interface AdditionalReduxType {
+interface AdditionalReduxProps {
     categories: CategoryStore,
     data: DataStore,
     display: Array<DisplaySectionType>,
 }
 
-class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxType> {
+class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxProps> {
 
     state = {
         bdCategoryKey: '',
@@ -128,7 +128,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
     }
 }
 
-const mapStateToProps = (state: ReduxThemeType & AdditionalReduxType) => ({
+const mapStateToProps = (state: ReduxThemeType & AdditionalReduxProps) => ({
     categories: state.categories,
     data: state.data,
     display: state.display,

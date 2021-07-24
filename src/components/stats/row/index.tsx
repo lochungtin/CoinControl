@@ -8,7 +8,7 @@ import { RowStyles } from './styles';
 import { SettingsType } from '../../../types/data';
 import { ReduxThemeType } from '../../../types/redux';
 
-interface AdditionalReduxType {
+interface AdditionalReduxProps {
     settings: SettingsType,
 }
 
@@ -19,7 +19,7 @@ interface DataProps {
     value: number,
 }
 
-class Row extends React.Component<ReduxThemeType & AdditionalReduxType & DataProps> {
+class Row extends React.Component<ReduxThemeType & AdditionalReduxProps & DataProps> {
     render() {
         return (
             <View style={{ ...RowStyles.root, borderBottomColor: this.props.theme.dynamic.screen.bgC }}>
@@ -56,7 +56,7 @@ class Row extends React.Component<ReduxThemeType & AdditionalReduxType & DataPro
     }
 }
 
-const mapStateToProps = (state: ReduxThemeType & AdditionalReduxType) => ({
+const mapStateToProps = (state: ReduxThemeType & AdditionalReduxProps) => ({
     settings: state.settings,
     theme: state.theme,
 });

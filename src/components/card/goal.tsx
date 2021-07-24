@@ -12,13 +12,13 @@ import { Goal, goals } from '../../data/goal';
 import { CategoryStore, DataStore, SettingsType } from '../../types/data';
 import { ReduxThemeType } from '../../types/redux';
 
-interface AdditionalReduxType {
+interface AdditionalReduxProps {
     categories: CategoryStore,
     data: DataStore,
     settings: SettingsType,
 }
 
-class Card extends React.Component<ReduxThemeType & AdditionalReduxType> {
+class Card extends React.Component<ReduxThemeType & AdditionalReduxProps> {
     render() {
         let progress: number = this.props.data.stats.goal.left / this.props.data.stats.goal.config.max;
         if (this.props.data.stats.goal.used > this.props.data.stats.goal.config.max)
@@ -62,7 +62,7 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType> {
     }
 }
 
-const mapStateToProps = (state: ReduxThemeType & AdditionalReduxType) => ({
+const mapStateToProps = (state: ReduxThemeType & AdditionalReduxProps) => ({
     categories: state.categories,
     data: state.data,
     settings: state.settings,

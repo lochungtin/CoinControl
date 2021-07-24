@@ -12,7 +12,7 @@ import { DetailCardStyles, GeneralCardStyles } from './styles';
 import { Categories, CategoryStore, DataStore, DataType, SettingsType } from '../../types/data';
 import { ReduxThemeType } from '../../types/redux';
 
-interface AdditionalReduxType {
+interface AdditionalReduxProps {
     categories: CategoryStore,
     data: DataStore,
     settings: SettingsType,
@@ -26,7 +26,7 @@ interface DataProps {
     recordList: Array<DataType>,
 }
 
-class Card extends React.Component<ReduxThemeType & DataProps & AdditionalReduxType> {
+class Card extends React.Component<ReduxThemeType & DataProps & AdditionalReduxProps> {
     render() {
         let amount: number = 0;
         let count: number = 0;
@@ -107,7 +107,7 @@ class Card extends React.Component<ReduxThemeType & DataProps & AdditionalReduxT
     }
 }
 
-const mapStateToProps = (state: ReduxThemeType & AdditionalReduxType) => ({
+const mapStateToProps = (state: ReduxThemeType & AdditionalReduxProps) => ({
     categories: state.categories,
     data: state.data,
     settings: state.settings,

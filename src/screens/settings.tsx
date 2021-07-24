@@ -42,16 +42,16 @@ import { ReduxThemeType } from '../types/redux';
 import { ScreenProps, SettingsCategory, SettingsItem } from '../types/ui';
 import { smallKeygen } from '../utils/keygen';
 
-interface AdditionalReduxType {
+interface AdditionalReduxProps {
     account: AccountType | null,
     settings: SettingsType,
 }
 
-class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxType> {
+class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxProps> {
 
     notif: NotifService;
 
-    constructor(props: ReduxThemeType & ScreenProps & AdditionalReduxType) {
+    constructor(props: ReduxThemeType & ScreenProps & AdditionalReduxProps) {
         super(props);
 
         this.notif = new NotifService(
@@ -297,7 +297,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
     }
 }
 
-const mapStateToProps = (state: ReduxThemeType & AdditionalReduxType) => ({
+const mapStateToProps = (state: ReduxThemeType & AdditionalReduxProps) => ({
     account: state.account,
     settings: state.settings,
     theme: state.theme,

@@ -8,7 +8,7 @@ import { CategoryStyles } from './styles';
 import { CategoryType, SettingsType } from '../../../types/data';
 import { ReduxThemeType } from '../../../types/redux';
 
-interface AdditionalReduxType {
+interface AdditionalReduxProps {
     settings: SettingsType,
 }
 
@@ -17,7 +17,7 @@ interface DataProps {
     onPress?: () => void,
 }
 
-class Row extends React.Component<ReduxThemeType & AdditionalReduxType & DataProps> {
+class Row extends React.Component<ReduxThemeType & AdditionalReduxProps & DataProps> {
     render() {
         return (
             <TouchableOpacity onPress={this.props.onPress} style={CategoryStyles.category}>
@@ -35,7 +35,7 @@ class Row extends React.Component<ReduxThemeType & AdditionalReduxType & DataPro
         );
     }
 }
-const mapStateToProps = (state: ReduxThemeType & AdditionalReduxType) => ({
+const mapStateToProps = (state: ReduxThemeType & AdditionalReduxProps) => ({
     settings: state.settings,
     theme: state.theme,
 });

@@ -11,7 +11,7 @@ import { DetailCardStyles, GeneralCardStyles } from './styles';
 import { Categories, CategoryStore, CategoryTallyType, DataStore } from '../../types/data';
 import { ReduxThemeType } from '../../types/redux';
 
-interface AdditionalReduxType {
+interface AdditionalReduxProps {
     categories: CategoryStore,
     data: DataStore,
 }
@@ -21,7 +21,7 @@ interface DataProps {
     categoryKey: string,
 }
 
-class Card extends React.Component<ReduxThemeType & DataProps & AdditionalReduxType> {
+class Card extends React.Component<ReduxThemeType & DataProps & AdditionalReduxProps> {
     render() {
         let categoryStats: CategoryTallyType = this.props.data.stats.categories[this.props.categoryType].tally[this.props.categoryKey];
 
@@ -55,7 +55,7 @@ class Card extends React.Component<ReduxThemeType & DataProps & AdditionalReduxT
     }
 }
 
-const mapStateToProps = (state: ReduxThemeType & AdditionalReduxType) => ({
+const mapStateToProps = (state: ReduxThemeType & AdditionalReduxProps) => ({
     categories: state.categories,
     data: state.data,
     theme: state.theme,

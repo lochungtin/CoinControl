@@ -13,18 +13,20 @@ import { ScreenStyles, CategoryScreenStyles } from './styles';
 
 import { defaultCategories } from '../data/default';
 import { Prompt } from '../data/prompts';
+import { firebaseDeleteCategory, firebaseUpdateCategory } from '../firebase/data';
 import { categoryDelete, categoryEdit, dataSetRecordCatToOther, settingsSetPromptShow } from '../redux/action';
 import { store } from '../redux/store';
-import { Categories, CategoryStore, CategoryType, SettingsType } from '../types/data';
+import { AccountType, Categories, CategoryStore, CategoryType, SettingsType } from '../types/data';
 import { ReduxThemeType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
 
-interface AdditionalReduxType {
+interface AdditionalReduxProps {
+    account: AccountType,
     categories: CategoryStore,
     settings: SettingsType,
 }
 
-class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxType> {
+class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxProps> {
 
     state = {
         category: this.props.route.params?.category || Categories.EXPENSE,
@@ -34,7 +36,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
     }
 
     componentDidMount() {
-        this.props.navigation.addListener('focus', () => this.setState({ 
+        this.props.navigation.addListener('focus', () => this.setState({
             category: this.props.route.params?.category || Categories.EXPENSE,
             selected: defaultCategories[Categories.EXPENSE]['C0000000'],
         }));
@@ -68,6 +70,10 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
                 category: this.state.category,
                 key: category.key,
             }));
+
+            if (this.props.account)
+                firebaseDeleteCategory(this.props.account.uid, this.state.category, category.key);
+
         }
         store.dispatch(settingsSetPromptShow({ prompt: Prompt.DELETE_CATEGORY, show }));
         this.setState({ pmOpen: null });
@@ -86,6 +92,10 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
             data: category,
             key: category.key,
         }));
+
+        if (this.props.account)
+            firebaseUpdateCategory(this.props.account.uid, this.state.category, category);
+
         this.setState({ cmOpen: false });
     }
 
@@ -179,7 +189,8 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
     }
 }
 
-const mapStateToProps = (state: ReduxThemeType & AdditionalReduxType) => ({
+const mapStateToProps = (state: ReduxThemeType & AdditionalReduxProps) => ({
+    account: state.account,
     categories: state.categories,
     settings: state.settings,
     theme: state.theme,

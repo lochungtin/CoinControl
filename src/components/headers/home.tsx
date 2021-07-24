@@ -18,7 +18,7 @@ import { CategoryStore, DataStore, GoalConfigType, SettingsType } from '../../ty
 import { ReduxThemeType } from '../../types/redux';
 import { ScreenProps } from '../../types/ui';
 
-interface AdditionalReduxType {
+interface AdditionalReduxProps {
     data: DataStore,
     categories: CategoryStore,
     settings: SettingsType,
@@ -30,7 +30,7 @@ interface DataProps {
     toggleDeleting: (deleteMode: boolean) => void,
 }
 
-class Header extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxType & DataProps> {
+class Header extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxProps & DataProps> {
 
     state = {
         deleting: false,
@@ -202,7 +202,7 @@ class Header extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
     }
 }
 
-const mapStateToProps = (state: ReduxThemeType & AdditionalReduxType) => ({
+const mapStateToProps = (state: ReduxThemeType & AdditionalReduxProps) => ({
     data: state.data,
     categories: state.categories,
     settings: state.settings,

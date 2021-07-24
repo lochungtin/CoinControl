@@ -11,19 +11,21 @@ import InputModal from '../components/modals/input';
 
 import { ScreenStyles } from './styles';
 
-import { Categories, CategoryStore, CategoryType, DataType } from '../types/data';
+import { defaultCategories } from '../data/default';
+import { firebaseUpdateRecord } from '../firebase/data';
+import { AccountType, Categories, CategoryStore, CategoryType, DataType } from '../types/data';
 import { ReduxThemeType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
-import { defaultCategories } from '../data/default';
-import { keygen } from '../utils/keygen';
-import { store } from '../redux/store';
 import { dataAdd, displayAdd } from '../redux/action';
+import { store } from '../redux/store';
+import { keygen } from '../utils/keygen';
 
-interface AdditionalReduxType {
+interface AdditionalReduxProps {
+    account: AccountType,
     categories: CategoryStore,
 }
 
-class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxType> {
+class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxProps> {
 
     state = {
         category: this.props.route.params?.category || Categories.EXPENSE,
@@ -38,6 +40,10 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
     onConfirm = (obj: DataType) => {
         store.dispatch(dataAdd(obj));
         store.dispatch(displayAdd(obj));
+
+        if (this.props.account)
+            firebaseUpdateRecord(this.props.account.uid, obj);
+
         this.setState({ open: false });
         this.props.navigation.navigate('home');
     }
@@ -113,6 +119,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
                         categoryType: this.state.category,
                         date: moment().format('DD-MM-YYYY'),
                         key: keygen(),
+                        lmt: '',
                         title: '',
                         value: 0,
                     }}
@@ -122,7 +129,8 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
     }
 }
 
-const mapStateToProps = (state: ReduxThemeType & AdditionalReduxType) => ({
+const mapStateToProps = (state: ReduxThemeType & AdditionalReduxProps) => ({
+    account: state.account,
     categories: state.categories,
     theme: state.theme,
 });

@@ -12,14 +12,19 @@ import { NewCatScreenStyles, ScreenStyles } from './styles';
 import { pickRandom } from '../data/color';
 import { defaultCategories } from '../data/default';
 import { icons } from '../data/icons';
-import { Categories, CategoryType, IconSection } from '../types/data';
+import { firebaseUpdateCategory } from '../firebase/data';
+import { AccountType, Categories, CategoryType, IconSection } from '../types/data';
 import { categoryAdd } from '../redux/action';
 import { store } from '../redux/store';
 import { ReduxThemeType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
 import { keygen, smallKeygen } from '../utils/keygen';
 
-class Screen extends React.Component<ReduxThemeType & ScreenProps> {
+interface AdditionalReduxProps {
+    account: AccountType,
+}
+
+class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxProps> {
 
     state = {
         category: this.props.route.params,
@@ -33,6 +38,10 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps> {
             data: category,
             key: category.key,
         }));
+
+        if (this.props.account)
+            firebaseUpdateCategory(this.props.account.uid, this.state.category, category);
+
         this.setState({ open: false });
     }
 
@@ -106,7 +115,8 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxThemeType) => ({
+const mapStateToProps = (state: ReduxThemeType & AdditionalReduxProps) => ({
+    account: state.account,
     theme: state.theme,
 });
 

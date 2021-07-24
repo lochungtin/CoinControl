@@ -14,7 +14,7 @@ import { Categories, CategoryStatType, CategoryStore, CategoryTallyType, Categor
 import { ReduxThemeType } from '../../types/redux';
 import { PieArcProps } from '../../types/ui';
 
-interface AdditionalReduxType {
+interface AdditionalReduxProps {
     categories: CategoryStore,
     data: DataStore,
 }
@@ -23,7 +23,7 @@ interface DataProps {
     onSelectCategory: (categoryType: Categories, categoryKey: string) => void,
 }
 
-class Card extends React.Component<ReduxThemeType & AdditionalReduxType & DataProps> {
+class Card extends React.Component<ReduxThemeType & AdditionalReduxProps & DataProps> {
 
     state = {
         categoryKey: '',
@@ -91,7 +91,7 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType & DataPr
     }
 }
 
-const mapStateToProps = (state: ReduxThemeType & AdditionalReduxType) => ({
+const mapStateToProps = (state: ReduxThemeType & AdditionalReduxProps) => ({
     categories: state.categories,
     data: state.data,
     theme: state.theme,

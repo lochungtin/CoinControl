@@ -15,7 +15,7 @@ import { InputModalStyles } from './styles';
 import { CategoryStore, CategoryType, DataType } from '../../types/data';
 import { ReduxThemeType } from '../../types/redux';
 
-interface AdditionalReduxType {
+interface AdditionalReduxProps {
     categories: CategoryStore,
 }
 
@@ -27,7 +27,7 @@ interface DataProps {
     open: boolean,
 }
 
-class Modal extends React.Component<ReduxThemeType & AdditionalReduxType & DataProps> {
+class Modal extends React.Component<ReduxThemeType & AdditionalReduxProps & DataProps> {
 
     state = {
         categoryKey: this.props.record.categoryKey || 'C0000000',
@@ -131,7 +131,7 @@ class Modal extends React.Component<ReduxThemeType & AdditionalReduxType & DataP
     }
 }
 
-const mapStateToProps = (state: ReduxThemeType & AdditionalReduxType) => ({
+const mapStateToProps = (state: ReduxThemeType & AdditionalReduxProps) => ({
     categories: state.categories,
     theme: state.theme,
 });

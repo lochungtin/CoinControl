@@ -14,7 +14,7 @@ import { Categories, CategoryStore, CategoryType, DataStore, DataType } from '..
 import { ReduxThemeType } from '../../types/redux';
 import { DisplaySectionType } from '../../types/ui';
 
-interface AdditionalReduxType {
+interface AdditionalReduxProps {
 	categories: CategoryStore,
 	data: DataStore,
 	display: Array<DisplaySectionType>,
@@ -29,7 +29,7 @@ interface DataProps {
 	onSelectDate: (date: string) => void,
 }
 
-class Card extends React.Component<ReduxThemeType & AdditionalReduxType & DataProps> {
+class Card extends React.Component<ReduxThemeType & AdditionalReduxProps & DataProps> {
 
 	state = {
 		categoryKey: '',
@@ -87,7 +87,7 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType & DataPr
 	}
 }
 
-const mapStateToProps = (state: ReduxThemeType & AdditionalReduxType) => ({
+const mapStateToProps = (state: ReduxThemeType & AdditionalReduxProps) => ({
 	categories: state.categories,
 	data: state.data,
 	display: state.display,
