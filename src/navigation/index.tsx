@@ -2,6 +2,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
+import FlashMessage from 'react-native-flash-message';
 import { connect } from 'react-redux';
 
 import analytics from '../screens/analytics';
@@ -47,6 +48,7 @@ class AppNav extends React.Component<ReduxThemeType> {
                     <Nav.Screen name='category' component={this.category} />
                     <Nav.Screen name='settings' component={this.settings} />
                 </Nav.Navigator>
+                <FlashMessage position='center' />
             </NavigationContainer>
         );
     }

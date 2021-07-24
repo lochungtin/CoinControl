@@ -17,6 +17,7 @@ import { colorPickerData, WHITE } from '../data/color';
 import { currencyData } from '../data/currency';
 import { itemlist, SettingsPickers, SettingsSelects, SettingsSwitches } from '../data/mapping/settings';
 import { Prompt, promptNames } from '../data/prompts';
+import { signOut } from '../firebase/auth';
 import NotifService from '../notifications';
 import {
     dataClear,
@@ -33,6 +34,7 @@ import {
     settingsSetDarkMode,
     displayClear,
     settingsSetLightMode,
+    accountSignOut,
 } from '../redux/action';
 import { store } from '../redux/store';
 import { AccountType, CurrencyType, SettingsType } from '../types/data';
@@ -176,7 +178,10 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
         this.setState({ timePickerOpen: false });
     }
 
-    signOut = () => { }
+    signOut = () => {
+        signOut();
+        store.dispatch(accountSignOut());
+    }
 
     themeSetAccentColor = (accent: string) => {
         store.dispatch(themeSetAccent(accent));
@@ -186,7 +191,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
     render() {
         let data: Array<any> = [];
         let selected: Array<number> = [];
-        
+
         if (this.state.multiPickerOpen === SettingsSelects.CURRENCY) {
             data = Object.keys(currencyData).map((key: string) => currencyData[key]);
             selected = [data.findIndex((cur: CurrencyType) => cur.key === this.props.settings?.currency.key)];

@@ -9,14 +9,21 @@ import Header from '../components/headers/auth';
 
 import { AuthScreenStyles, ScreenStyles } from './styles';
 
+import { signIn } from '../firebase/auth';
 import { ReduxThemeType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
+import { accountSignIn } from '../redux/action';
+import { store } from '../redux/store';
 
 class Screen extends React.Component<ReduxThemeType & ScreenProps> {
 
     state = {
         email: '',
         pswd: '',
+    }
+
+    signIn = () => {
+        signIn(this.state.email, this.state.pswd);
     }
 
     render() {
@@ -53,7 +60,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps> {
                         </View>
                         <View style={AuthScreenStyles.bullet}>
                             <Bullet
-                                onPress={() => { }}
+                                onPress={this.signIn}
                                 text='login'
                                 width={0.8}
                             />
