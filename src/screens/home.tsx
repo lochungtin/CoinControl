@@ -12,7 +12,7 @@ import LItem from '../components/listitem';
 
 import { HomeScreenStyles, ScreenStyles } from './styles';
 
-import { firebaseDeleteRecord, firebaseUpdateRecord } from '../firebase/data';
+import { firebaseDefaultErrorCallback, firebaseDeleteRecord, firebaseFetchAll, firebaseUpdateRecord } from '../firebase/data';
 import { DisplaySectionType, ScreenProps } from '../types/ui';
 import { ReduxThemeType } from '../types/redux';
 import { AccountType, Categories, CategoryStore, DataStore, DataType, SettingsType } from '../types/data';
@@ -20,6 +20,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { store } from '../redux/store';
 import { dataDelete, dataEdit, displayDelete, displayEdit, settingsSetPromptShow } from '../redux/action';
 import { Prompt } from '../data/prompts';
+import { FirebaseFullSnapshot } from '../types/firebase';
+import { merge } from '../utils/merger';
 
 interface AdditionalReduxProps {
 	account: AccountType,
@@ -39,7 +41,7 @@ const alternative: DataType = {
 	value: 0,
 }
 
-class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxProps> {
+class HomeScreen extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxProps> {
 
 	state = {
 		deleteMode: false,
@@ -83,6 +85,15 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
 		this.setState({ edit: null, imOpen: false });
 	}
 
+	sync = () => firebaseFetchAll(this.props.account.uid)
+		.then((snapshot: FirebaseFullSnapshot) => merge(
+			this.props.account.uid,
+			this.props.data.data,
+			this.props.categories,
+			snapshot
+		))
+		.catch(firebaseDefaultErrorCallback);
+
 	render() {
 		let sections: Array<DisplaySectionType> = this.props.display;
 		if (this.state.filterDate)
@@ -94,7 +105,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
 					<Header
 						navigation={this.props.navigation}
 						onFilterDate={(filterDate: string) => this.setState({ filterDate })}
-						onPressSync={() => { }}
+						onPressSync={this.sync}
 						toggleDeleting={(deleteMode: boolean) => this.setState({ deleteMode })}
 					/>
 					<ScrollView>
@@ -105,6 +116,9 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
 										<SubHeader label={section.date} />
 										{section.keys.map((key: string) => {
 											let record: DataType = this.props.data.data[key];
+
+											if (!record)
+												return <View />
 
 											return (
 												<LItem
@@ -168,4 +182,4 @@ const mapStateToProps = (state: ReduxThemeType & AdditionalReduxProps) => ({
 	theme: state.theme,
 });
 
-export default connect(mapStateToProps)(Screen);
+export default connect(mapStateToProps)(HomeScreen);

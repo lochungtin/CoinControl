@@ -44,9 +44,11 @@ export const merge = (uid: string, data: DataMap, categoryStore: CategoryStore, 
         1: mergedIncome,
     };
 
-    store.dispatch(displayOverwrite(mergedData));
-    store.dispatch(dataOverwrite(mergedData));
-    store.dispatch(categoryOverwrite(mergedCategories));
+    console.log(mergedData);
 
-    firebaseOverwriteAll(uid, mergedData, mergedCategories);
+    store.dispatch(categoryOverwrite(mergedCategories));
+    store.dispatch(dataOverwrite(mergedData));
+    store.dispatch(displayOverwrite(mergedData));
+
+    // firebaseOverwriteAll(uid, mergedData, mergedCategories);
 }

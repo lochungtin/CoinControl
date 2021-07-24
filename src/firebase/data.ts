@@ -9,7 +9,7 @@ import { defaultCategories } from '../data/default';
 
 const db: firebaseConfig.database.Database = firebaseConfig.database();
 
-const firebaseDefaultErrorCallback = (err: Error | null) => {
+export const firebaseDefaultErrorCallback = (err: Error | null) => {
     if (err)
         showMessage({
             ...flashMessageConfig.fail,
