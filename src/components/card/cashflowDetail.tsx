@@ -8,7 +8,7 @@ import CardBase from './base';
 
 import { DetailCardStyles, GeneralCardStyles } from './styles';
 
-import { Categories, CategoryStore, CategoryTallyType, DataStore, DataType } from '../../types/data';
+import { Categories, CategoryStore, DataStore, DataType } from '../../types/data';
 import { ReduxThemeType } from '../../types/redux';
 
 interface AdditionalReduxType {
@@ -65,7 +65,7 @@ class Card extends React.Component<ReduxThemeType & DataProps & AdditionalReduxT
                                 </View>
                                 :
                                 <View>
-
+                                    
                                 </View>
                             }
                         </>
