@@ -1,0 +1,87 @@
+import React from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { connect } from 'react-redux';
+
+import Bullet from '../bullet';
+import ModalBase from './base';
+
+import { PromptModalStyles } from './styles';
+
+import { Prompt, prompts } from '../../data/prompts';
+import { ReduxThemeType } from '../../types/redux';
+
+interface DataProps {
+    onClose: () => void,
+    onConfirm: (dnsa: boolean) => void,
+    open: boolean,
+    prompt: Prompt,
+}
+
+class Modal extends React.Component<ReduxThemeType & DataProps> {
+
+    state = {
+        checked: false,
+    }
+
+    render() {
+        return (
+            <ModalBase
+                onClose={this.props.onClose}
+                onOpen={() => this.setState({ checked: false })}
+                open={this.props.open}
+            >
+                <View style={PromptModalStyles.content}>
+                    <Icon
+                        color={this.props.theme.static.accentC}
+                        name='alert-circle-outline'
+                        size={60}
+                    />
+                    <View style={PromptModalStyles.textBox}>
+                        <View style={PromptModalStyles.warningTextBox}>
+                            <Text style={{ ...PromptModalStyles.warningText, color: this.props.theme.dynamic.text.mainC }}>
+                                WARNING
+                            </Text>
+                        </View>
+                        <View style={PromptModalStyles.promptTextBox}>
+                            <Text style={{ ...PromptModalStyles.promptText, color: this.props.theme.dynamic.text.mainC }}>
+                                {`You are about to ${prompts[this.props.prompt]}, are you sure you want to proceed?`}
+                            </Text>
+                        </View>
+                        <View style={PromptModalStyles.dnsaTextBox}>
+                            <Text style={{ ...PromptModalStyles.dnsaText, color: this.props.theme.dynamic.text.mainC }}>
+                                Don't show again
+                            </Text>
+                            <TouchableOpacity onPress={() => this.setState({ checked: !this.state.checked })}>
+                                <Icon
+                                    color={this.props.theme.static.accentC}
+                                    name={this.state.checked ? 'checkbox-marked-outline' : 'checkbox-blank-outline'}
+                                    size={30}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+                <View style={PromptModalStyles.bullets}>
+                    <Bullet
+                        onPress={() => this.props.onConfirm(this.state.checked)}
+                        text='confirm'
+                        width={0.375}
+                    />
+                    <Bullet
+                        inactive
+                        onPress={this.props.onClose}
+                        text='cancel'
+                        width={0.375}
+                    />
+                </View>
+            </ModalBase>
+        );
+    }
+}
+
+const mapStateToProps = (state: ReduxThemeType) => ({
+    theme: state.theme,
+});
+
+export default connect(mapStateToProps)(Modal);

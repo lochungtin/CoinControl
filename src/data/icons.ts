@@ -1,0 +1,269 @@
+import { IconSection } from '../types/data';
+
+export const icons: Array<IconSection> = [
+    {
+        header: 'banking',
+        data: [
+            [
+                'bank',
+                'cash',
+                'credit-card-outline',
+                'information-outline',
+                'information-variant',
+            ],
+            [
+                'wallet-outline',
+                'wallet-plus-outline',
+                'text-box-outline',
+                'receipt',
+                null,
+            ],
+        ],
+    },
+    {
+        header: 'entertainment',
+        data: [
+            [
+                'balloon',
+                'book-outline',
+                'campfire',
+                'controller-classic-outline',
+                'diamond-stone',
+            ],
+            [
+                'filmstrip-box-multiple',
+                'firework',
+                'gamepad-variant-outline',
+                'google-play',
+                'microsoft-xbox',
+            ],
+            [
+                'microsoft-xbox-controller',
+                'movie-open-outline',
+                'movie-outline',
+                'nintendo-switch',
+                'sony-playstation',
+            ],
+            [
+                'steam',
+                'twitch',
+                null,
+                null,
+                null,
+            ],
+        ],
+    },
+    {
+        header: 'food',
+        data: [
+            [
+                'baguette',
+                'bottle-wine-outline',
+                'cake-variant',
+                'chef-hat',
+                'fish',
+            ],
+            [
+                'food-drumstick',
+                'food-fork-drink',
+                'food-variant',
+                'glass-wine',
+                'noodles',
+            ],
+            [
+                'pizza',
+                'pot-mix',
+                'rice',
+                'silverware-fork-knife',
+                null,
+            ],
+        ],
+    },
+    {
+        header: 'health',
+        data: [
+            [
+                'account-child-outline',
+                'ambulance',
+                'baby-carriage',
+                'eye',
+                'tooth-outline',
+            ],
+            [
+                'toothbrush',
+                null,
+                null,
+                null,
+                null,
+            ],
+        ],
+    },
+    {
+        header: 'misc',
+        data: [
+            [
+                'account',
+                'bell',
+                'cat',
+                'christianity',
+                'dog',
+            ],
+            [
+                'exclamation',
+                'fingerprint',
+                'flag-outline',
+                'hook',
+                'keyboard-backspace',
+            ],
+            [
+                'lock',
+                'paw',
+                'rabbit',
+                'school',
+                'smoking',
+            ],
+            [
+                'umbrella-outline',
+                null,
+                null,
+                null,
+                null,
+            ],
+        ],
+    },
+    {
+        header: 'music',
+        data: [
+            [
+                'guitar-acoustic',
+                'guitar-electric',
+                'headphones',
+                'metronome-tick',
+                'music-clef-treble',
+            ],
+            [
+                'piano',
+                'saxophone',
+                'spotify',
+                'trumpet',
+                'violin',
+            ],
+        ],
+    },
+    {
+        header: 'office',
+        data: [
+            [
+                'attachment',
+                'bookmark-multiple-outline',
+                'clock-outline',
+                'desk',
+                'file-outline',
+            ],
+            [
+                'folder-open-outline',
+                'fountain-pen',
+                'paperclip',
+                'pen',
+                'pencil-outline',
+            ],
+        ],
+    },
+    {
+        header: 'shopping',
+        data: [
+            [
+                'amazon',
+                'cart-outline',
+                'dolly',
+                'gift',
+                'lipstick',
+            ],
+            [
+                'ring',
+                'shopping-outline',
+                'watch',
+                null,
+                null,
+            ],
+        ],
+    },
+    {
+        header: 'sports',
+        data: [
+            [
+                'badminton',
+                'baseball-bat',
+                'basketball',
+                'dumbbell',
+                'football',
+            ],
+            [
+                'kettlebell',
+                'soccer',
+                'tennis',
+                'weight-lifter',
+                null,
+            ],
+        ],
+    },
+    {
+        header: 'technology',
+        data: [
+            [
+                'access-point',
+                'apple',
+                'camera',
+                'cellphone-android',
+                'desktop-classic',
+            ],
+            [
+                'dropbox',
+                'goodreads',
+                'google',
+                'google-controller',
+                'google-drive',
+            ],
+            [
+                'keyboard',
+                'laptop',
+                'microphone',
+                'microsoft-windows',
+                'phone',
+            ],
+            [
+                'skype',
+                'wifi',
+                null,
+                null,
+                null,
+            ],
+        ],
+    },
+    {
+        header: 'travel',
+        data: [
+            [
+                'airballoon',
+                'airplane',
+                'bike',
+                'bus-side',
+                'car',
+            ],
+            [
+                'ferry',
+                'garage',
+                'gas-station',
+                'motorbike',
+                'rollerblade',
+            ],
+            [
+                'train-car',
+                null,
+                null,
+                null,
+                null,
+            ],
+        ],
+    },
+];
