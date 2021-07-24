@@ -105,7 +105,12 @@ export const firebaseOverwriteAll = (
         update[`/UserData/${uid}/categories/${Categories.INCOME}`] = categories[Categories.INCOME];
     }
 
-    db.ref().update(update, firebaseDefaultErrorCallback);
+    db.ref().update(update, (err: Error | null) => {
+        if (err)
+            firebaseDefaultErrorCallback(err);
+        else
+            showMessage({...flashMessageConfig.success, message: 'Sync Complete'});
+    });
 }
 
 // fetch all from firebase
