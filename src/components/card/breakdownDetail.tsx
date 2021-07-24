@@ -26,7 +26,7 @@ class Card extends React.Component<ReduxThemeType & DataProps & AdditionalReduxT
         let categoryStats: CategoryTallyType = this.props.data.stats.categories[this.props.categoryType].tally[this.props.categoryKey];
 
         return (
-            <CardBase icon='card-text-outline' title='details'>
+            <CardBase icon='card-text-outline' title='overall details'>
                 <View style={GeneralCardStyles.mainContent}>
                     {this.props.categoryKey === '' ?
                         <Text style={{ ...GeneralCardStyles.nullPrompt, color: this.props.theme.dynamic.text.secondaryC }}>

@@ -93,13 +93,17 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
                             colorList={colors}
                             dataList={data}
                             keyList={categoryKeys}
-                            onSelectCategory={(cfCategoryType: Categories, cfCategoryKey: string) => this.setState({ cfCategoryKey, cfCategoryType })}
-                            onSelectDate={(date: string) => this.setState({ date })}
+                            onSelectCategory={(cfCategoryType: Categories, cfCategoryKey: string) => this.setState({ cfCategoryKey, cfCategoryType, date: '' })}
+                            onSelectDate={(date: string) => this.setState({ date, cfCategoryKey: '', cfCategoryType: Categories.EXPENSE })}
                         />
                         <CFDetailsCard
                             categoryKey={this.state.cfCategoryKey}
                             categoryType={this.state.cfCategoryType}
+                            colorList={colors}
+                            dataList={data}
                             date={this.state.date}
+                            keyList={categoryKeys}
+                            recordList={recordList}
                         />
                         <BreakdownCard
                             onSelectCategory={(bdCategoryType: Categories, bdCategoryKey: string) => this.setState({ bdCategoryKey, bdCategoryType })}
