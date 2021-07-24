@@ -29,6 +29,7 @@ class Input extends React.Component<ReduxThemeType & DataProps> {
                         {this.props.label.toUpperCase()}
                     </Text>
                     <TextInput
+                        autoCapitalize='none'
                         placeholder={this.props.placeholder}
                         placeholderTextColor={this.props.theme.dynamic.text.secondaryC}
                         onChangeText={this.props.onChangeText}

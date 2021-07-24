@@ -1,8 +1,8 @@
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-import BTMBar from '../components/auth/bottombar';
 
+import BTMBar from '../components/auth/bottombar';
 import Input from '../components/auth/input';
 import Bullet from '../components/bullet';
 import Header from '../components/headers/auth';
