@@ -99,10 +99,8 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
                         <CFDetailsCard
                             categoryKey={this.state.cfCategoryKey}
                             categoryType={this.state.cfCategoryType}
-                            colorList={colors}
                             dataList={data}
                             date={this.state.date}
-                            keyList={categoryKeys}
                             recordList={recordList}
                         />
                         <BreakdownCard

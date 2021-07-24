@@ -65,11 +65,31 @@ export const DetailCardStyles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-evenly',
+        width: screenWidth * 0.85,
     },
     selected: {
         fontSize: 18,
         marginBottom: 15,
-    }
+    },
+    cfDetailRow: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingRight: 10,
+        width: screenWidth * 0.85,
+    },
+    priceBox: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginBottom: 15,
+    },
+    price: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
 });
 
 export const GoalCardStyles = StyleSheet.create({

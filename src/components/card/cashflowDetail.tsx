@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import Category from '../stats/category';
@@ -8,21 +9,20 @@ import CardBase from './base';
 
 import { DetailCardStyles, GeneralCardStyles } from './styles';
 
-import { Categories, CategoryStore, DataStore, DataType } from '../../types/data';
+import { Categories, CategoryStore, DataStore, DataType, SettingsType } from '../../types/data';
 import { ReduxThemeType } from '../../types/redux';
 
 interface AdditionalReduxType {
     categories: CategoryStore,
     data: DataStore,
+    settings: SettingsType,
 }
 
 interface DataProps {
     categoryType: Categories,
     categoryKey: string,
-    colorList: Array<string>,
     date: string,
     dataList: Array<{ [key: string]: any }>,
-    keyList: Array<string>,
     recordList: Array<DataType>,
 }
 
@@ -37,6 +37,11 @@ class Card extends React.Component<ReduxThemeType & DataProps & AdditionalReduxT
                 count += 1;
             }
         });
+
+        let data: { [key: string]: any } = this.props.dataList[this.props.dataList.findIndex((datapoint: { [key: string]: any }) => datapoint.date === this.props.date)];
+        let categories: Array<string> = Object.keys(data || {}).filter((key: string) => key !== 'date' && data[key] !== 0);
+
+        console.log(categories);
 
         return (
             <CardBase icon='card-text-outline' title='7 day details'>
@@ -65,7 +70,35 @@ class Card extends React.Component<ReduxThemeType & DataProps & AdditionalReduxT
                                 </View>
                                 :
                                 <View>
-                                    
+                                    <View style={DetailCardStyles.topRow}>
+                                        <Text style={{ ...DetailCardStyles.selected, color: this.props.theme.dynamic.text.mainC }}>
+                                            Selected:
+                                        </Text>
+                                        <Text style={{ ...DetailCardStyles.selected, color: this.props.theme.dynamic.text.mainC }}>
+                                            {this.props.date}
+                                        </Text>
+                                    </View>
+                                    <View>
+                                        {categories.map((key: string) => {
+                                            let category = this.props.categories[this.props.categoryType][key];
+
+                                            return (
+                                                <View key={category.key} style={DetailCardStyles.cfDetailRow}>
+                                                    <Category category={category} />
+                                                    <View style={DetailCardStyles.priceBox}>
+                                                        <Icon 
+                                                            color={this.props.theme.dynamic.text.mainC}
+                                                            name={this.props.settings.currency.icon}
+                                                            size={20}
+                                                        />
+                                                        <Text style={{ ...DetailCardStyles.price, color: this.props.theme.dynamic.text.mainC }}>
+                                                            {data[key]}
+                                                        </Text>
+                                                    </View>
+                                                </View>
+                                            );
+                                        })}
+                                    </View>
                                 </View>
                             }
                         </>
@@ -79,6 +112,7 @@ class Card extends React.Component<ReduxThemeType & DataProps & AdditionalReduxT
 const mapStateToProps = (state: ReduxThemeType & AdditionalReduxType) => ({
     categories: state.categories,
     data: state.data,
+    settings: state.settings,
     theme: state.theme,
 });
 

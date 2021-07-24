@@ -73,7 +73,7 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType & DataPr
 							data={this.props.dataList}
 							height={150}
 							keys={this.props.keyList}
-							onPress={console.log}
+							onPress={this.onSelectDate}
 							width={screenWidth * 0.8}
 						/>
 					</View>}

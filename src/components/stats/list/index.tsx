@@ -16,7 +16,7 @@ interface DataProps {
 
 class List extends React.Component<ReduxThemeType & DataProps> {
     render() {
-        let part2: Array<CategoryType> = [...this.props.categoryList];
+        let part2: Array<CategoryType> = [...this.props.categoryList].sort((a: CategoryType, b: CategoryType) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
         let part1: Array<CategoryType> = part2.splice(0, Math.ceil(part2.length / 2));
 
         return (
