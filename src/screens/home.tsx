@@ -14,13 +14,15 @@ import { HomeScreenStyles, ScreenStyles } from './styles';
 
 import { DisplaySectionType, ScreenProps } from '../types/ui';
 import { ReduxThemeType } from '../types/redux';
-import { Categories, CategoryStore, DataStore, DataType, SettingsType } from '../types/data';
+import { AccountType, Categories, CategoryStore, DataStore, DataType, SettingsType } from '../types/data';
 import { ScrollView } from 'react-native-gesture-handler';
 import { store } from '../redux/store';
 import { dataDelete, dataEdit, displayDelete, displayEdit, settingsSetPromptShow } from '../redux/action';
 import { Prompt } from '../data/prompts';
+import { firebaseDeleteRecord, firebaseUpdateRecord } from '../firebase/data';
 
 interface AdditionalReduxType {
+	account: AccountType,
     categories: CategoryStore,
 	data: DataStore,
 	display: Array<DisplaySectionType>,
@@ -41,7 +43,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
 	
 	state = {
 		deleteMode: false,
-		edit: undefined,
+		edit: alternative,
 		filterCategory: undefined,
 		filterDate: '',
 		imOpen: false,
@@ -53,22 +55,30 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
 		if (record !== null) {
 			store.dispatch(dataDelete(record));
 			store.dispatch(displayDelete(record));
+
+			firebaseDeleteRecord(this.props.account.uid, record.key);
 		}
 		store.dispatch(settingsSetPromptShow({ prompt: Prompt.DELETE_RECORD, show }));
+
 		this.setState({ pmOpen: null });
 	}
 
 	dataDelete = (record: DataType) => {
-		if (this.props.settings?.promptTrigger[Prompt.DELETE_RECORD])
+		if (this.props.settings.promptTrigger[Prompt.DELETE_RECORD])
 			this.setState({ pmOpen: record });
 		else
 			this.confirmDelete(record, false);
 	}
 
 	onEdit = (obj: DataType) => {
-		store.dispatch(dataEdit({ new: obj, old: this.state.edit || alternative }));
-		store.dispatch(displayEdit({ new: obj, old: this.state.edit || alternative }));
-		this.setState({ edit: alternative, imOpen: false });
+		if (this.state.edit !== null) {
+			store.dispatch(dataEdit({ new: obj, old: this.state.edit }));
+			store.dispatch(displayEdit({ new: obj, old: this.state.edit }));
+			
+			firebaseUpdateRecord(this.props.account.uid, obj);
+		}
+
+		this.setState({ edit: null, imOpen: false });
 	}
 
 	render() {
@@ -132,7 +142,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
 				</View>
 				<InputModal
 					record={this.state.edit || alternative}
-					onClose={() => this.setState({ edit: alternative, imOpen: false })}
+					onClose={() => this.setState({ edit: null, imOpen: false })}
 					onConfirm={this.onEdit}
 					open={this.state.imOpen}
 				/>
@@ -148,6 +158,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
 }
 
 const mapStateToProps = (state: ReduxThemeType & AdditionalReduxType) => ({
+	account: state.account,
 	categories: state.categories,
 	data: state.data,
 	display: state.display,

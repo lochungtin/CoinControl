@@ -10,13 +10,19 @@ import Header from '../components/headers/auth';
 import { AuthScreenStyles, ScreenStyles } from './styles';
 
 import { signUp } from '../firebase/auth';
+import { firebaseOverwriteAll } from '../firebase/data';
 import { accountSignIn } from '../redux/action';
 import { store } from '../redux/store';
-import { AccountType } from '../types/data';
+import { AccountType, CategoryStore, DataStore } from '../types/data';
 import { ReduxThemeType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
 
-class Screen extends React.Component<ReduxThemeType & ScreenProps> {
+interface AdditionalReduxProps {
+    data: DataStore,
+    categories: CategoryStore,
+}
+
+class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxProps> {
 
     state = {
         email: '',
@@ -30,6 +36,9 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps> {
         this.state.rePswd,
         (account: AccountType) => {
             store.dispatch(accountSignIn(account));
+
+            firebaseOverwriteAll(account.uid, this.props.data.data, this.props.categories);
+
             this.props.navigation.navigate('settingsHome');
         }
     );
@@ -85,7 +94,9 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps> {
     }
 }
 
-const mapStateToProps = (state: ReduxThemeType) => ({
+const mapStateToProps = (state: ReduxThemeType & AdditionalReduxProps) => ({
+    data: state.data,
+    categories: state.categories,
     theme: state.theme,
 });
 

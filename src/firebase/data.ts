@@ -24,7 +24,7 @@ export const firebaseUpdateRecord = (
 ) => {
     let update: FirebaseUpdateType = {};
 
-    update[`/UserData/${uid}/records/${payload.key}`] = payload.key;
+    update[`/UserData/${uid}/records/${payload.key}`] = payload;
 
     db.ref().update(update, firebaseDefaultErrorCallback);
 }
