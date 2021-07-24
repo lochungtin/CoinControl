@@ -69,7 +69,5 @@ export default class NotifService {
             vibration: 300,
             group: 'CCGroup',
         });
-
-        console.log(time.toString());
     }
 }
