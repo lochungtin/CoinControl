@@ -1,7 +1,8 @@
 import React from 'react';
 import { ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native';
-import { connect } from 'react-redux';
+import { ReceivedNotification } from 'react-native-push-notification';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { connect } from 'react-redux';
 
 import Header from '../components/headers/minimal';
 import SubHeader from '../components/headers/sub';
@@ -16,6 +17,7 @@ import { colorPickerData, WHITE } from '../data/color';
 import { currencyData } from '../data/currency';
 import { itemlist, SettingsPickers, SettingsSelects, SettingsSwitches } from '../data/mapping/settings';
 import { Prompt, promptNames } from '../data/prompts';
+import NotifService from '../notifications';
 import {
     dataClear,
     themeSetAccent,
@@ -44,6 +46,17 @@ interface AdditionalReduxType {
 }
 
 class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxType> {
+
+    notif: NotifService;
+
+    constructor(props: ReduxThemeType & ScreenProps & AdditionalReduxType) {
+        super(props);
+
+        this.notif = new NotifService(
+            this.onRegister.bind(this),
+            this.onNotif.bind(this),
+        );
+    }
 
     state = {
         colorPickerOpen: false,
@@ -127,16 +140,16 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
             store.dispatch(on ? themeSetDarkMode() : themeSetLightMode());
             store.dispatch(on ? settingsSetDarkMode() : settingsSetLightMode());
         }
-        if (type === SettingsSwitches.NOTIF)
+        if (type === SettingsSwitches.NOTIF) {
             store.dispatch(settingsSetNotifOn(on));
+
+            this.notif.cancelAll();
+            if (on)
+                this.notif.scheduleNotif(this.props.theme.static.accentC, this.props.settings.notifTime);                
+        }
     }
 
-    onReset = (prompt: Prompt) => {
-        if (this.props.settings?.promptTrigger[prompt])
-            this.setState({ prompt });
-        else
-            this.confirmReset(prompt, false);
-    }
+    onNotif = (notification: Omit<ReceivedNotification, "userInfo">) => { }
 
     openPicker = (type: SettingsPickers) => {
         if (type === SettingsPickers.TIME)
@@ -145,17 +158,30 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
             return this.setState({ colorPickerOpen: true });
     }
 
-    themeSetAccentColor = (accent: string) => {
-        store.dispatch(themeSetAccent(accent));
-        this.setState({ colorPickerOpen: false });
+    onRegister = (token: { os: string, token: string }) => { }
+
+    onReset = (prompt: Prompt) => {
+        if (this.props.settings?.promptTrigger[prompt])
+            this.setState({ prompt });
+        else
+            this.confirmReset(prompt, false);
     }
 
     settingsSetNotifTime = (time: string) => {
         store.dispatch(settingsSetNotifTime(time));
+        
+        this.notif.cancelAll();
+        this.notif.scheduleNotif(this.props.theme.static.accentC, time);
+
         this.setState({ timePickerOpen: false });
     }
 
     signOut = () => { }
+
+    themeSetAccentColor = (accent: string) => {
+        store.dispatch(themeSetAccent(accent));
+        this.setState({ colorPickerOpen: false });
+    }
 
     render() {
         let data: Array<any> = [];

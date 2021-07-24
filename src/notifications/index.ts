@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { PushNotificationPermissions } from 'react-native';
 import PushNotification, { PushNotificationScheduledLocalObject } from 'react-native-push-notification';
 
@@ -17,7 +18,7 @@ export default class NotifService {
             vibrate: true,
         };
 
-        PushNotification.createChannel(channelConfig, (created: boolean) => console.log('New channel created: ' + created));
+        PushNotification.createChannel(channelConfig, (created: boolean) => {});
 
         Handler.attachRegister(onRegister);
         Handler.attachNotification(onNotification);
@@ -43,12 +44,17 @@ export default class NotifService {
 
     requestPermissions = () => PushNotification.requestPermissions();
 
-    scheduleNotif = (color: string, timestamp: string): string => {
+    scheduleNotif = (color: string, timestamp: string) => {
         let id: number = parseInt(keygen(), 16);
+
+        let time: moment.Moment = moment(timestamp, 'LT');
+        if (moment().isAfter(time))
+            time.add(1, 'days');
+
         PushNotification.localNotificationSchedule({
             color,
             id,
-            date: new Date(timestamp),
+            date: new Date(time.toString()),
             message: `Don't forget to note your expenses!`,
             repeatType: 'day',
             title: `Friendly Daily Reminder`,
@@ -64,6 +70,6 @@ export default class NotifService {
             group: 'CCGroup',
         });
 
-        return id.toString();
+        console.log(time.toString());
     }
 }
