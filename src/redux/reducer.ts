@@ -38,6 +38,9 @@ const updateCategories = (categories: CategoryStore = defaultCategories, action:
         case Actions.CATEGORY_DELETE:
             delete update[action.payload.category][action.payload.key];
             return update;
+        // merge overwrite
+        case Actions.CATEGORY_OVERWRITE:
+            return action.payload;
         // set default
         case Actions.CATEGORY_SET_DEFAULT:
             return defaultCategories;
@@ -68,6 +71,10 @@ const updateData = (data: DataStore = defaultData, action: ReduxActionType) => {
         // delete category - set category to other
         case Actions.DATA_TO_CAT_OTHER:
             action.payload.forEach((key: string) => update.data[key].categoryKey = 'C0000000');
+            break;
+        // merger overwrite
+        case Actions.DATA_OVERWRITE:
+            update.data = action.payload;
             break;
         // set goal
         case Actions.DATA_SET_GOAL:
@@ -132,7 +139,7 @@ const updateData = (data: DataStore = defaultData, action: ReduxActionType) => {
 }
 
 const displayAdd = (update: Array<DisplaySectionType>, record: DataType) => {
-    var sectionIndex = update.findIndex((section: DisplaySectionType) => section.date === record.date);
+    let sectionIndex: number = update.findIndex((section: DisplaySectionType) => section.date === record.date);
 
     if (sectionIndex === -1) {
         sectionIndex = update.length;
@@ -143,7 +150,7 @@ const displayAdd = (update: Array<DisplaySectionType>, record: DataType) => {
 }
 
 const displayDelete = (update: Array<DisplaySectionType>, record: DataType) => {
-    var sectionIndex = update.findIndex((section: DisplaySectionType) => section.date === record.date);
+    let sectionIndex: number = update.findIndex((section: DisplaySectionType) => section.date === record.date);
 
     if (update[sectionIndex].keys.length === 1)
         update.splice(sectionIndex, 1);
@@ -169,6 +176,11 @@ const updateDisplay = (display: Array<DisplaySectionType> = [], action: ReduxAct
         case Actions.DISPLAY_EDIT:
             displayDelete(update, action.payload.old);
             displayAdd(update, action.payload.new);
+            break;
+        case Actions.DISPLAY_OVERWRITE:
+            // clear existing
+            update = [];
+            Object.keys(action.payload).forEach((key: string) => displayAdd(update, action.payload[key]));
             break;
         // default
         default:

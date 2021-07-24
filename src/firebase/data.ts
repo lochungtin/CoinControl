@@ -51,7 +51,7 @@ export const firebaseUpdateCategory = (
 ) => {
     let update: FirebaseUpdateType = {};
 
-    update[`/UserData/${uid}/category/${categoryType}/${payload.key}`] = payload;
+    update[`/UserData/${uid}/categories/${categoryType}/${payload.key}`] = payload;
 
     db.ref().update(update, firebaseDefaultErrorCallback);
 }
@@ -65,7 +65,7 @@ export const firebaseDeleteCategory = (
 ) => {
     let update: FirebaseUpdateType = {};
 
-    update[`/UserData/${uid}/category/${categoryType}/${key}`] = null;
+    update[`/UserData/${uid}/categories/${categoryType}/${key}`] = null;
 
     affectedRecord.forEach((key: string) => {
         update[`/UserData/${uid}/records/${key}/categoryKey/`] = 'C0000000';
@@ -81,7 +81,7 @@ export const firebaseSetDefaultCategories = (
 ) => {
     let update: FirebaseUpdateType = {};
 
-    update[`/UserData/${uid}/category`] = defaultCategories;
+    update[`/UserData/${uid}/categories`] = defaultCategories;
 
     affectedRecord.forEach((key: string) => {
         update[`/UserData/${uid}/records/${key}/categoryKey/`] = 'C0000000';
@@ -101,8 +101,8 @@ export const firebaseOverwriteAll = (
 
     update[`/UserData/${uid}/records`] = data;
     if (categories !== null) {
-        update[`/UserData/${uid}/category/${Categories.EXPENSE}`] = categories[Categories.EXPENSE];
-        update[`/UserData/${uid}/category/${Categories.INCOME}`] = categories[Categories.INCOME];
+        update[`/UserData/${uid}/categories/${Categories.EXPENSE}`] = categories[Categories.EXPENSE];
+        update[`/UserData/${uid}/categories/${Categories.INCOME}`] = categories[Categories.INCOME];
     }
 
     db.ref().update(update, firebaseDefaultErrorCallback);

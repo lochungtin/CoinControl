@@ -14,11 +14,12 @@ import { GeneralHeaderStyles, HomeHeaderStyles } from './styles';
 import { Goal, goalExceededText, goals } from '../../data/goal';
 import { dataSetGoal } from '../../redux/action';
 import { store } from '../../redux/store';
-import { CategoryStore, DataStore, GoalConfigType, SettingsType } from '../../types/data';
+import { AccountType, CategoryStore, DataStore, GoalConfigType, SettingsType } from '../../types/data';
 import { ReduxThemeType } from '../../types/redux';
 import { ScreenProps } from '../../types/ui';
 
 interface AdditionalReduxProps {
+    account: AccountType,
     data: DataStore,
     categories: CategoryStore,
     settings: SettingsType,
@@ -40,7 +41,7 @@ class Header extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
     }
 
     componentDidMount() {
-        this.props.navigation.addListener('focus', () => this.setState({ categoriesFiltering: [] }))
+        this.props.navigation.addListener('focus', () => this.setState({ categoriesFiltering: [] }));
     }
 
     onConfirmGoal = (config: GoalConfigType) => {
@@ -203,8 +204,9 @@ class Header extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
 }
 
 const mapStateToProps = (state: ReduxThemeType & AdditionalReduxProps) => ({
-    data: state.data,
+    account: state.account,
     categories: state.categories,
+    data: state.data,
     settings: state.settings,
     theme: state.theme,
 });

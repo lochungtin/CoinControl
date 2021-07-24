@@ -1,5 +1,5 @@
 import { defaultData } from "../data/default";
-import { AccountType, CurrencyType, DataType, GoalConfigType } from "../types/data";
+import { AccountType, CategoryStore, CurrencyType, DataMap, DataType, GoalConfigType } from "../types/data";
 import { ReduxActionType } from "../types/redux";
 
 export enum Actions {
@@ -10,12 +10,14 @@ export enum Actions {
     CATEGORY_ADD,
     CATEGORY_DELETE,
     CATEGORY_EDIT,
-    CATEGORY_SET_DEFAULT,
+    CATEGORY_OVERWRITE,
+    CATEGORY_SET_DEFAULT,    
     // data
     DATA_ADD,
     DATA_CLEAR,
     DATA_DELETE,
     DATA_EDIT,
+    DATA_OVERWRITE,
     DATA_SET_GOAL,
     DATA_TO_CAT_OTHER,
     // display
@@ -23,6 +25,7 @@ export enum Actions {
     DISPLAY_CLEAR,
     DISPLAY_DELETE,
     DISPLAY_EDIT,
+    DISPLAY_OVERWRITE,
     // settings
     SETTINGS_SET_CURRENCY,
     SETTINGS_SET_DARKMODE,
@@ -64,6 +67,11 @@ export const categoryEdit = (payload: any): ReduxActionType => ({
     payload,
 });
 
+export const categoryOverwrite = (payload: CategoryStore): ReduxActionType => ({
+    type: Actions.CATEGORY_OVERWRITE,
+    payload,
+});
+
 export const categorySetDefault = (): ReduxActionType => ({
     type: Actions.CATEGORY_SET_DEFAULT,
 });
@@ -87,6 +95,11 @@ export const dataDelete = (payload: DataType): ReduxActionType => ({
 
 export const dataEdit = (payload: { new: DataType, old: DataType }): ReduxActionType => ({
     type: Actions.DATA_EDIT,
+    payload,
+});
+
+export const dataOverwrite = (payload: DataMap): ReduxActionType => ({
+    type: Actions.DATA_OVERWRITE,
     payload,
 });
 
@@ -119,6 +132,11 @@ export const displayEdit = (payload: { new: DataType, old: DataType }): ReduxAct
     type: Actions.DISPLAY_EDIT,
     payload,
 });
+
+export const displayOverwrite = (payload: DataType): ReduxActionType => ({
+    type: Actions.DISPLAY_OVERWRITE,
+    payload,
+})
 
 
 // settings
