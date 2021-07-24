@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
@@ -12,15 +12,14 @@ import LItem from '../components/listitem';
 
 import { HomeScreenStyles, ScreenStyles } from './styles';
 
-import { firebaseDefaultErrorCallback, firebaseDeleteRecord, firebaseFetchAll, firebaseUpdateRecord } from '../firebase/data';
-import { DisplaySectionType, ScreenProps } from '../types/ui';
-import { ReduxThemeType } from '../types/redux';
-import { AccountType, Categories, CategoryStore, DataStore, DataType, SettingsType } from '../types/data';
-import { ScrollView } from 'react-native-gesture-handler';
-import { store } from '../redux/store';
-import { dataDelete, dataEdit, displayDelete, displayEdit, settingsSetPromptShow } from '../redux/action';
 import { Prompt } from '../data/prompts';
+import { firebaseDefaultErrorCallback, firebaseDeleteRecord, firebaseFetchAll, firebaseUpdateRecord } from '../firebase/data';
+import { AccountType, Categories, CategoryStore, DataStore, DataType, SettingsType } from '../types/data';
 import { FirebaseFullSnapshot } from '../types/firebase';
+import { ReduxThemeType } from '../types/redux';
+import { DisplaySectionType, ScreenProps } from '../types/ui';
+import { dataDelete, dataEdit, displayDelete, displayEdit, settingsSetPromptShow } from '../redux/action';
+import { store } from '../redux/store';
 import { merge } from '../utils/merger';
 
 interface AdditionalReduxProps {
