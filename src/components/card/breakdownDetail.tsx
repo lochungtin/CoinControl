@@ -28,7 +28,7 @@ class Card extends React.Component<ReduxThemeType & DataProps & AdditionalReduxP
         return (
             <CardBase icon='card-text-outline' title='overall details'>
                 <View style={GeneralCardStyles.mainContent}>
-                    {this.props.categoryKey === '' ?
+                    {this.props.categoryKey === '' || categoryStats === undefined ?
                         <Text style={{ ...GeneralCardStyles.nullPrompt, color: this.props.theme.dynamic.text.secondaryC }}>
                             Select a category from "breakdown" by clicking the donut slices or the category list to start using this card
                         </Text>

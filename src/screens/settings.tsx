@@ -41,6 +41,7 @@ import { AccountType, CurrencyType, SettingsType } from '../types/data';
 import { ReduxThemeType } from '../types/redux';
 import { ScreenProps, SettingsCategory, SettingsItem } from '../types/ui';
 import { smallKeygen } from '../utils/keygen';
+import { firebaseOverwriteAll, firebaseSetDefaultCategories } from '../firebase/data';
 
 interface AdditionalReduxProps {
     account: AccountType | null,
@@ -75,6 +76,11 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
             case Prompt.CLEAR_DATA:
                 store.dispatch(dataClear());
                 store.dispatch(displayClear());
+
+                if (this.props.account)
+                    firebaseOverwriteAll(this.props.account.uid, null, null);
+                
+
             case Prompt.DEFAULT_SETTINGS:
                 store.dispatch(settingsSetDefault());
                 store.dispatch(settingsSetDarkMode());
@@ -86,6 +92,9 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
             case Prompt.DEFAULT_CATEGORIES:
                 store.dispatch(categorySetDefault());
                 store.dispatch(dataSetAllRecordCatToOther());
+
+                if (this.props.account)
+                    firebaseSetDefaultCategories(this.props.account.uid);
                 break;
             default:
                 break;
