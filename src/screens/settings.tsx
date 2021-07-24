@@ -186,6 +186,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
     render() {
         let data: Array<any> = [];
         let selected: Array<number> = [];
+        
         if (this.state.multiPickerOpen === SettingsSelects.CURRENCY) {
             data = Object.keys(currencyData).map((key: string) => currencyData[key]);
             selected = [data.findIndex((cur: CurrencyType) => cur.key === this.props.settings?.currency.key)];
