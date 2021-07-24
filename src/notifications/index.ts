@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { PushNotificationPermissions } from 'react-native';
 import PushNotification, { PushNotificationScheduledLocalObject } from 'react-native-push-notification';
 
@@ -10,15 +9,15 @@ export default class NotifService {
 
     constructor(onRegister: any, onNotification: any) {
         let channelConfig = {
-            channelId: 'PreplyRepeatNotifs',
-            channelName: 'PreplyRepeatNotifs',
-            channelDescription: "Todo Reminders",
+            channelId: 'CCNotifs',
+            channelName: 'CCNotifs',
+            channelDescription: "Daily Reminders",
             soundName: "default",
             importance: 4,
             vibrate: true,
         };
 
-        PushNotification.createChannel(channelConfig, (created: boolean) => { console.log('new channel: ' + created) });
+        PushNotification.createChannel(channelConfig, (created: boolean) => console.log('New channel created: ' + created));
 
         Handler.attachRegister(onRegister);
         Handler.attachNotification(onNotification);
@@ -50,12 +49,12 @@ export default class NotifService {
             color,
             id,
             date: new Date(timestamp),
-            message: `Don't forget to note your expenses`,
+            message: `Don't forget to note your expenses!`,
             repeatType: 'day',
             title: `Friendly Daily Reminder`,
 
             // other properties
-            channelId: 'CCNotifChannel',
+            channelId: 'CCNotifs',
             ticker: 'CCTicker',
             autoCancel: true,
             largeIcon: 'ic_launcher',
