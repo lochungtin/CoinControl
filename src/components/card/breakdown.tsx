@@ -8,7 +8,7 @@ import List from '../stats/list';
 import Row from '../stats/row';
 import CardBase from './base';
 
-import { GeneralCardStyles, PieCardStyles } from './styles';
+import { GeneralCardStyles } from './styles';
 
 import { Categories, CategoryStatType, CategoryStore, CategoryTallyType, CategoryType, DataStore } from '../../types/data';
 import { ReduxThemeType } from '../../types/redux';
@@ -69,7 +69,7 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType & DataPr
                         selected={this.state.categoryType}
                         width={0.85}
                     />
-                    <View style={PieCardStyles.rowPadding}>
+                    <View style={GeneralCardStyles.topPadding}>
                         <Row
                             bold
                             label='Total:'

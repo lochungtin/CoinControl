@@ -45,18 +45,9 @@ export const GeneralCardStyles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
     },
-});
-
-export const CashflowCardStyles = StyleSheet.create({
-    chartPadding: {
+    topPadding: {
         marginTop: 15,
-    },
-});
-
-export const PieCardStyles = StyleSheet.create({
-    rowPadding: {
-        marginTop: 15,
-    },
+    }
 });
 
 export const DetailCardStyles = StyleSheet.create({

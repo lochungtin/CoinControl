@@ -8,7 +8,7 @@ import Selector from '../selector';
 import List from '../stats/list';
 import CardBase from './base';
 
-import { CashflowCardStyles, GeneralCardStyles, screenWidth } from './styles';
+import { GeneralCardStyles, screenWidth } from './styles';
 
 import { Categories, CategoryStore, CategoryType, DataStore, DataType } from '../../types/data';
 import { ReduxThemeType } from '../../types/redux';
@@ -67,7 +67,7 @@ class Card extends React.Component<ReduxThemeType & AdditionalReduxType & DataPr
 						selected={this.state.categoryType}
 						width={0.85}
 					/>
-					{this.props.dataList.length !== 0 && <View style={CashflowCardStyles.chartPadding}>
+					{this.props.dataList.length !== 0 && <View style={GeneralCardStyles.topPadding}>
 						<StackChart
 							colors={this.props.colorList}
 							data={this.props.dataList}
