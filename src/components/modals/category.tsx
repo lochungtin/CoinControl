@@ -29,6 +29,7 @@ class Modal extends React.Component<ReduxThemeType & DataProps> {
 
     onConfirm = () => this.props.onConfirm({
         color: this.state.color,
+        def: this.props.category.def,
         fav: this.props.category.fav,
         icon: this.props.category.icon,
         key: this.props.category.key,

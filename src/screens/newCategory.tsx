@@ -52,6 +52,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
             open: true,
             selected: {
                 color,
+                def: false,
                 key,
                 fav: false,
                 icon: name,

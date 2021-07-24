@@ -20,6 +20,7 @@ export interface CategoryMap {
 
 export interface CategoryType {
     color: string,
+    def: boolean,
     fav: boolean,
     icon: string,
     key: string,
