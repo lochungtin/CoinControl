@@ -23,6 +23,7 @@ export interface CategoryType {
     fav: boolean,
     icon: string,
     key: string,
+    lmt: string,
     name: string,
 }
 
@@ -52,6 +53,7 @@ export interface DataType {
     categoryType: Categories,
     date: string,
     key: string,
+    lmt: string,
     title: string,
     value: number,
 }

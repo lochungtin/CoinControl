@@ -12,12 +12,10 @@ import LItem from '../components/listitem';
 
 import { HomeScreenStyles, ScreenStyles } from './styles';
 
-import { defaultData } from '../data/default';
 import { DisplaySectionType, ScreenProps } from '../types/ui';
 import { ReduxThemeType } from '../types/redux';
 import { Categories, CategoryStore, DataStore, DataType, SettingsType } from '../types/data';
 import { ScrollView } from 'react-native-gesture-handler';
-import { keygen } from '../utils/keygen';
 import { store } from '../redux/store';
 import { dataDelete, dataEdit, displayDelete, displayEdit, settingsSetPromptShow } from '../redux/action';
 import { Prompt } from '../data/prompts';
@@ -33,7 +31,8 @@ const alternative: DataType = {
 	categoryKey: 'C0000000',
 	categoryType: Categories.EXPENSE,
 	date: moment().format('DD-MM-YYYY'),
-	key: keygen(),
+	key: '',
+	lmt: '',
 	title: '',
 	value: 0,
 }

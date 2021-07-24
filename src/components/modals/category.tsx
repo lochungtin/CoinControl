@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React from 'react';
 import { KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -31,6 +32,7 @@ class Modal extends React.Component<ReduxThemeType & DataProps> {
         fav: this.props.category.fav,
         icon: this.props.category.icon,
         key: this.props.category.key,
+        lmt: moment().toISOString(),
         name: this.state.name,
     });
 
