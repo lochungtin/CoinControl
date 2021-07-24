@@ -31,8 +31,8 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
         selected: defaultCategories[Categories.EXPENSE]['C0000000'],
     }
 
-    componentWillUnmount() {
-        this.unsubscribe();
+    componentDidMount() {
+        this.props.navigation.addListener('focus', () => this.setState({ category: this.props.route.params?.category || Categories.EXPENSE }));
     }
 
     onConfirm = (obj: DataType) => {
@@ -41,8 +41,6 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
         this.setState({ open: false });
         this.props.navigation.navigate('home');
     }
-
-    unsubscribe = this.props.navigation.addListener('focus', () => this.setState({ category: this.props.route.params?.category || Categories.EXPENSE }));
 
     render() {
         let all: Array<CategoryType> = Object.keys((this.props.categories)[this.state.category])

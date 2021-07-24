@@ -33,8 +33,11 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
         selected: defaultCategories[Categories.EXPENSE]['C0000000'],
     }
 
-    componentWillUnmount() {
-        this.unsubscribe();
+    componentDidMount() {
+        this.props.navigation.addListener('focus', () => this.setState({ 
+            category: this.props.route.params?.category || Categories.EXPENSE,
+            selected: defaultCategories[Categories.EXPENSE]['C0000000'],
+        }));
     }
 
     controllers = (category: CategoryType) =>
@@ -83,7 +86,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
             data: category,
             key: category.key,
         }));
-        this.setState({ open: false });
+        this.setState({ cmOpen: false });
     }
 
     toggleFav = (category: CategoryType) => {
@@ -94,11 +97,6 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
             key: category.key,
         }));
     }
-
-    unsubscribe = this.props.navigation.addListener('focus', () => this.setState({ 
-        category: this.props.route.params?.category || Categories.EXPENSE,
-        selected: defaultCategories[Categories.EXPENSE]['C0000000'],
-    }));
 
     render() {
         let favs: Array<CategoryType> = [];
@@ -141,7 +139,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
                                         category={category}
                                         key={category.key}
                                         label={category.name}
-                                        onPress={() => this.setState({ open: true, selected: category })}
+                                        onPress={() => this.setState({ cmOpen: true, selected: category })}
                                     >
                                         {this.controllers(category)}
                                     </LItem>
@@ -155,7 +153,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
                                         category={category}
                                         key={category.key}
                                         label={category.name}
-                                        onPress={() => this.setState({ open: true, selected: category })}
+                                        onPress={() => this.setState({ cmOpen: true, selected: category })}
                                     >
                                         {category.key === 'C0000000' ? <View style={CategoryScreenStyles.controller} /> : this.controllers(category)}
                                     </LItem>

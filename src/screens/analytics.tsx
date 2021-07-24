@@ -17,9 +17,9 @@ import { ReduxThemeType } from '../types/redux';
 import { DisplaySectionType, ScreenProps } from '../types/ui';
 
 interface AdditionalReduxType {
-	categories: CategoryStore,
-	data: DataStore,
-	display: Array<DisplaySectionType>,
+    categories: CategoryStore,
+    data: DataStore,
+    display: Array<DisplaySectionType>,
 }
 
 class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxType> {
@@ -32,56 +32,66 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
         date: '',
     }
 
+    componentDidMount() {
+        this.props.navigation.addListener('focus', () => this.setState({
+            bdCategoryKey: '',
+            bdCategoryType: Categories.EXPENSE,
+            cfCategoryKey: '',
+            cfCategoryType: Categories.EXPENSE,
+            date: '',
+        }));
+    }
+
     render() {
         let data: Array<{ [key: string]: any }> = [];
-		let sevenDaysAgo: moment.Moment = moment().subtract(7, 'days');
+        let sevenDaysAgo: moment.Moment = moment().subtract(7, 'days');
 
-		let recordKeys: Array<DisplaySectionType> = this.props.display
-			.slice(0, 7)
-			.filter((section: DisplaySectionType) => moment(section.date, 'DD-MM-YYYY').isAfter(sevenDaysAgo));
+        let recordKeys: Array<DisplaySectionType> = this.props.display
+            .slice(0, 7)
+            .filter((section: DisplaySectionType) => moment(section.date, 'DD-MM-YYYY').isAfter(sevenDaysAgo));
 
-		let categoryKeyArr: Array<string> = [];
-		let recordList: Array<DataType> = [];
+        let categoryKeyArr: Array<string> = [];
+        let recordList: Array<DataType> = [];
 
-		recordKeys.map((section: DisplaySectionType) => {
-			section.keys.map((key: string) => {
-				let record: DataType = this.props.data.data[key];
+        recordKeys.map((section: DisplaySectionType) => {
+            section.keys.map((key: string) => {
+                let record: DataType = this.props.data.data[key];
 
-				if (this.state.cfCategoryType === record.categoryType) {
-					categoryKeyArr.push(record.categoryKey);
-					recordList.push(record);
-				}
-			});
-		});
+                if (this.state.cfCategoryType === record.categoryType) {
+                    categoryKeyArr.push(record.categoryKey);
+                    recordList.push(record);
+                }
+            });
+        });
 
-		let categoryKeys: Array<string> = Array.from(new Set(categoryKeyArr));
-		let categories: Array<CategoryType> = [];
-		let colors: Array<string> = categoryKeys.map((categoryKey: string) => {
-			let category: CategoryType = this.props.categories[this.state.cfCategoryType][categoryKey];
-			categories.push(category);
+        let categoryKeys: Array<string> = Array.from(new Set(categoryKeyArr));
+        let categories: Array<CategoryType> = [];
+        let colors: Array<string> = categoryKeys.map((categoryKey: string) => {
+            let category: CategoryType = this.props.categories[this.state.cfCategoryType][categoryKey];
+            categories.push(category);
 
-			return category.color;
-		});
+            return category.color;
+        });
 
-		for (let i: number = 0; i < 7; i++) {
-			sevenDaysAgo.add(1, 'days');
+        for (let i: number = 0; i < 7; i++) {
+            sevenDaysAgo.add(1, 'days');
 
-			let datapoint: { [key: string]: any } = {
-				date: sevenDaysAgo.format('DD-MM-YYYY'),
-			};
+            let datapoint: { [key: string]: any } = {
+                date: sevenDaysAgo.format('DD-MM-YYYY'),
+            };
 
-			categoryKeys.forEach((key: string) => {
-				datapoint[key] = 0;
-			});
+            categoryKeys.forEach((key: string) => {
+                datapoint[key] = 0;
+            });
 
-			data.push(datapoint);
-		}
+            data.push(datapoint);
+        }
 
-		recordList.forEach((record: DataType) => {
-			let index = data.findIndex((datapoint: { [key: string]: any }) => datapoint['date'] === record.date);
+        recordList.forEach((record: DataType) => {
+            let index = data.findIndex((datapoint: { [key: string]: any }) => datapoint['date'] === record.date);
 
-			data[index][record.categoryKey] += record.value;
-		});
+            data[index][record.categoryKey] += record.value;
+        });
 
         return (
             <View style={{ ...ScreenStyles.root, backgroundColor: this.props.theme.dynamic.screen.bgC }}>
@@ -120,8 +130,8 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
 
 const mapStateToProps = (state: ReduxThemeType & AdditionalReduxType) => ({
     categories: state.categories,
-	data: state.data,
-	display: state.display,
+    data: state.data,
+    display: state.display,
     theme: state.theme,
 });
 

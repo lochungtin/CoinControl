@@ -41,8 +41,6 @@ class Card extends React.Component<ReduxThemeType & DataProps & AdditionalReduxT
         let data: { [key: string]: any } = this.props.dataList[this.props.dataList.findIndex((datapoint: { [key: string]: any }) => datapoint.date === this.props.date)];
         let categories: Array<string> = Object.keys(data || {}).filter((key: string) => key !== 'date' && data[key] !== 0);
 
-        console.log(categories);
-
         return (
             <CardBase icon='card-text-outline' title='7 day details'>
                 <View style={GeneralCardStyles.mainContent}>

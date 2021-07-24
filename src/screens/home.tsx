@@ -39,6 +39,7 @@ const alternative: DataType = {
 }
 
 class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxType> {
+	
 	state = {
 		deleteMode: false,
 		edit: undefined,

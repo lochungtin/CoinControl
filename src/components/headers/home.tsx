@@ -39,8 +39,8 @@ class Header extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
         gmOpen: false,
     }
 
-    componentWillUnmount() {
-        this.unsubscribe();
+    componentDidMount() {
+        this.props.navigation.addListener('focus', () => this.setState({ categoriesFiltering: [] }))
     }
 
     onConfirmGoal = (config: GoalConfigType) => {
@@ -66,8 +66,6 @@ class Header extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
         this.props.toggleDeleting(!this.state.deleting);
         this.setState({ deleting: !this.state.deleting });
     }
-
-    unsubscribe = () => this.props.navigation.addListener('focus', () => this.setState({ categoriesFiltering: [] }))
 
     render() {
         let splt: Array<string> = this.props.data.stats.balance.toString().split('.') || ['0'];
