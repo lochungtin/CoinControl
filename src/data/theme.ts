@@ -10,10 +10,13 @@ const staticTheme: StaticThemeType = {
     icon: {
         actionC: GREY,
         drawerC: GREY,
+        categoryC: WHITE,
         homeC: GREY,
         mainC: ICONS,
     },
     secondaryC: GREY,
+    thumbC: WHITE,
+    trackC: WHITE,
 }
 
 export const lightTheme: ThemeType = {

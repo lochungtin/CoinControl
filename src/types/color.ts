@@ -24,6 +24,8 @@ export interface StaticThemeType {
     },
     icon: IconThemeType,
     secondaryC: string,
+    thumbC: string,
+    trackC: string,
 }
 
 export interface ThemeType {
@@ -39,6 +41,7 @@ export interface ThemeType {
 // dynamic
 export interface IconThemeType {
     actionC: string,
+    categoryC: string,
     drawerC: string,
     homeC: string,
     mainC: string,

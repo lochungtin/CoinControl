@@ -12,7 +12,7 @@ import MultiPicker from '../components/pickers/multi';
 import TimePicker from '../components/pickers/time';
 
 import { ScreenStyles, SettingsScreenStyles } from './styles';
-import { colorPickerData, WHITE } from '../data/color';
+import { colorPickerData } from '../data/color';
 
 import { currencyData } from '../data/currency';
 import { itemlist, SettingsPickers, SettingsSelects, SettingsSwitches } from '../data/mapping/settings';
@@ -243,7 +243,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
                                                         {item.switch !== undefined ?
                                                             <Switch
                                                                 onValueChange={item.onPress}
-                                                                thumbColor={item.switch ? this.props.theme.static.accentC : WHITE}
+                                                                thumbColor={item.switch ? this.props.theme.static.accentC : this.props.theme.static.thumbC}
                                                                 trackColor={{ false: this.props.theme.static.icon.actionC, true: this.props.theme.static.icon.actionC }}
                                                                 value={item.switch}
                                                             />

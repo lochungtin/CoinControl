@@ -2,7 +2,6 @@ import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 
-import { WHITE } from '../../data/color';
 import { PGBarStyles, screenWidth } from './style';
 
 import { ReduxThemeType } from '../../types/redux';
@@ -19,7 +18,7 @@ class PGBar extends React.Component<ReduxThemeType & DataProps> {
             <View
                 style={{
                     ...PGBarStyles.root,
-                    backgroundColor: WHITE,
+                    backgroundColor: this.props.theme.static.trackC,
                     borderRadius: this.props.height / 2,
                     height: this.props.height,
                     width: screenWidth * this.props.width,

@@ -3,7 +3,6 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import { WHITE } from '../../../data/color';
 import { CategoryStyles } from './styles';
 
 import { CategoryType, SettingsType } from '../../../types/data';
@@ -24,7 +23,7 @@ class Row extends React.Component<ReduxThemeType & AdditionalReduxType & DataPro
             <TouchableOpacity onPress={this.props.onPress} style={CategoryStyles.category}>
                 <View style={{ ...CategoryStyles.icon, backgroundColor: this.props.category.color }}>
                     <Icon
-                        color={WHITE}
+                        color={this.props.theme.static.icon.categoryC}
                         name={this.props.category.icon}
                         size={20}
                     />

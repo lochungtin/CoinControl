@@ -3,7 +3,6 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import { WHITE } from '../../data/color';
 import { ListItemStyles } from './styles';
 
 import { CategoryType } from '../../types/data';
@@ -30,7 +29,7 @@ class LItem extends React.Component<ReduxThemeType & DataProps> {
                 <View style={ListItemStyles.contentPositioner}>
                     <View style={{ ...ListItemStyles.icon, backgroundColor: this.props.category.color }}>
                         <Icon
-                            color={WHITE}
+                            color={this.props.theme.static.icon.categoryC}
                             name={this.props.category.icon}
                             size={25}
                         />

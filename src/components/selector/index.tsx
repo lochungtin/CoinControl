@@ -3,7 +3,7 @@ import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 
-import { BLACK, WHITE } from '../../data/color';
+import { WHITE } from '../../data/color';
 import { screenWidth, SelectorStyles } from './styles';
 
 import { Categories } from '../../types/data';
@@ -32,7 +32,12 @@ class Selector extends React.Component<ReduxThemeType & DataProps> {
                         backgroundColor: this.props.selected === Categories.EXPENSE ? hightlight : 'transparent',
                         width: screenWidth * this.props.width * 0.5,
                     }}>
-                    <Text style={{ ...SelectorStyles.label, color: this.props.selected === Categories.EXPENSE ? BLACK : WHITE }}>
+                    <Text style={{
+                        ...SelectorStyles.label,
+                        color: this.props.selected === Categories.EXPENSE ?
+                            this.props.theme.static.bulletTextC.active :
+                            this.props.theme.static.bulletTextC.inactive
+                    }}>
                         EXPENSE
                     </Text>
                 </TouchableOpacity>
@@ -43,7 +48,12 @@ class Selector extends React.Component<ReduxThemeType & DataProps> {
                         backgroundColor: this.props.selected === Categories.INCOME ? hightlight : 'transparent',
                         width: screenWidth * this.props.width * 0.5,
                     }}>
-                    <Text style={{ ...SelectorStyles.label, color: this.props.selected === Categories.INCOME ? BLACK : WHITE }}>
+                    <Text style={{
+                        ...SelectorStyles.label,
+                        color: this.props.selected === Categories.INCOME ?
+                            this.props.theme.static.bulletTextC.active :
+                            this.props.theme.static.bulletTextC.inactive
+                    }}>
                         INCOME
                     </Text>
                 </TouchableOpacity>

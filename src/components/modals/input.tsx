@@ -9,10 +9,8 @@ import MultiPicker from '../pickers/multi';
 import ModalBase from './base';
 import Selector from './selector';
 
-import { WHITE } from '../../data/color';
 import { InputModalStyles } from './styles';
 
-import { defaultCategories } from '../../data/default';
 import { CategoryStore, CategoryType, DataType } from '../../types/data';
 import { ReduxThemeType } from '../../types/redux';
 
@@ -113,7 +111,7 @@ class Modal extends React.Component<ReduxThemeType & AdditionalReduxType & DataP
                             <View key={category.key} style={InputModalStyles.category}>
                                 <View style={{ ...InputModalStyles.icon, backgroundColor: category.color }}>
                                     <Icon
-                                        color={WHITE}
+                                        color={this.props.theme.static.icon.categoryC}
                                         name={category.icon}
                                         size={25}
                                     />
