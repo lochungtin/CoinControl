@@ -18,7 +18,6 @@ export enum Actions {
     DATA_EDIT,
     DATA_SET_GOAL,
     DATA_TO_CAT_OTHER,
-    DATA_TO_CAT_OTHER_ALL,
     // display
     DISPLAY_ADD,
     DISPLAY_CLEAR,
@@ -96,15 +95,10 @@ export const dataSetGoal = (payload: GoalConfigType): ReduxActionType => ({
     payload,
 });
 
-export const dataSetRecordCatToOther = (payload: any): ReduxActionType => ({
+export const dataSetCatsToOther = (payload: Array<string>): ReduxActionType => ({
     type: Actions.DATA_TO_CAT_OTHER,
     payload,
 });
-
-export const dataSetAllRecordCatToOther = (): ReduxActionType => ({
-    type: Actions.DATA_TO_CAT_OTHER_ALL,
-});
-
 
 // display
 export const displayAdd = (payload: DataType): ReduxActionType => ({

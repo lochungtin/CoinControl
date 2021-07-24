@@ -14,14 +14,15 @@ import { ScreenStyles, CategoryScreenStyles } from './styles';
 import { defaultCategories } from '../data/default';
 import { Prompt } from '../data/prompts';
 import { firebaseDeleteCategory, firebaseUpdateCategory } from '../firebase/data';
-import { categoryDelete, categoryEdit, dataSetRecordCatToOther, settingsSetPromptShow } from '../redux/action';
+import { categoryDelete, categoryEdit, dataSetCatsToOther, settingsSetPromptShow } from '../redux/action';
 import { store } from '../redux/store';
-import { AccountType, Categories, CategoryStore, CategoryType, SettingsType } from '../types/data';
+import { AccountType, Categories, CategoryStore, CategoryType, DataStore, DataType, SettingsType } from '../types/data';
 import { ReduxThemeType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
 
 interface AdditionalReduxProps {
     account: AccountType,
+    data: DataStore,
     categories: CategoryStore,
     settings: SettingsType,
 }
@@ -62,18 +63,22 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
 
     confirmDelete = (category: CategoryType | null, show: boolean) => {
         if (category !== null) {
+            let toDelete: Array<string> = [];
+
+            Object.keys(this.props.data.data).forEach((key: string) => {
+                let record: DataType = this.props.data.data[key];
+                if (record.categoryKey === category.key)
+                    toDelete.push(record.key);
+            });
+
             store.dispatch(categoryDelete({
                 category: this.state.category,
                 key: category.key,
             }));
-            store.dispatch(dataSetRecordCatToOther({
-                category: this.state.category,
-                key: category.key,
-            }));
+            store.dispatch(dataSetCatsToOther(toDelete));
 
             if (this.props.account)
-                firebaseDeleteCategory(this.props.account.uid, this.state.category, category.key);
-
+                firebaseDeleteCategory(this.props.account.uid, this.state.category, category.key, toDelete);
         }
         store.dispatch(settingsSetPromptShow({ prompt: Prompt.DELETE_CATEGORY, show }));
         this.setState({ pmOpen: null });
@@ -191,6 +196,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
 
 const mapStateToProps = (state: ReduxThemeType & AdditionalReduxProps) => ({
     account: state.account,
+    data: state.data,
     categories: state.categories,
     settings: state.settings,
     theme: state.theme,

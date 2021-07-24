@@ -61,10 +61,15 @@ export const firebaseDeleteCategory = (
     uid: string,
     categoryType: Categories,
     key: string,
+    affectedRecord: Array<string>,
 ) => {
     let update: FirebaseUpdateType = {};
 
     update[`/UserData/${uid}/category/${categoryType}/${key}`] = null;
+
+    affectedRecord.forEach((key: string) => {
+        update[`/UserData/${uid}/records/${key}/categoryKey/`] = 'C0000000';
+    });
 
     db.ref().update(update, firebaseDefaultErrorCallback);
 }
@@ -72,10 +77,15 @@ export const firebaseDeleteCategory = (
 // to default categories
 export const firebaseSetDefaultCategories = (
     uid: string,
+    affectedRecord: Array<string>,
 ) => {
     let update: FirebaseUpdateType = {};
 
     update[`/UserData/${uid}/category`] = defaultCategories;
+
+    affectedRecord.forEach((key: string) => {
+        update[`/UserData/${uid}/records/${key}/categoryKey/`] = 'C0000000';
+    });
 
     db.ref().update(update, firebaseDefaultErrorCallback);
 }

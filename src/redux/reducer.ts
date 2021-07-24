@@ -67,18 +67,7 @@ const updateData = (data: DataStore = defaultData, action: ReduxActionType) => {
             break;
         // delete category - set category to other
         case Actions.DATA_TO_CAT_OTHER:
-            Object.keys(update.data).forEach((key: string) => {
-                let record: DataType = update.data[key];
-                if (record.categoryKey === action.payload.key)
-                    record.categoryKey = 'C0000000';
-            });
-            break;
-        case Actions.DATA_TO_CAT_OTHER_ALL:
-            Object.keys(update.data).forEach((key: string) => {
-                let record: DataType = update.data[key];
-                if (!defaultCategoryKeys.includes(record.categoryKey))
-                    record.categoryKey = 'C0000000';
-            });
+            action.payload.forEach((key: string) => update.data[key].categoryKey = 'C0000000');
             break;
         // set goal
         case Actions.DATA_SET_GOAL:

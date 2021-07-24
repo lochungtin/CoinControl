@@ -20,24 +20,24 @@ import { Prompt, promptNames } from '../data/prompts';
 import { signOut } from '../firebase/auth';
 import NotifService from '../notifications';
 import {
+    accountSignOut,
     dataClear,
-    themeSetAccent,
-    settingsSetCurrency,
-    themeSetDarkMode,
+    dataSetCatsToOther,
+    displayClear,
     categorySetDefault,
+    settingsSetCurrency,
+    settingsSetDarkMode,
     settingsSetDefault,
-    themeSetLightMode,
+    settingsSetLightMode,
     settingsSetNotifOn,
     settingsSetNotifTime,
     settingsSetPromptShow,
-    dataSetAllRecordCatToOther,
-    settingsSetDarkMode,
-    displayClear,
-    settingsSetLightMode,
-    accountSignOut,
+    themeSetAccent,
+    themeSetDarkMode,
+    themeSetLightMode,
 } from '../redux/action';
 import { store } from '../redux/store';
-import { AccountType, CurrencyType, SettingsType } from '../types/data';
+import { AccountType, CategoryStore, CurrencyType, DataStore, DataType, SettingsType } from '../types/data';
 import { ReduxThemeType } from '../types/redux';
 import { ScreenProps, SettingsCategory, SettingsItem } from '../types/ui';
 import { smallKeygen } from '../utils/keygen';
@@ -45,6 +45,8 @@ import { firebaseOverwriteAll, firebaseSetDefaultCategories } from '../firebase/
 
 interface AdditionalReduxProps {
     account: AccountType | null,
+    categories: CategoryStore,
+    data: DataStore,
     settings: SettingsType,
 }
 
@@ -79,7 +81,6 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
 
                 if (this.props.account)
                     firebaseOverwriteAll(this.props.account.uid, null, null);
-                
 
             case Prompt.DEFAULT_SETTINGS:
                 store.dispatch(settingsSetDefault());
@@ -89,13 +90,27 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
                 // bypass for clear data
                 if (prompt === Prompt.DEFAULT_SETTINGS)
                     break;
+
             case Prompt.DEFAULT_CATEGORIES:
                 store.dispatch(categorySetDefault());
-                store.dispatch(dataSetAllRecordCatToOther());
 
-                if (this.props.account)
-                    firebaseSetDefaultCategories(this.props.account.uid);
+                if (prompt === Prompt.DEFAULT_CATEGORIES) {
+                    let nonDefault: Array<string> = [];
+
+                    Object.keys(this.props.data.data).forEach((key: string) => {
+                        let record: DataType = this.props.data.data[key];
+                        if (!this.props.categories[record.categoryType][record.categoryKey].def)
+                            nonDefault.push(record.key);
+                    });
+
+                    store.dispatch(dataSetCatsToOther(nonDefault));
+
+                    if (this.props.account)
+                        firebaseSetDefaultCategories(this.props.account.uid, nonDefault);
+                }
+
                 break;
+
             default:
                 break;
         }
@@ -156,7 +171,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
 
             this.notif.cancelAll();
             if (on)
-                this.notif.scheduleNotif(this.props.theme.static.accentC, this.props.settings.notifTime);                
+                this.notif.scheduleNotif(this.props.theme.static.accentC, this.props.settings.notifTime);
         }
     }
 
@@ -180,7 +195,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
 
     settingsSetNotifTime = (time: string) => {
         store.dispatch(settingsSetNotifTime(time));
-        
+
         this.notif.cancelAll();
         this.notif.scheduleNotif(this.props.theme.static.accentC, time);
 
@@ -308,6 +323,8 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
 
 const mapStateToProps = (state: ReduxThemeType & AdditionalReduxProps) => ({
     account: state.account,
+    categories: state.categories,
+    data: state.data,
     settings: state.settings,
     theme: state.theme,
 });
