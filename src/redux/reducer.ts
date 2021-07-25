@@ -32,11 +32,11 @@ const updateCategories = (categories: CategoryStore = defaultCategories, action:
         // add or edit
         case Actions.CATEGORY_ADD:
         case Actions.CATEGORY_EDIT:
-            update[action.payload.category][action.payload.data.key] = action.payload.data;
+            update[action.payload.type][action.payload.category.key] = action.payload.category;
             return update;
         // delete
         case Actions.CATEGORY_DELETE:
-            delete update[action.payload.category][action.payload.key];
+            delete update[action.payload.type][action.payload.key];
             return update;
         // merge overwrite
         case Actions.CATEGORY_OVERWRITE:

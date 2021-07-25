@@ -30,16 +30,16 @@ interface AdditionalReduxProps {
 class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxProps> {
 
     state = {
-        category: this.props.route.params?.category || Categories.EXPENSE,
+        category: defaultCategories[Categories.EXPENSE]['C0000000'],
+        categoryType: this.props.route.params?.category || Categories.EXPENSE,
         cmOpen: false,
         pmOpen: null,
-        selected: defaultCategories[Categories.EXPENSE]['C0000000'],
     }
 
     componentDidMount() {
         this.props.navigation.addListener('focus', () => this.setState({
-            category: this.props.route.params?.category || Categories.EXPENSE,
-            selected: defaultCategories[Categories.EXPENSE]['C0000000'],
+            category: defaultCategories[Categories.EXPENSE]['C0000000'],
+            categoryType: this.props.route.params?.category || Categories.EXPENSE,
         }));
     }
 
@@ -71,16 +71,13 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
                     toDelete.push(record.key);
             });
 
-            store.dispatch(categoryDelete({
-                category: this.state.category,
-                key: category.key,
-            }));
+            store.dispatch(categoryDelete({ key: category.key, type: this.state.categoryType }));
             store.dispatch(dataSetCatsToOther(toDelete));
 
             if (this.props.account)
-                firebaseDeleteCategory(this.props.account.uid, this.state.category, category.key, toDelete);
+                firebaseDeleteCategory(this.props.account.uid, this.state.categoryType, category.key, toDelete);
         }
-        store.dispatch(settingsSetPromptShow({ prompt: Prompt.DELETE_CATEGORY, show }));
+        store.dispatch(settingsSetPromptShow({ show, prompt: Prompt.DELETE_CATEGORY }));
         this.setState({ pmOpen: null });
     }
 
@@ -92,33 +89,25 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
     }
 
     categoryEdit = (category: CategoryType) => {
-        store.dispatch(categoryEdit({
-            category: this.state.category,
-            data: category,
-            key: category.key,
-        }));
+        store.dispatch(categoryEdit({ category, type: this.state.categoryType }));
 
         if (this.props.account)
-            firebaseUpdateCategory(this.props.account.uid, this.state.category, category);
+            firebaseUpdateCategory(this.props.account.uid, this.state.categoryType, category);
 
         this.setState({ cmOpen: false });
     }
 
     toggleFav = (category: CategoryType) => {
         category.fav = !category.fav;
-        store.dispatch(categoryEdit({
-            category: this.state.category,
-            data: category,
-            key: category.key,
-        }));
+        store.dispatch(categoryEdit({ category, type: this.state.categoryType }));
     }
 
     render() {
         let favs: Array<CategoryType> = [];
         let others: Array<CategoryType> = [];
 
-        Object.keys((this.props.categories)[this.state.category])
-            .map((key: string) => (this.props.categories)[this.state.category][key])
+        Object.keys((this.props.categories)[this.state.categoryType])
+            .map((key: string) => (this.props.categories)[this.state.categoryType][key])
             .sort((a: CategoryType, b: CategoryType) => {
                 if (a.key === 'C0000000')
                     return 1;
@@ -139,10 +128,10 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
                     <Header
                         name='categories'
                         navigation={this.props.navigation}
-                        onPressRight={() => this.props.navigation.navigate('newCategory', this.state.category)}
-                        onToggle={(category: Categories) => this.setState({ category })}
+                        onPressRight={() => this.props.navigation.navigate('newCategory', this.state.categoryType)}
+                        onToggle={(categoryType: Categories) => this.setState({ categoryType })}
                         right='tag-plus'
-                        selected={this.state.category}
+                        selected={this.state.categoryType}
                     />
                     <ScrollView>
                         <View style={ScreenStyles.scrollView}>
@@ -154,7 +143,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
                                         category={category}
                                         key={category.key}
                                         label={category.name}
-                                        onPress={() => this.setState({ cmOpen: true, selected: category })}
+                                        onPress={() => this.setState({ category, cmOpen: true })}
                                     >
                                         {this.controllers(category)}
                                     </LItem>
@@ -168,7 +157,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
                                         category={category}
                                         key={category.key}
                                         label={category.name}
-                                        onPress={() => this.setState({ cmOpen: true, selected: category })}
+                                        onPress={() => this.setState({ category, cmOpen: true })}
                                     >
                                         {category.key === 'C0000000' ? <View style={CategoryScreenStyles.controller} /> : this.controllers(category)}
                                     </LItem>
@@ -178,7 +167,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
                     </ScrollView>
                 </View>
                 <CategoryModal
-                    category={this.state.selected}
+                    category={this.state.category}
                     onClose={() => this.setState({ cmOpen: false })}
                     onConfirm={this.categoryEdit}
                     open={this.state.cmOpen}

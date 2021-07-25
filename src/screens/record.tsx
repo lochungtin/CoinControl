@@ -28,13 +28,16 @@ interface AdditionalReduxProps {
 class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxProps> {
 
     state = {
-        category: this.props.route.params?.category || Categories.EXPENSE,
+        category: defaultCategories[Categories.EXPENSE]['C0000000'],
+        categoryType: this.props.route.params?.category || Categories.EXPENSE,
         open: false,
-        selected: defaultCategories[Categories.EXPENSE]['C0000000'],
     }
 
     componentDidMount() {
-        this.props.navigation.addListener('focus', () => this.setState({ category: this.props.route.params?.category || Categories.EXPENSE }));
+        this.props.navigation.addListener('focus', () => this.setState({ 
+            category: defaultCategories[Categories.EXPENSE]['C0000000'],
+            categoryType: this.props.route.params?.category || Categories.EXPENSE 
+        }));
     }
 
     onConfirm = (obj: DataType) => {
@@ -49,8 +52,8 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
     }
 
     render() {
-        let all: Array<CategoryType> = Object.keys((this.props.categories)[this.state.category])
-            .map((key: string) => (this.props.categories)[this.state.category][key])
+        let all: Array<CategoryType> = Object.keys((this.props.categories)[this.state.categoryType])
+            .map((key: string) => (this.props.categories)[this.state.categoryType][key])
             .sort((a: CategoryType, b: CategoryType) => {
                 if (a.key === 'C0000000')
                     return 1;
@@ -66,8 +69,8 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
                     <Header
                         name='new record'
                         navigation={this.props.navigation}
-                        onToggle={(category: Categories) => this.setState({ category, selected: defaultCategories[Categories.EXPENSE]['C0000000'] })}
-                        selected={this.state.category}
+                        onToggle={(categoryType: Categories) => this.setState({ categoryType, category: defaultCategories[Categories.EXPENSE]['C0000000'] })}
+                        selected={this.state.categoryType}
                     />
                     <ScrollView>
                         <View style={ScreenStyles.scrollView}>
@@ -79,7 +82,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
                                         category={category}
                                         key={category.key}
                                         label={category.name}
-                                        onPress={() => this.setState({ open: true, selected: category })}
+                                        onPress={() => this.setState({ open: true, category })}
                                     >
                                         <Icon
                                             color={this.props.theme.static.icon.actionC}
@@ -97,7 +100,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
                                         category={category}
                                         key={category.key}
                                         label={category.name}
-                                        onPress={() => this.setState({ open: true, selected: category })}
+                                        onPress={() => this.setState({ open: true, category: category })}
                                     >
                                         <Icon
                                             color={this.props.theme.static.icon.actionC}
@@ -115,8 +118,8 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
                     onConfirm={this.onConfirm}
                     open={this.state.open}
                     record={{
-                        categoryKey: this.state.selected.key,
-                        categoryType: this.state.category,
+                        categoryKey: this.state.category.key,
+                        categoryType: this.state.categoryType,
                         date: moment().format('DD-MM-YYYY'),
                         key: keygen(),
                         lmt: '',

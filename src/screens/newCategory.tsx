@@ -27,20 +27,16 @@ interface AdditionalReduxProps {
 class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalReduxProps> {
 
     state = {
-        category: this.props.route.params,
+        category: defaultCategories[Categories.EXPENSE]['C0000000'],
+        categoryType: this.props.route.params,
         open: false,
-        selected: defaultCategories[Categories.EXPENSE]['C0000000'],
     }
 
-    categoryEdit = (category: CategoryType) => {
-        store.dispatch(categoryAdd({
-            category: this.state.category,
-            data: category,
-            key: category.key,
-        }));
+    onConfirm = (category: CategoryType) => {
+        store.dispatch(categoryAdd({ category, type: this.state.categoryType }));
 
         if (this.props.account)
-            firebaseUpdateCategory(this.props.account.uid, this.state.category, category);
+            firebaseUpdateCategory(this.props.account.uid, this.state.categoryType, category);
 
         this.setState({ open: false });
     }
@@ -50,7 +46,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
         let color: string = pickRandom();
         this.setState({
             open: true,
-            selected: {
+            category: {
                 color,
                 def: false,
                 key,
@@ -69,8 +65,8 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
                         backMode
                         name='new categories'
                         navigation={this.props.navigation}
-                        onToggle={(category: Categories) => this.setState({ category })}
-                        selected={this.state.category}
+                        onToggle={(categoryType: Categories) => this.setState({ categoryType })}
+                        selected={this.state.categoryType}
                     />
                     <SubHeader label='select an icon' />
                     <ScrollView>
@@ -106,9 +102,9 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps & AdditionalRe
                     </ScrollView>
                 </View>
                 <CategoryModal
-                    category={this.state.selected}
+                    category={this.state.category}
                     onClose={() => this.setState({ open: false })}
-                    onConfirm={this.categoryEdit}
+                    onConfirm={this.onConfirm}
                     open={this.state.open}
                 />
             </>
