@@ -1,15 +1,16 @@
 import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import BTMBar from '../components/auth/bottombar';
 
 import Input from '../components/auth/input';
 import Bullet from '../components/bullet';
 import Header from '../components/headers/auth';
 
+import { AuthScreenStyles, ScreenStyles } from './styles';
+
+import { resetPswd } from '../firebase/auth';
 import { ReduxThemeType } from '../types/redux';
 import { ScreenProps } from '../types/ui';
-import { AuthScreenStyles, ScreenStyles } from './styles';
 
 class Screen extends React.Component<ReduxThemeType & ScreenProps> {
 
@@ -37,7 +38,7 @@ class Screen extends React.Component<ReduxThemeType & ScreenProps> {
                         />
                         <View style={AuthScreenStyles.bullet}>
                             <Bullet
-                                onPress={() => { }}
+                                onPress={() => resetPswd(this.state.email)}
                                 text='login'
                                 width={0.8}
                             />
