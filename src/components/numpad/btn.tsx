@@ -32,7 +32,7 @@ class Btn extends React.Component<ReduxThemeType & NumpadBtnProps & NumpadContro
             <TouchableOpacity onPress={this.onPress} style={NumpadStyles.btn}>
                 <Icon
                     color={color}
-                    name={this.props.icon}
+                    name={this.props.highlight ? 'checkbox-marked-circle-outline' : this.props.icon}
                     size={40}
                 />
             </TouchableOpacity>
