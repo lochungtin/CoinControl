@@ -36,7 +36,7 @@ class Numpad extends React.Component<ReduxThemeType & DataProps> {
         if (lastChr === '.')
             add = '0*';
 
-        this.setState({ display: this.state.display + add + this.state.mem})
+        this.setState({ display: this.state.display + add + this.state.mem })
     }
 
     onPressClr = () => this.setState({ display: '0', mem: '' });
@@ -62,6 +62,44 @@ class Numpad extends React.Component<ReduxThemeType & DataProps> {
             this.setState({ display: '0' + chr });
         else
             this.setState({ display: this.state.display + chr });
+    }
+
+    onPressPar = () => {
+        let display: string = this.state.display;
+        let lastChar: string = display[display.length - 1];
+        let valid: boolean = this.validate(Solver.tokenize(display));
+
+        if (display.length === 0 || display === '0')
+            display = '(';
+        else if (['+', '-', '*', '/', '(', ')'].includes(lastChar)) {
+            if (lastChar === ")")
+                display += (valid ? '*(' : ')');
+            else
+                display += '(';
+        }
+        else if (lastChar === '.')
+            display += '0*(';
+        else
+            display += (valid ? '*(' : ')');
+
+        this.setState({ display });
+    }
+
+    validate = (splt: Array<string>): boolean => {
+        let stack: Array<string> = [];
+    
+        for (let i: number = 0; i < splt.length; ++i) {
+            let token: string = splt[i];
+            if (token === '(')
+                stack.push('(');
+            if (token === ')') {
+                if (stack.length === 0)
+                    return false;
+                stack.pop();
+            }
+        }
+    
+        return stack.length === 0;
     }
 
     render() {
@@ -92,7 +130,7 @@ class Numpad extends React.Component<ReduxThemeType & DataProps> {
                 </View>
                 {makeGrid(
                     this.onPressMem,
-                    () => { },
+                    this.onPressPar,
                     this.onPressClr,
                     this.onPressBkS,
                     this.onPressEql,
