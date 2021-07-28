@@ -54,7 +54,7 @@ class HomeScreen extends React.Component<ReduxThemeType & ScreenProps & Addition
 		render: false,
 	}
 
-	confirmDelete = (record: DataType | null, show: boolean) => {
+	confirmDelete = (record: DataType | null) => {
 		if (record !== null) {
 			store.dispatch(dataDelete(record));
 			store.dispatch(displayDelete(record));
@@ -84,7 +84,7 @@ class HomeScreen extends React.Component<ReduxThemeType & ScreenProps & Addition
 		if (this.props.settings.promptTrigger[Prompt.DELETE_RECORD])
 			this.setState({ pmOpen: true, prompt: Prompt.DELETE_RECORD, record });
 		else
-			this.confirmDelete(record, false);
+			this.confirmDelete(record);
 	}
 
 	onEdit = (obj: DataType) => {
@@ -104,7 +104,7 @@ class HomeScreen extends React.Component<ReduxThemeType & ScreenProps & Addition
 
 		switch (this.state.prompt) {
 			case Prompt.DELETE_RECORD:
-				return this.confirmDelete(this.state.record, show);
+				return this.confirmDelete(this.state.record);
 			case Prompt.COMMIT_SYNC:
 				return this.confirmSync();
 			default:
@@ -190,7 +190,7 @@ class HomeScreen extends React.Component<ReduxThemeType & ScreenProps & Addition
 					open={this.state.imOpen}
 				/>
 				<PromptModal
-					onClose={() => this.setState({ pmOpen: null })}
+					onClose={() => this.setState({ pmOpen: false })}
 					onConfirm={(dnsa: boolean) => this.onConfirm(!dnsa)}
 					open={this.state.pmOpen}
 					prompt={this.state.prompt}
