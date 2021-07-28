@@ -48,7 +48,9 @@ class HomeScreen extends React.Component<ReduxThemeType & ScreenProps & Addition
 		filterCategory: undefined,
 		filterDate: '',
 		imOpen: false,
-		pmOpen: null,
+		pmOpen: false,
+		prompt: Prompt.COMMIT_SYNC,
+		record: null,
 		render: false,
 	}
 
@@ -60,14 +62,27 @@ class HomeScreen extends React.Component<ReduxThemeType & ScreenProps & Addition
 			if (this.props.account)
 				firebaseDeleteRecord(this.props.account.uid, record.key);
 		}
-		store.dispatch(settingsSetPromptShow({ prompt: Prompt.DELETE_RECORD, show }));
 
-		this.setState({ pmOpen: null });
+		this.setState({ pmOpen: false });
+	}
+
+	confirmSync = () => {
+		if (this.props.account)
+			firebaseFetchAll(this.props.account.uid)
+				.then((snapshot: FirebaseFullSnapshot) => merge(
+					this.props.account.uid,
+					this.props.data.data,
+					this.props.categories,
+					snapshot
+				))
+				.catch(firebaseDefaultErrorCallback);
+
+		this.setState({ pmOpen: false });
 	}
 
 	dataDelete = (record: DataType) => {
 		if (this.props.settings.promptTrigger[Prompt.DELETE_RECORD])
-			this.setState({ pmOpen: record });
+			this.setState({ pmOpen: true, prompt: Prompt.DELETE_RECORD, record });
 		else
 			this.confirmDelete(record, false);
 	}
@@ -84,16 +99,26 @@ class HomeScreen extends React.Component<ReduxThemeType & ScreenProps & Addition
 		this.setState({ edit: null, imOpen: false });
 	}
 
+	onConfirm = (show: boolean) => {
+		store.dispatch(settingsSetPromptShow({ prompt: this.state.prompt, show }));
+
+		switch (this.state.prompt) {
+			case Prompt.DELETE_RECORD:
+				return this.confirmDelete(this.state.record, show);
+			case Prompt.COMMIT_SYNC:
+				return this.confirmSync();
+			default:
+				return;
+		}
+	}
+
 	sync = () => {
-		if (this.props.account)
-			firebaseFetchAll(this.props.account.uid)
-				.then((snapshot: FirebaseFullSnapshot) => merge(
-					this.props.account.uid,
-					this.props.data.data,
-					this.props.categories,
-					snapshot
-				))
-				.catch(firebaseDefaultErrorCallback);
+		if (this.props.account) {
+			if (this.props.settings.promptTrigger[Prompt.COMMIT_SYNC])
+				this.setState({ pmOpen: true, prompt: Prompt.COMMIT_SYNC });
+			else
+				this.confirmSync();
+		}
 	}
 
 	render() {
@@ -166,9 +191,9 @@ class HomeScreen extends React.Component<ReduxThemeType & ScreenProps & Addition
 				/>
 				<PromptModal
 					onClose={() => this.setState({ pmOpen: null })}
-					onConfirm={(dnsa: boolean) => this.confirmDelete(this.state.pmOpen, !dnsa)}
-					open={this.state.pmOpen !== null}
-					prompt={Prompt.DELETE_RECORD}
+					onConfirm={(dnsa: boolean) => this.onConfirm(!dnsa)}
+					open={this.state.pmOpen}
+					prompt={this.state.prompt}
 				/>
 			</>
 		);

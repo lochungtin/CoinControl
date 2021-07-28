@@ -45,7 +45,10 @@ class Modal extends React.Component<ReduxThemeType & DataProps> {
                         </View>
                         <View style={PromptModalStyles.promptTextBox}>
                             <Text style={{ ...PromptModalStyles.promptText, color: this.props.theme.dynamic.text.mainC }}>
-                                {`You are about to ${prompts[this.props.prompt]}, are you sure you want to proceed?`}
+                                {Prompt.COMMIT_SYNC === this.props.prompt ?
+                                    prompts[this.props.prompt] :
+                                    `You are about to ${prompts[this.props.prompt]}, are you sure you want to proceed?`
+                                }
                             </Text>
                         </View>
                         <View style={PromptModalStyles.dnsaTextBox}>
