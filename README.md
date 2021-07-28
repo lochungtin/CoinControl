@@ -2,5 +2,5 @@
 
 ## Todolist
 
-### Functionality
-- add sync options
+- assemble release
+- v2 alpha testing
