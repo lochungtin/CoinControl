@@ -19,7 +19,7 @@ Users can select from **various icons** to create their own custom categories to
 Users can select their currency label for their spending records, which include: **USD, GBP, EUR, HKD, NTD, JPY, KRW**.
 
 ### Data Managements
-Data is stored both locally and on the cloud via firebase's realtime database system. Data syncing can be done with a press of a button. Syncing methods include
+Data is stored both locally and on the cloud via Firebase's **Realtime Database System**. Data syncing can be done with a press of a button. Syncing methods include
 - **Select latest (default)**
 - **Cloud overwrite**
 - **Local overwrite**
