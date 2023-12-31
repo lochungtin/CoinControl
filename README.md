@@ -1,3 +1,5 @@
+<img src="./img/icons/rounded.png" width="80">
+
 # CoinControl
 
 This project was led by [Timothy Lo](www.lotimothy.com), then joined by [Ken Huang](https://kenchihuang.co.uk/) and [Issac To](https://issacto.com/).
