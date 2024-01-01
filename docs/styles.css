@@ -1,0 +1,45 @@
+:root {
+    /* Color
+    ------------------------------------------------------------------------- */
+    /* Monochrome shades (darker) and tints (lighter) */
+    --mono-shade3     : #202533;
+    --mono-shade2     : #222d4a;
+    --mono-shade1     : #282d40;
+    --mono-base       : #2a324b;
+    --mono-tint1      : #2e3b63;
+    --mono-tint2      : #f7c59f;
+    --mono-tint3      : #e1e5ee;
+
+    /* Theme */
+    --theme-color     : #f7c59f;
+
+    /* Sidebar
+    ------------------------------------------------------------------------- */
+    /* Toggle */
+    --sidebar-toggle-background                   : ;
+    --sidebar-toggle-border-color                 : ;
+    --sidebar-toggle-border-radius                : var(--border-radius-s);
+    --sidebar-toggle-border-style                 : solid;
+    --sidebar-toggle-border-width                 : 0;
+    --sidebar-toggle-height                       : 36px;
+    --sidebar-toggle-icon-color                   : var(--base-color);
+    --sidebar-toggle-icon-height                  : 10px;
+    --sidebar-toggle-icon-stroke-width            : 1px;
+    --sidebar-toggle-icon-width                   : 16px;
+    --sidebar-toggle-offset-left                  : 0;
+    --sidebar-toggle-offset-top                   : calc(35px - (var(--sidebar-toggle-height) / 2));
+    --sidebar-toggle-width                        : 44px;
+
+    /* Search
+    ------------------------------------------------------------------------- */
+    /* Base */
+    --search-background                      : ;
+    --search-margin                          : 1.5rem 0 0;
+
+    /* Clear Button */
+    --search-clear-icon-color1               : var(--mono-shade2);
+    --search-clear-icon-color2               : var(--mono-tint2);
+
+    /* Input */
+    --search-input-background-color          : ;
+}
