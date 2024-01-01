@@ -4,7 +4,7 @@
 
 </div>
 
-# CoinControl
+# CoinControl [(Github)](https://github.com/lochungtin/CoinControl)
 
 ## About
 
