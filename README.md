@@ -8,6 +8,8 @@ This project was led by [myself](https://lotimothy.com), then joined by [Ken Hua
 
 CoinControl is a mobile money management application designed to track spendings and income statistics while also providing insightful analytics to users. The mobile app is fitted with an account system and cloud storage/backups. Record analytics are also available for users to very spending and income trends and other data. The app also has a built-in calculator as the input number pad for easy on-the-stop calculations and recordings of expenses and incomes.
 
+For a more detailed guided, please visit the official [website](https://lochungtin.github.io/CoinControl).
+
 ## Features
 
 ### Records
