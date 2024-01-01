@@ -2,7 +2,7 @@
 
 # CoinControl
 
-This project was led by [Timothy Lo](www.lotimothy.com), then joined by [Ken Huang](https://kenchihuang.co.uk/) and [Issac To](https://issacto.com/).
+This project was led by [myself](https://lotimothy.com), then joined by [Ken Huang](https://kenchihuang.co.uk/) and [Issac To](https://issacto.com/).
 
 ## About
 
